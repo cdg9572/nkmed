@@ -1,0 +1,373 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include  "../inc/func.php";
+$tbl = "smart_reserve";
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+//$secret = "Y";
+$subject = addslashes($subject);
+$content = addslashes($content);
+$comment = addslashes($comment);
+
+//echo $sess_userid;
+//exit;
+testing_dsp("test post") ;
+testing_dsp("post") ;
+//exit;
+
+
+$name = trim($name);
+$mobile_no = trim($mobile_no);
+
+
+if($mode == "new" || $mode == "write") {
+
+	$sql = "
+		INSERT INTO `smart_munjin_cmp`
+            (
+             `name`,
+			 `mobile_no`,
+			 `reserve_seq`,
+			 `munjin_category`,
+
+             `reg_date`,
+
+             
+             `view_state`,
+             `state`,
+             `use_yn`)
+		VALUES (
+				'$name',
+				'$mobile_no',
+				'$reserve_seq',
+				'$munjin_category',
+				
+				NOW(),
+				'Y',
+				'Y',
+				'Y');
+		
+	";
+
+	mysql_query($sql) ;
+	$newSeq = mysql_insert_id();
+
+	testing_dsp("[$newSeq] $sql") ;
+
+	
+	if($newSeq) {
+		MYSQL_CLOSE();
+		echo "<script language='JavaScript'>parent.location.href='./mj_il.html?reserve_seq=$reserve_seq&seq=$newSeq&munjin_category=$munjin_category&page_no=1'</script>";
+		exit;
+	}
+	else {
+
+		exit;
+	}
+}
+else if($mode == "update" && $seq) {
+
+
+	$key = "no".$page_no ;
+	$key_add = "no".$page_no."_add" ;
+
+	$val = ${$key} ;
+	$val_add = ${$key_add} ;
+
+	if($page_no == 1)  //== 3번 문항 일때 
+	{
+		$total_str = "" ;
+
+
+		$reStr = getCheckbox_str($c01) ;
+		$total_str = $reStr ;
+
+		$reStr = getCheckbox_str($c02) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c03) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c04) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c05) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c06) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c07) ;
+		$total_str = $total_str."&".$reStr ;
+
+
+		$val = $total_str ;
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+			 $key = '$val',
+			 $key_add = '$val_add'
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+
+	else if($page_no == 2)  //== 3번 문항 일때 
+	{
+		$total_str = "" ;
+
+
+		$reStr = getCheckbox_str($c01) ;
+		$total_str = $reStr ;
+
+		$reStr = getCheckbox_str($c02) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c03) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c04) ;
+		$total_str = $total_str."&".$reStr ;
+
+		$reStr = getCheckbox_str($c05) ;
+		$total_str = $total_str."&".$reStr ;
+
+
+
+		$val = $total_str ;
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+			 $key = '$val',
+			 $key_add = '$val_add'
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+
+	else if($page_no == 4)  //== 3번 문항 일때 
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				no4_1 = '$no4_1',
+				no4_1_add = '$no4_1_add',
+
+				no4_2 = '$no4_2_',
+				no4_2_add = '$no4_2_add',
+
+				no4_3 = '$no4_3_',
+				no4_3_add = '$no4_3_add'
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+	else if($page_no == 5)  //== 3번 문항 일때 
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				no5_1 = '$no5_1',
+				no5_1_add = '$no5_1_add',
+
+				no5_2 = '$no5_2_',
+				no5_2_add = '$no5_2_add'
+
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+	else if($page_no == 6)  //== 3번 문항 일때 
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				no6_1 = '$no6_1',
+				no6_1_add = '$no6_1_add',
+
+				no6_2 = '$no6_2',
+				no6_2_add = '$no6_2_add',
+
+				no6_3 = '$no6_3',
+				no6_3_add = '$no6_3_add'
+
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+	else if($page_no == 7)  //== 3번 문항 일때 
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				no7_1 = '$no7_1',
+				no7_1_add = '$no7_1_add',
+
+				no7_2 = '$no7_2',
+				no7_2_add = '$no7_2_add',
+
+				no7_3 = '$no7_3',
+				no7_3_add = '$no7_3_add',
+
+				
+				no7_4 = '$no7_4',
+				no7_4_add = '$no7_4_add',
+
+				
+				no7_5 = '$no7_5',
+				no7_5_add = '$no7_5_add'
+
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+
+	else if($page_no == 8)  //== 3번 문항 일때 
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				no8_1 = '$no8_1',
+				no8_1_add = '$no8_1_add',
+
+				no8_2 = '$no8_2',
+				no8_2_add = '$no8_2_add',
+
+				no8_3 = '$no8_3',
+				no8_3_add = '$no8_3_add',
+
+				
+				no8_4 = '$no8_4',
+				no8_4_add = '$no8_4_add'
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+
+	else   //== 기본 문항일때
+	{
+		
+
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+			 $key = '$val',
+			 $key_add = '$val_add'
+
+			where seq = $seq
+		";
+
+		mysql_query($sql) ;
+	}
+
+
+
+
+	
+
+	
+
+	testing_dsp("[$newSeq] $sql") ;
+
+
+	
+
+	//exit;
+
+	
+
+
+	if($page_no == "8") 
+	{
+		//============== 마지막 페이지 완료 체크 
+		$sql = "
+			UPDATE `smart_munjin`
+			SET 
+				done_check = 'Y'
+
+			where seq = $seq
+		";
+
+		testing_dsp("[fin] $sql") ;
+		mysql_query($sql) ;
+
+		//exit;
+
+
+		//echo "<script language='JavaScript'>parent.location.href='./page_fin.html?seq=$seq&munjin_category=$munjin_category'</script>";
+		echo "<script language='JavaScript'>
+				alert('일반검진 문진표 작성을 완료하였습니다') ;
+				parent.location.href='../munjin_gate.html' ;
+			</script>";
+	}
+	else 
+		echo "<script language='JavaScript'>parent.location.href='./mj_il.html?seq=$seq&munjin_category=$munjin_category&page_no=$next_no'</script>";
+
+
+	MYSQL_CLOSE();
+	exit;
+
+
+}
+else if($mode == "answer" && $seq && $user_class == "PROF") {
+	
+
+	
+}
+else if($mode == "del" && $seq) {
+
+}
+else if($mode == "comment" && $seq) {
+	
+}
+else if($mode == "commDel" && $commSeq){
+	
+}
+?>

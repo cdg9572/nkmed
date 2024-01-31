@@ -1,0 +1,16 @@
+<?
+
+include "../inc/dbConn.php";
+
+$sql = " UPDATE gr26 SET
+				HJ='".$_GET["t"]."'
+			WHERE RIDX='".$_GET["n"]."' ";
+
+#echo $_GET["n"]."<br>".$_GET["t"];
+#echo $sql;
+if( mysql_query($sql) ){
+	echo "<script>parent.document.frm.submit();</script>";
+}else{
+	echo "<script>alert('오류가 발생되었습니다.');</script>";
+}
+?>

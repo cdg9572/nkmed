@@ -1,0 +1,26 @@
+<title>내용 수정</title>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+<? 
+include "../inc/dbConn.php"; 
+
+$sql = " SELECT * FROM gr28 WHERE RIDX='".$_GET['v']."' ";
+if( $res = mysql_query($sql) ){
+	$row = mysql_fetch_array($res);
+?>
+<form method="post" action="mod_post.html">
+<input type="hidden" name="RIDX" value="<?=$row['RIDX'];?>" />
+동:<select name="DONG">
+		<option value="413" <? if($row['DONG']=="413") echo "selected"; ?>>413동</option>
+		<option value="414" <? if($row['DONG']=="414") echo "selected"; ?>>414동</option>
+		<option value="415" <? if($row['DONG']=="415") echo "selected"; ?>>415동</option>
+		<option value="416" <? if($row['DONG']=="416") echo "selected"; ?>>416동</option>
+		<option value="417" <? if($row['DONG']=="417") echo "selected"; ?>>417동</option>
+	</select><br>
+호수 : <input type="text" name="HO" value="<?=$row['HO'];?>" />[숫자만]<br>
+예약자 : <input type="text" name="PNM" value="<?=$row['PNAME'];?>" /><br>
+연락처 : <input type="text" name="PTEL" value="<?=$row['PTEL'];?>" /><br>
+<button>수정하기</button>&nbsp;&nbsp;
+<button type="button" onclick="window.close();">창닫기</button>
+</form>
+<?		} ?>

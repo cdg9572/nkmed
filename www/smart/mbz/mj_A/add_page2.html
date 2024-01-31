@@ -1,0 +1,42 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+if($v == "아니요") 
+{
+	$c_y = "checked" ;
+	$c_n = "" ;
+}
+else if($v == "체중감소") 
+{
+	$c_y = "" ;
+	$c_n = "checked" ;
+}
+else
+{
+	$c_y = "" ;
+	$c_n = "" ;
+}
+?>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					2. 최근 6개월 간 특별한 이유 없이 5Kg 이상의 체중감소가 있었습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="아니요" <?=$c_y?> > 아니요</td>
+			</tr>
+
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="체중감소" <?=$c_n?> > 체중감소 
+					 ( <input type="text" name="no<?=$page_no?>_add"  value="<?=$v_add?>" > Kg )
+				</td>
+			</tr>
+			
+		</table>
+	

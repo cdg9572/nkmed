@@ -1,0 +1,30 @@
+<table width='100%'>
+<tr><td><a onclick="window.open('img/c11.jpg','','');" style="font-size:12pt;color:blue" >설명보기</a></td></tr></table>
+<!--위장 / 대장 검사-->
+<? if( GetArrTXT( $arr, "E5" )<>""){ ?>
+<h2>위내시경 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "E5" );?></td></tr>
+</table><br/>
+<? } ?>
+
+<? if( GetArrTXT( $arr, "E7" )<>""){ ?>
+<h2>대장내시경 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "E7" );?></td></tr>
+</table><br/>
+<? } ?>
+
+<? if( GetArrTXT( $arr, "E9" )<>""){ ?>
+<h2>기타 추가 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "E9" );?></td></tr>
+</table><br/>
+<? } ?>
+
+<? if( $tmp<>""){ ?>
+<h2>기타별지 결과</h2>
+<table width='100%'>
+<tr><td align='center'><?=$tmp;?></td></tr>
+</table><br/>
+<? } ?>

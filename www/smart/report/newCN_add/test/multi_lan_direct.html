@@ -1,0 +1,163 @@
+<?
+session_start();
+//include $DOCUMENT_ROOT."/inc/head.php";
+error_reporting(E_ALL ^ E_NOTICE);
+
+//include  "./inc/cn_lib.php";
+include $DOCUMENT_ROOT."/inc/dbConn.php";
+
+
+header('Content-type: text/html; charset=euckr');
+
+$desc_kr1 = "´ëÀå" ;
+$desc_cn1 = "ÓÞ" ;
+
+
+$sql  = "
+		
+			INSERT INTO `multi_lan` 
+				(
+				`category`, 
+				`desc_kr`, 
+				`desc_cn`, 
+				`reg_date`
+				)
+				VALUES
+				(
+				'meilu', 
+				'$desc_kr1', 
+				'$desc_cn1', 
+				NOW()
+				); " ;
+		
+		echo "<br>$sql<br><p>";
+		$res = mysql_query($sql);
+
+exit;
+
+
+
+if($mode == "new") {
+
+
+   while (is_array($_POST) && list($key, $val) = each($_POST))
+   {
+    	echo "key : $key -> value : $val	<br>" ;
+		//${$key} = preg_replace("/\s+/", "",   $val) ;
+
+   }
+   echo "<p>";
+
+   $desc_kr1 = preg_replace("/\s+/", "",  $desc_kr1) ;
+   $desc_kr2 = preg_replace("/\s+/", "",  $desc_kr2) ;
+   $desc_kr3 = preg_replace("/\s+/", "",  $desc_kr3) ;
+
+   
+   //echo "<br>$desc_kr" ;
+   //exit() ;
+	
+	if($desc_kr1 )
+	{
+		$sql  = "
+		
+			INSERT INTO `multi_lan` 
+				(
+				`category`, 
+				`desc_kr`, 
+				`desc_cn`, 
+				`reg_date`
+				)
+				VALUES
+				(
+				'meilu', 
+				'$desc_kr1', 
+				'$desc_cn1', 
+				NOW()
+				); " ;
+		
+		echo "<br>$sql<br><p>";
+		$res = mysql_query($sql);
+	}
+
+	if($desc_kr2 )
+	{
+		$sql  = "
+		
+			INSERT INTO `multi_lan` 
+				(
+				`category`, 
+				`desc_kr`, 
+				`desc_cn`, 
+				`reg_date`
+				)
+				VALUES
+				(
+				'meilu', 
+				'$desc_kr2', 
+				'$desc_cn2', 
+				NOW()
+				); " ;
+		
+		echo "<br>$sql<br><p>";
+		$res = mysql_query($sql);
+	}
+
+	if($desc_kr3 )
+	{
+		$sql  = "
+		
+			INSERT INTO `multi_lan` 
+				(
+				`category`, 
+				`desc_kr`, 
+				`desc_cn`, 
+				`reg_date`
+				)
+				VALUES
+				(
+				'meilu', 
+				'$desc_kr3', 
+				'$desc_cn3', 
+				NOW()
+				); " ;
+		
+		echo "<br>$sql<br><p>";
+		$res = mysql_query($sql);
+	}
+
+	//exit;
+
+}
+
+
+
+?>
+
+<form name="admin_form" method="post" enctype="multipart/form-data"  action='<?=$PHP_SELF?>' >
+<input type='hidden' name='mode' value='new'>
+
+desc_kr1 <br>
+<textarea name="desc_kr1" value="" rows=3 cols=140></textarea> <br>
+
+desc_cn1 <br>
+<textarea name="desc_cn1" value="" rows=3 cols=140></textarea> <br>
+
+
+desc_kr2 <br>
+<textarea name="desc_kr2" value="" rows=3 cols=140></textarea> <br>
+
+desc_cn2 <br>
+<textarea name="desc_cn2" value="" rows=3 cols=140></textarea> <br>
+
+
+desc_kr3 <br>
+<textarea name="desc_kr3" value="" rows=3 cols=140></textarea> <br>
+
+desc_cn3 <br>
+<textarea name="desc_cn3" value="" rows=3 cols=140></textarea> <br>
+
+
+
+
+<input type='submit' style='font-weight:bold; width:50px; height:23px;' value='µî·Ï' class='btn' onfocus='this.blur();'>		
+</form>

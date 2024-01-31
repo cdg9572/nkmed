@@ -1,0 +1,16 @@
+<? session_start(); 
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+
+$sql = " UPDATE smart_mj_mnobesytbl SET
+				MNOBQST01='".$_POST[MNOBQST01]."', MNOBQST02='".$_POST[MNOBQST02]."'	, MNOBQST03='".$_POST[MNOBQST03]."'
+			WHERE MNOBJUBNO='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("수정되었습니다.");
+location.href="vf.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/><br/>". mysql_error();
+}?>

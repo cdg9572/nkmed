@@ -1,0 +1,101 @@
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+<style>
+table{ font-size:10pt; }
+tr{	border-color:#c2c2c2;	}
+td{	border-color:#c2c2c2;	 }
+</style>
+<title>예약일시 확인</title>
+ </head>
+<body  topmargin="0"  leftmargin="0" marginwidth="0" marginheight="0">
+<center>
+<? #echo $_GET[RDT];
+if( $_GET[RDT]<>""){
+	$rd = $_GET[RDT];
+	include "../smart/inc/dbConn.php";
+	
+	$sql = " SELECT rtime, COUNT( * ) CNT   ";
+	$sql .= "	FROM smart_ir  ";
+	$sql .= "	WHERE idate = '".$rd."'   ";
+	$sql .= "	GROUP BY rtime ";
+
+	$mm = 50;
+	
+	if( date("w", strtotime($rd)) == 0 ){
+		echo "<script>alert('일요일은 진행하지 않습니다.\\n월~토요일에 선택해주세요.');
+					parent.document.getElementById(\"rtime_div\").style.display=\"none\";
+					parent.document.getElementById(\"f_div\").style.opacity = 1;</script>";
+	}elseif( date("w", strtotime($rd)) == 6 ){
+		#기본구간 50
+		if( $r = mysql_query($sql) ){
+			while($row = mysql_fetch_array($r) ){
+				$a = 0;
+				if( $row[rtime] == "08:00" ){	$a=1;	}
+				if( $row[rtime] == "09:00" ){	$a=3;	}
+				if( $row[rtime] == "10:00" ){	$a=5;	}
+				if( $row[rtime] == "11:00" ){	$a=7;	}
+				
+				$m[$a]=$row[CNT];
+			}
+		}
+
+		
+		echo "<table class=\"tbl\" cellspacing='0' border='1'>";
+		echo "<tr align='center'><td>예약구간</td><td>예약현황</td><td>선택</td></tr>";
+		if(  ( $t1 = $mm - $m[1] ) <= 0   ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','08:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>08:00~</td><td>$t1</td><td>$btn</td></tr>";
+		if(  ( $t1 = $mm - $m[2] ) <= 0   ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','09:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>09:00~</td><td>$t1</td><td>$btn</td></tr>";
+		if(  ( $t1 = $mm - $m[3] ) <= 0  ){ $btn="<font color='red'>예약불가</font>"; $t1='0'; }else{	$btn="<a onclick=\"Rdate('".$rd."','10:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>10:00~</td><td>$t1</td><td>$btn</td></tr>";
+		if(  ( $t1 = $mm - $m[4] ) <= 0  ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','11:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>11:00~</td><td>$t1</td><td>$btn</td></tr>";
+		echo "<table>";
+	}else{
+		#기본구간 50
+		if( $r = mysql_query($sql) ){
+			while($row = mysql_fetch_array($r) ){
+				if( $row[RTIME] == "16:00" ){	$a=1;	}
+				if( $row[RTIME] == "17:00" ){	$a=2;	}
+				if( $row[RTIME] == "18:00" ){	$a=3;	}
+				$m[$a]=$row[CNT];
+			}
+		}
+		
+		echo "<table class=\"tbl\" cellspacing='0' border='1' bordercolor='#c2c2c2'>";
+		echo "<tr align='center'><td>예약구간</td><td>예약현황</td><td>선택</td></tr>";
+		if(  ( $t1 = $mm - $m[1] ) <= 0   ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','16:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>16:00~</td><td>$t1</td><td>$btn</td></tr>";
+		if(  ( $t1 = $mm - $m[2] ) <= 0   ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','17:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>17:00~</td><td>$t1</td><td>$btn</td></tr>";
+		if(  ( $t1 = $mm- $m[3] ) <= 0 ){ $btn="<font color='red'>예약불가</font>"; $t1=0; }else{	$btn="<a onclick=\"Rdate('".$rd."','18:00')\" style='cursor:pointer;'><font color='blue'>예약하기</font></a>"; }
+		echo "<tr align='center'><td>18:00~</td><td>$t1</td><td>$btn</td></tr>";
+		echo "<table>";
+	}
+
+}
+?>
+<input type="button" value="닫기" onclick="cbt()" />
+</center>
+
+<script>
+	function cbt(){
+		parent.document.getElementById("rtime_div").style.display="none";
+		parent.document.getElementById("f_div").style.opacity = 1;
+	}
+
+	function Rdate( y, d){
+		//alert( parent.document.getElementById("RTIME") );
+		//alert( parent.document.getElementById("rtime_div") );
+		parent.document.getElementById("RTIME").value = d;
+//		parent.document.frm.RTIME.value = d;
+		self.close();
+		parent.document.getElementById("rtime_div").style.display="none";
+		parent.document.getElementById("f_div").style.opacity = 1;
+		//opener.document.frm.getElementById("RTIME").value = d;
+	}
+</script>

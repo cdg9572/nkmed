@@ -1,0 +1,349 @@
+<script language="JavaScript">
+<!--
+resizeTo(150, 600);
+-->
+</script>
+
+<LINK REL=stylesheet TYPE="text/css" HREF="css1.css">
+<script language="javascript" src="script.js"></script>
+<center>
+<table width="154" border="0" cellspacing="0" cellpadding="0">
+<tr align="center">
+<td width="154" align="center">
+<table width="154" border="0" cellspacing="0" cellpadding="0">
+<form name="visual_phone" method="post">
+<input type="hidden" name="mobileNo" value="<?=$mobileNo?>">
+<input type="hidden" name="code" value="<?=$code?>">
+
+  <tr> 
+    <td align="center" valign="top"> 
+      <table width="146" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><img src="./images/phone_top_new.gif" width="146" height="48"></td>
+        </tr>
+        <tr> 
+          <td valign="top"> 
+            <table width="146" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td width="8"><img src="./images/phone_left.gif" width="8" height="121"></td>
+                <td width="129" background="./images/hp_bg_new.gif" align="center">
+                <!-- 메시지입력창 -->
+									<textarea class="phonemsgbox" name="txtMessage" rows=4 cols=6 value="<메시지는 여기에 입력해주세요>" onClick="SelText()" onKeyUp="javascript:checklen()" style="ime-mode:active;"><메시지는 여기에 입력해주세요></textarea>
+                <!-- // 메시지입력창 -->
+									<br>
+									<input class="phonemsglen" type="text" name="msglen" size="2" maxlength="2" readonly value=0><font style="font-size:9pt">/80 byte</font>
+                </td>
+                <td width="9"><img src="./images/phone_right.gif" width="9" height="121"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td><a href="javascript:MM_showHideLayers('vp_layer1','','show','vp_layer2','','hide');"><img src="./images/phone_btn_s.gif" border="0" onmouseout="javascript:MM_showHideLayers('vp_layer1','','hide');"></a><a href="javascript:MM_showHideLayers('vp_layer2','','show','vp_layer1','','hide');"><img src="./images/phone_btn_e.gif" border="0" onmouseout="javascript:MM_showHideLayers('vp_layer2','','hide');"></a></td>
+        </tr>
+        <tr> 
+          <td><img src="./images/phone_bg2.gif" width="146" height="8" border="0"></td>
+        </tr>
+        <tr> 
+          <td background="./images/phone_bg3.gif" height="177" valign="top" align="center">
+            <table width="132" border="0" cellspacing="0" cellpadding="0" height="146">
+              <tr>
+                <td width="51" height="23" style=padding-top:2; colspan="2">
+                  <div align="center">받는번호</div>
+                </td>
+              </tr>
+              <tr align="center" valign="bottom">
+                <td colspan="2" height="19">
+					<?
+					if($mobileNo != ""){
+					?>
+                    <input type="text" name="phone123" size="16" maxlength="11" STYLE="font-size:9pt;" value="<?=str_replace("-","",$mobileNo)?>">
+					<?
+					}
+					else{
+					?>
+					<input type="text" name="phone123" size="16" maxlength="11" STYLE="font-size:9pt;" value="0000000000">
+					<?
+					}
+					?>
+				</td>
+              </tr>
+              <!--회신번호 입력-->
+              <tr> 
+                <td width="51" valign="bottom" height="20"> 
+                  <div align="center">회신번호</div>
+                </td>
+                <td width="81" height="20">
+									<INPUT TYPE=TEXT maxlength="11" name="reqnumber" value="023305133" STYLE="font-size:9pt; width:72px" onkeypress="onlynum()">
+                </td>
+              </tr>
+              <!--//회신번호 입력-->
+              <tr> 
+                <td height="6" colspan=2> 
+                </td>
+              </tr>
+              <!--전송 버튼-->
+              <tr align="center"> 
+                <td colspan="2" height="1">
+					<!--실제 버튼-->
+					<div id=b_send>
+						<a href="javascript:Check();"><img src="./images/phone_send.gif" width="71" height="27" border="0"></a>
+					</div>
+				</td>
+              </tr>
+              <!--//전송 버튼-->
+              <tr align="center">
+                <td colspan="2" height="1">
+                  <table width="130" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td height="26" valign="bottom"> 
+                        <input type="checkbox" name="calltype" value="2" onclick="resv_divopen()">
+                        예약전송</td>
+                    </tr>
+                    <tr height="20">
+											<td>
+												<div id="divResv" style="display:none">
+													<table width="130" border="0" cellspacing="0" cellpadding="0">
+														<tr align=right> 
+														  <td> 
+														      <INPUT TYPE=TEXT maxlength=4 STYLE="font-size:10pt; width:36px" NAME=yy  maxlength=4>년 
+														      <INPUT TYPE=TEXT NAME=mm STYLE="font-size:10pt; width:20px" maxlength=2>월 
+														      <INPUT TYPE=TEXT NAME=dd STYLE="font-size:10pt; width:20px" maxlength=2>일
+														  </td>
+														</tr>
+														<tr align=right> 
+														  <td> 
+														      <INPUT TYPE=TEXT NAME=h STYLE="font-size:10pt; width:20px" maxlength=2>시 
+														      <INPUT TYPE=TEXT NAME=m STYLE="font-size:10pt; width:20px" maxlength=2>분
+														  </td>
+														</tr>
+													</table>
+													<INPUT TYPE=hidden NAME=current_yy>
+													<INPUT TYPE=hidden NAME=current_mm>
+													<INPUT TYPE=hidden NAME=current_dd>
+													<INPUT TYPE=hidden NAME=current_h>
+													<INPUT TYPE=hidden NAME=current_m>
+												</div>
+											</td>
+										</tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td><img src="./images/phone_bottom.gif" width="146" height="27"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</td>
+</tr>
+<tr>
+	<td height="20"></td>
+</tr>
+<?
+if($mobileNo == "" && $code != ""){
+?>
+<tr>
+	<td>
+		<table width="100%" bgcolor="#efefef" border="0" cellpadding="5" cellspacing="1">
+			<tr bgcolor="">
+				<td colspan="2" align="center">발송 조건 (<?=$code?>)
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<td><input type="radio" name="sort" value="payment">
+				</td>
+				<td>미입금자 발송
+				</td>
+			</tr>
+			<tr bgcolor="#ffffff">
+				<td><input type="radio" value="total" name="sort">
+				</td>
+				<td>수강자 발송
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<?
+}
+?>
+</form>
+
+</table>
+</center>
+<script language="javascript">
+<!--
+	now = new Date();
+	var cur_year = now.getYear();
+	var cur_mon =  now.getMonth()+1;
+	var cur_day =  now.getDate();
+	var cur_hour = now.getHours();
+	var cur_min =  now.getMinutes();
+	var cur_sec =  now.getSeconds();
+
+	cur_year = cur_year.toString();
+	cur_mon =  cur_mon.toString();
+	cur_day =  cur_day.toString();
+	cur_hour = cur_hour.toString();
+	cur_min =  cur_min.toString();
+	cur_sec =  cur_sec.toString();
+
+	if(cur_mon.length == 1)		cur_mon  = "0" + cur_mon;
+	if(cur_day.length == 1)		cur_day  = "0" + cur_day;
+	if(cur_hour.length == 1)	cur_hour = "0" + cur_hour;
+	if(cur_min.length == 1)		cur_min  = "0" + cur_min;
+	if(cur_sec.length == 1)		cur_sec  = "0" + cur_sec;
+
+	document.visual_phone.yy.value			= cur_year;
+	document.visual_phone.current_yy.value  = cur_year;
+	document.visual_phone.mm.value			= cur_mon;
+	document.visual_phone.current_mm.value  = cur_mon;
+	document.visual_phone.dd.value			= cur_day;
+	document.visual_phone.current_dd.value  = cur_day;
+	document.visual_phone.h.value			= cur_hour;
+	document.visual_phone.current_h.value  = cur_hour;
+	document.visual_phone.m.value			= cur_min;
+	document.visual_phone.current_m.value  = cur_min;
+//-->
+</script>
+
+<div id="vp_layer1" style="position:absolute; left:50px; top:180px; width:164px; height:170px; z-index:0; visibility: hidden" onClick="MM_showHideLayers('vp_layer1','','show')" onMouseOut="MM_showHideLayers('vp_layer1','','hide')"> 
+  <br>
+	<table width="84" border="0" cellpadding="3" cellspacing="1" onMouseOver="MM_showHideLayers('vp_layer1','','show')" onMouseOut="MM_showHideLayers('vp_layer1','','hide')" bgcolor="#8AD060">
+	  <tr bgcolor="#FFFFFF"> 
+			<td>
+				<A HREF="javascript:AddChar('☆');" CLASS=t0>☆</A>
+				<A HREF="javascript:AddChar('○');" CLASS=t0>○</A>
+				<A HREF="javascript:AddChar('□');" CLASS=t0>□</A>
+				<A HREF="javascript:AddChar('◎');" CLASS=t0>◎</A>
+				<A HREF="javascript:AddChar('★');" CLASS=t0>★</A><br>
+				<A HREF="javascript:AddChar('●');" CLASS=t0>●</A>
+				<A HREF="javascript:AddChar('■');" CLASS=t0>■</A>
+				<A HREF="javascript:AddChar('⊙');" CLASS=t0>⊙</A>
+				<A HREF="javascript:AddChar('☏');" CLASS=t0>☏</A>
+				<A HREF="javascript:AddChar('☎');" CLASS=t0>☎</A><br>
+				<A HREF="javascript:AddChar('◈');" CLASS=t0>◈</A>
+				<A HREF="javascript:AddChar('▣');" CLASS=t0>▣</A>
+				<A HREF="javascript:AddChar('◐');" CLASS=t0>◐</A>
+				<A HREF="javascript:AddChar('◑');" CLASS=t0>◑</A>
+				<A HREF="javascript:AddChar('☜');" CLASS=t0>☜</A><br>
+				<A HREF="javascript:AddChar('☞');" CLASS=t0>☞</A>
+				<A HREF="javascript:AddChar('◀');" CLASS=t0>◀</A>
+				<A HREF="javascript:AddChar('▶');" CLASS=t0>▶</A>
+				<A HREF="javascript:AddChar('▲');" CLASS=t0>▲</A>
+				<A HREF="javascript:AddChar('▼');" CLASS=t0>▼</A><br>
+				<A HREF="javascript:AddChar('♠');" CLASS=t0>♠</A>
+				<A HREF="javascript:AddChar('♣');" CLASS=t0>♣</A>
+				<A HREF="javascript:AddChar('♥');" CLASS=t0>♥</A>
+				<A HREF="javascript:AddChar('◆');" CLASS=t0>◆</A>
+				<A HREF="javascript:AddChar('◁');" CLASS=t0>◁</A><br>
+				<A HREF="javascript:AddChar('▷');" CLASS=t0>▷</A>
+				<A HREF="javascript:AddChar('△');" CLASS=t0>△</A>
+				<A HREF="javascript:AddChar('▽');" CLASS=t0>▽</A>
+				<A HREF="javascript:AddChar('♤');" CLASS=t0>♤</A>
+				<A HREF="javascript:AddChar('♧');" CLASS=t0>♧</A><br>
+				<A HREF="javascript:AddChar('♡');" CLASS=t0>♡</A>
+				<A HREF="javascript:AddChar('◇');" CLASS=t0>◇</A>
+				<A HREF="javascript:AddChar('※');" CLASS=t0>※</A>
+				<A HREF="javascript:AddChar('♨');" CLASS=t0>♨</A>
+				<A HREF="javascript:AddChar('♪');" CLASS=t0>♪</A>
+			</td>
+	  </tr>
+	</table>                  
+</div>
+
+<div id="vp_layer2" style="position:absolute; left:50px; top:180px; width:164px; height:170px; z-index:2; visibility: hidden" onClick="MM_showHideLayers('vp_layer2','','show')" onMouseOut="MM_showHideLayers('vp_layer2','','hide')"> 
+  <br>
+  <table width="165" border="0" cellspacing="1" cellpadding="0" onMouseOver="MM_showHideLayers('vp_layer2','','show')" onMouseOut="MM_showHideLayers('vp_layer2','','hide')" bgcolor="#8AD060">
+    <tr bgcolor="#FFFFFF"> 
+      <td width="44" height="21"> 
+        <div align="center"><A HREF="javascript:AddChar('(*^_^*)');" CLASS=t0>(*^_^*)</a> </div>
+      </td>
+      <td width="58" height="21"> 
+        <div align="center"><A HREF="javascript:AddChar('(^▽^)');" CLASS=t0>(^▽^)</a> </div>
+      </td>
+      <td width="59" height="21"> 
+        <div align="center"><A HREF="javascript:AddChar('S(^.^)b');" CLASS=t0>S(^.^)b</a></div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('*^^*');" CLASS=t0>*^^*</a> </div>
+      </td>
+      <td width="58" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('^.~');" CLASS=t0>^.~</a></div>
+      </td>
+      <td width="59" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('＠_＠');" CLASS=t0>＠_＠</a></div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('★.★');" CLASS=t0>★.★</a> </div>
+      </td>
+      <td width="58" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(V_V)');" CLASS=t0>(V_V)</a> </div>
+      </td>
+      <td width="59" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(*_*)');" CLASS=t0>(*_*)</a> </div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('⊙.⊙');" CLASS=t0>⊙.⊙</a></div>
+      </td>
+      <td width="58" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(*^.☜)');" CLASS=t0>(*^.☜)</a></div>
+      </td>
+      <td width="59" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar(';p(*^0^)q');" CLASS=t0>;p(*^0^)q</a> </div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(=_=;)');" CLASS=t0>(=_=;)</a> </div>
+      </td>
+      <td width="58" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(*^^)(^_^)');" CLASS=t0>(*^^)(^_^)</a></div>
+      </td>
+      <td width="59" height="17"> 
+        <div align="center"><A HREF="javascript:AddChar('(^*^)Kiss');" CLASS=t0>(^*^)Kiss</a></div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('(-_-)…');" CLASS=t0>(-_-)…</a> </div>
+      </td>
+      <td width="58" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('(-.-+)');" CLASS=t0>(-.-+)</a> </div>
+      </td>
+      <td width="59" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('0(--)zz');" CLASS=t0>0(--)zz</a></div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('♡.♡');" CLASS=t0>♡.♡</a> </div>
+      </td>
+      <td colspan="2" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('/(*’’)♡(‘’*)');" CLASS=t0>/(*’’)♡(‘’*)</a></div>
+      </td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="44" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('^}{^');" CLASS=t0>^}{^</a> </div>
+      </td>
+      <td colspan="2" height="18"> 
+        <div align="center"><A HREF="javascript:AddChar('(/^0^)/(*^_^)');" CLASS=t0>(/^0^)/(*^_^)</a></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+

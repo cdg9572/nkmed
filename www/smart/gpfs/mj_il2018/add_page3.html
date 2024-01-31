@@ -1,0 +1,92 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 흡연 및 전자담배 관련 문항
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					4. 지금까지 평생 총 5갑(100개비)이상의 담배를 피운 적이 있습니까?
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<td><input type="radio" name="no4" value="1"  > 아니오(☞ 5번 문항으로 가세요). </td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no4" value="2" > 예, 지금은 끊었음 (☞ 4-2번 문항으로 가세요)</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no4" value="3" > 예, 현재도 흡연 중 (☞ 4-3번 문항으로 가세요)</td>
+			</tr>
+
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th style="!important; text-align:left;">4-1. 과거에 흡연을 하였으나 현재는 끊으셨다면</th>
+			</tr>
+			<tr>
+				<td> 금연 전까지 담배를 몇 년이나 피우셨습니까? 총 <input type="test" name="no4_1" value="" style="width:50px;" >년 </td>
+				
+			</tr>
+			<tr>
+				<td> 금연하시기 전 평균 하루 흡연량은 몇 개비였습니까? <input type="test" name="no4_12" value=""  style="width:50px;">개비 </td>
+			</tr>
+		
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_3" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th style="!important; text-align:left;">4-2. 현재도 흡연을 하신다면</th>
+			</tr>
+			<tr>
+				<td> 몇 년째 담배를 피우시고 계십니까? 총 <input type="test" name="no4_2" value="" style="width:50px;" >년 </td>
+				
+			</tr>
+			<tr>
+				<td> 평균 하루 흡연량은 몇 개비였습니까? <input type="test" name="no4_22" value=""  style="width:50px;">개비 </td>
+			</tr>
+		</table>

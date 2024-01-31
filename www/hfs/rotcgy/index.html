@@ -1,0 +1,82 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "./inc/func.php";
+include "./inc/dbConn.php";
+
+testing_dsp("session") ;
+
+
+$_SESSION['cpname']  = "ROTC고양지회";		
+
+
+$_SESSION['c'] = "1";
+//echo $_SERVER['REMOTE_ADDR'];
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원 ROTC고양지회 사이트</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	<header><?# echo $cpname;		?>
+		<img src="images/logo.png" class="top_logo" alt=""/>
+	</header>
+	<nav>
+		<ul class="menu_list">
+			<li ><a href="about/page01.html"><img src="../images/r1.png" alt="기관소개"/></a></li>
+			<li ><a href="reserve/reserve01.html"><img src="../images/r2.png" alt="간편예약"/></a></li>
+			<li><a href="munjin.html" ><img src="../images/r3.png" alt="문진표 & 동의서 & 주의사항"/></a></li>
+			<li><a href="http://smart.nkhospital.net/report2/index.html" target="_blank"><img src="../images/r4.png" alt="검진 결과 보기"/></a></li>
+			<li><a href="tel:1661-7779"><img src="../images/r5.png" alt="검진 문의"/></a></li>
+		</ul>
+	</nav>
+	
+	<section><br/>
+		<B><font size="4">&nbsp;&nbsp;&nbsp;검진 예약을 하시면 평일기준 <font color="blue">24시간 이내에</font> <br/>
+		&nbsp;&nbsp;&nbsp;담당자가 연락드려 최종일정 확인해 드립니다. </B></font>
+		<!--<a href = "tel:1661-7779">
+		<img src="images/callcenter.jpg" class="callcenter" alt="문의"/>
+		</a>-->
+	</section>
+	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+
+<!--
+<?
+
+
+//include $_SERVER["DOCUMENT_ROOT"]."/goSMSHeader.html";  //== 전송해야할 것이 있는 경우 발송
+// <iframe name="company_proc" width=500 height=300 src="<?=$_SERVER["DOCUMENT_ROOT"]?>/goSMSHeader.html"></iframe>
+
+?>
+-->
+
+</body>
+</html>

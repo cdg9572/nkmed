@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<?
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+$sql = " INSERT INTO gwd_revlist 
+		VALUES (
+			0, '".$_POST[rev_gubun2]."', '".$_POST[gname]."', '".$_POST[gbdt]."', '".$_POST[gtel]."'
+			, '".$_POST[dept]."', '".$_POST[symptom]."', '".$_POST[gjtype]."', '".$_POST[rdate]."'
+			, '".$_POST[memo]."', '".date("Y-m-d H:i:s")."', '".$_SERVER['REMOTE_ADDR']."'
+			, '등록' , '' , '' , '') ";
+#echo $sql;
+if( $r = mysql_query($sql) ){
+	#echo "등록되었습니다.";
+
+	$ty = ($_POST[rev_gubun2]=="gj")	? "종합검진상품 : $_POST[gjtype]형" : "진료예약 : $_POST[dept] 증상 : $_POST[symptom]";
+	#
+	$smsf_phone = "010-3380-0588";	//김세라
+	$smsf_msg = "[장애인복지시설연합회]
+	$_POST[gname] 님
+	==예약정보==
+	$ty
+	예약희망일: $_POST[rdate]
+	메모: $_POST[memo]" ;
+
+	$smsf_opt1 = "";
+	$frm="from"; $ifrm="ifrm"; $reyn = "N"; //리턴여부
+	echo "<div style='display:none;'>";
+	include "../inc/nksms2.html" ;
+	echo "</div>";
+	$smsf_phone = "010-8810-7202";	//박은지
+	$smsf_opt1 = "";
+	$frm="from2"; $ifrm="ifrm2"; $reyn = "N"; //리턴여부
+	echo "<div style='display:none;'>";
+	include "../inc/nksms2.html" ;
+	echo "</div>";
+}
+//echo  $_POST[rev_gubun2]." ".$_POST[dept]." ".$_POST[symptom]." ".$_POST[gjtype]." ".$_POST[rdate]." ".$_POST[memo]." ".$_POST[gname]." ".$_POST[gbdt]." ".$_POST[gtel];
+?>
+<script>alert('예약 등록 되었습니다.');</script>
+<form action="gwd_check.html" autocomplete="off" method="post" id="frm" name="frm">
+<input type="hidden" id="gname" name="gname" value="<?=$_POST['gname'];?>"/>
+<input type="hidden" id="gbdt" name="gbdt" value="<?=$_POST['gbdt'];?>"/>
+<input type="hidden" id="gtel" name="gtel" value="<?=$_POST['gtel'];?>"/>
+</form>
+<script>
+	const frm = document.getElementById("frm");
+	frm.submit();
+</script>
+</html>

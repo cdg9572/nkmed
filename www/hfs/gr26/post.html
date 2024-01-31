@@ -1,0 +1,35 @@
+<?
+include "../inc/dbConn.php";
+
+#echo $_POST['RIDX']."<br>";
+#echo $_POST['SNM']."<br>";
+#echo $_POST['STEL']."<br>";
+#echo $_POST['SINM1']."<br>";
+#echo $_POST['SINM2']."<br>";
+#echo $_POST['SINM3']."<br>";
+#echo $_POST['SINM4']."<br>";
+#echo $_POST['ADD_GJ'].$_POST['ADD_DJ'].$_POST['ADD_INM']."<br>";
+#echo $_POST['bigo']."<br>";
+
+$sql = " UPDATE gr26 SET		
+				ADD_JDI='".$_POST['ADD_GJ'].$_POST['ADD_DJ'].$_POST['ADD_INM']."'
+				, BIGO='".$_POST['bigo']."'
+				, MDT='".time()."'
+				, RDT ='".$_POST['RDT']."'
+			WHERE RIDX='".$_POST['RIDX']."' ";
+
+if( $res = mysql_query($sql) ){
+
+	echo "<script>
+				alert( ' 등록되었습니다. ' );
+			</script>
+			<form name='frm' method='post' action='view.html' target='_parent'>
+			<input type='hidden' name='RIDX' value='".$_POST['RIDX']."' />
+			</form>
+			<script>document.frm.submit();</script>";
+
+}
+
+?>
+
+<!-- 4650  3600 -->

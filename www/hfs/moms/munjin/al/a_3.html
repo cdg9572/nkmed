@@ -1,0 +1,152 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+	$sql = " UPDATE smart_mj_am SET 
+					MNCAGT3WY='".$_POST[MNCAGT3WY]."' , MNCAGT3WA='".$_POST[MNCAGT3WA]."'
+					, MNCAGT3WB='".$_POST[MNCAGT3WB]."' , MNCAGT3WC='".$_POST[MNCAGT3WC]."'
+					, MNCAGT3WD='".$_POST[MNCAGT3WD]."' , MNCAGT3WE='".$_POST[MNCAGT3WE]."'
+
+					, MNCAGT3UY='".$_POST[MNCAGT3UY]."' , MNCAGT3UA='".$_POST[MNCAGT3UA]."'
+					, MNCAGT3UB='".$_POST[MNCAGT3UB]."' , MNCAGT3UC='".$_POST[MNCAGT3UC]."'
+					, MNCAGT3UD='".$_POST[MNCAGT3UD]."' , MNCAGT3UE='".$_POST[MNCAGT3UE]."'
+
+					, MNCAGT3DY='".$_POST[MNCAGT3DY]."' , MNCAGT3DA='".$_POST[MNCAGT3DA]."'
+					, MNCAGT3DB='".$_POST[MNCAGT3DB]."' , MNCAGT3DC='".$_POST[MNCAGT3DC]."'
+					, MNCAGT3DD='".$_POST[MNCAGT3DD]."' , MNCAGT3DE='".$_POST[MNCAGT3DE]."'
+
+					, MNCAGT3GY='".$_POST[MNCAGT3GY]."' , MNCAGT3GA='".$_POST[MNCAGT3GA]."'
+					, MNCAGT3GB='".$_POST[MNCAGT3GB]."' , MNCAGT3GC='".$_POST[MNCAGT3GC]."'
+					, MNCAGT3GD='".$_POST[MNCAGT3GD]."' , MNCAGT3GE='".$_POST[MNCAGT3GE]."'
+
+					, MNCAGT3JY='".$_POST[MNCAGT3JY]."' , MNCAGT3JA='".$_POST[MNCAGT3JA]."'
+					, MNCAGT3JB='".$_POST[MNCAGT3JB]."' , MNCAGT3JC='".$_POST[MNCAGT3JC]."'
+					, MNCAGT3JD='".$_POST[MNCAGT3JD]."' , MNCAGT3JE='".$_POST[MNCAGT3JE]."'
+
+					, MNCAGT3EN='".$_POST[MNCAGT3EN]."' 
+					, MNCAGT3EY='".$_POST[MNCAGT3EY]."' , MNCAGT3EA='".$_POST[MNCAGT3EA]."'
+					, MNCAGT3EB='".$_POST[MNCAGT3EB]."' , MNCAGT3EC='".$_POST[MNCAGT3EC]."'
+					, MNCAGT3ED='".$_POST[MNCAGT3ED]."' , MNCAGT3EE='".$_POST[MNCAGT3EE]."'
+
+					, MNCAFDATM='".date("YmdHis")."' 
+
+				WHERE midx='".$_POST[mseq]."'  ";
+
+	#echo $sql;
+	mysql_query( $sql );
+}
+#초기화
+$MNCAGT41E = "";	$MNCAGT42E = "";	$MNCAGT43E = "";	$MNCAGT44E = "";	
+$MNCAGT45E = "";	$MNCAGT46E = "";	$MNCAGT47E = "";	$MNCAGT48E = "";
+
+if( $r = mj_am_info( $_POST[mseq] ) ){
+	$row = mysql_fetch_array($r);
+	$MNCAGT41E = $row[MNCAGT41E];
+	$MNCAGT42E = $row[MNCAGT42E];
+	$MNCAGT43E = $row[MNCAGT43E];
+	$MNCAGT44E = $row[MNCAGT44E];
+	$MNCAGT45E = $row[MNCAGT45E];
+	$MNCAGT46E = $row[MNCAGT46E];
+	$MNCAGT47E = $row[MNCAGT47E];
+	$MNCAGT48E = $row[MNCAGT48E];
+}
+?>
+
+<body topmargin=0>
+ <form name="frm" method="post" action="a_4.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+	<input type="hidden" name="md" value="reg"/>	
+	<!--<font color="black" >진행 : 3/<?=$tp;?></font>-->
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">4 귀하는 다음의 검사를 받은 적이 있습니까?(미입력 해당사항 없음)</th></tr>
+	<tr><td  >
+					<table width='100%' border='1' cellspacing='0'>
+					<tr style=" !important; text-align:center;"><td rowspan='2' colspan='2'>검 &nbsp; 사 &nbsp; 명</td>
+						<td colspan='4'>검사시기</td></tr>
+					<tr style=" !important; text-align:center;"><td>10년 이상<br>또는<br/>한적 없음</td><td>1년 미만</td>
+						<td>1년이상~<br>2년미만</td><td>2년이상~<br>10년미만</td></tr>
+					<tr style=" !important; text-align:center;"><td rowspan='2'>위&nbsp;&nbsp;암</td><td>위장조영검사<br>(위장 X선 촬영)</td>
+						<td><input type="radio" name="MNCAGT41E" value="1" <? if( $MNCAGT41E=="1" || $MNCAGT41E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="2" <? if( $MNCAGT41E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="3" <? if( $MNCAGT41E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="4" <? if( $MNCAGT41E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>위내시경</td>
+						<td><input type="radio" name="MNCAGT42E" value="1" <? if( $MNCAGT42E=="1" || $MNCAGT42E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="2" <? if( $MNCAGT42E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="3" <? if( $MNCAGT42E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="4" <? if( $MNCAGT42E=="4" ){ echo "checked"; }?> /></td></tr>
+<? #여성일때만 보여주기 
+	if ( $_POST[s]=="F" ){ ?>
+					<tr style=" !important; text-align:center;"><td>유방암</td><td>유방촬영</td>
+						<td><input type="radio" name="MNCAGT43E" value="1" <? if( $MNCAGT43E=="1" || $MNCAGT43E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="2" <? if( $MNCAGT43E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="3" <? if( $MNCAGT43E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="4" <? if( $MNCAGT43E=="4" ){ echo "checked"; }?> /></td></tr>
+<? } ?>
+					<tr style=" !important; text-align:center;"><td rowspan='3'>대장암</td><td>분변잠혈검사<br>(대변 검사)</td>
+						<td><input type="radio" name="MNCAGT44E" value="1" <? if( $MNCAGT44E=="1" || $MNCAGT44E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="2" <? if( $MNCAGT44E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="3" <? if( $MNCAGT44E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="4" <? if( $MNCAGT44E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>대장이중조영검사<br>(대장 X선 촬영)</td>
+						<td><input type="radio" name="MNCAGT45E" value="1" <? if( $MNCAGT45E=="1" || $MNCAGT45E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="2" <? if( $MNCAGT45E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="3" <? if( $MNCAGT45E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="4" <? if( $MNCAGT45E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>대장내시경</td>
+						<td><input type="radio" name="MNCAGT46E" value="1" <? if( $MNCAGT46E=="1" || $MNCAGT46E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="2" <? if( $MNCAGT46E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="3" <? if( $MNCAGT46E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="4" <? if( $MNCAGT46E=="4" ){ echo "checked"; }?> /></td></tr>
+<? #여성일때만 보여주기 
+	if ( $_POST[s]=="F" ){ ?>
+					<tr style=" !important; text-align:center;"><td>자궁경부암</td><td>자궁경부세포검사</td>
+						<td><input type="radio" name="MNCAGT47E" value="1" <? if( $MNCAGT47E=="1" || $MNCAGT47E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="2" <? if( $MNCAGT47E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="3" <? if( $MNCAGT47E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="4" <? if( $MNCAGT47E=="4" ){ echo "checked"; }?> /></td></tr>
+<? } ?>
+					<tr style=" !important; text-align:center;"><td rowspan='2'>간&nbsp;&nbsp;암</td><td rowspan='2'>간초음파</td>
+						<td>한적<br>없음</td><td>6개월<br>이내</td>
+						<td>6개월에서<br>1년 사이</td><td>1년보다<br>오래전에</td></tr>
+					<tr style=" !important; text-align:center;">
+						<td><input type="radio" name="MNCAGT48E" value="1" <? if( $MNCAGT48E=="1" || $MNCAGT48E=="" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="2" <? if( $MNCAGT48E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="3" <? if( $MNCAGT48E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="4" <? if( $MNCAGT48E=="4" ){ echo "checked"; }?> /></td></tr>
+					</table>
+					</td>
+				</tr>
+	</table>
+	<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+	<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.frm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+	</form>
+ </body>
+ </html>
+ <script>
+
+function hisBack(){
+	document.frm.action="a_2.html";
+	document.frm.md.value = "view";
+	document.frm.submit();
+}
+
+</script>

@@ -1,0 +1,1060 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+#echo $cpname;
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$cpname;?> 건강검진 예약사이트</title>
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+
+</head>
+
+<body>
+
+	
+	<form name='form' method='post' action='reserve_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_resscomp'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='seq' value='<?=$seq?>'>
+		<input type='hidden' name='cpname' value='<?=$cpname;?>'>
+		<input type='hidden' name='pname' value='<?=$pname;?>'>
+		<input type='hidden' name='name2' value='<?=$name2;?>'>
+
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2><?=$cpname;?> 검진상품</h2>
+	
+	<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan='2' width="100%">유형선택</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr><td colspan='2'>
+					<select name="ctype" onchange="CheckN(this.value)">
+						<option value="알뜰형">알뜰형 (<I>492,180</I>원<!--=> <b>25만원</b>-->)</option>
+						<option value="건강형">건강형 (<I>847,820</I>원<!-- => <b>35만원</b>-->)</option>
+						<option value="소망형">소망형 (<I>1,067,820</I>원<!-- => <b>45만원</b>-->)</option>
+						<option value="행복형">행복형 (<I>1,517,820</I>원<!-- => <b>60만원</b>-->)</option>
+						<option value="사랑해">사랑해 (<I>2,200,000</I>원<!-- => <b>120만원</b>-->)</option>
+					</select> <input type="button" value="상품내용보기" onclick="ViewC()" /><br/>
+					   공단검진대상은 <font color="red">공단비용은 별도 재정산</font>합니다. 
+					  </td></tr>
+			</tbody>
+	</table>
+	<iframe id="ifrmV" name="ifrmV" width='100%' height='250' src="" style="display:none;"></iframe>
+	<script>
+	function ViewC(){
+		if( document.form.ctype.value == "알뜰형" ){
+			document.getElementById("ifrmV").style.display = "";
+			document.getElementById("ifrmV").src= "../../a2018.html";
+		}else if( document.form.ctype.value == "건강형" ){
+			document.getElementById("ifrmV").style.display = "";
+			document.getElementById("ifrmV").src= "../../g2018.html";
+		}else if( document.form.ctype.value == "소망형" ){
+			document.getElementById("ifrmV").style.display = "";
+			document.getElementById("ifrmV").src= "../../s2018.html";
+		}else if( document.form.ctype.value == "행복형" ){
+			document.getElementById("ifrmV").style.display = "";
+			document.getElementById("ifrmV").src= "../../h2018.html";
+		}else if( document.form.ctype.value == "사랑해" ){
+			document.getElementById("ifrmV").style.display = "";
+			document.getElementById("ifrmV").src= "../../l2018.html";
+		}
+	}
+	</script>
+	<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan='2' width="100%">공통검사</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr><td colspan='2'>
+					<input type="radio" name="cstype1" value="1.위내시경" />&nbsp;1. 위내시경 <?=geblk(5);?>
+					<input type="radio" name="cstype1" value="2. 위수면내시경" />&nbsp;2. 위수면내시경	 </td></tr>
+			</tbody>
+	</table>
+<!--건강형-->
+	<div id="groupA" style="display:none;">
+		<input type="hidden" id="gA_e" name="gA_e" size="6" maxlength='6' value="0" style="border:none;"/>
+		<table width="100%" border='0' class="tbst01">
+		<thead>
+		<tr><th colspan='2' width="100%">선택검사</th></tr>
+		</thead>
+		<tbody>
+		<tr><td>A 그룹<br/><input type="text" id="gA_sc1" name="gA_sc1" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gA_A1" name="gA_A1" value="1.경질초음파(여)"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>1. 경질초음파(여) <?=geblk(4);?><br/>
+						<input type="checkbox" id="gA_A2" name="gA_A2" value="2.유방초음파(여)"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>2. 유방초음파(여)<?=geblk(5);?><br/>
+						<input type="checkbox" id="gA_A3" name="gA_A3" value="3.전립선초음파(남)"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>3. 전립선초음파(남) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gA_A4" name="gA_A4" value="4.경동맥초음파"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>4. 경동맥초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gA_A5" name="gA_A5" value="5.갑상선초음파"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>5. 갑상선초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gA_A6" name="gA_A6" value="6.ABI(혈관협착도)"  onclick="CHK_A( 'A',this.value, this.checked, this.id ) "/>6. ABI(혈관협착도) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gA_A7" name="gA_A7" value="7.NK뷰키트"  onclick="CHK_A( 'A', this.value, this.checked, this.id ) "/>7. NK뷰키트검사<?=geblk(4);?><br/>
+						<input type="hidden" name="gA_selA" value="" /><input type="hidden" name="gA_Acnt" value="0" /></td></tr>
+		
+		
+		<tr><td>B 그룹<br/><input type="text" name="gA_sc2" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gA_B1" name="gA_B1" value="8.QCT(골다공증)"  onclick="CHK_A( 'B', this.value, this.checked, this.id ) "/>8. QCT(골다공증)<?=geblk(0);?><br/>
+					<input type="checkbox" id="gA_B2" name="gA_B2" value="9.경추CT"  onclick="CHK_A( 'B',  this.value, this.checked, this.id ) "/>9. 경추CT<?=geblk(12);?><br/>
+					<input type="checkbox" id="gA_B3" name="gA_B3" value="10.뇌CT"  onclick="CHK_A( 'B',  this.value, this.checked, this.id ) "/>10. 뇌CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gA_B4" name="gA_B4" value="11.폐CT"  onclick="CHK_A( 'B',  this.value, this.checked, this.id ) "/>11. 폐CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gA_B5" name="gA_B5" value="12.요추CT"  onclick="CHK_A( 'B',  this.value, this.checked, this.id ) "/>12. 요추CT<?=geblk(10);?><br/>
+					<input type="checkbox" id="gA_B6" name="gA_B6" value="13.심장MDCT"  onclick="CHK_A( 'B', this.value, this.checked, this.id ) "/>13. 심장MDCT<?=geblk(5);?><br/>
+					<input type="checkbox" id="gA_B7" name="gA_B7" value="14.유전자검사"  onclick="CHK_A( 'B', this.value, this.checked, this.id ) "/>14.유전자검사<?=geblk(5);?><br/>(3종-위,간,폐)<?=geblk(4);?><br/>
+					<input type="hidden" name="gA_selB" value="" /><input type="hidden" name="gA_Bcnt" value="0" /></td></tr>
+		<tr><td colspan='2'><input type="checkbox" id="SA" name="SA" value="심장초음파"  onclick="CHK_A( 'E', this.value, this.checked, this.id ) "/> 1~14중 2항목 미선택시 심장초음파 검사 가능<?=geblk(7);?></td></tr>
+		</tbody>
+		</table>
+	</div>
+
+<!--소망형-->
+	<div id="groupB" style="display:none;">
+		<input type="hidden" id="gB_e" name="gB_e" size="6" maxlength='6' value="0" style="border:none;"/>
+		<table width="100%" border='0' class="tbst01">
+		<thead>
+		<tr><th colspan='2' width="100%">선택검사</th></tr>
+		</thead>
+		<tbody>
+		<tr><td>A 그룹<br/><input type="text" id="gB_sc1" name="gB_sc1" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gB_A1" name="gB_A1" value="1.경질초음파(여)"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>1. 경질초음파(여) <?=geblk(4);?><br/>
+						<input type="checkbox" id="gB_A2" name="gB_A2" value="2.유방초음파(여)"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>2. 유방초음파(여)<?=geblk(5);?><br/>
+						<input type="checkbox" id="gB_A3" name="gB_A3" value="3.전립선초음파(남)"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>3. 전립선초음파(남) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gB_A4" name="gB_A4" value="4.경동맥초음파"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>4. 경동맥초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gB_A5" name="gB_A5" value="5.갑상선초음파"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>5. 갑상선초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gB_A6" name="gB_A6" value="6.ABI(혈관협착도)"  onclick="CHK_B( 'A',this.value, this.checked, this.id ) "/>6. ABI(혈관협착도) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gB_A7" name="gB_A7" value="7.NK뷰키트"  onclick="CHK_B( 'A', this.value, this.checked, this.id ) "/>7. NK뷰키트검사<?=geblk(4);?><br/>
+						<input type="hidden" name="gB_selA" value="" /><input type="hidden" name="gB_Acnt" value="0" /></td></tr>
+		
+		
+		<tr><td>B 그룹<br/><input type="text" name="gB_sc2" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gB_B1" name="gB_B1" value="8.QCT(골다공증)"  onclick="CHK_B( 'B', this.value, this.checked, this.id ) "/>8. QCT(골다공증)<?=geblk(0);?><br/>
+					<input type="checkbox" id="gB_B2" name="gB_B2" value="9.경추CT"  onclick="CHK_B( 'B',  this.value, this.checked, this.id ) "/>9. 경추CT<?=geblk(12);?><br/>
+					<input type="checkbox" id="gB_B3" name="gB_B3" value="10.뇌CT"  onclick="CHK_B( 'B',  this.value, this.checked, this.id ) "/>10. 뇌CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gB_B4" name="gB_B4" value="11.폐CT"  onclick="CHK_B( 'B',  this.value, this.checked, this.id ) "/>11. 폐CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gB_B5" name="gB_B5" value="12.요추CT"  onclick="CHK_B( 'B',  this.value, this.checked, this.id ) "/>12. 요추CT<?=geblk(10);?><br/>
+					<input type="checkbox" id="gB_B6" name="gB_B6" value="13.심장MDCT"  onclick="CHK_B( 'B', this.value, this.checked, this.id ) "/>13. 심장MDCT<?=geblk(5);?><br/>
+					<input type="checkbox" id="gB_B7" name="gB_B7" value="14.유전자검사"  onclick="CHK_B( 'B', this.value, this.checked, this.id ) "/>14.유전자검사<?=geblk(5);?><br/>(3종-위,간,폐)<?=geblk(4);?><br/>
+					<input type="hidden" name="gB_selB" value="" /><input type="hidden" name="gB_Bcnt" value="0" /></td></tr>
+		<tr><td colspan='2'><input type="checkbox" id="SB1" name="SB1" value="심장초음파"  onclick="CHK_B( 'E', this.value, this.checked, this.id ) "/> 1~14중 2항목 미선택시 심장초음파 검사 가능<?=geblk(6);?><br/><input type="checkbox" id="SB2" name="SB2" value="대장수면내시경"  onclick="CHK_B( 'D', this.value, this.checked, this.id ) "/> 1~14중 2항목 미선택시 대장수면내시경 검사 가능</td></tr>
+		</tbody>
+		</table>
+	</div>
+
+<!--행복형-->
+	<div id="groupC" style="display:none;">
+		<input type="hidden" id="gC_e" name="gC_e" size="6" maxlength='6' value="0" style="border:none;"/>
+		<table width="100%" border='0' class="tbst01">
+		<thead>
+		<tr><th colspan='2' width="100%">선택검사</th></tr>
+		</thead>
+		<tbody>
+		<tr><td>A 그룹<br/><input type="text" id="gC_sc1" name="gC_sc1" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gC_A1" name="gC_A1" value="1.경질초음파(여)"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>1. 경질초음파(여) <?=geblk(4);?><br/>
+						<input type="checkbox" id="gC_A2" name="gC_A2" value="2.유방초음파(여)"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>2. 유방초음파(여)<?=geblk(5);?><br/>
+						<input type="checkbox" id="gC_A3" name="gC_A3" value="3.전립선초음파(남)"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>3. 전립선초음파(남) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gC_A4" name="gC_A4" value="4.경동맥초음파"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>4. 경동맥초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gC_A5" name="gC_A5" value="5.갑상선초음파"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>5. 갑상선초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gC_A6" name="gC_A6" value="6.ABI(혈관협착도)"  onclick="CHK_C( 'A',this.value, this.checked, this.id ) "/>6. ABI(혈관협착도) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gC_A7" name="gC_A7" value="7.NK뷰키트"  onclick="CHK_C( 'A', this.value, this.checked, this.id ) "/>7. NK뷰키트검사<?=geblk(4);?><br/>
+						<input type="hidden" name="gC_selA" value="" /><input type="hidden" name="gC_Acnt" value="0" /></td></tr>
+		<tr><td>B 그룹<br/><input type="text" name="gC_sc2" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gC_B1" name="gC_B1" value="8.QCT(골다공증)"  onclick="CHK_C( 'B', this.value, this.checked, this.id ) "/>8. QCT(골다공증)<?=geblk(0);?><br/>
+					<input type="checkbox" id="gC_B2" name="gC_B2" value="9.경추CT"  onclick="CHK_C( 'B',  this.value, this.checked, this.id ) "/>9. 경추CT<?=geblk(12);?><br/>
+					<input type="checkbox" id="gC_B3" name="gC_B3" value="10.뇌CT"  onclick="CHK_C( 'B',  this.value, this.checked, this.id ) "/>10. 뇌CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gC_B4" name="gC_B4" value="11.폐CT"  onclick="CHK_C( 'B',  this.value, this.checked, this.id ) "/>11. 폐CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gC_B5" name="gC_B5" value="12.요추CT"  onclick="CHK_C( 'B',  this.value, this.checked, this.id ) "/>12. 요추CT<?=geblk(10);?><br/>
+					<input type="checkbox" id="gC_B6" name="gC_B6" value="13.심장MDCT"  onclick="CHK_C( 'B', this.value, this.checked, this.id ) "/>13. 심장MDCT<?=geblk(5);?><br/>
+					<input type="checkbox" id="gC_B7" name="gC_B7" value="14.유전자검사"  onclick="CHK_C( 'B', this.value, this.checked, this.id ) "/>14.유전자검사<?=geblk(5);?><br/>(3종-위,간,폐)<?=geblk(4);?><br/>
+					<input type="hidden" name="gC_selB" value="" /><input type="hidden" name="gC_Bcnt" value="0" /></td></tr>
+		<tr><td colspan='2'><input type="checkbox" id="SC1" name="SC1" value="심장초음파"  onclick="CHK_C( 'E', this.value, this.checked, this.id ) "/> 1~14중 2항목 미선택시 심장초음파 검사 가능<?=geblk(6);?><br/><input type="checkbox" id="SC2" name="SC2" value="대장수면내시경"  onclick="CHK_C( 'D', this.value, this.checked, this.id ) "/> 1~14중 2항목 미선택시 대장수면내시경 검사 가능</td></tr>
+		<tr><td>C 그룹<br/><input type="text" name="gC_sc3" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gC_C1" name="gC_C1" value="a.뇌MRA+MRI"  onclick="CHK_C( 'C', this.value, this.checked, this.id ) "/>a. 뇌MRA + 뇌MRI<?=geblk(0);?><br/>
+					<input type="checkbox" id="gC_C2" name="gC_C2" value="b.경추MRI"  onclick="CHK_C( 'C', this.value, this.checked, this.id ) "/>b.경추MRI<?=geblk(13);?><br/>
+					<input type="checkbox" id="gC_C3" name="gC_C3" value="c.요추MRI"  onclick="CHK_C( 'C', this.value, this.checked, this.id ) "/>c.요추MRI<?=geblk(13);?><br/>
+					<input type="checkbox" id="gC_C4" name="gC_C4" value="d.무릎MRI"  onclick="CHK_C( 'C', this.value, this.checked, this.id ) "/>d.무릎MRI(한부위)<?=geblk(0);?><br/><br/>
+					<input type="hidden" name="gC_selC" value="" /><input type="hidden" name="gC_Ccnt" value="0" /></td></tr>
+		</tbody>
+		</table>
+	</div>
+
+<!--사랑해-->
+	<div id="groupD" style="display:none;">
+	사랑해검진 작업중
+		<input type="hidden" id="gD_e" name="gD_e" size="6" maxlength='6' value="0" style="border:none;"/>
+		<table width="100%" border='0' class="tbst01">
+		<thead>
+		<tr><th colspan='2' width="100%">선택검사</th></tr>
+		</thead>
+		<tbody>
+		<tr><td>A 그룹<br/><input type="text" id="gD_sc1" name="gD_sc1" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gD_A1" name="gD_A1" value="1.경질초음파(여)"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>1. 경질초음파(여) <?=geblk(4);?><br/>
+						<input type="checkbox" id="gD_A2" name="gD_A2" value="2.유방초음파(여)"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>2. 유방초음파(여)<?=geblk(5);?><br/>
+						<input type="checkbox" id="gD_A3" name="gD_A3" value="3.전립선초음파(남)"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>3. 전립선초음파(남) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gD_A4" name="gD_A4" value="4.경동맥초음파"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>4. 경동맥초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gD_A5" name="gD_A5" value="5.갑상선초음파"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>5. 갑상선초음파 <?=geblk(5);?><br/>
+						<input type="checkbox" id="gD_A6" name="gD_A6" value="6.ABI(혈관협착도)"  onclick="CHK_D( 'A',this.value, this.checked, this.id ) "/>6. ABI(혈관협착도) <?=geblk(0);?><br/>
+						<input type="checkbox" id="gD_A7" name="gD_A7" value="7.NK뷰키트"  onclick="CHK_D( 'A', this.value, this.checked, this.id ) "/>7. NK뷰키트검사<?=geblk(4);?><br/>
+						<input type="hidden" name="gD_selA" value="" /><input type="hidden" name="gD_Acnt" value="0" /></td></tr>
+		<tr><td>B 그룹<br/><input type="text" name="gD_sc2" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gD_B1" name="gD_B1" value="8.QCT(골다공증)"  onclick="CHK_D( 'B', this.value, this.checked, this.id ) "/>8. QCT(골다공증)<?=geblk(0);?><br/>
+					<input type="checkbox" id="gD_B2" name="gD_B2" value="9.경추CT"  onclick="CHK_D( 'B',  this.value, this.checked, this.id ) "/>9. 경추CT<?=geblk(12);?><br/>
+					<input type="checkbox" id="gD_B3" name="gD_B3" value="10.뇌CT"  onclick="CHK_D( 'B',  this.value, this.checked, this.id ) "/>10. 뇌CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gD_B4" name="gD_B4" value="11.폐CT"  onclick="CHK_D( 'B',  this.value, this.checked, this.id ) "/>11. 폐CT<?=geblk(14);?><br/>
+					<input type="checkbox" id="gD_B5" name="gD_B5" value="12.요추CT"  onclick="CHK_D( 'B',  this.value, this.checked, this.id ) "/>12. 요추CT<?=geblk(10);?><br/>
+					<input type="checkbox" id="gD_B6" name="gD_B6" value="13.심장MDCT"  onclick="CHK_D( 'B', this.value, this.checked, this.id ) "/>13. 심장MDCT<?=geblk(5);?><br/>
+					<input type="checkbox" id="gD_B7" name="gD_B7" value="14.유전자검사"  onclick="CHK_D( 'B', this.value, this.checked, this.id ) "/>14.유전자검사<?=geblk(5);?><br/>(3종-위,간,폐)<?=geblk(4);?><br/>
+					<input type="hidden" name="gD_selB" value="" /><input type="hidden" name="gD_Bcnt" value="0" /></td></tr>
+		<tr><td colspan='2'>기본 검사 : 대장수면내시경 검사 기본 , 전립선초음파(남)</td></tr>
+		<tr><td>C 그룹<br/><input type="text" name="gD_sc3" size="6" maxlength='6' value="" style="border:none;"/></td>
+			<td><input type="checkbox" id="gD_C1" name="gD_C1" value="a.뇌MRA+MRI"  onclick="CHK_D( 'C', this.value, this.checked, this.id ) "/>a. 뇌MRA + 뇌MRI<?=geblk(0);?><br/>
+					<input type="checkbox" id="gD_C2" name="gD_C2" value="b.경추MRI"  onclick="CHK_D( 'C', this.value, this.checked, this.id ) "/>b.경추MRI<?=geblk(13);?><br/>
+					<input type="checkbox" id="gD_C3" name="gD_C3" value="c.요추MRI"  onclick="CHK_D( 'C', this.value, this.checked, this.id ) "/>c.요추MRI<?=geblk(13);?><br/>
+					<input type="checkbox" id="gD_C4" name="gD_C4" value="d.무릎MRI"  onclick="CHK_D( 'C', this.value, this.checked, this.id ) "/>d.무릎MRI(한부위)<?=geblk(0);?><br/>
+					<input type="checkbox" id="gD_C5" name="gD_C5" value="심장초음파"  onclick="CHK_D( 'C', this.value, this.checked, this.id ) "/>심장초음파<?=geblk(12);?><br/>
+					<input type="" name="gD_selC" value="" /><input type="hidden" name="gD_Ccnt" value="0" /></td></tr>
+		</tbody>
+		</table>
+	</div>
+
+<script language="javascript" type="text/javascript">
+
+	function CHK_A( ab, val, tf, nid ){
+		
+		if ( document.form.gA_sc1.value=="선택 불가" || document.form.gA_sc2.value=="선택 불가" ){
+			alert( "심장초음파 선택으로 추가 선택이 불가 합니다.");
+			document.getElementById(nid).checked = false;
+		}else{
+
+			//A1
+			if( ab=="A" ){
+				if ( document.form.gA_sc1.value == "선택 1개"){ max = 1; }else{	max = 0;		}
+				tmp_v = Number(document.form.gA_Acnt.value);
+				if ( tmp_v < max ){
+					document.form.gA_Acnt.value = tmp_v + 1;
+					document.form.gA_selA.value = val
+				}else{
+					if ( tf ){
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}else{
+						document.form.gA_Acnt.value = tmp_v - 1;
+						document.form.gA_selA.value = document.form.gA_selA.value.replace(val, "");
+					}
+				}
+				
+			}else if( ab=="B" ){
+				if ( document.form.gA_sc2.value == "선택 1개"){ max = 1; }else{	max = 0;		}
+				tmp_v = Number(document.form.gA_Bcnt.value);
+				if ( tmp_v < max ){
+					document.form.gA_Bcnt.value = tmp_v + 1;
+					document.form.gA_selB.value = val
+				}else{
+					if ( tf ){
+						alert( "1개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}else{
+						document.form.gA_Bcnt.value = tmp_v - 1;
+						document.form.gA_selB.value = document.form.gA_selB.value.replace(val, "");
+					}
+				}
+			}else if( ab=="E" ){
+				if( document.form.gA_Acnt.value == 0 && document.form.gA_Bcnt.value == 0){
+					//A,B그룹 선택을 할수 없게
+					if (tf){
+						document.form.gA_e.value = 1;
+						document.form.gA_sc1.value = "선택 불가";
+						document.form.gA_sc2.value = "선택 불가";
+					}else{
+						document.form.gA_e.value = 0;
+						document.form.gA_sc1.value = "선택 1개";
+						document.form.gA_sc2.value = "선택 1개";
+					}
+					
+				}else{
+					alert( "1 ~ 14번 검사 선택시에는 검사 하실수 없습니다. " );
+					document.getElementById(nid).checked = false;
+					document.form.gA_e.value = 0;
+				}
+			}
+
+		}
+	}
+
+	function CHK_B( ab, val, tf, nid ){
+
+		if ( ( ab == "A" || ab == "B" ) && ( document.form.gB_sc1.value=="선택 불가" || document.form.gB_sc2.value=="선택 불가" ) ){
+			alert( "심장초음파 및 대장 내시경 선택으로 추가 선택이 불가 합니다.");
+			document.getElementById(nid).checked = false;
+		}else{
+			//A1
+			if( ab=="A" ){
+				if ( document.form.gB_sc1.value == "선택 2개"){ max = 2; }else if ( document.form.gB_sc1.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gB_Acnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gB_Acnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gB_selA.value = val;
+						}else{
+							document.form.gB_selA.value =  document.form.gB_selA.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gB_Acnt.value = tmp_v - 1;
+					document.form.gB_selA.value = document.form.gB_selA.value.replace(val, "");
+				}
+				
+			}else if( ab=="B" ){
+
+				if ( document.form.gB_sc2.value == "선택 2개"){ max = 2; }else if ( document.form.gB_sc2.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gB_Bcnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gB_Bcnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gB_selB.value = val;
+						}else{
+							document.form.gB_selB.value =  document.form.gB_selB.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gB_Bcnt.value = tmp_v - 1;
+					document.form.gB_selB.value = document.form.gB_selB.value.replace(val, "");
+				}
+
+			}else if( ab=="E" || ab=="D" ){
+				//스페셜 선택 갯수 확인
+				if ( tf ){
+					if ( document.form.gB_e.value == 0  && ( document.form.gB_Acnt.value < 2 && document.form.gB_Bcnt.value < 2  )  ){
+						document.form.gB_e.value = Number(document.form.gB_e.value)+1;
+						document.form.gB_sc1.value = "선택 1개";
+						document.form.gB_sc2.value = "선택 1개";
+					}else if ( document.form.gB_e.value == 1 && ( document.form.gB_Acnt.value == 0 && document.form.gB_Bcnt.value == 0  )  ){
+						document.form.gB_e.value = Number(document.form.gB_e.value)+1;
+						document.form.gB_sc1.value = "선택 불가";
+						document.form.gB_sc2.value = "선택 불가";
+					}else{
+						if( document.form.gB_e.value == 0 ){
+							alert( " A,B 그룹에서 각 1개만 선택 가능합니다.");
+						}else if( document.form.gB_e.value == 1  ){
+							alert( " A,B 그룹 선택 불가 합니다. \n확인후 선택 해주세요.");
+						}else{
+							alert( "  ");
+						}
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					if ( document.form.gB_e.value == 2  ){
+						document.form.gB_e.value = Number(document.form.gB_e.value)-1;
+						document.form.gB_sc1.value = "선택 1개";
+						document.form.gB_sc2.value = "선택 1개";
+					}else if ( document.form.gB_e.value == 1  ){
+						document.form.gB_e.value = Number(document.form.gB_e.value)-1;
+						document.form.gB_sc1.value = "선택 2개";
+						document.form.gB_sc2.value = "선택 2개";
+					}
+				}
+			}
+
+		}
+		
+	}
+
+	function CHK_C( ab, val, tf, nid ){
+
+		if ( ( ab == "A" || ab == "B" ) && ( document.form.gC_sc1.value=="선택 불가" || document.form.gC_sc2.value=="선택 불가" ) ){
+			alert( "심장초음파 및 대장 내시경 선택으로 추가 선택이 불가 합니다.");
+			document.getElementById(nid).checked = false;
+		}else{
+			//A1
+			if( ab=="A" ){
+				if ( document.form.gC_sc1.value == "선택 2개"){ max = 2; }else if ( document.form.gC_sc1.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gC_Acnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gC_Acnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gC_selA.value = val;
+						}else{
+							document.form.gC_selA.value =  document.form.gC_selA.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gC_Acnt.value = tmp_v - 1;
+					document.form.gC_selA.value = document.form.gC_selA.value.replace(val, "");
+				}
+				
+			}else if( ab=="B" ){
+
+				if ( document.form.gC_sc2.value == "선택 2개"){ max = 2; }else if ( document.form.gC_sc2.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gC_Bcnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gC_Bcnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gC_selB.value = val;
+						}else{
+							document.form.gC_selB.value =  document.form.gC_selB.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gC_Bcnt.value = tmp_v - 1;
+					document.form.gC_selB.value = document.form.gC_selB.value.replace(val, "");
+				}
+
+			}else if( ab=="C" ){
+
+				if ( document.form.gC_sc3.value == "선택 2개"){ max = 2; }else if ( document.form.gC_sc3.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gC_Ccnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gC_Ccnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gC_selC.value = val;
+						}else{
+							document.form.gC_selC.value =  document.form.gC_selC.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gC_Ccnt.value = tmp_v - 1;
+					document.form.gC_selC.value = document.form.gC_selC.value.replace(val, "");
+				}
+
+
+			}else if( ab=="E" || ab=="D" ){
+				//스페셜 선택 갯수 확인
+				if ( tf ){
+					if ( document.form.gC_e.value == 0  && ( document.form.gC_Acnt.value < 2 && document.form.gC_Bcnt.value < 2  )  ){
+						document.form.gC_e.value = Number(document.form.gC_e.value)+1;
+						document.form.gC_sc1.value = "선택 1개";
+						document.form.gC_sc2.value = "선택 1개";
+					}else if ( document.form.gC_e.value == 1 && ( document.form.gC_Acnt.value == 0 && document.form.gC_Bcnt.value == 0  )  ){
+						document.form.gC_e.value = Number(document.form.gC_e.value)+1;
+						document.form.gC_sc1.value = "선택 불가";
+						document.form.gC_sc2.value = "선택 불가";
+					}else{
+						if( document.form.gC_e.value == 0 ){
+							alert( " A,B 그룹에서 각 1개만 선택 가능합니다.");
+						}else if( document.form.gC_e.value == 1  ){
+							alert( " A,B 그룹 선택 불가 합니다. \n확인후 선택 해주세요.");
+						}else{
+							alert( "  ");
+						}
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					if ( document.form.gC_e.value == 2  ){
+						document.form.gC_e.value = Number(document.form.gC_e.value)-1;
+						document.form.gC_sc1.value = "선택 1개";
+						document.form.gC_sc2.value = "선택 1개";
+					}else if ( document.form.gB_e.value == 1  ){
+						document.form.gC_e.value = Number(document.form.gC_e.value)-1;
+						document.form.gC_sc1.value = "선택 2개";
+						document.form.gC_sc2.value = "선택 2개";
+					}
+				}
+			}
+
+		}
+		
+	}
+
+	function CHK_D( ab, val, tf, nid ){
+
+		if ( ( ab == "A" || ab == "B" ) && ( document.form.gD_sc1.value=="선택 불가" || document.form.gD_sc2.value=="선택 불가" ) ){
+			alert( "심장초음파  추가 선택이 불가 합니다. A/B그룹에서 각1개 검사를 제외 후 선택해주세요");
+			document.getElementById(nid).checked = false;
+		}else{
+			//A1
+			if( ab=="A" ){
+				if ( document.form.gD_sc1.value == "선택 4개"){ max = 4; }else if ( document.form.gD_sc1.value == "선택 3개"){ max = 3;  }else if ( document.form.gD_sc1.value == "선택 2개"){ max = 2; }else if ( document.form.gD_sc1.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gD_Acnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gD_Acnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gD_selA.value = val;
+						}else{
+							document.form.gD_selA.value =  document.form.gD_selA.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gD_Acnt.value = tmp_v - 1;
+					document.form.gD_selA.value = document.form.gD_selA.value.replace(val, "");
+				}
+				
+			}else if( ab=="B" ){
+
+				if ( document.form.gD_sc2.value == "선택 4개"){ max = 4; }else if ( document.form.gD_sc2.value == "선택 3개"){ max = 3;  }else if ( document.form.gD_sc2.value == "선택 2개"){ max = 2;  }else if ( document.form.gD_sc2.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gD_Bcnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gD_Bcnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gD_selB.value = val;
+						}else{
+							document.form.gD_selB.value =  document.form.gD_selB.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gD_Bcnt.value = tmp_v - 1;
+					document.form.gD_selB.value = document.form.gD_selB.value.replace(val, "");
+				}
+
+			}else if( ab=="C" ){
+
+				if ( document.form.gD_sc3.value == "선택 2개"){ max = 2;  }else if ( document.form.gD_sc3.value == "선택 1개"){ max = 1;  }else{	max = 0;		}
+				tmp_v = Number(document.form.gD_Ccnt.value);
+				//체크 유무
+				if (tf){
+					if ( tmp_v < max ){
+						document.form.gD_Ccnt.value = tmp_v + 1;
+						if ( tmp_v == 0 ){
+							document.form.gD_selC.value = val;
+						}else{
+							document.form.gD_selC.value =  document.form.gD_selC.value + "\n"+ val;
+						}
+					}else{
+						alert( max + " 개만 선택 가능합니다.");
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					document.form.gD_Ccnt.value = tmp_v - 1;
+					document.form.gD_selC.value = document.form.gD_selC.value.replace(val, "");
+				}
+
+
+			}else if( ab=="E" ){
+				//스페셜 선택 갯수 확인
+				if ( tf ){
+					if ( document.form.gD_e.value == 0  && ( document.form.gD_Acnt.value < 2 && document.form.gD_Bcnt.value < 2  )  ){
+						document.form.gD_e.value = Number(document.form.gD_e.value)+1;
+						document.form.gD_sc1.value = "선택 2개";
+						document.form.gD_sc2.value = "선택 2개";
+					}else if ( document.form.gD_e.value == 1 && ( document.form.gD_Acnt.value == 0 && document.form.gD_Bcnt.value == 0  )  ){
+						document.form.gD_e.value = Number(document.form.gD_e.value)+1;
+						document.form.gD_sc1.value = "선택 불가";
+						document.form.gD_sc2.value = "선택 불가";
+					}else{
+						if( document.form.gD_e.value == 0 ){
+							alert( " A,B 그룹에서 각 1개만 선택 가능합니다.");
+						}else if( document.form.gD_e.value == 1  ){
+							alert( " A,B 그룹 선택 불가 합니다. \n확인후 선택 해주세요.");
+						}else{
+							alert( "  ");
+						}
+						document.getElementById(nid).checked = false;
+					}
+				}else{
+					if ( document.form.gD_e.value == 2  ){
+						document.form.gD_e.value = Number(document.form.gD_e.value)-1;
+						document.form.gD_sc1.value = "선택 2개";
+						document.form.gD_sc2.value = "선택 2개";
+					}else if ( document.form.gD_e.value == 1  ){
+						document.form.gD_e.value = Number(document.form.gD_e.value)-1;
+						document.form.gD_sc1.value = "선택 3개";
+						document.form.gD_sc2.value = "선택 3개";
+					}
+				}
+			}
+
+		}
+		
+	}
+
+
+	function CheckN( val ){
+		
+		if (val == "알뜰형"){
+			document.getElementById("groupA").style.display="none";
+			document.getElementById("groupB").style.display="none";
+			document.getElementById("groupC").style.display="none";
+			document.getElementById("groupD").style.display="none";
+		}else if (val == "건강형"){
+			document.form.gA_sc1.value = "선택 1개";
+			document.form.gA_sc2.value = "선택 1개";
+			document.getElementById("groupA").style.display="";
+			document.getElementById("groupB").style.display="none";
+			document.getElementById("groupC").style.display="none";
+			document.getElementById("groupD").style.display="none";
+		}else if (val == "소망형"){
+			document.form.gB_sc1.value = "선택 2개";
+			document.form.gB_sc2.value = "선택 2개";
+			document.getElementById("groupA").style.display="none";
+			document.getElementById("groupB").style.display="";
+			document.getElementById("groupC").style.display="none";
+			document.getElementById("groupD").style.display="none";
+		}else if (val == "행복형"){
+			document.form.gC_sc1.value = "선택 2개";
+			document.form.gC_sc2.value = "선택 2개";
+			document.form.gC_sc3.value = "선택 1개";
+			
+			document.getElementById("groupA").style.display="none";
+			document.getElementById("groupB").style.display="none";
+			document.getElementById("groupC").style.display="";
+			document.getElementById("groupD").style.display="none";
+		}else{
+			document.form.gD_sc1.value = "선택 3개";
+			document.form.gD_sc2.value = "선택 3개";
+			document.form.gD_sc3.value = "선택 2개";
+			
+			document.getElementById("groupA").style.display="none";
+			document.getElementById("groupB").style.display="none";
+			document.getElementById("groupC").style.display="none";
+			document.getElementById("groupD").style.display="";
+		}
+
+		ViewC()
+	}
+
+
+	$(function () {
+		$('#contents tr').hide();
+		$('#contents').find('.title').parent().show(); 
+		$('#contents').find('.title2').parent().show(); 
+		$('#contents .title').parent().click(function(){ 
+			$('#contents tr').hide();
+			
+			$('#contents').find('.title').parent().show();
+			$('#contents').find('.title2').parent().show();
+			$('#contents').find('.title').css('background-color', '#fff'); 
+			var tr = $('#contents tr'); 
+			var rindex = $(this).parent().children().index(this); 
+			$(this).children().css('background-color', '#f7f7f7');
+			for(var i = rindex; i < rindex + 2; i++){
+				i = i+3 ;
+				$(tr[i]).show();
+			}
+		});
+	});
+</script>
+	
+		
+
+<script src="../../js/jquery.js" type="text/javascript"></script>
+<script src="../../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#datepicker1').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '2016:2020'
+	});	
+});
+	//		$("#datepicker").datepicker($.datepicker.regional['ko']);
+	</script>
+
+
+ </script>
+
+
+<?
+
+$datetemp =  date("Y-m-d", strtotime(date("Y-m-d")." + 4 day"));
+
+?>
+
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important;">일정 및 개인정보 입력</th>
+			</tr>
+			<tr>
+				<th width="35%">희망 검진일</th>
+				<td width="65%">
+					
+					<input type="text" name = "reserve_date"  id="datepicker1" class="intextst01" placeholder="예약은 <?= $datetemp ?> 부터 가능합니다." onfocus="blur();">
+
+					
+
+					<!--<input type="date" name = "reserve_date"  class="intextst01" placeholder="DD/MM/YYYY">-->
+				</td>
+			</tr>
+			<tr>
+				<th>희망 검진시간</th>
+				<td>
+					<select name="reserve_hour">
+						<option value="07">07시</option>
+						<option value="08">08시</option>
+						<option value="09">09시</option>
+						<option value="10">10시</option>
+						<option value="11">11시</option>
+						<option value="12">12시</option>
+						<option value="13">13시</option>
+						<option value="14">14시</option>
+						<option value="15">15시</option>
+						<option value="16">16시</option>
+					</select>
+					<select name="reserve_min">
+						<option value="00">00분</option>
+						<option value="15">15분</option>
+						<option value="30">30분</option>
+						<option value="45">45분</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name="name"  placeholder="성명을 입력해주세요"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="tel" class="intextst01" name="mobile_no" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<!--<? if( $_SESSION['name2'] == "" ){ ?>
+			<tr>
+				<th>직원(추천인) 성명</th>
+				<td><input type="text" class="intextst01" name="name2"  placeholder="직원 성명을 입력해주세요"></td></tr>
+			<? }else{ ?>
+			<tr>
+				<th>직원(추천인) 성명</th>
+				<td><input type="text" class="intextst01" name="name2"  value="<?=$_SESSION['name2'];?>"></td></tr>
+			<? } ?>-->
+			<!--<tr>
+				<th>직원 연락처</th>
+				<td><input type="tel" class="intextst01" name="mobile_no2" placeholder="직원 연락처를 &quot;-&quot; 없이 입력해주세요."></td>
+			</tr>-->
+			<tr>
+				<th>메모</th>
+				<td><input type="text" class="intextst01" name="memo" placeholder="문의사항을 입력해주세요."></td>
+			</tr>
+		</table>
+		
+
+		<!--
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">모바일 검진 결과 통보 문자 알림 서비스(무료)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>예 <input type="radio" name="mobileSMS_check" value="Y"/> | 아니요 <input type="radio" name="mobileSMS_check"  value="N"/></td>
+				</tr>
+			</tbody>
+		</table>
+		-->
+
+<style>
+div.caluse-common {
+	color: #666;
+	padding: 10px;
+	height: 70px;
+	border: 1px solid #ccc;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-bottom: 15px;
+	text-align:left;
+}
+</style>
+
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">개인정보 수집/이용 동의서</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					
+		<h3>개인정보 수집/이용 동의서</h3>
+		<div id="caluse-02" class="caluse-common">
+"개인정보 보호법"에 따라 본인의 동의를 받아 검진 예약 상담을 진행하고자 합니다.
+<br>
+<br>
+<br>1. 개인정보 수집/이용 목적 : 검진 예약 및 상담
+<br>
+<br>2. 개인정보 수집 항목 : 성명, 연락처
+<br>
+<br>3. 보유 및 이용기간 : 수검 완료 또는 상담 종료시
+<br>
+<br></div>
+
+		<p class="calusep">개인정보 수집/이용에 동의합니다.(선택) <input type="checkbox" id="agree" name="agree" value="yes"> 동의 <input type="checkbox" id="agree2" name="agree2" value="no"> 동의하지 않음</p>
+		
+	</section>
+</article>
+
+
+					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div style="padding:20px 0px;">
+			<a href="#" class="btnst01" onClick="chkForm(document.form)">검진 예약하기</a>
+			
+		</div>
+	</section>
+
+	</form>
+
+</div>
+
+
+<?
+//================= 예약일 일자 설정 
+$reserve_interval = 3 ;
+
+?>
+
+
+<!--//=== 시간체크를 위한 스크립트 -->
+<script language="JavaScript">
+
+function toTimeObject(time) // 2011-11-11
+{
+	/*
+	var year = time.substr(0,4) ;
+	var month = time.substr(5,2) ;
+	var day = time.substr(8,2) ;
+	*/
+
+	var arr_t = time.split("-") ;
+	var year = arr_t[0] ;
+	var month = arr_t[1] ;
+	var day = arr_t[2] ;
+
+	var c_date = new Date(year, month, day) ;
+	var t = c_date.getTime() ;
+
+	return t ;
+
+}
+
+function getDateInterval(time1, time2)
+{
+
+	var date1 = toTimeObject(time1);
+	var date2 = toTimeObject(time2);
+	var day = 1000 * 3600 * 24 ;
+	var temp =  date2 - date1 ;
+
+	return parseInt((date2 - date1)/day, 10);
+}
+
+function converDateString(dt){
+	return dt.getFullYear() + "-" + addZero(eval(dt.getMonth()+1)) + "-" + addZero(dt.getDate());
+}
+
+function addZero(i){
+	var rtn = i + 100;
+	return rtn.toString().substring(1,3);
+}
+
+function calDateRange(val1, val2)
+{
+	var FORMAT = "-";
+	// FORMAT을 포함한 길이 체크
+	if (val1.length != 10 || val2.length != 10)
+		return null;
+	// FORMAT이 있는지 체크
+	if (val1.indexOf(FORMAT) < 0 || val2.indexOf(FORMAT) < 0)
+		return null;
+	// 년도, 월, 일로 분리
+	var start_dt = val1.split(FORMAT);
+	var end_dt = val2.split(FORMAT);
+
+	// 월 - 1(자바스크립트는 월이 0부터 시작하기 때문에...)
+	// Number()를 이용하여 08, 09월을 10진수로 인식하게 함.
+	start_dt[1] = (Number(start_dt[1]) - 1) + "";
+	end_dt[1] = (Number(end_dt[1]) - 1) + "";
+	var from_dt = new Date(start_dt[0], start_dt[1], start_dt[2]);
+	var to_dt = new Date(end_dt[0], end_dt[1], end_dt[2]);
+	return (to_dt.getTime() - from_dt.getTime()) / 1000 / 60 / 60 / 24;
+}
+
+</script>
+
+
+<script language="JavaScript">
+<!--	
+
+/*
+var sd = "2016-10-28" ;
+//var ed = "2016-10-31" ;
+var ed = "2016-11-01" ;
+var tt = getDateInterval(sd, ed) ;
+var cc = calDateRange(sd, ed) ;
+
+alert(tt + " || " + cc + " &&--> " + sd + " ||| " + ed) ;
+
+var today = new Date();  
+var dateString ="2016-10-29" ;
+var dateArray = dateString.split("-");  
+var dateObj = new Date(dateArray[0], Number(dateArray[1])-1, dateArray[2]);  
+var betweenDay = (today.getTime() - dateObj.getTime())/1000/60/60/24;  
+*/
+
+
+function chkForm(frm) {
+
+
+
+	if (!$("#agree").attr("checked")  || $("#agree2").attr("checked"))
+	 {
+	  alert('개인정보 수집/이용 동의서에 동의 하여야 진행이 가능합니다.');
+	  frm.agree.focus();
+	  return;
+	 }
+
+	
+
+	if(!frm.reserve_date.value) {
+		alert('검진희망일을 선택해 주세요.');
+		frm.reserve_date.focus();
+		return false;
+	}
+
+
+	//== 검진 가능일 계산
+	var newDt = new Date();
+	var intd = <?=$reserve_interval?> + 1 ;
+	newDt.setDate( newDt.getDate() + intd );
+	var nextDate = converDateString(newDt);
+
+	var Today = new Date(); //오늘의 날짜정보를 가져옴.
+	var year = Today. getFullYear();//객체에생선된 년도 정보를 가져옴.
+	var month = Today.getMonth() + 1;//객체에 생선된 월의 정보를 가져옴…
+	var day = Today.getDate();//객체에 생선된 일의 정보를 가져옴.
+	var date1 = year + "-" + addZero(month) + "-" + addZero(day) ;
+
+
+	if(frm.reserve_date.value )
+	{
+		//var temp = getDateInterval(date1, frm.reserve_date.value) ;
+		var temp = calDateRange(date1, frm.reserve_date.value) ;
+		
+
+		//alert(temp + " --> " + date1 + " ||| " + frm.reserve_date.value) ;
+
+
+		if(temp <= <?=$reserve_interval?>) 
+		{
+			alert('검진은 ' + nextDate + ' 이후부터 가능합니다') ;
+			frm.reserve_date.focus();
+			return false;
+		}		
+	}
+
+
+	if(!frm.name.value) {
+		alert('성명을 입력해 주세요.');
+		frm.name.focus();
+		return false;
+	}
+
+
+	if(!frm.mobile_no.value) {
+		alert('연락처를 입력해 주세요.');
+		frm.mobile_no.focus();
+		return false;
+	}
+
+
+
+
+	frm.submit();
+}
+
+
+
+function chk_radio() 
+{ 
+	 num_temp = document.all.item_category.length; 
+
+	 for (i=0;i<num_temp ;i++) 
+	 { 
+	  if (document.all.item_category[i].checked == true) 
+	  { 
+		 break; 
+	  } 
+	 } 
+	 if (i == num_temp) 
+	 { 
+		//alert("하나를 선택하세요"); 
+		return false ;
+	 }
+	 else 
+	{
+		return true ;
+	}
+} 
+//-->
+</script>
+
+<? if($_SERVER['REMOTE_ADDR']=="114.129.126.128" || $_SERVER['REMOTE_ADDR']=="119.197.19.46"){ 
+		$r = ""; 
+	}else{ 
+		$r = "display:none;"; 
+	} ?>
+
+<iframe name="company_proc" width=700 height=700 style="<?=$r;?>"></iframe>
+
+<? include "../footer.html"; ?>
+
+<? function geblk( $val ){ $t = "&nbsp;"; for($i = 0 ; $i<$val; $i++ ){ $t .= "&nbsp;"; } return $t;  }?>

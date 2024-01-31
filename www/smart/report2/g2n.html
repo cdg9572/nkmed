@@ -1,0 +1,24 @@
+<table width='100%'>
+<tr><td><a onclick="window.open('img/c02.jpg','','');" style="font-size:12pt;color:blue" >설명보기</a></td></tr></table>
+<!--일반혈액검사/혈액형검사/빈혈관련검사-->
+<h2>일반혈액검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "A1" );?>
+</table><br/>
+
+<h2>혈액형검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "A3" );?>
+</table><br/>
+
+<h2>빈혈관련검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "A5" );?>
+</table><br/>
+

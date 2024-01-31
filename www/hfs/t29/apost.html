@@ -1,0 +1,13 @@
+<?
+session_start();
+echo $_POST['mid']." / ".$_POST['mpw'];
+if( $_POST['mid']== "" or $_POST['mpw']== "" ){
+	echo "<script>alert('정보가 부족합니다.');</script>";
+}elseif( $_POST['mid']== "gr26" and $_POST['mpw']== "gr!@#$" ){
+	$_SESSION['mid'] = "관리자";
+	echo "<script>parent.location.href='admin_info.html';</script>";
+}else{
+	echo "<script>alert('정보가 일치하지 않습니다.');</script>";
+}
+
+?>

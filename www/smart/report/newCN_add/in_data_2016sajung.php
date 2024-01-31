@@ -1,0 +1,536 @@
+<?
+
+$data[$Á¾ÇÕ¼Ò°ß] = 
+"
+
+
+
+&#20026;BúþÊÜæú&#24102;Ð¶íº¡£&#35831;Ð×ñÐó¦ù­Øó&#36807;Óøùª&#21171;¡£ì¤6&#20010;êÅ&#20026;&#38388;Ì°ïÈáôúìäûÐàõ±ëå÷î&#26816;&#26597;¡£ì»ó¦Ê«ìÑ&#24212;ïÈáô&#26816;&#26597;£¬ù±é©&#26102;Ëï&#35758;&#39044;ÛÁïÈ&#31181;¡£
+
+
+úìäû&#26816;&#26597;ß¾£¬&#32966;Í³âõñòÊ¥¡£&#36825;íÂ&#20026;&#21457;ßæ&#21160;&#33033;Ìãûù¡¢ãý&#33039;¡¢&#33041;úìÎ·òðÜ»îÜêË&#38505;ì×áÈ£¬èÙý¨âÍ&#36827;ú¼î¸ò·Û¸óÉ¡¢Ð×æÓ¡¢Ð×ñÐ¡¢&#36816;&#21160;ÔõîÜÎ·×â¡£&#35831;ïÈáô÷×&#36807;&#20869;Î¡&#35786;&#30103;îÜÎ·×â¡£ 
+
+
+&#20174;ØÞÔ¸&#37492;&#21035;&#26816;&#26597;&#26469;Ê×£¬&#34429;æÔïÐ&#29616;&#38451;àõ&#35786;&#26029;£¬Ó£âÍïÈáô&#30830;&#35786;éÄïñÚË&#26816;&#26597;î¦Ê¦&#30830;&#35748;ïñ&#30830;ò¢Êïæø&#19982;Üú£¬êó&#26102;&#20250;î¤æúñø¡¢ÊÜòðÜ»¡¢Øóæ¹òðÜ»¡¢&#24322;û¡øËæúÔõïÐ&#29616;&#20266;&#38451;àõ£¬&#35831;&#19982;&#19987;&#19994;&#21307;ßæßÂ&#35758;¡£
+
+
+ì×ÍéÚËÓø&#20943;á³âÍ&#39044;ÛÁÍé&#36136;áÂáæñø¡£âÍ&#36827;ú¼&#36816;&#21160;£¬&#24182;ÒýÒýãÝéÄéÚ&#22902;¡¢êá&#20135;ù¡¡¢Ôç&#31867;¡£&#35831;ù­Øó&#39278;ñÐ&#36807;Õá¡¢ýåæÓ¡¢&#21654;&#21857;¡¢&#30899;ß«&#39278;Öù¡£&#38041;&#21058;¡¢&#32500;öâÙ¤D¡¢Ì­áÈ&#30103;ÛöÊ¦Òöêóá¶&#24110;ð¾¡£
+
+êÖ&#20869;&#35270;&#38236;ß¾Ê¦&#35266;óÌÓðØ·àõøú&#27973;àõêÖæú¡£Ø·àõøú&#27973;àõêÖæúÙéâÍ÷å&#21035;ö½&#30103;¡£&#32500;ò¥&#35268;&#21017;&#39278;ãÝ&#20064;&#24815;£¬Üôà¢Ü×îÜñø&#29366;êóîÜ&#35805;£¬&#33647;Úªö½&#30103;å¥&#20250;âÍé©¡£
+
+
+Ë£&#29366;àÍßÓ&#20851; : Ùé÷åâ¨&#21307;&#22065; 
+ÜÙÝ»õ±&#22768;÷î : (ÊÜ&#20869;Ê¦&#35265;Òý&#20010;(3~4)Ò¥&#32959;)£¬âÍ÷×&#36807;ïÒÑ¢àõõ±ëå÷î&#26816;&#26597;&#36827;ú¼èÙý¨&#35266;óÌ¡£
+
+
+êáÛ®&#25668;ç¯ : ñ§&#20391;êáÛ®Ê¦&#35265;ÓÞá³&#32422;5×ØÚ·&#32467;&#33410;
+êáÛ®õ±ëå÷î : õ±&#22768;÷î&#26816;&#26597;ñéêáÛ®&#21306;æ´Ú±&#35265;Ù¥&#26174;&#32467;&#33410; (&#20004;&#20391;êáÛ®:ïáßÈ)
+
+
+øËCT : Ùé÷åâ¨&#21307;&#22065; 
+
+
+";
+
+$data[°ñ´Ù°øÁõ]	=	"99.4" ; 
+$data_esti[°ñ´Ù°øÁõ] = " ¡Ã 80" ;
+
+$data[¸²ÇÁÀý]	=	"32.3" ; 
+$data_esti[¸²ÇÁÀý] = "20 ~ 44 %" ;
+
+
+$data[]	=	"" ; 
+$data[Á¢¼ö¹øÈ£Å°]	=	"9225007" ; 
+$data[]	=	"41341589" ; 
+$data[°ËÁøÀÏÀÚ]	=	"23/09/2016" ; 
+$data[¼º¸í]	=	"&#35874;&#38745;" ; 
+$data[ÁÖ¹Î¹øÈ£1]	=	"" ; 
+$data[ÁÖ¹Î¹øÈ£2]	=	"" ; 
+$data[ºÎ¼­¸í]	=	"" ; 
+$data[¼ºº°MF]	=	"F" ; 
+$data[ÀüÈ­¹øÈ£]	=	"" ; 
+$data[ÇÚµåÆù¹øÈ£]	=	"010-9015-3250" ; 
+$data[°Å·¡Ã³ÄÚµå]	=	"175143" ; 
+$data[ÁöÁ¡ÄÚµå]	=	"" ; 
+$data[ºÎ¼­¸í]	=	"" ; 
+$data[Á÷À§]	=	"" ; 
+$data[»ç¿ø¹øÈ£]	=	"" ; 
+$data[»ý³â¿ùÀÏ]	=	"19510216" ; 
+$data[]	=	"" ; 
+$data[°Å·¡Ã³¸í]	=	"¸Þµð·Îµå_ÀÇ·á°ü±¤" ; 
+$data[ÁÖ¹Î¹øÈ£]	=	"510216-5******" ; 
+$data[½Å¡¡Àå_Height_]	=	"160.8" ; 
+$data[Ã¼¡¡Áß_Weight_]	=	"49.2" ; 
+
+$data[Çã¸®µÑ·¹_WaistCircum_]	=	"70" ; 
+$data_esti[''] = "" ;
+ 
+$data[º¹ºÎÁö¹æÀ²Waisthipratio]	=	"î¸&#20307;ñì" ;  
+$data_esti[''] = "" ;
+
+$data[ºñ¸¸µµ]	=	"25.6% (&uarr;)" ;  
+$data_esti[''] = "" ;
+
+$data[ºñ¸¸µµ_BMI_]	=	"19(&uarr;)" ;  
+$data_esti[''] = "" ;
+
+$data[Ç÷¾Ð_°í_BP]	=	"100" ;  
+$data_esti[''] = "" ;
+
+$data[Ç÷¾Ð_Àú_BP]	=	"70" ;  
+$data_esti[''] = "" ;
+
+$data[½Ã·Â_ÁÂ_Vision_L_]	=	"" ; 
+$data[½Ã·Â_¿ì_Vision_R_]	=	"" ; 
+$data[±³Á¤_ÁÂ_CV_L_]	=	"1" ;  
+$data_esti[''] = "" ;
+
+$data[±³Á¤_¿ì_CV_R_]	=	"1" ;  
+$data_esti[''] = "" ;
+
+$data[¾È¾Ð_ÁÂ_IOP_L_]	=	"" ; 
+$data[¾È¾Ð_¿ì_IOP_R_]	=	"" ; 
+$data[¾ÈÀúFundus]	=	"Á¤»ó" ; 
+$data[_500Hz_L_]	=	"" ; 
+$data[_1000Hz_L_]	=	"Á¤»ó" ; 
+$data[_2000Hz_L_]	=	"" ; 
+$data[±âµµÃ»·Â3000Hz_ÁÂ_]	=	"" ; 
+$data[_4000Hz_L_]	=	"" ; 
+$data[±âµµÃ»·Â6000Hz_ÁÂ_]	=	"" ; 
+$data[±âµµÃ»·Â8000Hz_ÁÂ_]	=	"" ; 
+$data[_500Hz_R_]	=	"" ; 
+$data[_1000Hz_R_]	=	"Á¤»ó" ; 
+$data[_2000Hz_R_]	=	"" ; 
+$data[±âµµÃ»·Â3000Hz_¿ì_]	=	"" ; 
+$data[_4000Hz_R_]	=	"" ; 
+$data[±âµµÃ»·Â6000Hz_¿ì_]	=	"" ; 
+$data[±âµµÃ»·Â8000Hz_¿ì_]	=	"" ; 
+$data[Ã»·ÂÁø´ÜHearingEvalution]	=	"Á¤»ó" ; 
+$data[Ã»·Â_ÁÂ_Hearing_L_]	=	"" ; 
+$data[Ã»·Â_¿ì_Hearing_R_]	=	"" ; 
+$data[FEV1]	=	"2.54 (100 %)" ;  
+$data_esti[''] = "" ;
+
+$data[FEV1_%PRED_]	=	"78" ;  
+$data_esti[''] = "" ;
+
+$data[FVC]	=	"84.30" ; 
+$data[ÆóÈ°·®Áø´ÜPFTest]	=	"Á¤»ó" ; 
+$data[WBC]	=	"5.88" ;  
+$data_esti['WBC'] = "4 ~ 11 mm&#179; " ;
+
+$data[RBC]	=	"4.71" ;  
+$data_esti['RBC'] = "4 ~ 5.5  mm&#179; " ;
+ 
+$data_esti[''] = "" ;
+
+$data[Hemoglobin]	=	"13.6" ;  
+$data_esti['Hemoglobin'] = "12 ~ 18 g/dl" ;
+
+$data[HCT]	=	"40.9" ;  
+$data_esti['HCT'] = "35 ~ 53 %" ;
+
+$data[Platelet]	=	"226" ;  
+$data_esti['Platelet'] = "150 ~ 450  mm&#179;" ;
+
+$data[MCV]	=	"86.8" ;  
+$data_esti['MCV'] = "79 ~ 99 um&#179;" ;
+
+$data[MCH]	=	"28.9" ;  
+$data_esti['MCH'] = "26 ~ 33 pg" ;
+
+$data[MCHC]	=	"33.3" ;  
+$data_esti['MCHC'] = "33 ~ 37 g/dl" ;
+
+$data[PDW]	=	"12.7" ;  
+$data_esti['PDW'] = "9 ~ 18 fL" ;
+
+$data[RDW]	=	"12.7" ;  
+$data_esti['RDW'] = "11.5 ~ 14.5 %" ;
+
+$data[MPV]	=	"12.7" ;  
+$data_esti['MPV'] = "7.79 ~ 11 fl " ;
+
+$data[Band]	=	"0" ;  
+$data_esti['Band'] = "" ;
+
+$data[Segment]	=	"36" ;  
+$data_esti['Segment'] = "" ;
+
+$data[Lymphocyte]	=	"53.8" ;  
+$data_esti['Lymphocyte'] = "" ;
+
+$data[Eosinophil]	=	"3.1" ;  
+$data_esti['Eosinophil'] = "1 ~ 6 % " ;
+
+$data[Basophil]	=	"0.3" ;  
+$data_esti['Basophil'] = "0 ~ 2 %" ;
+
+$data[Monocyte]	=	"7.5" ;  
+$data_esti['Monocyte'] = "1.7 ~ 9.3 %" ;
+
+$data[Myelocyte]	=	"0" ; 
+$data[Promyelocyte]	=	"0" ; 
+$data[Metamyeloctye]	=	"0" ; 
+$data[NucleatedRBC]	=	"0" ; 
+$data[Blast]	=	"0" ; 
+$data[Total_Protein]	=	"7.6" ; 
+$data_esti['Total_Protein'] = "6.6 ~ 8.7 g/dL" ;
+
+$data_esti[''] = "" ;
+
+$data[Albumin]	=	"4.7" ; 
+$data_esti['Albumin'] = "3.1 ~ 5.2 g/dL" ;
+
+$data[Globulin_]	=	"2.9" ; 
+$data_esti['Globulin_'] = "1.5 ~ 3.5 g/dL" ;
+
+$data[A_GRatio_]	=	"1.2" ; 
+$data_esti['A_GRatio_'] = "" ;
+
+$data[TBilirubin]	=	"1.26" ; 
+$data_esti['TBilirubin'] = "0.2 ~ 1.2 mg/dL" ;
+
+$data[DBilirubin]	=	"0.33" ; 
+$data_esti['DBilirubin'] = "0.0 ~ 0.3 mg/dL " ;
+
+$data[BilirubinINDIR_]	=	"0.4" ; 
+$data_esti['BilirubinINDIR_'] = "0.3 ~1.0 mg/dL" ;
+
+$data[SGOT_AST_]	=	"18" ; 
+$data_esti['SGOT_AST_'] = "8 ~ 38 U/L" ;
+
+$data[SGPT_ALT_]	=	"15" ; 
+$data_esti['SGPT_ALT_'] = "4 ~ 41 U/L" ;
+
+$data[r_GTP]	=	"17" ; 
+$data_esti['r_GTP'] = "8 ~ 73 U/L" ;
+
+$data[Alkphosphat]	=	"144" ; 
+$data_esti['Alkphosphat'] = "103 ~ 335 U/L" ;
+
+
+$data[LDH]	=	"318" ; 
+$data_esti['LDH'] = "" ;
+
+$data[CPKtotal]	=	"139" ; 
+$data_esti['CPKtotal'] = "" ;
+
+$data[Amylase]	=	"150" ; 
+$data_esti['Amylase'] = "" ;
+
+$data[Homocysteine]	=	"" ; 
+$data[Cholesterol]	=	"213" ; 
+$data_esti['Cholesterol'] = "130 ~ 220 mg/dl" ;
+
+$data[HDL_Cholesterol]	=	"72" ; 
+$data_esti['HDL_Cholesterol'] = "42 ~ 74 mg/dl" ;
+
+$data[LDL_Cholesterol_]	=	"134" ; 
+$data_esti['LDL_Cholesterol_'] = "0 ~ 130 mg/dl" ;
+
+$data[Triglyceride]	=	"44" ; 
+$data_esti['Triglyceride'] = "34 ~ 143 mg/dl" ;
+
+$data[CardiacRiskIndex]	=	"21" ; 
+$data_esti['CardiacRiskIndex'] = "" ;
+
+$data[Glucose]	=	"97" ; 
+$data_esti['Glucose'] = "70 ~ 115 mg/dl" ;
+
+$data[HbA1C]	=	"5.6" ; 
+$data_esti['HbA1C'] = "4.5 ~ 6.1 %" ;
+
+$data[CLOTest_Hp_Á¶Á÷_]	=	"" ; 
+$data[HBsAg]	=	"¾ç¼º" ; 
+$data_esti['HBsAg'] = "0 ~ 1(&#38452;àõ)" ;
+
+$data[HBsAb]	=	"À½¼º" ; 
+$data_esti['HBsAb'] = "0 ~ 10(&#38452;àõ)" ;
+
+$data[HBsAg_CLIA_]	=	"" ; 
+$data[HBsAb_CLIA_]	=	"" ; 
+$data[HCV_Ab]	=	"À½¼º" ; 
+$data_esti['HCV_Ab'] = "&#38452;àõ" ;
+
+$data[HAVIgG]	=	"Positive :11.39" ; 
+$data_esti['HAVIgG'] = "" ;
+
+$data[HAVIgM]	=	"" ; 
+$data[Iron_Fe_]	=	"75" ; 
+$data_esti['Iron_Fe_'] = "" ;
+
+$data[UIBC]	=	"196" ; 
+$data_esti['UIBC'] = "" ;
+
+$data[Ã¶Æ÷È­À²]	=	"28" ; 
+$data_esti['Ã¶Æ÷È­À²'] = "" ;
+
+$data[TIBC_]	=	"271" ; 
+$data_esti['TIBC_'] = "" ;
+
+$data[BUN]	=	"14.0" ; 
+$data_esti['BUN'] = "8 ~ 20 mg/dl" ;
+
+$data[Creatinine]	=	"0.8" ; 
+$data_esti['Creatinine'] = "0.5 ~ 1.2 mg/dl" ;
+
+$data[BUN_Creatinineratio_]	=	"10" ; 
+$data_esti['BUN_Creatinineratio_'] = "" ;
+
+$data[Uricacid]	=	"6.6" ; 
+$data_esti['Uricacid'] = "" ;
+
+$data[GFR_]	=	"" ; 
+$data[Blood_U_]	=	"0~1" ; 
+$data_esti['Blood_U_'] = "0 ~ 5 /H.P.F" ;
+
+$data[WBC_U_]	=	"42500" ; 
+$data_esti['WBC_U_'] = "0 ~ 5 /H.P.F" ;
+
+$data[Protein_U_]	=	"À½¼º" ; 
+$data_esti['Protein_U_'] = "&#38452;àõ" ;
+
+$data[Glucose_U_]	=	"À½¼º" ; 
+$data_esti['Glucose_U_'] = "&#38452;àõ" ;
+
+$data[Bilirubin]	=	"À½¼º" ; 
+$data_esti['Bilirubin'] = "&#38452;àõ" ;
+
+$data[Urobilinogen]	=	"À½¼º" ; 
+$data_esti['Urobilinogen'] = "&#38452;àõ" ;
+
+$data[KetoneBodies]	=	"+/-" ; 
+$data_esti['KetoneBodies'] = "&#38452;àõ" ;
+
+$data[Nitrite]	=	"¾ç¼º" ; 
+$data_esti['Nitrite'] = "&#38452;àõ" ;
+
+$data[SpecificG]	=	">1.025" ; 
+$data_esti['SpecificG'] = "1.005 ~ 1.030" ;
+
+$data[PH_U_]	=	"6.0" ; 
+$data_esti['PH_U_'] = "5.0 ~ 8.0 pH" ;
+
+$data[RBC_U_]	=	"" ; 
+$data[¿äWBC_¿äÁß¹éÇ÷±¸_]	=	"" ; 
+$data[Sodium_Na_]	=	"138" ; 
+$data_esti['Sodium_Na_'] = "" ;
+
+$data[Potassium_K_]	=	"4.4" ; 
+$data_esti['Potassium_K_'] = "" ;
+
+$data[Chloride_Cl_]	=	"103" ; 
+$data_esti['Chloride_Cl_'] = "" ;
+
+$data[Calcium_Ca_]	=	"8.8" ; 
+$data_esti['Calcium_Ca_'] = "" ;
+
+$data[Phosphorus_p_]	=	"3.1" ; 
+$data_esti['Phosphorus_p_'] = "" ;
+
+$data[Magnesium_Mg_]	=	"2.06" ; 
+$data_esti['Magnesium_Mg_'] = "" ;
+
+$data[RAFactor]	=	"À½¼º" ; 
+$data_esti['RAFactor'] = "&#38452;àõ" ;
+
+$data[CRPÁ¤¼º_Qualitative_]	=	"À½¼º" ; 
+$data_esti['CRPÁ¤¼º_Qualitative_'] = "" ;
+
+$data[FreeT3]	=	"1.02" ; 
+$data_esti['FreeT3'] = "" ;
+
+$data[TSH]	=	"2.17" ;  
+$data_esti['TSH'] = "0.27 ~ 4.2 ulU/L" ;
+
+$data[FreeT4]	=	"1.23" ;  
+$data_esti['FreeT4'] = "0.93 ~ 1.7 ng/dl" ;
+
+$data[VDRL_RPR_Á¤¹Ð]	=	"¾ç¼º" ;  
+$data_esti['VDRL_RPR_Á¤¹Ð'] = "&#38452;àõ" ;
+
+$data[RPRÁ¤·®_Quantitative_]	=	"" ; 
+$data[RPRÁ¤¼º_Qualitative_]	=	"" ; 
+$data[AFP_CLIA_]	=	"3.63" ;  
+$data_esti['AFP_CLIA_'] = "0 ~ 7.0" ;
+
+$data[CEA]	=	"0.308" ;  
+$data_esti['CEA'] = "0 ~ 4.7 ng/mL" ;
+
+$data[CA19_9]	=	"2.00" ;  
+$data_esti['CA19_9'] = "0 ~ 27 u/mL" ;
+
+$data[PSA_CLIA_]	=	"" ; 
+$data[CA_125]	=	"10.66" ;  
+$data_esti['CA_125'] = "¡Â 35 " ;
+
+$data[HelicobacterpyloriIgG]	=	"" ; 
+$data[HelicobacterpyloriIgM]	=	"" ; 
+$data[ChestPA_ÈäºÎÃÔ¿µ_]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[UGI_À§ÀåÁ¶¿µÃÔ¿µ_]	=	"" ; 
+$data[Endoscopy_À§³»½Ã°æ_]	=	"&#36731;ÓøØ·àõ&#27973;øúàõêÖæú" ; 
+$data[À§¼ö¸é³»½Ã°æ]	=	"" ; 
+$data[À§Á¶Á÷°Ë»ç]	=	"" ; 
+$data[Çï¸®ÄÚ¹ÚÅÍ]	=	"" ; 
+$data[Ba_Enema_´ëÀåÃÔ¿µ_]	=	"" ; 
+$data[LiverSONO_°£_]	=	"ÊÜ&#20869;Ê¦&#35265;Òý&#20010;(3~4)Ò¥&#32959;" ; 
+$data[´ëÀå³»½Ã°æColonoscopy]	=	"" ; 
+$data[GBSONO_´ã³¶_]	=	"Á¤»ó" ; 
+$data_esti[''] = "" ;
+ 
+$data[PancreasSONO_ÃéÀå_]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[´ëÀå¼ö¸é³»½Ã°æ]	=	"Üâó­&#20307;&#26816;ñéÚ±ñ®&#35813;&#39033;&#26816;&#26597;" ; 
+$data[SpleenSONO_ºñÀå_]	=	"Á¤»ó" ; 
+$data_esti[''] = "" ;
+ 
+$data[´ëÀåÁ¶Á÷°Ë»ç]	=	"" ; 
+$data[KidneySONO_½ÅÀå_]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[StoolOccultBlood]	=	"" ; 
+$data[ºÐº¯Ç÷»ö¼ÒÁ¤·®]	=	"" ; 
+$data[PelvisSONO_°ñ¹Ý_]	=	"" ; 
+$data[ProstateSONO_Àü¸³¼±_]	=	"" ; 
+$data[ThyroidSONO_°©»ó¼±_]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[CarotidSONO_°æµ¿¸Æ_]	=	"" ; 
+$data[EchocardioSONO_½ÉÀå_]	=	"" ; 
+$data[EKG_½ÉÀüµµ_]	=	"Á¤»ó" ; 
+$data_esti[''] = "" ;
+ 
+$data[BreastSONO_À¯¹æ_]	=	"&#20004;&#20391;êáÛ®:ïáßÈ(õ±&#22768;÷î&#26816;&#26597;ñéêáÛ®&#21306;æ´Ú±&#35265;Ù¥&#26174;&#32467;&#33410;)" ; 
+$data[VaginalSONO_Áú_]	=	"" ; 
+$data[Pap]	=	"" ; 
+$data[Mammogram_À¯¹æÃÔ¿µ_]	=	"ñ§&#20391;êáÛ®Ê¦&#35265;ÓÞá³&#32422;5×ØÚ·&#32467;&#33410;" ; 
+$data[BMDL_SpineAp_°ñ¹Ðµµ_]	=	"" ; 
+$data[BrainCT_³ú_]	=	"" ; 
+$data[LungCT_ÈäºÎ_]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[CervicalCT_°æÃß_]	=	"" ; 
+$data[LumbarCT_¿äÃß_]	=	"" ; 
+$data[HeartCT½ÉÀå_SmartScore_]	=	"" ; 
+$data[º¹ºÎÁö¹æºÐ¼®CT]	=	"" ; 
+$data[AbdomenCT_º¹ºÎ_]	=	"" ; 
+$data[µ¿¸Æ°æÈ­¼öÄ¡]	=	"" ; 
+$data[¿ì¿ïÁõ°Ë»ç]	=	"" ; 
+$data[¼ö¸éÀå¾Ö]	=	"" ; 
+$data[PTSD_¿Ü»óÈÄ½ºÆ®·¹½ºÀå¾ÖÃ´µµ°Ë»ç_]	=	"" ; 
+$data[Á¤¹ÐÁøÂû_ÀÌ°æ_]	=	"" ; 
+$data[½Å°æ°è¹®Áø]	=	"" ; 
+$data[Ç÷ÁßÄ«¸£º¹½ÃÇì¸ð±Û·Îºó]	=	"" ; 
+$data[Pb_Ç÷Áß³³_]	=	"" ; 
+$data[Ç÷ÁßÄ«µå¹Å_Cd_]	=	"" ; 
+$data[Ç÷Áßº¥Á¨]	=	"" ; 
+$data[Cyfra21_1]	=	"" ; 
+$data[Ferritin]	=	"" ; 
+$data[Fructosamine]	=	"" ; 
+$data[Testosterone]	=	"" ; 
+$data[Estradiol_E2_]	=	"" ; 
+$data[B_Lipoprotine]	=	"" ; 
+$data[Liporprotine_A_]	=	"" ; 
+$data[¾ÆÆ÷Áö´Ü¹éAI]	=	"" ; 
+$data[¾ÆÆ÷Áö´Ü¹éB]	=	"" ; 
+$data[ºñÅ¸¹ÎD]	=	"" ; 
+$data[B2_Microglobulin]	=	"" ; 
+
+$data[ESR]	=	"16" ; 
+$data_esti['ESR'] = "0 ~ 10 mm/hr" ;
+
+$data[Cardiacriskfactor_]	=	"" ; 
+$data[FSH]	=	"" ; 
+$data[HBeAg_EIA_]	=	"" ; 
+$data[HBeAb_EIA_]	=	"" ; 
+$data[ASO_ASLO_]	=	"" ; 
+$data[Nicotine_Ç÷¾×_]	=	"" ; 
+$data[Nicotine_Ç÷¾×_]	=	"" ; 
+$data[Nicotine´ÏÄÚÆ¾]	=	"" ; 
+$data[Insulin]	=	"" ; 
+$data[NSE]	=	"" ; 
+$data[aPTT]	=	"" ; 
+$data[PT]	=	"" ; 
+$data[LH]	=	"" ; 
+$data[Brain_torsoPET]	=	"" ; 
+$data[BrainMRI_³ú_]	=	"" ; 
+$data[BrainMRA_³ú_]	=	"" ; 
+$data[³ú½ÉÇ÷°ü¹ßº´À§ÇèµµÆò°¡]	=	"" ; 
+$data[L_SpineAP_Lat_¿äÃßÃÔ¿µ_]	=	"" ; 
+$data[C_SpineAP_Lat_°æÃßÃÔ¿µ_]	=	"" ; 
+$data[CervicaMRI_°æÃß_]	=	"" ; 
+$data[Brain_torsoPET]	=	"Á¤»ó" ;  
+$data_esti['Brain_torsoPET'] = "" ;
+
+$data[MRI_L_SPINE_]	=	"" ; 
+$data[¹«¸­MRI_ÁÂ_]	=	"" ; 
+$data[¹«¸­MRI_¿ì_]	=	"" ; 
+$data[LTShoulderMRI]	=	"" ; 
+$data[¹ß¸ñ_LtAnkleMRI_]	=	"" ; 
+$data[KUB]	=	"" ; 
+$data[LTKneeCT]	=	"" ; 
+$data[RTKneeCT]	=	"" ; 
+$data[KneeSeriesLeft]	=	"" ; 
+$data[KneeSerRight]	=	"" ; 
+$data[KneeAplat]	=	"" ; 
+$data[Á÷¹«½ºÆ®·¹½º]	=	"" ; 
+$data[½ºÆ®·¹½ºÃøÁ¤]	=	"Á¤»ó" ;  
+$data_esti[''] = "" ;
+
+$data[ÀÎÀ¯µÎÁ¾¹ÙÀÌ·¯½º]	=	"" ; 
+$data[DITI_Àû¿Ü¼±Ã¼¿­Áø´Ü_]	=	"" ; 
+$data[ºÒ¾ÈÁõ_BAI°Ë»ç_]	=	"" ; 
+$data[¸»ÃÊÇ÷¾×¼øÈ¯°Ë»ç]	=	"Ç÷°ü»óÅÂ-2´Ü°è" ;  
+$data_esti[''] = "" ;
+
+$data[°Ç°­Á¤º¸Áö]	=	"4/5/20/33" ; 
+$data[°Ç°­Á¤º¸Áö_¹øÈ£_]	=	"°íÁöÇ÷Áõ(43), Áö¹æ°£(1), °©»ó¼±°áÀý(14)" ; 
+
+
+
+$data[½É¹Ú¼ö] = "73" ; 
+$data_esti['½É¹Ú¼ö'] = "" ;
+
+
+$data[ABOÇ÷¾×Çü] = "O" ; 
+$data_esti['ABOÇ÷¾×Çü'] = "" ;
+
+$data[RHÇ÷¾×Çü] = "¾ç¼º" ; 
+$data_esti['RHÇ÷¾×Çü'] = "" ;
+
+
+$data[ca19-9] = "3.06" ; 
+$data_esti['ca19-9'] = "0 ~ 27 u/ml" ;
+
+$data[»óº¹ºÎÃÊÀ½ÆÄ] = "ÊÜ&#20869;Ê¦&#35265;Òý&#20010;(3~4)Ò¥&#32959;" ;
+$data[¹ÚÅ×¸®¾Æ_¼Òº¯_] = "À½¼º"; 
+$data_esti['¹ÚÅ×¸®¾Æ_¼Òº¯_'] = "&#38452;àõ" ;
+
+$data[ÆíÆò»óÇÇ_¼Òº¯_]  = "À½¼º";  
+$data_esti['ÆíÆò»óÇÇ_¼Òº¯_'] = "&#38452;àõ" ;
+
+$data[¿äÀáÇ÷]  = "À½¼º";  
+$data_esti['¿äÀáÇ÷'] = "&#38452;àõ" ;
+
+
+$data[Áú»ê¿°] = "À½¼º";  
+$data_esti['Áú»ê¿°'] = "&#38452;àõ" ;
+
+$data[È£Áß±¸] = "56.8" ; 
+$data_esti['È£Áß±¸'] = "38 ~ 78 %" ;
+
+$data[pct] = "226"; 
+$data_esti['pct'] = "0.100 ~ 0.500 %" ;
+
+$data["CervicalCT_¿äÃß_"] = "Á¤»ó"; 
+$data_esti['CervicalCT_¿äÃß_'] = "" ;
+
+$data[AIDS] = "À½¼º"; 
+$data_esti['AIDS'] = "&#38452;àõ" ;
+
+//$data[] = "" ;
+?>

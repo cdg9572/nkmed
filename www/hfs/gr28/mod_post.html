@@ -1,0 +1,20 @@
+<meta charset="UTF-8">
+<?
+
+include "../inc/dbConn.php";
+
+$sql = " UPDATE gr28 SET		
+					PTEL='".$_POST['PTEL']."'
+					, DONG='".$_POST['DONG']."'
+					, HO='".$_POST['HO']."'
+					, PNAME='".$_POST['PNM']."'
+				WHERE RIDX='".$_POST['RIDX']."' ";
+$msg = "예약수정";
+
+if( mysql_query($sql) ){
+	echo "<script>alert('$msg 되었습니다.');opener.document.frm.submit();window.close();</script>";
+}else{
+	echo "<script>alert('오류가 발생되었습니다.');</script>";
+}
+
+?>

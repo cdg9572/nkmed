@@ -1,0 +1,75 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 음주 관련 문항
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					5. 아래 문항을 읽고 자신의 현재 상태에 해당하는 내용을 작성하여 주십시오. 
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th>5-1. 1주에 평균 며칠이나 술을 마십니까?</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="0"  <?=getChecked($v, "0")?> > 0 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="1"  <?=getChecked($v, "1")?> > 1 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="2"  <?=getChecked($v, "2")?> > 2 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="3"  <?=getChecked($v, "3")?> > 3 &nbsp;				
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="4"  <?=getChecked($v, "4")?> > 4 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="5"  <?=getChecked($v, "5")?> > 5 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="6"  <?=getChecked($v, "6")?> > 6 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="7"  <?=getChecked($v, "7")?> > 7 &nbsp;				
+				</td>
+			</tr>
+
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th>5-2. 술을 마실 때 보통 하루에 얼마나 마십니까? </th>
+			</tr>
+			<tr>
+				<td> <input type="test" name="<?=$v_name?> " value="<?=$v?>" style="width:50px;" > 잔
+					<br>(※ 술 종류에 관계없이 각각의 술잔으로 계산합니다.단, 캔맥주 1개(355cc)는 맥주 1.6잔과 같습니다) 
+				</td>
+				
+			</tr>
+		
+
+
+		</table>

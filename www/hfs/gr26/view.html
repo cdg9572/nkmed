@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래26통 의료지원사업_신청내역 </title>
+  <link href="default.css" rel="stylesheet" >
+  <style>
+  td{
+  	border-left:1px solid #cdcdcd;
+	border-bottom:1px solid #cdcdcd;
+  }
+  </style>
+ </head>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script src="../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#RDT').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		minDate: new Date('2021-09-01'),
+		maxDate: new Date('2021-10-30'),
+		yearRange: '2021:2021'
+	});	
+	$('#RDT2').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		minDate: new Date('2021-09-01'),
+		maxDate: new Date('2021-10-30'),
+		yearRange: '2021:2021'
+	});	
+});
+
+</script>
+<?
+include "../inc/dbConn.php";
+$rcdate = strtotime(date("Y-m-d") ) + (60*60*24*7);
+$rcdate = date("Y-m-d", $rcdate);
+$sql = " SELECT * FROM gr26 WHERE RIDX='".$_POST['RIDX']."'  ";
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+$dong = $row['DONG'];
+$ho = $row['HO'];
+$pname = $row['PNAME'];
+$ptel = $row['PTEL'];
+$jg = $row['JG'];
+$dp = $row['DP'];
+$inp = $row['INP'];
+$inm1 = $row['INM1'];
+$inm2 = $row['INM2'];
+$inm3 = $row['INM3'];
+$inm4 = $row['INM4'];
+$snm = $row['SNM'];
+$stel = $row['STEL'];
+$sinm1 = $row['SINM1'];
+$sinm2 = $row['SINM2'];
+$sinm3 = $row['SINM3'];
+$sinm4 = $row['SINM4'];
+$add_jdi = $row['ADD_JDI'];
+$rdt = $row['RDT'];
+$rdt2 = $row['RDT2'];
+$HJ = $row['HJ'];
+
+$add_jdi2 = $row['ADD_JDI2'];
+
+if( strpos( $add_jdi, "1") > -1 ){	$a1="checked";	}else{	$a1="";	}
+if( strpos( $add_jdi, "2") > -1 ){	$a2="checked";	}else{	$a2="";	}
+if( strpos( $add_jdi, "3") > -1 ){	$a3="checked";	}else{	$a3="";	}
+if( strpos( $add_jdi2, "1") > -1 ){	$ab1="checked";	}else{	$ab1="";	}
+if( strpos( $add_jdi2, "2") > -1 ){	$ab2="checked";	}else{	$ab2="";	}
+if( strpos( $add_jdi2, "3") > -1 ){	$ab3="checked";	}else{	$ab3="";	}
+$bigo = $row['BIGO'];
+$bigo2 = $row['BIGO2'];
+$rsnm = $row['RSNM'];
+?>
+ <body>
+  <div id="mtitle">
+      사전 신청내역
+  </div>
+
+  <form id="frm2" name="frm2" target="ifrm2" method="post" action="post.html">
+  <input type="hidden" name="RIDX" value="<?=$_POST['RIDX'];?>" />
+  <div id="mdiv">
+  	<table width='400'  style='line-height:30px;font-size:14px;'>
+	<tr><td>동</td>
+		<td><?=$dong;?></td>
+		<td>호</td>
+		<td><?=$ho;?></td></tr>
+	<tr><td>이름</td>
+		<td><?=$pname;?></td>
+		<td>연락처</td>
+		<td><?=$ptel;?></td></tr>
+	<tr><td colspan='2'>사전 선택</td>
+		<td colspan='2'>
+			<? if( strpos($jg,"V") > -1 ){ echo "종합검진<br>"; } 
+				if( strpos($dp,"V") > -1 ){ echo "대상포진<br>"; }
+				if( strpos($inp,"V") > -1 ){
+					echo "<div style='line-height:25px;'>";
+					echo "독감-".$inp."<br>";$tmp_nm = "";
+					if( $inm1<>"" ){ echo $inm1."<br>"; $tmp_nm .= $inm1.", "; }
+					if( $inm2<>"" ){ echo $inm2."<br>"; $tmp_nm .= $inm2.", ";}
+					if( $inm3<>"" ){ echo $inm3."<br>"; $tmp_nm .= $inm3.", ";}
+					if( $inm4<>"" ){ echo $inm4."<br>"; $tmp_nm .= $inm4.", ";}
+					echo "</div>";
+				}?></td></tr>
+	<tr><td colspan='2'>희망일</td>
+		<td colspan='2'>
+		<!--<? if( strpos($inp,"V") > -1 ){
+			echo "<font>독감은 9월중 일정확인되면 별도 문자안내 드리겠습니다.</font>";
+			#echo "예방접종은 <b><a href='http://smart.nkhospital.net/ir2021.html?memo=26통예미지_$tmp_nm&nm=$pname&tel=$ptel'>예약하기</a></b> <= 눌러주세요.";
+		}else{ ?>-->
+		<input type='text' id='RDT' name='RDT' value='<?=$rdt;?>' class='required' size="10"/>&nbsp;&nbsp;
+		<? if( $HJ=="" ){ ?>
+		<button id="abtn2">희망일등록</button>
+		<? }else{ ?>
+		<br><b>확진된 이후변경은 콜센터로문의주세요</b>
+		<!--	<? } ?>	-->
+	<? } ?></td></tr>
+	</table>
+  </div><br>
+  <div id="mdiv2">
+   사전선택 상품은 <font color='red'>변경 불가</font>합니다.<br>
+   단, 수검자는 <font color='red'>등본상 세대</font>으로 변경가능
+   ( <font color='red'>수검시 필수 등본 제출 필요</font> )<br>
+  </div><br>
+  <div id="mdiv3">
+<?
+echo "<b>추가 상품선택</b> <font color='red'>(선택시 본인부담금액)</font>";
+echo "<br><table width='100%' style='font-size:14px;'>";
+echo "<tr bgcolor='#cdcdcd'><th width='100'>추가종류</th>
+				<th width='300'>내용</th></tr>";
+if( $jg == "" ){  
+	echo "<tr><td><input type='checkbox' name='ADD_GJ' value='1' $a1/>종합검진<br>[13만]</td>
+					<td style='line-height:15px;font-size:12px;text-align:left;padding-top:5px;padding-bottom:5px;padding-left:5px;'><b>[혈액&소변]</b> 순환기계, 간기능, A/B/C간염, 당뇨,
+					<br>췌장기능, 철결핍성, 빈혈, 혈액질환, 전해질, 신장기능,
+					<br>골격계질환, 감염성, 갑상선기능, 부갑상선기능,
+					<br>종양표지자,생체나이, 소변 등 80여 항목<br><br>
+	<b>[장비]</b> 신장, 체중, 혈압, 시력, 청력, 체성분, 안압, 심전도, 흉부X-ray, 위일반내시경, (간/담낭/비장/췌장/신장)복부초음파,            (여)자궁경부세포진, (여)유방촬영</td></tr>";
+ }
+
+if( $dp == "" ){
+	echo "<tr><td colspan='2'><input type='checkbox' name='ADD_DJ' value='2' $a2/>대상포진 [13만]</td></tr>";
+}
+
+if( $inp == "" ){
+	echo "<tr><td colspan='2'><input type='checkbox' name='ADD_INM' value='3' $a3/>독감접종 [3만]</td></tr>";
+}
+
+echo "<tr><td>메모</td>
+			<td colspan='2'><textarea name='bigo' cols='34' rows='4'>$bigo</textarea></td></tr>";
+echo "</table>";
+
+?>
+  </div>
+  <? if( $HJ=="" ){ ?>
+		<br>
+		  <div id="mbtn" onclick="MSAVE();" style="width:240px;margin-bottom:20px;">
+		   추가신청
+		  </div>
+  <? }else{ ?>
+		<br><b>확진된 이후변경은 콜센터로문의주세요</b>
+  <? } ?>
+  
+	</form>
+	<hr></hr>
+	<form id="frm3" name="frm3" target="ifrm2" method="post" action="post2.html">
+  <input type="hidden" name="RIDX" value="<?=$_POST['RIDX'];?>" />
+	  <div id="mdiv3">
+<?
+	echo "<b>신청인외 상품선택</b> <font color='red'>(본인부담금액)</font>";
+	echo "<br><table width='100%' style='font-size:14px;'>";
+	echo "<tr bgcolor='#cdcdcd'><th width='100'>추가종류</th>
+					<th width='300'>내용</th></tr>";
+
+	echo "<tr><td><input type='checkbox' name='ADD_GJ2' value='1' $ab1/>종합검진<br>[13만]</td>
+					<td style='line-height:15px;font-size:12px;text-align:left;padding-top:5px;padding-bottom:5px;padding-left:5px;'><b>[혈액&소변]</b> 순환기계, 간기능, A/B/C간염, 당뇨,
+					<br>췌장기능, 철결핍성, 빈혈, 혈액질환, 전해질, 신장기능,
+					<br>골격계질환, 감염성, 갑상선기능, 부갑상선기능,
+					<br>종양표지자,생체나이, 소변 등 80여 항목<br><br>
+	<b>[장비]</b> 신장, 체중, 혈압, 시력, 청력, 체성분, 안압, 심전도, 흉부X-ray, 위일반내시경, (간/담낭/비장/췌장/신장)복부초음파,            (여)자궁경부세포진, (여)유방촬영</td></tr>";
+
+	echo "<tr><td colspan='2'><input type='checkbox' name='ADD_DJ2' value='2' $ab2/>대상포진 [13만]</td></tr>";
+
+
+	echo "<tr><td colspan='2'><input type='checkbox' name='ADD_INM2' value='3' $ab3/>독감접종 [3만]</td></tr>";
+
+
+	echo "<tr><td>메모</td>
+				<td colspan='2'><textarea name='bigo2' cols='34' rows='4'>$bigo2</textarea></td></tr>";
+
+	echo "<tr><td colspan='3'>
+				예약자<input type='text' id='RSNM' name='RSNM' value='$rsnm' class='required' size='10'/>
+				예약일<input type='text' id='RDT2' name='RDT2' value='$rdt2' class='required' size='10'/>
+				<!--<br><b>".$rcdate."일 이후</b> 일자 선택해주세요.--></td></tr>";
+	echo "</table>";
+?>
+  </div>
+  <? if( $HJ=="" ){ ?>
+		<br>
+		 <div id="mbtn" onclick="MSAVE2();" style="width:240px;margin-bottom:20px;">
+   추가신청
+  </div>
+  <? }else{ ?>
+		<br><b>확진된 이후변경은 콜센터로문의주세요</b>
+  <? } ?>
+	</form>
+	<div>
+	<a id="abtn" href="tel:010-4490-7575">담당자 문의</a>&nbsp;&nbsp;
+  <a id="abtn" href="tel:1833-9988">콜센터 문의</a>
+  </div>
+  <br>
+  <div id="mbtn" onclick="location.href='index.html';">
+    처음화면
+  </div>&nbsp;&nbsp;
+  <div id="mbtn" onclick="self.close();">
+    창닫기
+  </div>
+  <br>
+<iframe id="ifrm2" name="ifrm2" src="" style="display:none;"></iframe>
+</body>
+</html>
+<script>
+function MSAVE(){
+	document.all.frm2.submit();
+}
+
+function MSAVE2(){
+	document.all.frm3.submit();
+}
+</script>

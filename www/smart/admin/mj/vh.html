@@ -1,0 +1,121 @@
+<?	#음주
+//include "mj_function.php";	
+include "../../inc/dbConn.php";
+$sql = "SELECT A.* FROM smart_mj_mnjphq9tbl A
+			LEFT OUTER JOIN smart_mj_il B ON A.MNJPJUBNO=B.MIDX
+			WHERE MNJPJUBNO='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+	$MNJPQST01 = $row["MNJPQST01"];	$MNJPQST02 = $row["MNJPQST02"];	$MNJPQST03 = $row["MNJPQST03"];
+	$MNJPQST04 = $row["MNJPQST04"];	$MNJPQST05 = $row["MNJPQST05"];	$MNJPQST06 = $row["MNJPQST06"];
+	$MNJPQST07 = $row["MNJPQST07"];	$MNJPQST08 = $row["MNJPQST08"];	$MNJPQST09 = $row["MNJPQST09"];
+
+	#합계요청
+	$tm = 0;
+	if( $row[MNJPQST01]=="4" ){ $tm += 3 ; }else if($row[MNJPQST01]=="3"){ $tm += 2 ;  }else if($row[MNJPQST01]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST02]=="4" ){ $tm += 3 ; }else if($row[MNJPQST02]=="3"){ $tm += 2 ;  }else if($row[MNJPQST02]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST03]=="4" ){ $tm += 3 ; }else if($row[MNJPQST03]=="3"){ $tm += 2 ;  }else if($row[MNJPQST03]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST04]=="4" ){ $tm += 3 ; }else if($row[MNJPQST04]=="3"){ $tm += 2 ;  }else if($row[MNJPQST04]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST05]=="4" ){ $tm += 3 ; }else if($row[MNJPQST05]=="3"){ $tm += 2 ;  }else if($row[MNJPQST05]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST06]=="4" ){ $tm += 3 ; }else if($row[MNJPQST06]=="3"){ $tm += 2 ;  }else if($row[MNJPQST06]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST07]=="4" ){ $tm += 3 ; }else if($row[MNJPQST07]=="3"){ $tm += 2 ;  }else if($row[MNJPQST07]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST08]=="4" ){ $tm += 3 ; }else if($row[MNJPQST08]=="3"){ $tm += 2 ;  }else if($row[MNJPQST08]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNJPQST09]=="4" ){ $tm += 3 ; }else if($row[MNJPQST09]=="3"){ $tm += 2 ;  }else if($row[MNJPQST09]=="2"){ $tm += 1; }else{ $tm +=0; }
+?>
+<center>
+<form name="frm" method="post" action="vh_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<!--공통문진표-->
+<tr><td width='100%'>
+	<table border='1'  width='100%' cellspacing='0' style="font-size:10pt;">
+	<tr><td width='20%'>수검자성명</td>
+		<td width='80%'>&nbsp;</td></tr>
+	<tr><td colspan='2'>
+	<table width="100%" style="font-size:10pt;">
+<tr><td align='center' style="font-size:11pt;">한글판 Patient Health Questionnaire-9: PHQ-9</td></tr>
+<tr><td align='left'>본 설문은 우울한 정도를 스스로 알아보기 위한 것입니다. 이 질문들이 확정된 진단을 위한 것은 아니지만 높은 점수가 나왔을 경우에는 우울증의 가능성이 높으므로, 더 정확한 평가를 위해서 병원에서 진료를 받아볼 것을 추천합니다. </td></tr>
+<tr><td align='left'><b>지난 2주 동안,</b> 아래 나열되는 증상들에 얼마나 자주 시달렸습니까?</td></tr>
+</table>
+	<table width="100%" style="font-size:10pt;">
+	<tr><td>
+		1. 일을 하는 것에 대한 흥미나 재미가 거의 없음   <td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST01" value="1" <? if( $MNJPQST01==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST01" value="2" <? if( $MNJPQST01==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST01" value="3" <? if( $MNJPQST01==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST01" value="4" <? if( $MNJPQST01==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		2. 가라앉은 느낌, 우울감 혹은 절망감 <td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST02" value="1" <? if( $MNJPQST02==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST02" value="2" <? if( $MNJPQST02==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST02" value="3" <? if( $MNJPQST02==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST02" value="4" <? if( $MNJPQST02==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		3. 잠들기 어렵거나 자꾸 깨어남, 혹은 너무 많이 잠<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST03" value="1" <? if( $MNJPQST03==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST03" value="2" <? if( $MNJPQST03==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST03" value="3" <? if( $MNJPQST03==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST03" value="4" <? if( $MNJPQST03==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		4. 피곤함, 기력이 저하됨<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST04" value="1" <? if( $MNJPQST04==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST04" value="2" <? if( $MNJPQST04==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST04" value="3" <? if( $MNJPQST04==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST04" value="4" <? if( $MNJPQST04==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		5. 식욕 저하 혹은 과식<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST05" value="1" <? if( $MNJPQST05==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST05" value="2" <? if( $MNJPQST05==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST05" value="3" <? if( $MNJPQST05==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST05" value="4" <? if( $MNJPQST05==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		6. 내 자신이 나쁜 사람이라는 느낌 혹은 내 자신을 실패자라고 느끼거나 나 때문에 나 자신이나 내 가족이 불행하게 되었다는 느낌<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST06" value="1" <? if( $MNJPQST06==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST06" value="2" <? if( $MNJPQST06==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST06" value="3" <? if( $MNJPQST06==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST06" value="4" <? if( $MNJPQST06==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		7. 신문을 읽거나 TV를 볼 때 집중하기 어려움<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST07" value="1" <? if( $MNJPQST07==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST07" value="2" <? if( $MNJPQST07==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST07" value="3" <? if( $MNJPQST07==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST07" value="4" <? if( $MNJPQST07==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		8. 남들이 알아챌 정도로 거동이나 말이 느림, 또는 반대로 너무 초조하고 안절부절 못해서 평소보다 많이 돌아다니고 서성거림<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST08" value="1" <? if( $MNJPQST08==1){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST08" value="2" <? if( $MNJPQST08==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST08" value="3" <? if( $MNJPQST08==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST08" value="4" <? if( $MNJPQST08==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td>
+		 9. 나는 차라리 죽는 것이 낫겠다는 등의 생각 혹은 어떤 식으로든 스스로를 자해하는 생각들<td></tr>
+	<tr><td align='left'><input type="radio" name="MNJPQST09" value="1" <? if( $MNJPQST09==1 ){ echo "checked"; }?> />전혀아니다
+			<input type="radio" name="MNJPQST09" value="2" <? if( $MNJPQST09==2){ echo "checked"; }?> />여러날동안
+			<input type="radio" name="MNJPQST09" value="3" <? if( $MNJPQST09==3){ echo "checked"; }?> />일주일이상
+			<input type="radio" name="MNJPQST09" value="4" <? if( $MNJPQST09==4){ echo "checked"; }?> />거의매일<br/><br/></td></tr>
+	<tr><td align='right'><table width='100%' border='0' cellspacing='0'>
+									<tr><td align='right' width="100%"><table border='1' cellspacing='0'>
+																							<tr><td>&nbsp;합계&nbsp;</td>
+																									<td><input type="text" name="tl" value="<?=$tm;?>" size="10" readonly /></td></tr>
+																									</table></td></tr>
+									</table></td></tr>
+	</table></td></tr>	
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

@@ -1,0 +1,12 @@
+<?
+
+include "inc/dbConn.php";
+
+$sql = " DELETE FROM smart_ir  WHERE idx='".$_GET[v]."' ";
+mysql_query($sql);
+
+?>
+<script>
+	opener.document.fm.submit();
+	self.close();
+</script>

@@ -1,0 +1,50 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+	$sql = " UPDATE smart_mj_am SET 
+			MNCAGT11E='".$_POST[MNCAGT11E]."' , MNCAGT12E='".$_POST[MNCAGT12E]."'
+			, MNCAGT13E='".$_POST[MNCAGT13E]."' , MNCAGT14E='".$_POST[MNCAGT14E]."'
+		WHERE midx='".$_POST[mseq]."'  ";
+	mysql_query( $sql );
+}
+?>
+<script>
+	alert("암문진표가 작성되었습니다.");
+	parent.document.frm.gatxt.value= "작성완료";
+	parent.document.frm.gatxt.style.color = "red";
+</script>
+<form name="fm" method="post" action="a1.html" >
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type="hidden" name="md" value="reg"/>
+<table width='100%' cellspacing='10'>
+	<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+			<td width='50%' height="40" bgcolor="#86E57F" onclick="parent.location.href='../../munjin.html?seq=<?=$_POST[rseq];?>';" style="cursor:hand">처음화면</td></tr>
+</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="button" value="창닫기" onclick="self.close();"/> &nbsp; &nbsp;-->
+</form>
+
+
+<script>
+
+
+function hisBack(){
+	document.fm.action="a_6.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+</script>

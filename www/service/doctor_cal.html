@@ -1,0 +1,202 @@
+<?
+	include_once  '../_init.php';
+	include_once($GP -> CLS."/class.reserve.php");	
+	include_once($GP -> CLS."/class.doctor.php");
+	$C_Reserve 	= new Reserve;
+	$C_Doctor 	= new Doctor;
+	
+	if($_POST['date']!= '') {
+		$date = $_POST['date'];
+	}else{
+		$date = date('Y-m-d');
+	}	      
+   
+  $now_day = date('Y-m-d');
+  
+  $dr_idx = $_POST['dr_idx'];	
+ 
+  $x=explode("-",$date); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
+  $s_Y=$x[0]; // 지정된 년도
+  $s_m=$x[1]; // 지정된 월
+  $s_d=$x[2]; // 지정된 요일
+
+  $s_t=date("t",mktime(0,0,0,$s_m,$s_d,$s_Y)); // 지정된 달은 몇일까지 있을까요?
+  $s_n=date("N",mktime(0,0,0,$s_m,1,$s_Y)); // 지정된 달의 첫날은 무슨요일일까요?
+  $l=$s_n%7; // 지정된 달 1일 앞의 공백 숫자.
+  $ra=($s_t+$l)/7; $ra=ceil($ra); $ra=$ra-1; // 지정된 달은 총 몇주로 라인을 그어야 하나?
+
+  $n_d= date("Y-m-d",mktime(0,0,0,$s_m,$s_d+1,$s_Y)); // 다음날
+  $p_d= date("Y-m-d",mktime(0,0,0,$s_m,$s_d-1,$s_Y)); // 이전날
+  $n_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y+1)); // 내년
+  $p_Y= date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y-1)); // 작년
+  $p_m= date("Y-m-d",mktime(0,0,0,$s_m-1,$s_d,$s_Y)); // 저번달
+  $n_m= date("Y-m-d",mktime(0,0,0,$s_m+1,$s_d,$s_Y)); // 
+  
+  $prev_m= $s_Y . sprintf("%02d",$s_m-1);
+  $next_m= $s_Y . sprintf("%02d",$s_m+1);
+
+    $args['dr_idx'] = $dr_idx;
+    $data = "";
+    $data = $C_Doctor->Doctor_Info($args);    	
+    extract($data);
+
+    //예약 가능 의사 확인
+    // $url = "http://1.214.232.188:8070/api/v1/";
+    // $path01 = "view_dr";                                       
+
+    // $data01 = array(       
+    //     "is_dept" => $dr_mtreat_no, //진료과코드
+    //     "is_doct" =>  $dr_mcode//의사코드      
+    // );      
+
+
+    // $json_data = json_encode($data01);
+    // $curl = curl_init();
+    // curl_setopt_array($curl, array(
+    // CURLOPT_URL => $url.$path01,
+    // CURLOPT_RETURNTRANSFER => true,
+    // CURLOPT_CUSTOMREQUEST => 'GET',
+    // CURLOPT_POSTFIELDS => $json_data,
+    // CURLOPT_HTTPHEADER => array(
+    //     'Content-Type: application/json'),
+    // ));
+    // $response = curl_exec($curl);                  
+    // $data02 = json_decode($response, true);
+
+    // if( $data02['data_cnt'] < 1){          
+    //      $C_Func->put_msg_and_back("해당 의료진은 예약이 불가 합니다.");			
+    // }
+
+    //예약가능일자 확인
+    $url = "http://1.214.232.188:8070/api/v1/";
+    $path01 = "date_reserve";  
+
+    (!$yydd)?   $yydd = date("Ym") : $yydd =  $_POST['yydd'] ;  
+
+    $data01 = array(       
+        "is_dept" => $dr_mtreat_no, //진료과코드
+        "is_doct" =>  $dr_mcode,//의사코드      
+        "is_month" => $yydd //년월
+    );      
+    //현재년월   
+
+
+    $json_data = json_encode($data01);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => $url.$path01,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_POSTFIELDS => $json_data,
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json'),
+    ));
+    $response = curl_exec($curl);                  
+    $data02 = json_decode($response, true);
+
+    // echo "data01:<pre>"; print_r($data01); echo "</pre><br>" ;
+    // echo "data:<pre>"; print_r($data02); echo "</pre><br>" ;
+
+    $data03 = "";
+    for	($i=0; $i<count($data02["data"]); $i++) {	        
+        $today2 = date("Y-m-d", strtotime("+1 days"));        
+        if (strtotime($data02["data"][$i]) <= strtotime($today2)) continue;
+
+        $today = date("Y-m-d", strtotime("+3 months"));        
+        if (strtotime($data02["data"][$i]) >= strtotime($today)) continue;
+
+		if (date("w", strtotime($data02["data"][$i])) == 0) continue;
+
+        $data03 .=  '"' .date("Y-m-d", strtotime($data02["data"][$i])) .'"' ;
+        //마지막 만 빼고 , 붙이기
+        if($i != count($data02["data"])-1) $data03 .= ",";	                
+    }
+
+    $one_day = $C_Func->request_add_day($now_day , 2);	//오늘 + 3일
+    $ck_week = $C_Func->DayWeekChange($now_day);  			//오늘의 주일  
+
+?>
+<p class="calHead">
+	<button type="button" class="prev" onClick="ch_cal('<?=$p_m?>','<?=$prev_m?>','<?=$dr_idx?>')"><span>이전달</span></button>
+	<strong>
+		<?=$s_Y?>년
+		<?=$s_m?>월
+	</strong>
+	<button type="button" class="next" onClick="ch_cal('<?=$n_m?>','<?=$next_m?>','<?=$dr_idx?>')"><span>다음달</span></button>
+</p>
+<div class="calBody">
+	<table>
+		<!-- <caption>진료일정 선택 달력</caption> -->
+		<colgroup>
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+			<col style="width:calc(100%/7)" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col" class="sun">일</th>
+				<th scope="col">월</th>
+				<th scope="col">화</th>
+				<th scope="col">수</th>
+				<th scope="col">목</th>
+				<th scope="col">금</th>
+				<th scope="col">토</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?
+			for($r=0;$r<=$ra;$r++){
+			echo "<tr>\n";
+			  for($z=1;$z<=7;$z++){									
+				  $rv=7*$r+$z; 
+				  $ru=$rv-$l; // 칸에 번호를 매겨줍니다. 1일이 되기전 공백들 부터 마이너스 값으로 채운 뒤 ~
+				  
+				  if($ru<=0 || $ru>$s_t) { // 딱 그달에 맞는 숫자가 아님 표시하지 말자
+					echo "<td>&nbsp;</td>";											
+				  }else{
+					$s = date("Y-m-d",mktime(0,0,0,$s_m,$ru,$s_Y)); // 현재칸의 날짜
+
+					$dayweek = $C_Func->DayWeekChange($s);                    
+					$now_year = date("y");                              
+					$now_mon = date("m");                              
+					$ch_mday = $s_m.$s_d;
+					
+					$ru_d = "";
+					if(strlen($ru) < 2) {
+					  $ru_d = "0".$ru;
+					}else{
+					  $ru_d = $ru;
+					}
+					$ch_mday1 = $now_mon.$ru_d;	                   
+					
+					$cho_date = $s_Y. "-" . $s_m. "-" .$ru_d;                      
+
+                    if($ch_mday == $ch_mday1) { //오늘							
+                    echo "<td class='today' title='예약불가 - 오늘'><span>$ru</span></td>";	                    
+                    } else if($s < date('Y-m-d')) {	//오늘이전이면  예약불가																															
+                        echo "<td class='pssd non' title='예약불가 - 이전날'>$ru</td>";	 
+                    } else if($s < $one_day) { //삼일
+                        echo "<td class='sun non' title='예약불가'>$ru</td>";											
+                    } else if($dayweek == "일") { //일요일은 방문접수만							
+                        echo "<td class='sun non' title='예약불가 - 일요일'>$ru</td>";	
+                    //3개월 이후 예약불가
+                    } else if($s > date("Y-m-d", strtotime("+3 months"))) { //3개월 이후 예약불가
+                        echo "<td class='sun non' title='예약불가 - 3개월 이후'>$ru</td>";					
+                    } else if(strpos($data03, $s)) { //예약가능					
+                        echo "<td title=''><button type='button' onClick=\"time_sel('" . $dr_idx. "','" . $cho_date. "', this)\">$ru</button></td>";	
+                    } 
+                    else {
+                        echo "<td class='sun non' title='예약불가'>$ru</td>";	
+                    }
+				  } 													
+			  }
+			  echo "</tr>\n";
+			  }
+			?>
+		</tbody>
+	</table>
+</div>

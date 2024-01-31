@@ -1,0 +1,58 @@
+<?
+session_start();
+include "../../inc/dbConn.php";
+include  "../inc/func.php";
+$tbl = "smart_reserve";
+//header("Content-Type:text/html;charset=utf-8") ;
+header("Content-Type:text/html;charset=utf-8");
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+//mysql_select_db("mediroad_liss", $dbconn);
+
+
+//echo $business_name2;
+
+
+
+
+if ($business_name) { 
+	//$sql = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on //(a.COMPANY_CODE=b.COMPANY_CODE)  where b.COMPANY_NAME = '".$business_name."' and a.PRO_YEARS='".date("Y")."'";
+
+	$sql = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where b.COMPANY_NAME = '".$business_name."' and a.PRO_YEARS='2014'";
+	
+	//echo $sql;
+	
+	$result = mysql_query($sql); 
+	$k=0;
+	while($rows = mysql_fetch_array($result)){
+		//echo $rows[PRO_CODE];
+?>
+		<li><input type="radio" name="PRO_NAME" onclick="javascript:startRequest2(this.value);startRequest_det(this.value);" value="<?=$rows[PRO_NAME]?>"><?=$rows[PRO_NAME]?></li>
+<?
+		$k++;	
+	}
+	if($k == 0){
+		echo "검색된 단체 유형이 없습니다.";
+	}
+	
+}else { 
+	echo " 
+	사업장을 입력하지 않았습니다.
+	"; 
+} 
+?> 
+
+
+
+

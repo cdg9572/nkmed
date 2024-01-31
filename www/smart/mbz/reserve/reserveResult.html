@@ -1,0 +1,105 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+
+$sql = "select * from smart_resscomp where RIDX = $seq" ;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+//testing_dsp($row) ;
+
+testing_dsp("session") ;
+testing_dsp("post") ;
+
+//print_r($_SESSION) ;
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>건강검진 예약</h2>
+	
+	<section style="padding:0px 10px;">
+	
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important; text-align:left !important;">예약 완료</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="border:1px solid #187DC0; text-align:left;"><strong><?=$row[RNAME]?></strong>님<br/>
+					뉴고려병원을 선택해주셔서 감사합니다.<br/>
+					<?=$row[RNAME]?>님은 <strong><?=$row[RDATE]?> <?=$row[RHOUR]?>시 <?=$row[RMIN]?>분</strong>로 예약되셨습니다.<br/>
+					평일기준<strong>24시간 내</strong>에 담당 상담사가 연락드리도록 하겠습니다.<br/>
+					문의 사항이 있으시면 1661-7779 번으로 문의주세요.</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<?
+		
+		//if($_SERVER['REMOTE_ADDR'] == '122.45.143.21' || $_SERVER['REMOTE_ADDR'] == '119.197.19.46')
+		//{
+		//	if($exam_category_am || $exam_category_il) 			{
+		?>
+
+			<div style="padding:20px 0px;">
+				<!--<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i> 문진표를 모바일로 미리 작성하시면 대기시간을 줄이실 수 있습니다.</p>
+				<a href="../mj_A/page01.html?seq=<?=$seq?>" class="btnst01" style="margin-bottom:15px;">지금 작성하기</a>-->
+
+				<a href="../munjin_gate.html?seq=<?=$seq?>" class="btnst01" style="margin-bottom:15px;">지금 작성하기</a>
+				<!--<a href="../index.html" class="btnst02">나중에 작성하기</a>  -->
+			</div>
+		<?
+		//	}
+		//}
+		
+		?>
+
+
+
+
+	</section>
+	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

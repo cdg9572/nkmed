@@ -1,0 +1,194 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+$mseq = $_POST[mseq];
+if( $mseq<>"" & $_POST[md]=="reg"  ){ 
+	if( $_POST[MNDRQST01]=="1" ){ $v = 0; }elseif( $_POST[MNDRQST01]=="2" ){ $v = 1; }elseif( $_POST[MNDRQST01]=="3" ){ $v = 2; }elseif( $_POST[MNDRQST01]=="4" ){ $v = 3;}elseif( $_POST[MNDRQST01]=="5" ){ $v = 4;}
+	if( $_POST[MNDRQSTA2]=="1" ){ $v += 0; }elseif( $_POST[MNDRQSTA2]=="2" ){ $v += 1; }elseif( $_POST[MNDRQSTA2]=="3" ){ $v += 2; }elseif( $_POST[MNDRQSTA2]=="4" ){ $v += 3;}elseif( $_POST[MNDRQSTA2]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQSTB2]=="1" ){ $v += 0; }elseif( $_POST[MNDRQSTB2]=="2" ){ $v += 1; }elseif( $_POST[MNDRQSTB2]=="3" ){ $v += 2; }elseif( $_POST[MNDRQSTB2]=="4" ){ $v += 3;}elseif( $_POST[MNDRQSTB2]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST03]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST03]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST03]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST03]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST03]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST04]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST04]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST04]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST04]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST04]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST05]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST05]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST05]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST05]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST05]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST06]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST06]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST06]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST06]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST06]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST07]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST07]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST07]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST07]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST07]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST08]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST08]=="2" ){ $v += 1; }elseif( $_POST[MNDRQST08]=="3" ){ $v += 2; }elseif( $_POST[MNDRQST08]=="4" ){ $v += 3;}elseif( $_POST[MNDRQST08]=="5" ){ $v += 4;}
+	if( $_POST[MNDRQST09]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST09]=="2" ){ $v += 2; }elseif( $_POST[MNDRQST09]=="3" ){ $v += 4; }
+	if( $_POST[MNDRQST10]=="1" ){ $v += 0; }elseif( $_POST[MNDRQST10]=="2" ){ $v += 2; }elseif( $_POST[MNDRQST10]=="3" ){ $v += 4; }
+
+
+	$sql = " UPDATE smart_mj_mndrinktbl SET 
+					MNDRQST01='".$_POST[MNDRQST01]."', MNDRQSTA2='".$_POST[MNDRQSTA2]."'	, MNDRQSTB2='".$_POST[MNDRQSTB2]."'
+					, MNDRQST03='".$_POST[MNDRQST03]."', MNDRQST04='".$_POST[MNDRQST04]."', MNDRQST05='".$_POST[MNDRQST05]."'
+					, MNDRQST06='".$_POST[MNDRQST06]."', MNDRQST07='".$_POST[MNDRQST07]."', MNDRQST08='".$_POST[MNDRQST08]."'
+					, MNDRQST09='".$_POST[MNDRQST09]."' , MNDRQST10='".$_POST[MNDRQST10]."' , MNDRJUMSU='".$v."', LDT= '".DATE("YmdHis")."'
+				WHERE 	MNDRJUBNO='".$mseq."' 	";
+
+	if( mysql_query( $sql ) ){
+	}else{
+		echo mysql_error()."<br/>".$sql;
+	}
+}
+
+
+$sql  = " SELECT * FROM smart_mj_mnexerctbl WHERE MNEXJUBNO='".$mseq."'  ";
+#정보 확인하고 
+if($r = mysql_query($sql)){
+	$val = mysql_fetch_array($r);
+	if($val["MNEXJUBNO"] == ""){
+		mysql_query( " INSERT INTO smart_mj_mnexerctbl ( MNEXJUBNO, WDT ) VALUES ( '".$mseq."', '".DATE("YmdHis")."' ) " );
+	}	}
+
+#운동정보 초기화
+$MNEXQ0101 = "";	$MNEXQ0102 = "";	$MNEXQ01T3 = "";	$MNEXQ01M3 = "";	
+$MNEXQ0104 = "";	$MNEXQ0105 = "";	$MNEXQ01T6 = "";	$MNEXQ01M6 = "";
+$MNEXQ0201 = "";
+
+#운동정보
+#$none="none"; $none1="none"; $none2="none"; $none3="none";
+if( $r = mysql_query($sql) ){
+	$val = mysql_fetch_array($r);
+	$MNEXQ0101 = $val["MNEXQ0101"];	
+	$MNEXQ0102 = $val["MNEXQ0102"];	
+	$MNEXQ01T3 = $val["MNEXQ01T3"];	$MNEXQ01M3 = $val["MNEXQ01M3"];	
+	$MNEXQ0104 = $val["MNEXQ0104"];	
+	$MNEXQ0105 = $val["MNEXQ0105"];
+	$MNEXQ01T6 = $val["MNEXQ01T6"];	$MNEXQ01M6 = $val["MNEXQ01M6"];
+	$MNEXQ0201 = $val["MNEXQ0201"];	
+	if( $MNEXQ0101==1 ){ $none1="";	}
+	if( $MNEXQ0104==1 ){ $none2="";	}
+	if( $MNEXQ0201==1 ){ $none3="";	}
+	$none="";
+}
+
+?>
+ 
+<form name="fm" method="post" action="cmm_4.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+
+<font style="font-size:12px; color:red;">※ 운동 생활습관 평가도구 1/3</font> &nbsp;
+<!--<font  style="font-size:12px;">추가문진 3/7</font>--><br/>
+<font style="font-size:11px;">※ 다음은 평소 일주일 동안 본인이 참여하고 있는 다양한 신체활동 시간과 관련된 질문입니다. 신체적으로 활동적인 사람이 아니더라도 질문에 답해주세요. <br/><br/>
+‘고강도 활동’은 격렬한 신체 활동으로 숨이 많이 차거나 심장이 매우 빠르게 뛰는 활동을,  <br/>
+‘중강도 활동’은 중간 정도의 신체 활동으로 숨이 약간 차거나 심장이 약간 빠르게 뛰는 활동을 말합니다. <br/></font>
+<table width="100%" class="tbst02">
+<tr><td>1. 우선 본인이 일하는 시간을 생각해 보세요. 일을 돈을 받는 일, 돈을 받지 않고 하는 일, 학교생활 / 교육, 
+집안일, 농업, 어업, 목축업, 구직과 같이 현재 하고 있는 것이라고 생각하시면 됩니다.<br/>
+(예: 직업, 학업, 집안일, 봉사활동, 학교 체육 수업 등)
+</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 1-1. 본인의 일은 최소 10분 이상 계속 숨이 많이 차거나 심장이 매우 빠르게 뛰는 고강도 신체 활동을 포함하고 있습니까?</th></tr>
+<tr><td style="font-size:11px;">※고강도 신체활동: 무거운 것을 들어 올리거나 나르는 일(약 20kg 이상), 땅파기, 건설 현장에서의 노동, 계단으로 물건 나르기 등</td></tr>
+<tr><td><input type="radio" name="MNEXQ0101" value="1" <? if( $MNEXQ0101==1){ echo "checked"; }?> onclick="setC(1);" />1. 예
+				<input type="radio" name="MNEXQ0101" value="2" <? if( $MNEXQ0101==2){ echo "checked"; }?> onclick="setC(2);" />2. 아니오(1-4번으로)</td></tr>
+</table>
+<div id="dvd" style="display:<?=$none1;?>;" >
+<table width='100%'>
+<tr><td>1-2. 평소 일주일 동안, 일과 관련된 고강도 신체 활동을 며칠 하십니까?</td></tr>
+<tr><td align='right'>일주일에( <input type="text" size="4" name="MNEXQ0102" value="<?=$MNEXQ0102;?>"/> )일</td></tr>
+<tr><td>1-3. 평소 하루에 일과 관련된 고강도 신체 활동을 몇 시간 하십니까?</td></tr>
+<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ01T3" value="<?=$MNEXQ01T3;?>"/> )시간&nbsp;
+( <input type="text" size="4" name="MNEXQ01M3" value="<?=$MNEXQ01M3;?>"/> )분</td></tr>
+</table>
+</div>
+<table class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+1-4. 본인의 일은 최소 10분 이상 계속 숨이 약간 차거나 심장이 약간 빠르게 뛰는 중강도 신체 활동을 포함하고 있습니까? 
+</th></tr>
+<tr><td style="font-size:11px;">※중강도 신체활동 : 빠르게 걷기(일하는 중에), 가벼운 물건 나르기, 청소, 육아(목욕시키기, 아이 안아주기 등)</td></tr>
+<tr><td><input type="radio" name="MNEXQ0104" value="1" <? if( $MNEXQ0104==1){ echo "checked"; }?> onclick="setC4(1);" />1. 예
+				<input type="radio" name="MNEXQ0104" value="2" <? if( $MNEXQ0104==2){ echo "checked"; }?> onclick="setC4(2);" />2. 아니오(2번으로)</td></tr>
+</table>
+<div id="dvd4" style="display:<?=$none2;?>;" >
+<table width='100%'>
+<tr><td>1-5. 평소 일주일 동안, 일과 관련된 중강도 신체 활동을 며칠 하십니까?</td></tr>
+<tr><td align='right'>일주일에( <input type="text" size="4" name="MNEXQ0105" value="<?=$MNEXQ0105;?>"/> )일</td></tr>
+<tr><td>1-6. 평소 하루에 일과 관련된 중강도 신체 활동을 몇 시간 하십니까?</td></tr>
+<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ01T6" value="<?=$MNEXQ01T6;?>"/> )시간&nbsp;
+( <input type="text" size="4" name="MNEXQ01M6" value="<?=$MNEXQ01M6;?>"/> )분</td></tr>
+</table>
+</div>
+<div id="dvd2" style="display:<?=$none;?>;" >
+<table width="100%" >
+<tr><td>2. 앞서 말한 일과 관련된 신체 활동은 제외합니다. 본인이 장소를 이동할 때, 어떻게 하시는지에 대해
+ 묻겠습니다.</td></tr>
+ <tr><td style="font-size:11px;">※장소 이동 시 신체활동: 일하러 갈 때, 쇼핑 갈 때, 장보러 갈 때, 예배 보러 갈 때, 학교 등/하교 시, 학원 갈 때 등</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+2-1. 평소 장소를 이동할 때 최소 10분 이상 계속 걷거나 자전거 이용을 하십니까? </th></tr>
+<tr><td><input type="radio" name="MNEXQ0201" value="1" <? if( $MNEXQ0201==1){ echo "checked"; }?> onclick="setC2(1);" />1. 예
+				<input type="radio" name="MNEXQ0201" value="2" <? if( $MNEXQ0201==2){ echo "checked"; }?> onclick="setC2(2);" />2. 아니오(3번으로)</td></tr>
+</table>
+</div>
+<div id="dvd3" style="display:<?=$none3;?>;" >
+<table width='100%'>
+<tr><td>2-2. 평소 일주일 동안, 장소를 이동할 때 최소 10분 이상 계속 걷거나 자전거 이용을 며칠 하십니까?</td></tr>
+<tr><td align='right'>일주일에( <input type="text" size="4" name="MNEXQ0202" value="<?=$MNEXQ0202;?>"/> )일</td></tr>
+<tr><td>2-3. 평소 하루에 장소를 이동할 때 걷거나 자전거 이용을 몇 시간 하십니까?</td></tr>
+<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ02T3" value="<?=$MNEXQ02T3;?>"/> )시간&nbsp;
+( <input type="text" size="4" name="MNEXQ02M3" value="<?=$MNEXQ02M3;?>"/> )분</td></tr>
+</table>
+</div>
+<!-- <input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="submit" value="다음 문진표"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+
+<script>
+
+function hisBack(){
+	document.fm.action="cmm_2.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+function setC2( val ){
+	//alert( val );
+	//alert( document.getElementById("dvd").style.display ) ;
+	if( val == 1){
+		document.getElementById("dvd3").style.display = "";
+	}else{
+		document.getElementById("dvd3").style.display = "none"; 
+		document.fm.MNEXQ0202.value = "";		document.fm.MNEXQ02T3.value = "";	document.fm.MNEXQ02M3.value = "";
+	}
+}
+
+function setC4( val ){	//1-4관련문항
+	if( val == 1){
+		document.getElementById("dvd4").style.display = "";
+		document.getElementById("dvd2").style.display = ""; 
+	}else{
+		document.getElementById("dvd4").style.display = "none"; 
+		document.getElementById("dvd2").style.display = ""; 
+		document.fm.MNEXQ0105.value = "";		document.fm.MNEXQ01T6.value = "";	document.fm.MNEXQ01M6.value = "";
+	}
+}
+
+function setC( val ){
+	//alert( val );
+	//alert( document.getElementById("dvd").style.display ) ;
+	if( val == 1){
+		document.getElementById("dvd").style.display = "";
+	}else{
+		document.getElementById("dvd").style.display = "none"; 
+		document.fm.MNEXQ0102.value = "";		document.fm.MNEXQ01T3.value = "";	document.fm.MNEXQ01M3.value = "";
+	}
+}
+</script>

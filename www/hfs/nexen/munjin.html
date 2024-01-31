@@ -1,0 +1,161 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "inc/func.php";
+include "inc/dbConn.php";
+global $bday, $sex, $email, $add, $mseq1;
+
+#echo $rseq;
+#echo $cpname." ".$_SESSION['cpname'];
+if( $seq <> "" or $newseql<> ""  or $rseq<> ""){
+if ( $seq == "" ){
+	if( $rseq<>"" ){
+		$sql = "select * from smart_resscomp where RIDX = $rseq" ;
+	}else{
+		$sql = "select * from smart_resscomp where RIDX = $newseql" ;
+	}
+}else{
+	$sql = "select * from smart_resscomp where RIDX = $seq" ;
+}
+
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+$gname = $row[RNAME];
+$gdate = $row[RDATE];
+$tel = $row[RTEL];
+
+
+ #Cech_mj( $row[RNAME], $row[RTEL], str_replace("-","",$row[RDATE]) );
+}
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="index.html"><img src="images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<nav style="margin-bottom:5px;">
+		<ul class="menu_list_sub clearfix">
+			<li><a href="munjin.html" class="active">문진표작성</a></li>
+			<li><a href="com/page02.html">검진 전 주의사항</a></li>
+			<li><a href="com/page03.html">이용안내</a></li>
+		</ul>
+	</nav>
+	
+	<section style="padding:0px 10px; min-height:450px;">
+	<!--
+		<form name='form1' method='post' action='munjin/munjin_proc.html' target="company_proc" >
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='reserve_seq' value='<?=$seq?>'>
+		<input type='hidden' name='mseq' value='<?=$mseq1?>'>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important; text-align:left;">예약정보</th>
+			</tr>
+			<tr>
+				<th width='30%'>검진예정일</th>
+				<td><input type="text" class="intextst01" name="gdate" value="<?=$row[RDATE]?>" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name="name" value="<?=$row[RNAME]?>"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" class="intextst01" name="tel" value="<?=$row[RTEL]?>" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<tr>
+				<th>생년월일</th>
+				<td><input type="text" class="intextst01" name="bday" value="<?=$bday;?>" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td><select name="s"><option value="F" <? if($sex=="F"){ echo "selected"; }?> />여자</option> <option value="M" <? if($sex=="M" or strpos($row[CTYPE], "남") ){ echo "selected"; }?> />남자</option></td>
+			</tr>
+			<tr>
+				<th>이메일[선택]</th>
+				<td><input type="text" class="intextst01" name="email" value="<?=$email;?>" placeholder="이 메일을 입력해주세요."></td>
+			</tr>
+			<tr>
+				<th>주소</th>
+				<td><input type="text" class="intextst01" name="addr" value="<?=$add;?>" placeholder="주소를 입력해주세요."></td>
+			</tr>
+		</table>	
+		
+
+		<div style="padding:10px 0px; margin-bottom:5px;">			
+			<a class="btnst01" onclick=" CheckCon();">문진표 작성하기</a>
+		</div>
+
+		</form>-->
+		<iframe width='100%' height='600'src="http://119.197.19.46:8000/mj/index2.html?gname=<?=$gname;?>&gdate=<?=$gdate;?>&tel=<?=$tel;?>&cpname=<?=$_SESSION['cpname'];?>" frameborder='0'></iframe>
+	</section>
+
+	</form>
+<script>
+	function CheckCon(){
+		if( document.form1.gdate.value == "" ){
+			alert( "예정일을 입력해주세요." );
+			document.form1.gdate.focus();
+			return false;
+		}
+
+		if( document.form1.name.value == "" ){
+			alert( "이름을 입력해주세요." );
+			document.form1.name.focus();
+			return false;
+		}
+
+		if( document.form1.bday.value == "" ){
+			alert( "생년월일을 입력해주세요." );
+			document.form1.bday.focus();
+			return false;
+		}
+
+		if( document.form1.tel.value == "" ){
+			alert( "연락처을 입력해주세요." );
+			document.form1.tel.focus();
+			return false;
+		}		
+
+		document.form1.submit();
+	}
+</script>
+	<iframe name="company_proc" width=600 height=600 style="display:none;"></iframe>
+
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

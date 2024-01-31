@@ -1,0 +1,58 @@
+<?
+session_start();
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원_구래26통 주민의료지원 관리자페이지</title>
+<style>
+
+header span{
+	color:yellow;
+	font-size:20px;
+	font-weight:bold;
+}
+.topdiv{
+	padding:10px 20px 10px 20px;
+	border-bottom-left-radius : 20px;
+	border-bottom-right-radius : 20px;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.content {
+  font-family: system-ui, serif;
+  font-size: 1rem;
+  padding: 3rem;
+  border-radius: 1rem;
+}
+</style>
+<body>
+<div class="wrapper">
+  <div class="content">
+	<header>
+		<div class="topdiv" style="background-color:#2478FF;">
+			<span style="padding-left:5px;padding-right:5px;">구래 26통 의료지원사업 관리자</span>
+		</div>
+	</header>
+	<center>
+	<form method="post" action="apost.html" target="ifrm">
+	<table border='0' cellpadding='3'>
+	<tr><td>아이디</td><td><input type="text" name="mid" value="" /></td></tr>
+	<tr><td>인증번호</td><td><input type="password" name="mpw" value="" /></td></tr>
+	<tr><td align='center' colspan='2'><input type="submit" value="로그인하기" /></td></tr>
+	</table>
+	</form>
+	</center>
+	<iframe id="ifrm" name="ifrm" src="" frameborder='0' style="display:none"></iframe>
+  </div>
+</div>
+</body>
+</html>

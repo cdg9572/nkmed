@@ -1,0 +1,49 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "예약/발급";
+$page_sub_title = "예약 조회";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+?>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr15.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<h3 class="cont-tit center" style="padding-bottom: 0;">예약 조회</h3>
+
+				<div class="l-pad-box gray text-left" style="margin-top: 50px;border-top:2px solid #333;">
+					<ul class="middot-list" style="margin-bottom: 0;">
+						<li>온라인 예약은 24시간 이전 내역에 한해 취소가 가능합니다. <span class="c-blue">(당일 취소는 전화로만 가능합니다.)</span></li>
+						<li>문의전화는 <span class="c-blue">031-980-9114(진료예약센터)</span>를 이용해주시기 바랍니다.</li>
+					</ul>
+				</div>
+				
+				<div id="btn-box" class="center">
+					<a href="page14-2.html" class="btn bg-black" style="width: 270px;">예약 조회 바로가기</a>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<?
+include "inc/dbConn.php"; 
+
+$time = time();
+$gubn = ( $_POST["rtype"]=="G" ) ? "검진" : "진료" ;
+$dpt = ( $_POST["rtype"]=="G" ) ? $_POST["dept2"] : $_POST["dept"] ;
+
+if( $_POST[OIDX]<>"" ){
+	$sql = " UPDATE nkh_overseas SET
+				PNAME='".$_POST["pname"]."'
+				, RDT='".$_POST["rdt"]."'
+				, RTYPE='".$_POST["rtype"]."'
+				, RDEPT='".$dpt."'
+				, RMEMO='".$_POST["rmemo"]."'
+				, AGENCY='".$_POST["agency"]."'
+				, AGNAME='".$_POST["agname"]."'
+				, AGTEL='".$_POST["agtel"]."'
+				, PTNO='".$_POST["ptno"]."'
+				, HRMEMO='".$_POST["hrmemo"]."'
+				, STATE='".$_POST["state"]."'
+				, MDT='".$time."'
+				, MIP='".$_SERVER['REMOTE_ADDR']."'
+			WHERE OIDX='".$_POST[OIDX]."' ";
+	if(mysql_query($sql)){
+		echo "<script>location.href='oar_adm_rm.html?v=".$_POST[OIDX]."';opener.location.href='oar_adm.html?m=s';</script>";
+	}else{
+		echo $sql;
+		echo mysql_error();
+		echo "오류 발생";
+		return flase;
+	}
+}
+
+if( $_GET[v]<>"" ){
+	$sql = " delete FROM nkh_overseas WHERE OIDX='".$_GET[v]."' ";
+	if($data=mysql_query($sql)){
+		echo "<script>opener.location.href='oar_adm.html?m=s';self.close();</script>";
+	}else{
+		echo "오류 발생";
+		return flase;
+	}
+}
+?>

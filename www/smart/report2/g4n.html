@@ -1,0 +1,27 @@
+﻿<style>
+tr{ text-align:center;font-size: .9em;	padding:5px;	border: 1px solid #CCCCCC; }
+</style>
+<table width='100%'>
+<tr><td><a onclick="window.open('img/c04.jpg','','');" style="font-size:12pt;color:blue" >설명보기</a></td></tr></table>
+<!--고지혈 및 심혈관 검사-->
+<h2>고지혈증 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "B1" );?>
+</table><br/>
+
+<h2>심혈관 관련 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "B2" );?>
+</table><br/>
+
+<!-- 필요 내용 보여주기 추가해야함 10/10 -->
+<? if ( GetArrTXT( $arr, "F2" )<> ""){ ?>
+<h2>동맥경화도 검사(ABI/PWV)</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "F2" );?></td></tr>
+</table><br/>
+<? } ?>

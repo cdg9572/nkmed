@@ -1,0 +1,121 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+
+$d1_arr = explode("&", $v) ;
+
+//print_r($d1_arr) ;
+
+
+?>
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 질환력(과거력, 가족력) 관련 문항.
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 1. 다음과 같은 질병으로 진단을 받았거나, 현재 약물 치료 중이십니까? 
+				</th>
+			</tr>
+			<tr>
+				<th>뇌졸중(중풍)</th>
+			</tr>
+			<?
+				$category = "c01" ; //== 뇌졸중(중풍)				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[0], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[0], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>심장병(심근경색/협심증)</th>
+			</tr>
+			<?
+				$category = "c02" ; //== 심장병(심근경색/협심증)
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[1], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[1], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>고혈압</th>
+			</tr>
+			<?
+				$category = "c03" ; //== 고혈압				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[2], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[2], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>당뇨병</th>
+			</tr>
+			<?
+				$category = "c04" ; //== 당뇨병				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[3], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[3], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>이상지질혈증</th>
+			</tr>
+			<?
+				$category = "c05" ; //== 이상지질혈증				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[4], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[4], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>폐결핵</th>
+			</tr>
+			<?
+				$category = "c06" ; //== 폐결핵				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[5], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[5], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			<tr>
+				<th>기타(암포함)</th>
+			</tr>
+			<?
+				$category = "c07" ; //== 기타(암포함)				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="진단여부" <?=getChecked($d1_arr[6], "진단여부")?> > 진단여부</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="약물치료여부" <?=getChecked($d1_arr[6], "약물치료여부")?> > 약물치료여부</td>
+			</tr>
+
+			
+			
+
+		</table>
+	
+	

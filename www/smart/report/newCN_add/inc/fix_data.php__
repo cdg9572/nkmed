@@ -1,0 +1,166 @@
+<?
+
+
+//========================= 수정사항 
+
+if( $data[접수번호키] == "1410067165" ) $data[말초혈액순환검사] = "혈관상태?3,4단계" ;
+
+
+$data_esti["AIDS"] = "0~0.999" ;
+$data_esti["Homosystein"] = "5.08~15.4" ;
+
+
+
+
+//==============================
+
+
+
+if( $data[접수번호키] == "1412127015" ) 
+{
+	$data[Creatinine] = "1.1" ;
+	$data[GFR_] = "76" ;
+}
+
+
+if( $data[접수번호키] == "1410067165" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	
+	$data[말초혈액순환검사] = "血管&#29366;&#24577; - 3,4&#38454;段" ;
+
+	//$data[Homosystein] = "0.06(Negative)" ;
+
+}
+
+
+if( $data[접수번호키] == "1410147008" ) 
+{
+	$data[AIDS] = "0.08(Negative)" ;
+	$data[Homosystein] = "11.4" ;
+}
+
+
+if( $data[접수번호키] == "1410147002" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "18.1" ;
+}
+
+
+if( $data[접수번호키] == "1410147003" ) 
+{
+	$data[AIDS] = "0.13(Negative)" ;
+	$data[Homosystein] = "10.23" ;
+}
+
+
+if( $data[접수번호키] == "1410147004" ) 
+{
+	$data[AIDS] = "0.06(negative)" ;
+	$data[Homosystein] = "19.23" ;
+}
+
+
+if( $data[접수번호키] == "1410147005" ) 
+{
+	$data[AIDS] = "0.07(Negative)" ;
+	$data[Homosystein] = "12.37" ;
+}
+
+
+if( $data[접수번호키] == "1410217038" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "11.27" ;
+}
+
+if( $data[접수번호키] == "1410217045" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "8.07" ;
+}
+
+
+if( $data[접수번호키] == "1410217040" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "5.19" ;
+}
+
+
+if( $data[접수번호키] == "1410217048" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "8.18" ;
+}
+
+
+if( $data[접수번호키] == "1410217049" ) 
+{
+	$data[AIDS] = "0.10(Negative)" ;
+	$data[Homosystein] = "9.64" ;
+}
+
+
+if( $data[접수번호키] == "1410217056" ) 
+{
+	$data[AIDS] = "0.06(Negative)" ;
+	$data[Homosystein] = "8.02" ;
+}
+
+
+if( $data[접수번호키] == "1410227095" ) 
+{
+	$data[AIDS] = "0.11(Negative)" ;
+	$data[Homosystein] = "4.69" ;
+}
+
+
+if( $data[접수번호키] == "1410227103" ) 
+{
+	$data[AIDS] = "0.18(Negative)" ;
+	$data[Homosystein] = "8.19" ;
+}
+
+if( $data[접수번호키] == "1410247017" ) 
+{
+	$data[AIDS] = "0.10(Negative)" ;
+}
+
+if( $data[접수번호키] == "1410247022" ) 
+{
+	$data[AIDS] = "0.09(Negative)" ;
+}
+
+
+if( $data[접수번호키] == "1410157111" ) 
+{
+	$data[HBsAb] = "양성" ;
+}
+
+/*
+if( $data[접수번호키] == "" ) 
+{
+	$data[AIDS] = "" ;
+	$data[Homosystein] = "" ;
+}
+*/
+
+
+if( $data[접수번호키] == "1412027047" ) 
+{
+	$data[AIDS] = "0.06(negative)" ;
+	//$data[Homosystein] = "8.19" ;
+}
+
+
+
+
+
+
+
+//========================= 수정사항 
+
+
+?>

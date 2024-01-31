@@ -1,0 +1,82 @@
+@charset "utf-8";
+@font-face {
+	font-family:'NanumGothic';
+	src:url('NanumGothic.eot');
+	src:local('?'), 
+		url('NanumGothic.woff') format('woff'),
+		url('NanumGothic.ttf') format('truetype');
+}
+/*base*/
+html{overflow-y:scroll}
+body{font-family:NanumGothic, Arial, Sans-serif;color:#555;font-size:12px;background:#5f5f5f}
+body, div, h1, h2, h3, h4, h5 ,h6, table, th, td, ul, ol, li, dl, dt, dd, p, form, input, fieldset{padding:0;margin:0}
+h1, h2, h3, h4, h5, h6{font-size:100%;font-weight:normal;margin-left:21px;}
+img{border:none;vertical-align:top;}
+ul, ol, li{list-style:none}
+table{border-collapse:collapse;border-spacing:0;border:0}
+/*a-style*/
+a{color:#333;text-decoration:none}
+a:hover, a:active{color:#2255cb;text-decoration:underline}
+/*btn*/
+.btn_r{text-align:right}
+.btn_l{text-align:left}
+.btn_c{text-align:center}
+/*reset*/
+.reset{clear:both !important;height:0 !important;font-size:0 !important;line-height:0 !important;padding:0 !important;margin:0 !important}
+/*skip*/
+.accissibility, .skip, hr, legend, caption{position:absolute;width:0;height:0;line-height:0;font-size:0;overflow:hidden;visibility:hidden;text-indent:-1000em}
+
+/*공통*/
+.page_num{position:absolute;left:49px;bottom:7px;font-size:14px;font-weight:bold;}
+.table_list_01{width:570px;letter-spacing:-0.05em;margin:0 auto;}
+.table_list_01 table{width:100%;}
+.table_list_01 th{width:14%;font-size:14px;border:1px solid #b49e8a;text-align:center;padding:6px 0 6px 10px;font-weight:normal;background:url(../images/th_bg.png) repeat left top;}
+.table_list_01 td{border:1px solid #b49e8a;font-size:12px;padding:8px 10px;text-align:center;background:url(../images/td_bg.png) repeat left top;}
+.table_list_02{border-left:1px solid #90c0e6;}
+.table_list_02{border-right:1px solid #90c0e6;}
+.table_list_02 table{width:100%;}
+.table_list_02 table th{width:33%;padding:7px 0;border:1px solid #90c0e6;border-left:0;background:#c2dcf1;font-weight:normal;}
+.table_list_02 table td{padding:7px 0;border:1px solid #90c0e6;border-left:0;text-align:center;}
+
+#wrap{width:565px;height:812px;padding:15px;margin:0 auto;background:#fff;}
+#wrap #container{width:563px;height:810px;position:relative;border:1px solid #e8e8e8;}
+.main_bg{background:url(../images/main_bg_21chana.jpg) no-repeat left top;}
+.bg_02{background:url(../images/bg_02.jpg) no-repeat left top;}
+.bg_03{background:url(../images/bg_03.jpg) no-repeat left top;}
+.bg_04{background:url(../images/bg_04.jpg) no-repeat left top;}
+
+.main .contnets{margin:151px 0 0 60px;}
+.main .contnets .first_inp{width:154px;height:22px;border:1px solid #d6d5d5;border-radius:2px;margin-right:5px;vertical-align:middle;line-height:22px;}
+.main .contnets img{vertical-align:middle;}
+
+.page_02 .contnets{padding:395px 0 0 245px;}
+.page_02 .contnets .inp_text{width:177px;height:22px;padding:0 13px;color:#555;background:#fff;border:1px solid #d6d5d5;border-radius:2px;line-height:22px;letter-spacing:-0.05em;}
+
+.contnets{padding-top:50px;}
+.contnets .cont_box h5{color:#806b58;font-size:24px;letter-spacing:-0.15em;padding:40px 0 0 58px;}
+.page .cont_box .bg_cont{width:570px;padding-bottom:3px;border:1px solid #b49e8a;margin:0 auto;margin-top:13px;background:url(../images/contents_bg.png) repeat left top;}
+
+.cont_box .bg_cont textarea{border:10px solid #806b58;width:95%;height:600px;border:0;overflow-y:hidden;padding:10px 10px 10px 10px;font-size:12px;color:#555;line-height:10px;letter-spacing:-0.05em;background:transparent;}
+
+
+.contnets .cont_box .cont_img{min-height:308px;}
+
+
+
+
+
+
+
+.page_bg_A h4{width:570px;color:#fff;font-size:24px;text-align:center;background:#806b58;letter-spacing:-0.15em;margin-bottom:22px;margin-top:22px;}
+
+
+
+
+.page_04 .cont_01{margin-bottom:30px;}
+.page_04 .cont_01 h5{border-bottom:2px solid #0056a2;padding:0 0 10px 42px;font-size:18px;color:#0056a2;letter-spacing:-0.1em;margin-bottom:16px;}
+.page_04 .cont_01 p{padding:0 25px 0 7px;line-height:18px;}
+.page_04 .cont_02 p{font-size:14px;letter-spacing:-0.1em;color:#0056a2;text-align:right;padding-bottom:5px;}
+.page_04 .cont_03{margin-top:30px;letter-spacing:-0.05em;line-height:18px;}
+
+
+.page_bg_B h4{width:100%;padding:0px 0;color:#fff;font-size:24px;text-align:center;background:#0056a2;letter-spacing:-0.15em;margin-bottom:42px;}

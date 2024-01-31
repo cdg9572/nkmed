@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Untitled Document</title>
+<link type="text/css" rel="stylesheet" href="/styles/popup.css" />
+<style type="text/css">
+table { 
+	border-collapse:collapse;
+	border:1px solid #35416C;
+}
+table th {
+	font-size: 1.2em;
+	font-family: "Apple SD Gothic Neo Bold", '맑은 고딕', "돋움", Gulim, "굴림";
+	color: #fff;
+	background-color:#3D4679;
+}
+</style>
+</head>
+
+<body>
+<?
+session_start();
+include "../inc/dbConn.php";
+include "../inc/chkLogin.php";
+include $DOCUMENT_ROOT."/admin/inc/func.php";
+
+if($reserve_name == "" || $jumin_no1 == "" || $jumin_no2 == ""){
+?>
+<script>alert("히스토리는 성명, 주민번호입력 후 확인 할수 있습니다.");self.close();</script>
+<?
+
+}
+?>
+
+<?
+$jumin_no = $jumin_no1."-".$jumin_no2;
+
+$black_query = "select * from reserve_list_new where reserve_name='".$reserve_name."' and jumin_no='".$jumin_no."' and comment!='' order by seq desc";
+$black_result = mysql_query($black_query);
+$black_cnt = mysql_num_rows($black_result);
+
+if($black_cnt >0){
+?>
+
+<table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="">
+	<tr>
+		<td style="border-bottom:1px solid #fff;" align="right"><img src="../_img/blackList.gif" width="219" height="50" alt="" align="absmiddle"/>
+		</td>
+	</tr>
+</table>
+<br>
+<?
+}
+?>
+<table width="100%" border="1" cellpadding="5" cellspacing="0">
+	<tr align="center">
+		<th width="10%" height="30">성명
+		</th>
+		<th width="10%">주민번호
+		</th>
+		<th width="10%">등록ID
+		</th>
+		<th width="60%">코멘트 내용
+		</th>
+		<th width="10%">등록일
+		</th>
+	</tr>
+<?
+$query = "select * from reserve_list_new where reserve_name='".$reserve_name."' and jumin_no='".$jumin_no."' and comment!='' order by seq desc";
+$result = mysql_query($query);
+$cnt = mysql_num_rows($result);
+if($cnt == 0){
+?>
+<!--<script>alert("등록된 코멘트가 없습니다.");self.close();</script>-->
+<?
+}
+while($rows = mysql_fetch_array($result)){
+
+?>
+<tr>
+	<td align="center"><?=$rows[reserve_name]?>
+	</td>
+	<td align="center"><?=$rows[jumin_no]?>
+	</td>
+	<td align="center"><?=$rows[reg_id]?>
+	</td>
+	<td><?=$rows[comment]?>
+	</td>
+	<td align="center"><?=substr($rows[reg_date],0,10)?>
+	</td>
+</tr>
+<?
+}
+?>
+</table>
+</body>
+</html>

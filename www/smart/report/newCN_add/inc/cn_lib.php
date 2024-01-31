@@ -1,0 +1,429 @@
+<?
+
+
+function esti_jian($item_kr, $sex = "m")
+{
+	$sql = "select * from jian_esti where item_kr = '$item_kr' ORDER BY reg_date DESC" ;
+
+    //echo "<br>$sql<br>" ;
+
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$row = mysql_fetch_array($res) ;
+
+	$low = $sex."_low" ;
+	$high = $sex."_high" ;
+
+	if($sex == "M")
+	{
+		$esti_arr[low] = $row[m_low] ;
+		$esti_arr[high] = $row[m_high] ;
+	}
+	else 
+	{
+		$esti_arr[low] = $row[f_low] ;
+		$esti_arr[high] = $row[f_high] ;
+	}
+
+	$esti_arr[min] = $row[min] ;
+	$esti_arr[max] = $row[max] ;
+	
+	$esti_arr[unit] = $row[unit] ;
+
+	
+	if($esti_arr[low] == $esti_arr[high] && !($esti_arr[low] == "0" && $esti_arr[high] == "0"))
+	{
+		$esti_arr[esti_str] = $esti_str = $esti_arr[low] ;
+	}
+	else if($esti_arr[low] == "0" && $esti_arr[high] == "0")
+	{
+		$esti_arr[esti_str] = $esti_str = $esti_arr[low]."~".$esti_arr[high] ;
+
+		//echo "<br>estti XXXXXX:  $item_kr : $esti_str <br> :" ;
+	}
+	else 
+	{
+		$esti_arr[esti_str] = $esti_str = $esti_arr[low]."~".$esti_arr[high] ;
+	}
+
+	
+
+
+	$esti_arr[item] = $item_kr ;
+
+	/*
+	echo "$item_kr :" ;
+	print_r($esti_arr) ;
+	echo "<br><p>" ;
+	*/
+
+	//echo "$item_kr : $esti_str <br> :" ;
+
+	if($esti_str == "~") return "" ;
+	else return $esti_arr ;
+
+
+}
+
+
+
+function get_infoM($no) 
+{
+	$sql = "select * from info_magazine where serial_no = '$no' ORDER BY reg_date DESC" ;
+
+    //echo "<br>$sql<br>" ;
+
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$row = mysql_fetch_array($res) ;
+
+	//$data[title] = $row[title_kr] ;
+	//$data[desc] = $row[desc_kr] ;
+
+	$data[title] = $row[title_cn] ;
+	$data[desc] = $row[desc_cn] ;
+
+	return $data ;
+
+
+}
+
+
+function trans_item_j2h($jian) 
+{
+	//echo "<br> hanaro : $jian <br> ";
+
+	$sql = "select * from standard_item where jian = '$jian' ORDER BY reg_date DESC" ;
+
+    //echo "<br>$sql<br>" ;
+
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$row = mysql_fetch_array($res) ;
+
+	if($row[hanaro])
+	{
+		if($row[hanaro] == "Ã¼Áß_Weight_" ) $row[hanaro]  = Ã¼¡¡Áß_Weight_ ;
+		if($row[hanaro] == "½ÅÀå_Height_" ) $row[hanaro]  = ½Å¡¡Àå_Height_ ;
+
+		return $row[hanaro] ;
+	}
+
+	else return $jian ;
+
+}
+
+//============= ¾ÆÀÌÅÛÀ¸·Î Ãâ·ÂµÇ´Â Áß±¹¾î¹öÁ¯ Ç×¸ñ¸í Ãâ·Â
+function getitem2name($item) 
+{
+	$CN_NAME["ºñ¸¸µµ_BMI_"] = tr_cn("Ã¼Áú·®Áö¼ö(BMI)", $tr_check) ;
+
+	$CN_NAME["Total_Protein"] = tr_cn("ÃÑ´Ü¹é", $tr_check) ;
+	$CN_NAME["Albumin"] = tr_cn("¾ËºÎ¹Î", $tr_check) ; 
+	$CN_NAME["Globulin_"] = tr_cn("±Û·ÎºÎ¸°", $tr_check) ; 
+	$CN_NAME["A_GRatio_"] = tr_cn("A/GºñÀ²", $tr_check) ; 
+	$CN_NAME["TBilirubin"] = tr_cn("ÃÑºô¸®·çºó", $tr_check) ; 
+	$CN_NAME["DBilirubin"] = tr_cn("Á÷Á¢ºô¸®·çºó", $tr_check) ; 
+	$CN_NAME["BilirubinINDIR_"] = tr_cn("°£Á¢ºô¸®·çºó", $tr_check) ; 
+	$CN_NAME["SGOT_AST_"] = tr_cn("AST(SGOT)", $tr_check) ; 
+	$CN_NAME["SGPT_ALT_"] = tr_cn("ALT(SGPT)", $tr_check) ; 
+	$CN_NAME["r_GTP"] = tr_cn("GGT(r-GTP)", $tr_check) ; 
+	$CN_NAME["Alkphosphat"] = tr_cn("ALP", $tr_check) ; 
+	$CN_NAME["AFP_CLIA_"] = tr_cn("AFP(°£¾Ï°Ë»ç)", $tr_check) ; 
+	$CN_NAME["HAVIgG"] = tr_cn("AÇü°£¿°", $tr_check) ; 
+	$CN_NAME["HBsAg_CLIA_"] = tr_cn("BÇü°£¿° Ç×¿ø", $tr_check) ; 
+	$CN_NAME["HBsAb_CLIA_"] = tr_cn("BÇü°£¿° Ç×Ã¼", $tr_check) ; 
+	$CN_NAME["HCV_Ab"] = tr_cn("CÇü°£¿°", $tr_check) ; 
+
+	$CN_NAME["Amylase"] = tr_cn("¾Æ¹Ð¶óÁ¦", $tr_check) ; 
+	$CN_NAME["Glucose"] = tr_cn("Ç÷´ç", $tr_check) ; 
+
+	$CN_NAME["BUN"] = "BUN(".tr_cn("¿ä¼ÒÁú¼Ò", $tr_check).")" ; 
+	$CN_NAME["Creatinine"] = tr_cn("Creatinine", $tr_check) ; 
+	$CN_NAME["BUN_Creatinineratio_"] = tr_cn("B/CºñÀ²", $tr_check) ; 
+	$CN_NAME["Glucose_U_"] = tr_cn("¿ä´ç", $tr_check) ; 
+	$CN_NAME["Bilirubin"] = tr_cn("¿äºô¸®·çºó", $tr_check) ; 
+	$CN_NAME["KetoneBodies"] = tr_cn("¿äÄÉÅæ", $tr_check) ; 
+	$CN_NAME["SpecificG"] = tr_cn("¿äºñÁß", $tr_check) ; 
+	$CN_NAME["PH_U_"] = tr_cn("¿ä»êµµ", $tr_check) ; 
+	$CN_NAME["Protein_U_"] = tr_cn("¿ä´Ü¹é", $tr_check) ; 
+	$CN_NAME["Blood_U_"] = tr_cn("¿äÀûÇ÷±¸", $tr_check) ; 
+	$CN_NAME["WBC_U_"] = tr_cn("¿ä¹éÇ÷±¸", $tr_check) ; 
+	$CN_NAME["Urobilinogen"] = tr_cn("À¯·Îºô¸®³ë°Õ", $tr_check) ; 
+	$CN_NAME["Nitrite"] = tr_cn("¾ÆÁú»ê¿°", $tr_check) ; 
+
+
+	$CN_NAME["Ç÷¾Ð_°í_BP"] = "úì&#21387;"."â¥&#32553;Ñ¢" ; 
+	$CN_NAME["Ç÷¾Ð_Àú_BP"] = "úì&#21387;"."à¢&#24352;Ñ¢" ; 
+	$CN_NAME["CPKtotal"] = tr_cn("CPK ", $tr_check) ; 
+	$CN_NAME["LDH"] = tr_cn("À¯»êÅ»¼öÈ¿¼Ò", $tr_check) ; 
+	$CN_NAME["CRPÁ¤¼º_Qualitative_"] = "CRP(". tr_cn("C-¹ÝÀÀ´Ü¹é", $tr_check) .")" ; 
+	$CN_NAME["Cholesterol"] =  "&#24635;&#32966;Í³âõ(T. Cholesterol)" ;
+	$CN_NAME["HDL_Cholesterol"] = "HDL-&#32966;Í³âõ " ;
+	$CN_NAME["LDL_Cholesterol_"] = "LDL-&#32966;Í³âõ" ;
+	$CN_NAME["Triglyceride"] = "Êöêú ß²&#37231;(Triglyceride)" ;
+	$CN_NAME["Cardiacriskfactor_"] = tr_cn("½ÉÀåº´¹ß»ýÀ§ÇèÁö¼ö", $tr_check) ; 
+
+	$CN_NAME["FreeT3"] = "ß²&#30872;Ë£àÍê«&#27688;ß«" ;
+	$CN_NAME["FreeT4"] = "êý&#31163;ß²&#30872;Ë£àÍê«&#27688;ß«" ;
+	$CN_NAME["TSH"] = "Ë£&#29366;àÍí©Ì­Ì­áÈ" ;
+
+	$CN_NAME["PSA_CLIA_"] = tr_cn("PSA", $tr_check) ; 
+	$CN_NAME["WBC"] = "ÛÜúìÏ¹ " ;
+	$CN_NAME["RBC"] = "&#32418;úìÏ¹" ;
+	$CN_NAME["Hemoglobin"] = " úìßäáÈ" ;
+	$CN_NAME["HCT"] = tr_cn("Çì¸¶ÅäÅ©¸®Æ®", $tr_check) ; 
+	$CN_NAME["Platelet"] = tr_cn("Platelets", $tr_check) ; 
+	$CN_NAME["MCV"] = tr_cn("MCV", $tr_check) ; 
+	$CN_NAME["MCH"] = tr_cn("MCH", $tr_check) ; 
+	$CN_NAME["MCHC"] = tr_cn("MCHC", $tr_check) ; 
+	$CN_NAME["RDW"] = tr_cn("RDW", $tr_check) ; 
+	$CN_NAME["MPV"] = tr_cn("MPV", $tr_check) ; 
+	$CN_NAME["RDW"] = tr_cn("RDW", $tr_check) ; 
+	$CN_NAME["Band"] = tr_cn("Band", $tr_check) ; 
+	$CN_NAME["Segment"] = tr_cn("Seg", $tr_check) ; 
+	$CN_NAME["Lymphocyte"] = tr_cn("Lymp", $tr_check) ; 
+	$CN_NAME["Monocyte"] = tr_cn("Mono", $tr_check) ; 
+	$CN_NAME["Eosinophil"] = tr_cn("Eosin", $tr_check) ; 
+	$CN_NAME["Basophil"] = tr_cn("Baso", $tr_check) ; 
+	$CN_NAME["Metamyeloctye"] = tr_cn("Metamyelocyte", $tr_check) ; 
+	$CN_NAME["Myelocyte"] = tr_cn("Myelocyte", $tr_check) ; 
+	$CN_NAME["Myeloblast"] = tr_cn("Myeloblast", $tr_check) ; 
+	$CN_NAME["NucleatedRBC"] = tr_cn("N.RBC", $tr_check) ; 
+	$CN_NAME["Promyelocyte"] = tr_cn("Promyelocyte", $tr_check) ; 
+
+	$CN_NAME["Iron_Fe_"] = "úì&#28165;&#38081; (Fe)" ;
+	$CN_NAME["UIBC"] = "Üô&#39281;ûú&#32467;ùêÕô( (UIBC)" ;
+	$CN_NAME["TIBC_"] = "&#24635;&#38081;&#32467;ùêÕô (TIBC)" ;
+
+
+	$CN_NAME["Uricacid"] = "Òãß« (Uric Acid)";
+	$CN_NAME["RAFactor"] = "&#31867;&#39118;&#28287;ì×í­(RF)";
+	$CN_NAME["RPRÁ¤¼º_Qualitative_"] = "ØÞÔ¸&#26816;&#26597;";
+	$CN_NAME["HIV_Ab_¥°¥±_"] = "HIVAb";
+	$CN_NAME["Sodium_Na_"] = "Na (&#38048;)";
+	$CN_NAME["Potassium_K_"] = "K(&#38078;)";
+	$CN_NAME["Chloride_Cl_"] = "Cl(&#27695;&#31163;í­)";
+	$CN_NAME["Calcium_Ca_"] = "Ca(&#38041;)";
+	$CN_NAME["Phosphorus_p_"] = "P(ÙéÏõ&#30967;)";
+	$CN_NAME["Magnesium_Mg_"] = "Mg(&#38209;)";
+	$CN_NAME["CEA"] = "CEA";
+	$CN_NAME["CA19_9"] = "CA19-9";
+	$CN_NAME["GFR_"] = tr_cn("GFR", $tr_check) ; 
+
+
+	$CN_NAME["ÆóÈ°·®Áø´ÜPFTest"] = tr_cn("Æó±â´É°Ë»ç", $tr_check) ; 
+	$CN_NAME["Ã»·ÂÁø´ÜHearingEvalution"] = tr_cn("Ã»·Â", $tr_check).tr_cn("Áø´Ü", $tr_check) ; 
+	$CN_NAME["º¹ºÎÁö¹æÀ²Waisthipratio"] = tr_cn("Ã¼Áú·®Áö¼ö(BMI)", $tr_check) ; 
+	$CN_NAME["¾È¾ÐÁø´ÜEvaluationofIOP"] = tr_cn("¾È¾Ð", $tr_check).tr_cn("Áø´Ü", $tr_check) ; 
+	$CN_NAME["¾ÈÀúFundus"] = tr_cn("¾ÈÀú", $tr_check) ; 
+	$CN_NAME["EKG_½ÉÀüµµ_"] = "ãý&#30005;&#22270;" ; 
+	$CN_NAME["µ¿¸Æ°æÈ­ÇùÂøÁø´ÜArteriosclerosisExam"]  = tr_cn("", $tr_check) ; 
+	$CN_NAME["ChestPA_ÈäºÎÃÔ¿µ_"] = "Chest PA(".tr_cn("ÈäºÎÃÔ¿µ" , $tr_check).")"  ; 
+	$CN_NAME["Brain_torsoPET"] = "Brain,torso PET" ; 
+	$CN_NAME["Endoscopy_À§³»½Ã°æ_"] = tr_cn("À§³»½Ã°æ", $tr_check) ; 
+	$CN_NAME["ThyroidSONO_°©»ó¼±_"] = tr_cn("°©»ó¼±", $tr_check) ; 
+	$CN_NAME["LiverSONO_°£_"] = tr_cn("ÃÊÀ½ÆÄ(°£)", $tr_check) ; 
+	$CN_NAME["GBSONO_´ã³¶_"]  = tr_cn("ÃÊÀ½ÆÄ(´ã³¶)", $tr_check) ; 
+	$CN_NAME["KidneySONO_½ÅÀå_"]  = tr_cn("½ÅÀåÃÊÀ½ÆÄ°Ë»ç", $tr_check) ; 
+	$CN_NAME["PancreasSONO_ÃéÀå_"] = tr_cn("ÃéÀåÃÊÀ½ÆÄ", $tr_check) ; 
+	
+	$CN_NAME["SpleenSONO_ºñÀå_"] = tr_cn("ÃÊÀ½ÆÄ(ºñÀå)", $tr_check) ; 
+
+	$CN_NAME["GBSONO_´ã³¶_"] = tr_cn("ÃÊÀ½ÆÄ(´ã³¶)", $tr_check) ; 
+
+
+	$CN_NAME["Mammogram_À¯¹æÃÔ¿µ_"] = tr_cn("À¯¹æÃÔ¿µ", $tr_check) ; 
+	$CN_NAME["BMDL_SpineAp_°ñ¹Ðµµ_"] = tr_cn("°ñ´Ù°øÁõ°Ë»ç", $tr_check) ; 
+	$CN_NAME["PelvisSONO_°ñ¹Ý_"] = tr_cn("ÀÚ±Ã ÃÊÀ½ÆÄ(¿©)", $tr_check) ; 
+	$CN_NAME["BreastSONO_À¯¹æ_"] = tr_cn("À¯¹æÃÊÀ½ÆÄ", $tr_check) ; 
+
+
+
+	//print_r($CN_NAME) ;
+
+	$name = $CN_NAME[$item] ;
+	return $name ;
+}
+
+
+//===================== esti º¯È¯ -- ¹üÀ§
+function kr2cn_replace($str)
+{
+	$str = str_replace("¹Ì¸¸", "ì¤ù»",  $str) ;
+
+	$str = str_replace("ÀÌ»ó", "ì¤ß¾",  $str) ;
+
+	$str = str_replace("Nega 0-1.0", "Negative",  $str) ;
+	$str = str_replace("Negative:<1.0", "Negative",  $str) ;
+	$str = str_replace("Negative:<10.0", "Negative",  $str) ;
+	$str = str_replace("Negative", "Negative",  $str) ;
+//echo "<br>str : $str => $str<br>" ;
+
+	return $str ;
+}
+
+//=== °ø¹éÁ¦°Å // ¸Ç¾Õ ¼ýÀÚ°¡ ÀÖÀ»¶§ "_" Ãß°¡ // () -> _ º¯°æ // ¸¶Áö¸· * Á¦°Å // "/" -> "_" ¼öÁ¤
+function eli($str)
+{
+		$c0 = $str ;
+		$c0 = preg_replace("/\s+/", "",  $c0) ;
+
+		//echo "<br> °ø¹éÁ¦°Å : $c0 ";
+
+		$c0 = str_replace("/", "_",  $c0) ;
+
+		//echo "<br> \/ Á¦°Å : $c0 ";
+
+		preg_match("/^[0-9]*/", $c0, $n_check);
+		if($n_check[0] ||$n_check[0] == "0" )
+		{
+			$c0 = "_".$c0 ;
+		}
+		//echo "<br>¾ÕÀÚ¸® ¼ýÀÚÁ¦°Å : $c0" ;
+
+		$c0 = str_replace("*", "_",  $c0) ;
+		$c0 = str_replace("(", "_",  $c0) ;
+		$c0 = str_replace(")", "_",  $c0) ;
+		$c0 = str_replace("[", "_",  $c0) ;
+		$c0 = str_replace("]", "_",  $c0) ;
+		$c0 = str_replace(".", "",  $c0) ;
+		$c0 = str_replace("/", "_",  $c0) ;
+		$c0 = str_replace("-", "_",  $c0) ;
+		$c0 = str_replace("-", "_",  $c0) ;
+		$c0 = str_replace("+", "_",  $c0) ;
+		$c0 = str_replace(",", "_",  $c0) ;
+
+		
+
+		//echo "<br> * ( ) -> _ : $c0" ;
+
+		return $c0 ;
+}
+
+
+//== mult lang¿¡¼­ ÀÓ½Ã °Ë»ö ¹®ÀÚ¿­À» ÅëÇÑ Áß±¹¾î ÃßÃâ 
+function tr_cn($desc_kr, $tr_check =0) 
+{
+	
+	$desc_kr = str_replace("Positive","&#38451;àõ", $desc_kr) ;
+	$desc_kr = str_replace("Negative","&#38452;àõ", $desc_kr) ;
+
+	
+
+	if($tr_check == 1) 
+	{
+		return $desc_kr ;
+		exit;
+	}
+
+	$desc_kr = preg_replace("/\s+/", "",  $desc_kr) ;
+
+
+	$sql = "select * from multi_lan where desc_kr = '$desc_kr' ORDER BY reg_date DESC" ;
+
+
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$row = mysql_fetch_array($res) ;
+
+
+	$re = nl2br($row[desc_cn] ) ;
+
+//echo "<br>$sql : $re <br>" ;
+
+	if(!$re) 
+	{
+		return $desc_kr ;
+	}
+	else return $re ;
+	
+		
+	//return $desc_kr ;
+}	
+
+
+//=== Ä­ ¶ç¿ì±â 
+
+function h($height)
+{
+	$tt = $height."px";
+	echo " 
+		<div style='height:$tt ;'> </div> " ;
+}
+
+
+function testing_dsp2($str)
+{
+
+	$test_ip = '112.144.16.75' ;
+	$r_addr = $_SERVER['REMOTE_ADDR'];
+
+
+	if($r_addr == $test_ip)
+	{
+		if($str == "post")
+		{
+			$return = "<br>*** Post value *** <br>" ;
+			foreach ($_POST as $k => $v) {
+				$return .= "\$_POST[$k] => $v <br> ";
+			}
+			
+		}
+		else if($str == "get")
+		{
+			$return = "<br>*** Get value *** <br>" ;
+			foreach ($_GET as $k => $v) {
+				$return .= "\$_GET[$k] => $v <br> ";
+			}
+		}
+		else if($str == "session")
+		{
+			$return = "<br>*** Session value *** <br>" ;
+			foreach ($_SESSION as $k => $v) {
+				$return .= "\$_SESSION[$k] => $v <br> ";
+			}
+		}
+		else if(is_array($str))
+		{
+			$return = "<br>*** Array *** <br>" ;
+			foreach ($str as $k => $v) {
+				$return .= "\$data[$k] => $v <br> ";
+			}
+		}
+		
+		else
+		{
+			$return = "<br>*** string value *** <br>".$str ;
+		}
+
+		echo "$return <br> ******************** <br>";
+
+	}
+
+}
+
+
+// === ¹è¿­ Ãâ·Â 
+function arr_dsp($arr, $doc_root = "")
+{
+
+	
+	echo "**<font  ><b> arr Ãâ·Â * $doc_root </b><br>
+		 " ;
+
+	foreach($arr as $key=>$value){
+
+		/*
+		echo "
+				<tr>
+				  <td>   $key   </td>
+				  <td>    $value  </td>
+				  <td>   $"."data"."[".$key."]   </td>
+				</tr>
+		" ;
+		*/
+		echo "&nbsp;&nbsp;&nbsp;".$key . " &nbsp;&nbsp; \t\t =>&nbsp;&nbsp; " . $value . "  || &nbsp;&nbsp;&nbsp;&nbsp; "."$"."data"."[".$key."]</br>"; 
+	}
+
+	//echo"</table><br></font>";
+
+}
+
+?>

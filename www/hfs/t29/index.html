@@ -1,0 +1,231 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+testing_dsp("session") ;
+$_SESSION['cpname']  = "구래26통";
+
+//echo $_SERVER['REMOTE_ADDR'];
+
+?>
+<script>alert('사전예약은 종료되었습니다.');self.close();</script>
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원_구래26통 주민의료지원 모바일 신청</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<style>
+header{
+	padding-left:30px;
+	padding-right:30px;
+}
+header span{
+	color:yellow;
+	font-size:20px;
+	font-weight:bold;
+}
+.topdiv{
+	padding:10px 20px 10px 20px;
+	border-bottom-left-radius : 20px;
+	border-bottom-right-radius : 20px;
+}
+
+.mcont{
+	padding-left:40px;
+	padding-right:40px;
+}
+
+.mcont div{
+	padding:5px;
+	border:1px solid black;
+}
+
+.mcont2{
+	padding:20px 40px;
+}
+
+.mcont2 div{
+	padding:10px;
+	text-align:left;
+	background-color:#9DCFFF;
+}
+
+.tr1{
+	border:1px solid #cdcdcd;
+}
+
+.td1{
+	background-color:yellow;
+}
+
+</style>
+</head>
+
+<body>
+	<header>
+		<div class="topdiv" style="background-color:#2478FF;">
+			<span>[송주법]</span><br>
+			<span style="padding-left:20px;">구래 26통 주민의료지원사업 안내</span>
+		</div>
+	</header>
+	<p></p>
+	<nav class="mcont">
+		<div>
+		<span>* 해당 사업은 한전 송주법 주민지원사업 시행에 따른
+  구래동 26통 주민(공동)대표 주관 주민지원사업입니다.</span><br>
+		<span>* 당해년도 주민지원사업 분야는 의료지원사업으로
+  ❶ 종합검진 ❷ 대상포진 예방접종 ❸ 독감 예방접종 중 1가지 선택으로 진행합니다.</span>
+  		</div>
+	</nav>
+<form name="frm" id="frm" method="post" action="post.html" target="ifrm" onsubmit="return CheckForm();">
+	<nav class="mcont2" style="text-align:center;">
+		<div>
+		<span>상기 사업에 관련하여 주민대표,  한전, 의료기관에 필요한 개인정보 수집 및 활용에 동의합니다.</span><br>
+		&nbsp;&nbsp;&nbsp;수집내용 : 성명, 전화번호, 동/호수
+  		</div>
+			<input type="radio" name="YN" value="Y" onclick="chk_btn();"/>동의함
+			<input type="radio" name="YN" value="N" onclick="alert('미동의시 신청을 할 수 없습니다.');"/>동의안함 *신청불가 
+	</nav>
+
+	<nav class="mcont2" style="text-align:center;">
+		<table width='100%' border='1' cellspacing='0' style="border:1px solid #cdcdcd;">
+		<tr><td width='60'>선택</td><td>의료지원 항목 선택</td></tr>
+		<tr>
+			<td width='60'><input type="radio" name="cho" value="1" onclick=" ck( this.value ); "/></td>
+			<td align='left'>종합검진 (90여 항목)<br>
+			[혈액&소변]<br>
+순환기계, 간기능, A/B/C간염, 당뇨, 췌장기능, 
+철결핍성, 빈혈, 혈액질환, 전해질, 신장기능, 
+골격계질환, 감염성, 갑상선기능, 부갑상선기능, 
+종양표지자, 생체나이, 소변 등 80여 항목<br>
+<hr>
+[장비]<br>
+신장, 체중, 혈압, 시력, 청력, 체성분, 안압, 심전도, 흉부X-ray, 위일반내시경,  (간/담낭/비장/췌장/신장)복부초음파, 
+(여)자궁경부세포진, (여)유방촬영
+			</td>
+			</tr>
+			<tr>
+				<td width='60'><input type="radio" name="cho" value="2" onclick=" ck( this.value ); "/></td>
+				<td align='left'>대상포진 예방접종(1회) 1명</td>
+			</tr>
+			<tr>
+				<td width='60'><input type="radio" name="cho" value="3" onclick=" ck( this.value ); "/>
+				<select id="pcnt" name="pcnt" style="display:none;">
+					<option value="">선택</option>
+					<option value="1">1명</option>
+					<option value="2">2명</option>
+					<option value="3">3명</option>
+					<option value="4">4명</option>
+				</select></td>
+				<td align='left'>독감 예방접종(1회)  최대4명</td>
+			</tr>
+		</table>
+		
+		<span style="text-align:left;">신청정보</span>
+		<table width='100%'>
+		<tr class="tr1"><td class="td1" width='25%'>동</td>
+			<td width='25%'><input type="text" name="dong" value="" size='9'/></td>
+			<td class="td1" width='25%'>호</td>
+			<td width='25%'><input type="text" name="ho" value="" size='9'/></td></tr>
+		<tr class="tr1"><td class="td1">성명</td>
+			<td><input type="text" name="sname" value="" size='9'/></td>
+			<td class="td1">휴대폰</td>
+			<td><input type="text" name="tel" value="" size='9'/></td></tr>
+		<tr><td colspan='4'><button id="btn" style="display:none;">신청하기</button></td></tr>
+		</table>
+	</nav>
+
+	
+</form>	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+<iframe id="ifrm" name="ifrm" src="" height="150" style="display:;"></iframe>
+</body>
+</html>
+
+<script>
+
+function CheckForm(){
+	
+	if( document.all.YN[0].checked == false ){
+		alert( "개인정보 수집 동의하지 않으면 진행이 안됩니다." );
+		return false;
+	}
+	
+	if( document.all.cho[0].checked == false 
+		&& document.all.cho[1].checked == false 
+		&& document.all.cho[2].checked == false ){
+		alert( "의료지원 항목을 선택 해주세요" );
+		return false;
+	}
+
+	if( document.all.cho[2].checked && document.all.pcnt.value=="" ){
+		alert( "독감 접종인원을 선택해주세요." );
+		document.all.pcnt.focus();
+		return false;
+	}
+
+	if( document.all.dong.value=="" ){
+		alert( "동을 입력해주세요." );
+		document.all.dong.focus();
+		return false;
+	}
+
+	if( document.all.ho.value=="" ){
+		alert( "호를 입력해주세요." );
+		document.all.ho.focus();
+		return false;
+	}
+
+	if( document.all.sname.value=="" ){
+		alert( "성함을 입력해주세요." );
+		document.all.sname.focus();
+		return false;
+	}
+
+	if( document.all.tel.value=="" ){
+		alert( "연락처를 입력해주세요." );
+		document.all.tel.focus();
+		return false;
+	}
+
+	return true;
+}
+
+function chk_btn(){
+	document.getElementById("btn").style.display = "";
+}
+
+function ck( v ){
+	if( v == 3 ){
+		document.getElementById("pcnt").style.display = "";
+	}else{
+		document.getElementById("pcnt").style.display = "none";
+		document.getElementById("pcnt").value = "";
+	}
+}
+</script>

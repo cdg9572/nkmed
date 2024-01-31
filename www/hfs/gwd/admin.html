@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>김포시 장애인복지시설연합회 전용 간편예약사이트_[관리자]</title>
+	<link rel="stylesheet" type="text/css" href="/css/boilerplate.css">
+	<link rel="stylesheet" type="text/css" href="/css/defult.css">
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<style>
+	body	{	text-align: center;	}
+	.mtd	{	margin-top: 20px;	}
+	label	{	min-width:100px!important;border:1px solid green;	}
+	.fdiv	{	display:inline-block;margin-top: 10px; font-weight:bold;color:#717170;	}
+	.fdiv input{	border-radius: 5px;	border:1px solid lightblue; padding:5px;}
+	.btnFont{	margin-top: 20px; font-weight:bold; padding:5px 20px ; border-radius: 5px;	border:1px solid lightblue; background-color:#c2f0ff; color:#717170;}
+	.contDiv table th, td {	font-size:0.9em;border-right:1px solid #717170;border-bottom:1px solid #717170;padding:5px;	}
+	.contDiv table th {	 }
+	.contDiv table td {	font-size:0.8em; }
+	.cp	{	cursor:pointer;	}
+	</style>
+</head>
+<body>
+	<div class='mtd'>
+		<h2>뉴고려병원 장애인복지시설연합회 예약관리</h2>
+		<form autocomplete="off" method="post" action="">
+		<div class='fdiv' >예약자명:</div>
+		<div class='fdiv'><input type="text" name="gname" value="<?=$_POST['gname'];?>" size="14" maxlength="10" required/>
+		<button class='btnFont'>조회하기</button></div>
+		</form>
+	</div>
+	<div class='contDiv' style='display: inline-block;margin-top:10px;'>
+		<table>
+		<tr><th>No</th>
+			<th>예약자명</th>
+			<th>연락처</th>
+			<th>예약구분</th>
+			<th>예약희망일</th>
+			<th>예약메모</th>
+			<th>작성일</th>
+			<th>처리사항</th>
+			<th>처리메모</th></tr>
+<?
+	include "../inc/func.php";
+	include "../inc/dbConn.php";
+
+	$sql = " SELECT * FROM gwd_revlist WHERE gname like '%".$_POST['gname']."%' ";
+	if( $r = mysql_query($sql) ){
+		$no=1;
+		while($row=mysql_fetch_array($r)){
+			$oc = " onclick=\"GWD_MOD('".$row['RIDX']."');\" ";
+			$gubun = $row['DEPT']=="" ? $row['GJTYPE'] : $row['DEPT'];
+			echo "<tr><td>$no</td>
+						<td>".$row['GNAME']."</td>
+						<td>".$row['GTEL']."</td>
+						<td>".$gubun."</td>
+						<td>".$row['RDATE']."</td>
+						<td>".nl2br($row['MEMO'])."</td>
+						<td>".$row['WDT']."</td>
+						<td class='cp' $oc>".$row['WSTATE']."</td>
+						<td class='cp' $oc>".$row['AMEMO']."</td></tr>";
+			$no++;
+		}
+	}
+?>
+		</table>
+	</div>
+</body>
+</html>
+<script>
+function GWD_MOD(v){
+	window.open('mod.html?v='+v,'수정','width=500,height=500');
+}
+</script>

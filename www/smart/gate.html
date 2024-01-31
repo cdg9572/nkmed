@@ -1,0 +1,75 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "./inc/func.php";
+include "./inc/dbConn.php";
+
+testing_dsp("session") ;
+
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<img src="images/logo.jpg" class="top_logo" alt=""/>
+	</header>
+	
+	<nav>
+		<ul class="menu_list clearfix">
+			<li><table width='100%' bgcolor="#DAD9FF" cellpadding="20"><tr><td width='100' align="center"><a href="index.html" style="font-size:30pt;color:black" >종검예약</a></td></tr></table></li>
+			<li><table width='100%' bgcolor="#86E57F" cellpadding="20"><tr><td width='100' align="center"><a href="http://student.nkhospital.net" style="font-size:30pt;color:black" >학생검진</a></td></tr></table></li>
+		</ul>
+	</nav>
+	
+	<section>
+		<a href = "tel:1661-7779">
+		<img src="images/callcenter.jpg" class="callcenter" alt="문의"/>
+		</a>
+	</section>
+	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+
+<!--
+<?
+
+
+//include $_SERVER["DOCUMENT_ROOT"]."/goSMSHeader.html";  //== 전송해야할 것이 있는 경우 발송
+// <iframe name="company_proc" width=500 height=300 src="<?=$_SERVER["DOCUMENT_ROOT"]?>/goSMSHeader.html"></iframe>
+
+?>
+-->
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+/* CSS Document */
+
+* {font-family:sans-serif;}
+
+a { text-decoration: none; }
+
+.top_logo, .sub_logo { margin-bottom:10px; width:100%; }
+.menu_list { list-style: none; padding:0px; margin:0px; }
+.menu_list li { float:left; width: 50%; }
+.menu_list li a img { width:100%; height:auto; }
+.callcenter { width:100%; height:auto; }
+
+h2 { font-size:16px; margin:0px 0px 0px 10px; padding:10px 5px; }
+footer {padding:20px 0px; }
+footer p {
+	font-size:12px; color: #666; text-align:center;
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight:normal;
+}
+
+.menu_list_sub { list-style: none; padding:0px; margin:0px; }
+.menu_list_sub li { float:left; width: 33%; }
+.menu_list_sub li:last-child { width:34%; }
+.menu_list_sub li a { display:block; line-height:40px; border-right: 1px solid #aaa; background:#ccc; color: #333; font-size:12px; text-align:center; }
+.menu_list_sub li:last-child a { border-right: none; }
+.menu_list_sub li a.active { background:#333; color:#FFF; border-right: 1px solid #f0f0f0; }
+
+
+
+.pageCtr { list-style: none; padding:0px; margin:0px; }
+.pageCtr li { float:left; width: 50%; }
+
+
+.tbst01 { margin-bottom: 15px; }
+.tbst01 thead {}
+.tbst01 thead tr {}
+.tbst01 thead tr th { background: #D6E9F6; color: #187DC0; font-size: 13px; border: 1px solid #187DC0; padding:5px; }
+.tbst01 tbody {}
+.tbst01 tbody tr {}
+.tbst01 tbody tr td { padding:10px 5px; vertical-align:middle; text-align:center; font-size:12px; border-bottom: 1px solid #D6E9F6; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+
+.tbst02 { margin-bottom: 15px; }
+.tbst02 tr th { background: #D6E9F6; color: #187DC0; font-size: 13px; border: 1px solid #187DC0; padding:5px; }
+.tbst02 tr td { padding: 5px; vertical-align:middle; text-align:left; font-size:12px; border: 1px solid #187DC0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+
+.intextst01 { width: 95%; border: none; padding:5px; }
+
+
+.btnst01, .btnst01:visited { background: #25b07d; color: #FFF; display:block; text-align:center; padding:15px 0px; }
+.btnst01:hover { background: #129666; color: #FFF; }
+
+.btnst02, .btnst02:visited { background: #e93647; color: #FFF; display:block; text-align:center; padding:15px 0px; }
+.btnst02:hover { background: #C72E3D; color: #FFF; }

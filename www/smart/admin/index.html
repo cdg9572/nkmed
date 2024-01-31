@@ -1,0 +1,464 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+include $DOCUMENT_ROOT."/admin/inc/chkLogin.php";
+
+//include $DOCUMENT_ROOT."/admin/_inc/test_func.php";  //=== 테스트용 함수 
+//include "./inc/dbConn.php";
+//include  $DOCUMENT_ROOT."/inc/func.php";
+//include $DOCUMENT_ROOT."/admin/inc/func.php";
+//include "./inc/stnoble_func.php";
+
+
+include "./inc/conf.php";
+
+mysql_query("set names utf8;");
+
+
+if($sess_AID != ""){
+	$mtime = filemtime($HTTP_SERVER_VARS["SCRIPT_FILENAME"]); 
+	$gmt_mtime = gmdate("D, d M Y H:i:s", $mtime).' GMT'; 
+	if ($HTTP_IF_MODIFIED_SINCE == $gmt_mtime) { 
+			header("HTTP/1.1 304 Not Modified"); 
+			exit; 
+	} 
+	header("Last-Modified: ".$gmt_mtime); 
+
+	$dir = $dir ? $dir : "reserve";
+	$menu = $menu ? $menu : "ReserveList";
+	$tbl = $tbl ? $tbl : "smart_reserve";
+
+
+
+
+	if($_SESSION['sess_ASP'] && $_SESSION['sess_ALV'] == "5")	// == 업체관리자일 경우 
+	{
+		$dirName = $dirName ? $dirName : "관리자전용";
+		$dir = $dir ? $dir : "manager";
+		$menu = $menu ? $menu : "DashBoard";
+	}
+	else 
+	{
+		$dirName = $dirName ? $dirName : "관리자전용";
+		$dir = $dir ? $dir : "manager";
+		$menu = $menu ? $menu : "Manager";
+
+	}
+
+
+
+$linkPage = $menu.$form;
+$subject_code = $subjectCode ? $subjectCode : $subject_code;
+$course_code = $courseCode ? $courseCode : $course_code;
+$state = $stateCode ? $stateCode : $state;
+
+
+//testing_dsp ( "test : $dir || $menu" );
+//testing_dsp ( $dir."/inc".$linkPage.".html" );
+
+//읽기/쓰기/수정모드
+if($seq) {
+	$que_data = MYSQL_QUERY("select * from ".$tbl." where seq='".$seq."'");
+	//echo "select * from ".$tbl." where seq='".$seq."' and view_state='Y'";
+	//exit;
+	@$row_data = MYSQL_FETCH_ARRAY($que_data);
+}
+//echo $form;
+if($form == "View" && $seq) {
+	//echo "update ".$tbl." set hit=hit+1 where seq='".$seq."'";
+	MYSQL_QUERY("update ".$tbl." set hit=hit+1 where seq='".$seq."'");
+}
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원 Administaration</title>
+
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/font.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+
+<link href="/admin/ecss/reset.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/admin/ecss/sidenav_acc.css">
+
+
+<link href="/admin/ecss/page_style.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/defult.css" rel="stylesheet" type="text/css">
+
+
+
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="../respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script>
+ WebFont.load({
+  custom: {
+   families: ['Nanum Barun Gothic'],
+   urls: ['http://cleanb04.cafe24.com/mcmacademy/css/font.css']
+  }
+ });
+</script>
+<link rel="stylesheet" type="text/css" href="http://cleanb04.cafe24.com/mcmacademy/css/featherlight.min.css">
+</head>
+<body>
+	<div class="gridContainer02 clearfix ">
+	
+		<div class="container clearfix">
+		
+			<div class="navBox">
+				<div class="logo"><img src="./images/logo.png" width="200" alt=""/></div>
+				<div style="position:relative; height:50px;" class="clearfix">
+					<span class="userName"><?= $_SESSION[sess_ANM] ?> 님</span>
+					<a href="#" onclick="top.location.href='./procLogout.php';" class="logOutBtn" onfocus="blur()">LOGOUT</a>
+				</div>
+				
+				<nav class="menuBar">
+					<ul>
+						
+						<li>
+							<a href="./index.html?dir=manager&menu=Manager" <? if($dir == 'manager' || $dir == 'code' ) echo "class='actived'"; ?>>사이트 관리</a>
+							<?
+							if($dir == 'manager' || $dir == 'code' ){
+							?>
+							<ul class="subMenu">
+								<li><a href="./index.html?dir=manager&menu=Manager" <? if($dir == 'manager' && $menu =='Manager') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Manager') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>운영자 관리</a></li>
+
+								<li><a href="./index.html?dir=manager&menu=Op"  <? if($dir == 'manager' && $menu =='Op') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Op') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>영업자 ASP 관리</a></li>
+
+
+								<li><a href="#" onclick="alert('단체검진을 위해 사용됩니다 \n업데이트중입니다')" <? if($dir == 'manager' && $menu =='Company') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Company') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>사업장 관리</a></li>
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+
+						<li>
+							<a href="./index.html?dir=reserve&menu=ReserveList" <? if($dir == 'reserve'  || $dir == 'mj' ) echo "class='actived'"; ?>>예약 관리</a>
+							<?
+							if($dir == 'reserve' || $dir == 'mj'){
+							?>
+							<ul class="subMenu">
+								<!--<li><a href="./index.html?dir=reserve&menu=ReserveListIR&tbl=smart_ir"  <? if($dir == 'reserve' && $menu =='ReserveListIR') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='ReserveListIR') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>독감예방접종 2019 <?=GetCnt2("smart_ir");?></a></li>-->
+
+								<!--li><a href="./index.html?dir=reserve&menu=Student&tbl=smart_r_student"  <? if($dir == 'reserve' && $menu =='Student') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='Student') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>학생검진</a></li-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList24&tbl=tblMulti" <? if($dir == 'reserve' && $menu =='ReserveList24') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='ReserveList24') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>홈페이지_NEW[작업중]</a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList" <? if($dir == 'reserve' && $menu =='ReserveList') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='ReserveList') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>홈페이지_예약 <?=GetCnt("smart_reserve", "");?><font style='font-size:0.8em;color:blue;'>관리메모없는경우</font></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=" <? if($dir == 'reserve'&& $menu =='ReserveListN2019' && $_GET[cpname]  =='') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>거래처용_예약관리 <?=GetCnt("smart_resscomp  ", "");?></a></li>
+								<!--li><a href="./index.html?dir=mj&menu=ML"  <? if($dir == 'mj' && $menu =='ML') echo "class='subActived'"; ?>><? if($dir == 'mj' && $menu =='ML') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>문진표 관리[사용]</a></li-->
+
+								<li style='display:none;'><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=뉴고려병원2023" <? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2023') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2023') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>뉴고려병원2023 <?=GetCnt("smart_resscomp  ", "뉴고려병원2023");?></a></li>
+
+								<li style='display:none;'><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=뉴고려병원2022" <? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2022') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2022') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>뉴고려병원2022 <?=GetCnt("smart_resscomp  ", "뉴고려병원2022");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=22년맘까페" <? if($dir == 'reserve' && $_GET[cpname]  =='22년맘까페') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='22년맘까페') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>맘까페 2022 <?=GetCnt("smart_resscomp  ", "22년맘까페");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=파주시청" <? if($dir == 'reserve' && $_GET[cpname]  =='파주시청') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='파주시청') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>파주시청 <?=GetCnt("smart_resscomp  ", "파주시청");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=에스비비테크" <? if($dir == 'reserve' && $_GET[cpname]  =='에스비비테크') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='에스비비테크') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>에스비비테크 <?=GetCnt("smart_resscomp  ", "에스비비테크");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포시청" <? if($dir == 'reserve' && $_GET[cpname]  =='김포시청') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포시청') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포시청 <?=GetCnt("smart_resscomp  ", "김포시청");?></a></li>
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=뉴고려병원2020" <? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2020') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2020') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>뉴고려병원2020 <?=GetCnt("smart_resscomp  ", "뉴고려병원2020");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=2019가을맞이" <? if($dir == 'reserve' && $_GET[cpname]  =='2019가을맞이') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='2019가을맞이') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>2019가을맞이 <?=GetCnt("smart_resscomp  ", "2019가을맞이");?></a></li>
+
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=2019썸머" <? if($dir == 'reserve' && $_GET[cpname]  =='2019썸머') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='2019썸머') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>2019썸머 <?=GetCnt("smart_resscomp  ", "2019썸머");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=19봄맞이" <? if($dir == 'reserve' && $_GET[cpname]  =='19봄맞이') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='19봄맞이') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19봄맞이 <?=GetCnt("smart_resscomp  ", "19봄맞이");?></a></li>
+
+-->
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포도시관리공단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포도시관리공단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포도시관리공단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포도시관리공단 (구.시설관리) <?=GetCnt("smart_resscomp  ", "김포도시관리공단");?></a></li>
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포시설관리공단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포시설관리공단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포시설관리공단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포시설관리공단 (20년까지) <?=GetCnt("smart_resscomp  ", "김포시설관리공단");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포문화재단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포문화재단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포문화재단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포문화재단 예약관리 <?=GetCnt("smart_resscomp  ", "김포문화재단");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포복지재단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포복지재단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포복지재단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포복지재단 예약관리 <?=GetCnt("smart_resscomp  ", "김포복지재단");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포시청소년육성재단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포시청소년육성재단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포시청소년육성재단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포시청소년육성재단 예약관리 <?=GetCnt("smart_resscomp  ", "김포시청소년육성재단");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=넥센타이어" <? if($dir == 'reserve' && $_GET[cpname]  =='넥센타이어') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='넥센타이어') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>넥센타이어 <?=GetCnt("smart_resscomp  ", "넥센타이어");?></a></li>
+
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=캠코" <? if($dir == 'reserve' && $_GET[cpname]  =='캠코') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='캠코') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>캠코 <?=GetCnt("smart_resscomp  ", "캠코");?></a></li>
+
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=KT" <? if($dir == 'reserve' && $_GET[cpname]  =='KT') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='KT') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>KT <?=GetCnt("smart_resscomp  ", "KT");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=한국무역" <? if($dir == 'reserve' && $_GET[cpname]  =='한국무역') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='한국무역') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>한국무역보험공사 <?=GetCnt("smart_resscomp  ", "한국무역");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=기술보증" <? if($dir == 'reserve' && $_GET[cpname]  =='기술보증') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='기술보증') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>기술보증기금 <?=GetCnt("smart_resscomp  ", "기술보증");?></a></li>
+
+								<!--li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=뉴고려병원2019" <? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2019') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2019') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년가족검진 <?=GetCnt("smart_resscomp  ", "뉴고려병원2019");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포고양산업단지" <? if($dir == 'reserve' && $_GET[cpname]  =='김포고양산업단지') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포고양산업단지') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년김포고양산업단지 예약관리 <?=GetCnt("smart_resscomp  ", "김포고양산업단지");?></a></li-->
+
+								
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=김포시학원연합회" <? if($dir == 'reserve' && $_GET[cpname]  =='김포시학원연합회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포시학원연합회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년김포학원연합회 예약관리 <?=GetCnt("smart_resscomp  ", "김포시학원연합회");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN19&tbl=smart_resscomp&cpname=ROTC" <? if($dir == 'reserve' && $_GET[cpname]  =='ROTC') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='ROTC') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년 ROTC 예약관리 <?=GetCnt("smart_resscomp  ", "ROTC");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN19&tbl=smart_resscomp&cpname=ROTC김포지회" <? if($dir == 'reserve' && $_GET[cpname]  =='ROTC김포지회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='ROTC김포지회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년 ROTC김포지회 예약관리 <?=GetCnt("smart_resscomp  ", "ROTC김포지회");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN19&tbl=smart_resscomp&cpname=ROTC고양지회" <? if($dir == 'reserve' && $_GET[cpname]  =='ROTC고양지회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='ROTC고양지회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년 ROTC고양지회 예약관리 <?=GetCnt("smart_resscomp  ", "ROTC고양지회");?></a></li>
+							
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=교원공제" <? if($dir == 'reserve' && $_GET[cpname]  =='교원공제') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='교원공제') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년 교원공제 예약관리 <?=GetCnt("smart_resscomp  ", "교원공제");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=미용협회" <? if($dir == 'reserve' && $_GET[cpname]  =='미용협회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='미용협회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>19년 미용협회 예약관리 <?=GetCnt("smart_resscomp  ", "미용협회");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=자동차정비조합" <? if($dir == 'reserve' && $_GET[cpname]  =='자동차정비조합') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='자동차정비조합') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>자동차정비조합 예약관리 <?=GetCnt("smart_resscomp  ", "자동차정비조합");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=서남환경" <? if($dir == 'reserve' && $_GET[cpname]  =='서남환경') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='서남환경') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>서남환경 예약관리 <?=GetCnt("smart_resscomp  ", "서남환경");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=하성상공인협의회" <? if($dir == 'reserve' && $_GET[cpname]  =='하성상공인협의회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='하성상공인협의회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>하성상공인협의회 예약관리 <?=GetCnt("smart_resscomp  ", "하성상공인협의회");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN2019&tbl=smart_resscomp&cpname=월곶상공인협의회" <? if($dir == 'reserve' && $_GET[cpname]  =='월곶상공인협의회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='월곶상공인협의회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>월곶상공인협의회 예약관리 <?=GetCnt("smart_resscomp  ", "월곶상공인협의회");?></a></li>
+
+								<!--<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=ROTC김포지회" <? if($dir == 'reserve' && $_GET[cpname]  =='ROTC김포지회') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='ROTC김포지회') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>ROTC김포지회 예약관리 <?=GetCnt("smart_resscomp  ", "ROTC김포지회");?></a></li>-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=김포대학" <? if($dir == 'reserve' && $_GET[cpname]  =='김포대학') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포대학') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포대학교 예약관리 <?=GetCnt("smart_resscomp  ", "김포대학");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=땡큐이벤트" <? if($dir == 'reserve' && $_GET[cpname]  =='땡큐이벤트') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='땡큐이벤트') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>땡큐이벤트 예약관리 <?=GetCnt("smart_resscomp  ", "땡큐이벤트");?></a></li>
+
+								<!--<li><a href="./index.html?dir=reserve&menu=ReserveListIR&tbl=smart_ir&cpname=독감사전예약관리" <? if($dir == 'reserve' && $_GET[cpname]  =='독감사전예약관리') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='독감사전예약관리') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>독감사전예약관리 <?=GetCnt2("smart_ir");?></a></li>-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=특별" <? if($dir == 'reserve' && $_GET[cpname]  =='특별') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='특별') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>특별이벤트 예약관리 <?=GetCnt("smart_resscomp  ", "특별");?></a></li>
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=썸머이벤트" <? if($dir == 'reserve' && $_GET[cpname]  =='썸머이벤트') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='썸머이벤트') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>썸머이벤트 예약관리 <?=GetCnt("smart_resscomp  ", "썸머이벤트");?></a></li>	-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=소사라이온스" <? if($dir == 'reserve' && $_GET[cpname]  =='소사라이온스') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='소사라이온스') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>소사라이온스 예약관리 <?=GetCnt("smart_resscomp  ", "소사라이온스");?></a></li>
+
+								
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=김포아모레" <? if($dir == 'reserve' && $_GET[cpname]  =='김포아모레') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포아모레') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포아모레 예약관리 <?=GetCnt("smart_resscomp  ", "김포아모레");?></a></li>	
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=김포시설관리공단" <? if($dir == 'reserve' && $_GET[cpname]  =='김포시설관리공단') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포시설관리공단') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포시설관리공단 예약관리 <?=GetCnt("smart_resscomp  ", "김포시설관리공단");?></a></li>-->
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveListN&tbl=smart_resscomp&cpname=봄맞이" <? if($dir == 'reserve' && $_GET[cpname]  =='봄맞이') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='봄맞이') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>봄맞이 예약관리 <?=GetCnt("smart_resscomp  ", "봄맞이");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList2018&tbl=smart_resscomp&cpname=뉴고려병원2018" <? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2018') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='뉴고려병원2018') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>뉴고려가족검진 예약관리 <?=GetCnt("smart_resscomp  ", "뉴고려병원2018");?></a></li>	-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList2018&tbl=smart_resscomp&cpname=김포신협" <? if($dir == 'reserve' && $_GET[cpname]  =='김포신협') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='김포신협') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포신협가족검진 예약관리 <?=GetCnt("smart_resscomp  ", "김포신협");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList2018&tbl=smart_resscomp&cpname=외식업중앙회김포지부" <? if($dir == 'reserve' && $_GET[cpname]  =='외식업중앙회김포지부') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='외식업중앙회김포지부') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>외식업중앙회김포지부 예약관리 <?=GetCnt("smart_resscomp  ", "외식업중앙회김포지부");?></a></li>
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveList2018&tbl=smart_resscomp&cpname=한국공항공사" <? if($dir == 'reserve' && $_GET[cpname]  =='한국공항공사') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname]  =='한국공항공사') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>한국공항공사 예약관리 <?=GetCnt("smart_resscomp  ", "한국공항공사");?></a></li> 
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList2&tbl=smart_resscomp&cpname=김포시청" <? if($dir == 'reserve' && $menu =='ReserveList2') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='ReserveList2') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포시청 예약관리 <?=GetCnt("smart_resscomp  ", "김포시청");?></a></li>-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList3&tbl=smart_resscomp&cpname=김포농협조합원" <? if($dir == 'reserve' && $_GET[cpname] =='김포농협조합원') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='김포농협조합원') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포농협조합원 예약관리 <?=GetCnt("smart_resscomp  ", "김포농협조합원");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList3&tbl=smart_resscomp&cpname=고촌농협조합원" <? if($dir == 'reserve' && $_GET[cpname] =='고촌농협조합원') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='고촌농협조합원') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>고촌농협조합원 예약관리 <?=GetCnt("smart_resscomp  ", "고촌농협조합원");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList3&tbl=smart_resscomp&cpname=김포축협조합원" <? if($dir == 'reserve' && $_GET[cpname] =='김포축협조합원') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='김포축협조합원') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포축협조합원 예약관리 <?=GetCnt("smart_resscomp  ", "김포축협조합원");?></a></li>
+								
+								<li><a href="./index.html?dir=reserve&menu=ReserveList4&tbl=smart_resspers&cpname=영업자개별" <? if($dir == 'reserve' && $_GET[cpname] =='영업자개별') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='영업자개별') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>영업자개별 <?=GetCnt("smart_resspers  ", "영업자개별");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList4&tbl=smart_resspers&cpname=종검스페셜검진" <? if($dir == 'reserve' && $_GET[cpname] =='종검스페셜검진') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='종검스페셜검진') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>건소행 <?=GetCnt("smart_resspers  ", "종검스페셜검진");?></a></li>
+<!--
+								<li><a href="./index.html?dir=reserve&menu=ReserveList5&tbl=smart_resscomp&cpname=김포세무서" <? if($dir == 'reserve' && $_GET[cpname] =='김포세무서') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='김포세무서') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포세무서 <?=GetCnt("smart_resscomp  ", "김포세무서");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList5&tbl=smart_resscomp&cpname=김포경찰서" <? if($dir == 'reserve' && $_GET[cpname] =='김포경찰서') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='김포경찰서') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포경찰서 <?=GetCnt("smart_resscomp  ", "김포경찰서");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList5&tbl=smart_resscomp&cpname=신김포농협임직원" <? if($dir == 'reserve' && $_GET[cpname] =='신김포농협임직원') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='신김포농협임직원') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>신김포농협임직원 <?=GetCnt("smart_resscomp  ", "신김포농협임직원");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList5&tbl=smart_resscomp&cpname=김포도시공사" <? if($dir == 'reserve' && $_GET[cpname] =='김포도시공사') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='김포도시공사') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>김포도시공사 <?=GetCnt("smart_resscomp  ", "김포도시공사");?></a></li>
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList6&tbl=smart_resscomp&cpname=메인비즈" <? if($dir == 'reserve' && $_GET[cpname] =='메인비즈') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='메인비즈') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>메인비즈 <?=GetCnt("smart_resscomp  ", "메인비즈");?></a></li>	-->
+
+								<li><a href="./index.html?dir=reserve&menu=ReserveList6&tbl=smart_resscomp&cpname=학부모검진" <? if($dir == 'reserve' && $_GET[cpname] =='학부모검진') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $_GET[cpname] =='학부모검진') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?> 학부모검진 <?=GetCnt("smart_resscomp  ", "학부모검진");?></a></li>
+
+							</ul>
+							<?
+							}
+							?>
+						</li>
+						
+						<li>
+							<a href="./index.html?dir=reservation&menu=Calendar" <? if($dir == 'reservation'  || $dir == 'slotset') echo "class='actived'"; ?>>관리자 예약관리</a>
+							<?
+							if($dir == 'reservation'  || $dir == 'slotset'){
+							?>
+							<ul class="subMenu">
+								<!--<li><a href="./index.html?dir=reservation&menu=ReserveList" <? if($dir == 'reservation' && $menu =='ReserveList') echo "class='subActived'"; ?>><? if($dir == 'reservation' && $menu =='ReserveList') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 List</a></li>-->
+
+								<li><a href="./index.html?dir=reservation&menu=Calendar"  <? if($dir == 'reservation' && $menu =='Calendar') echo "class='subActived'"; ?>><? if($dir == 'reservation' && $menu =='Calendar') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 관리</a></li>
+
+								<li><a href="./index.html?dir=slotset&menu=Reserve2"  <? if($dir == 'slotset' && $menu =='Reserve2') echo "class='subActived'"; ?>><? if($dir == 'slotset' && $menu =='Reserve2') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 조회</a></li>
+
+
+								<li><a href="./index.html?dir=slotset&menu=Situation" <? if($dir == 'slotset' && ($menu =='Situation' || $menu == "Ban" || $menu == "Target" || $menu == "Holiday")) echo "class='subActived'"; ?>><? if($dir == 'slotset' && ($menu =='Situation' || $menu == "Ban" || $menu == "Target" || $menu == "Holiday")) echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약슬롯 설정</a></li>
+
+								<li><a href="./index.html?dir=slotset&menu=Scope"  <? if($dir == 'slotset' && $menu =='Scope') echo "class='subActived'"; ?>><? if($dir == 'slotset' && $menu =='Scope') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약범위 설정</a></li>
+
+
+
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+						
+
+
+
+
+
+
+<!--
+						<li>
+							<a href="./index.html?dir=exam&menu=TotalExamReg" <? if($dir == 'exam'  ) echo "class='actived'"; ?>>검진 관리</a>
+							<?
+							if($dir == 'exam'){
+							?>
+							<ul class="subMenu">
+								<li><a href="./index.html?dir=exam&menu=Desc" <? if($dir == 'exam' && $menu =='Desc') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='Desc') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>Desc. 관리</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=TotalExamReg" <? if($dir == 'exam' && $menu =='TotalExamReg') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='TotalExamReg') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>종합검진 결과등록</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=TotalExam" <? if($dir == 'exam' && $menu =='TotalExam') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='TotalExam') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>종합검진 ListUp</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=GenExamReg" <? if($dir == 'exam' && $menu =='GenExamReg') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='GenExamReg') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>일반검진 결과등록</a></li>
+								<li><a href="./index.html?dir=exam&menu=GenExam" <? if($dir == 'exam' && $menu =='GenExam') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='GenExam') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>일반검진 Listup</a></li>
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+						<li><a href="#">CRM 관리</a></li>
+						<li><a href="#">맞춤형 서비스 관리</a></li>
+						<li><a href="#">통계 관리</a></li>
+						<li><a href="#">게시판 관리</a></li>
+-->
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >맞춤형 서비스 관리</a></li>
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >통계 관리</a></li>
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >게시판 관리</a></li>
+					</ul>
+				</nav>
+			</div>
+			
+			
+			<div class="mainContent">
+			
+				<?include $dir."/inc".$linkPage.".html";?>
+				
+			</div>
+
+			</div>
+			
+		
+		
+		<div class="footer">
+			<p>MCM ACADEMY. All Rights Reserved.</p>
+		</div>
+		
+
+</body>
+</html>
+<?
+}
+
+?>
+
+<?
+function GetCnt( $tbl, $val ){
+	
+	if( $tbl=='smart_reserve' ) {
+		$sql = " SELECT count(*) CNT FROM smart_reserve 
+					WHERE STATE_FLAG = '예약대기' 
+						AND USE_YN = 'Y'
+						and name <> '' 
+						and admin_comment = ''
+						and reg_date > '2023-12-01' ";
+	}else{
+		if($val==""){
+			$sql = " SELECT COUNT(*) CNT FROM $tbl
+				WHERE STATEFLAG = '예약대기' AND USE_YN = 'Y' ";
+		}else{
+			$sql = " SELECT COUNT(*) CNT FROM $tbl
+				WHERE CPNAME = '$val' AND STATEFLAG = '예약대기' AND USE_YN = 'Y' ";
+		}
+	}
+
+#echo $sql;
+	if($result=mysql_query($sql) ){
+		$row = mysql_fetch_array($result);
+		if( $row[CNT] == 0 ){
+			$tmp = "<font color='BLACK'><b>[ $row[CNT] ]</b></font>";
+		}else{
+			$tmp = "<font color='BLUE'><b>[ $row[CNT] ]</b></font>";
+		}
+	}else{
+		$tmp = "오류";
+	}
+	return $tmp;
+}
+
+function GetCnt2( $tbl ){
+	$sql = " SELECT COUNT(*) CNT FROM $tbl
+WHERE state_flag = '처리대기' ";
+#echo $sql;
+	if($result=mysql_query($sql) ){
+		$row = mysql_fetch_array($result);
+		if( $row[CNT] == 0 ){
+			$tmp = "<font color='BLACK'><b>[ $row[CNT] ]</b></font>";
+		}else{
+			$tmp = "<font color='BLUE'><b>[ $row[CNT] ]</b></font>";
+		}
+	}else{
+		$tmp = "오류";
+	}
+	return $tmp;
+}
+?>

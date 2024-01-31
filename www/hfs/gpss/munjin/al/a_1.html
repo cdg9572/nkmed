@@ -1,0 +1,102 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+
+if( $r = mj_am_info( $_POST[mseq] ) ){
+	$row = mysql_fetch_array($r);
+	if( $row[midx] == "" ){
+		$sql = " INSERT INTO smart_mj_am ( midx, MNCAFDATM ) VALUES ( '".$_POST[mseq]."', '".date("YmdHis")."' ) ";
+		mysql_query($sql);
+		if( $r = mj_am_info( $_POST[mseq] ) ){
+			$row = mysql_fetch_array($r);
+			$MNCAGT1BM = $row[MNCAGT1BM];
+			$MNCAGT1RS = $row[MNCAGT1RS];
+		}
+	}else{
+		$MNCAGT1BM = $row[MNCAGT1BM];
+		$MNCAGT1RS = $row[MNCAGT1RS];
+	}
+}
+
+?>
+ <body topmargin=0>
+ <form name="fm" method="post" action="a_2.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+
+	<p style="font-size:12px; color:red;">※ 아래 문항을 읽고 자신의 현재 상태에 해당하는 답에 체크해 주십시오. 
+	<!--<font color="black">1/<?=$tp;?></font>--></p>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">1. 현재 신체 어느 부위에든 <B>불편한 증상</B>이 있습니까?</th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT1BM" value="1" <? if( $MNCAGT1BM == "1" ){ echo "checked"; } ?>  />예 
+						(증상 : <input type="text"  name="MNCAGT1RS"  value="<?=$MNCAGT1RS;?>" /> )&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT1BM" value="2" <? if( $MNCAGT1BM != "1" ){ echo "checked"; } ?> />아니오</td></tr>
+					</table>
+					</td>
+				</tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">2. 최근6개월 간 특별한 이유 없이 5Kg 이상의 체중감소가 있었습니까? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT2BM" value="1" <? if( MNCAGT2BM != "2" ){ echo "checked"; } ?>> 아니오 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT2BM" value="2" <? if( MNCAGT2BM == "2" ){ echo "checked"; } ?> >체중감소 
+						( <input type="text"  name="MNCAGT2RS" size='5'  onchange="CheckKg( this.value )" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2' />kg )</td></tr>
+					</table>
+					</td>
+				</tr>
+	</table>
+	<table width='100%' cellspacing='10'>
+	<tr align='center'>
+	<td width='100%' height="40" bgcolor="#86E57F" onclick="CheckREG();" style="cursor:hand"><b>다음설문</b></td></tr>
+	</table>
+	<!--<input type="submit" value="다음설문"/>-->
+	</form>
+ </body>
+ </html>
+
+ <script>
+ function CheckREG( ){
+	 if(  document.fm.MNCAGT1BM[0].checked ){
+		 if( document.fm.MNCAGT1RS.value==""){
+			 document.fm.MNCAGT1RS.focus();
+			 alert( "내용을 입력하셔야 합니다." );
+			 return false;
+		}
+	}						  
+
+	 document.fm.submit();
+	 return true;
+}
+ function CheckKg( val ){
+	
+	 if ( val < 5 ){
+		 alert( "5kg 미만은 적용되지 않습니다." );
+		 document.fm.MNCAGT2BM[0].checked = true;
+		 document.fm.MNCAGT2RS.value = "";
+	 }else{
+		 document.fm.MNCAGT2BM[1].checked = true;
+	 }
+	 
+}
+
+	parent.document.frm.gatxt.value= "작성중";
+	parent.document.frm.gatxt.style.color = "black";
+ </script>

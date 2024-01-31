@@ -1,0 +1,32 @@
+<?
+$page_no = 13 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					13. 과거에 유방에 양성 종양으로 진단받은 적이 있습니까?<br/>
+					<span style=" font-size:11px; color:#A0C3E9;">
+						(양성 종양이란 악성종양인 암이 아닌 기타 물혹, 덩어리 등을 말합니다.)
+					</span>
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="예" <?=getChecked($v, "예")?> > 예</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="아니요" <?=getChecked($v, "아니요")?> > 아니요</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="모름" <?=getChecked($v, "모름")?> > 모르겠음</td>
+			</tr>
+		</table>
+	
+	

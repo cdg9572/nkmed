@@ -1,0 +1,152 @@
+<?php
+
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 안내";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-4";$dep3 = "0-4-0";
+
+?>
+<style>
+	.group-list {display: flex;justify-content: space-between;}
+	.tableType-01 table th {background-color: #f8f8f8;}
+	@media screen and (max-width:720px) {
+		.tableType-01 table {
+			table-layout: auto;
+		}
+	}
+</style>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li><a href="page15-1.html">종합 건강검진</a></li>
+						<li class="active"><a href="page15-2.html">국가 암 검진</a></li>
+						<li><a href="page15-3.html">건강보험공단 검진</a></li>
+						<li><a href="page15-4.html">채용 건강검진</a></li>
+						<li><a href="page15-5.html">청소년 종합검진</a></li>
+						<li><a href="page15-6.html">영유아 건강검진</a></li>
+						<li><a href="page15-7.html">특수 건강검진</a></li>
+						<li><a href="page15-8.html">기업체&단체검진</a></li>
+					</ul>
+				</div>
+				<img src="/resource-pc/images/service-152-1.png" alt="">
+				<div class="sub-middle-tit">
+					<h2>국가 암 검진</h2>
+					<span class="bar"></span>
+					<p>
+						암은 우리나라 사망 원인 1위를 차지할 정도로 위험한 질환입니다.<br>
+						따라서 조기에 발견하여 치료하기 위해 정기적으로 검진을 받는 것이 중요합니다.<br>
+						<b style="font-weight: 500;">뉴고려병원 6대 국가 암 검진 프로그램을 소개합니다.</b>
+					</p>
+				</div>
+				<h3 class="cont-tit">국가 암 검진 Program</h3>
+				<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col style="width: 15%;">
+							<col>
+							<col style="width: 15%;">
+							<col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>암종</th>
+								<th>검진대상</th>
+								<th>검진주기</th>
+								<th>검진방법</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td align="center" style="font-weight: 500;">위암</td>
+								<td>40세 이상 남녀</td>
+								<td align="center">2년</td>
+								<td>위 내시경 검사</td>
+							</tr>
+							<tr>
+								<td align="center" style="font-weight: 500;">간암</td>
+								<td>40세 이상 남녀 / 간암발생 고위험군</td>
+								<td align="center">6개월</td>
+								<td>간초음파검사 + 혈청알파태아단백검사</td>
+							</tr>
+							<tr>
+								<td align="center" style="font-weight: 500;">대장암</td>
+								<td>50세 이상 남녀</td>
+								<td align="center">1년</td>
+								<td>분별잠혈검사 : 이상소견 시 대장내시경검사</td>
+							</tr>
+							<tr>
+								<td align="center" style="font-weight: 500;">유방암</td>
+								<td>40세 이상 여성</td>
+								<td align="center">2년</td>
+								<td>유방촬영술</td>
+							</tr>
+							<tr>
+								<td align="center" style="font-weight: 500;">자궁경부암</td>
+								<td>20세 이상 여성</td>
+								<td align="center">2년</td>
+								<td>자궁경부세포검사</td>
+							</tr>
+							<tr>
+								<td align="center" style="font-weight: 500;">폐암</td>
+								<td>54세 이상 74세 이하의 남녀 폐암 발생 고위험군</td>
+								<td align="center">2년</td>
+								<td>저선량흉부 CT</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="cont-tit"><small>암 예방 생활 수칙</small></h3>
+				<ul class="img-list">
+					<li>
+						<img src="/resource-pc/images/service-152-2.png" alt="">
+						<p>금연</p>
+					</li>
+					<li>
+						<img src="/resource-pc/images/service-152-3.png" alt="">
+						<p>금주</p>
+					</li>
+					<li>
+						<img src="/resource-pc/images/service-152-4.png" alt="">
+						<p>올바른 식습관</p>
+					</li>
+					<li>
+						<img src="/resource-pc/images/service-152-5.png" alt="">
+						<p>주기적인 운동</p>
+					</li>
+					<li>
+						<img src="/resource-pc/images/service-152-6.png" alt="">
+						<p>체중 조절</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

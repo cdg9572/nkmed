@@ -1,0 +1,50 @@
+<?	
+
+if($_GET[m]=="" or $_GET[m]=="s"){
+	$mm = " '', '등록' ";
+}elseif($_GET[m]=="j"){
+	$mm = " '예약처리' ";
+}elseif($_GET[m]=="e"){
+	$mm = " '수검완료' ";
+}elseif($_GET[m]=="b"){
+	$mm = " '부도' ";
+}
+
+$sql = " SELECT * FROM nkh_overseas WHERE STATE IN ( $mm ) "; ?>
+<div class="p3">
+	<table class="table is-bordered is-striped is-narrow is-hoverable  is-small">
+	<tr><th>No</th>
+		<th>에이전시</th>
+		<th>담당자</th>
+		<th>담당자연락처</th>
+		<th>고객명</th>
+		<th>희망예약일</th>
+		<th>예약상품</th>
+		<th>메모</th></tr>
+	<?
+	if($data=mysql_query($sql)){
+		$no=1;
+		while($row = mysql_fetch_array($data)){
+			$oc = " onclick=\"viewmd('".$row[OIDX]."');\" ";
+			echo "<tr><td class='txc curp' $oc>$no</td>
+					<td>".$row[AGENCY]."</td>
+					<td>".$row[AGNAME]."</td>
+					<td>".$row[AGTEL]."</td>
+					<td>".$row[PNAME]."</td>
+					<td>".$row[RDT]."</td>
+					<td>".$row[RTYPE]."-".$row[RDEPT]."</td>
+					<td>".$row[RMEMO]."</td></tr>";
+			$no++;
+		}
+	}
+		
+	?>
+	</table>
+</div>
+
+<script>
+function viewmd(v){
+	//alert(v);
+	window.open("oar_adm_rm.html?v="+v,"","width=600,height=800");
+}
+</script>

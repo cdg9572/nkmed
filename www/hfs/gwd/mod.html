@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>김포시 장애인복지시설연합회 전용 간편예약사이트_[관리자_수정]</title>
+	<link rel="stylesheet" type="text/css" href="/css/boilerplate.css">
+	<link rel="stylesheet" type="text/css" href="/css/defult.css">
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<style>
+	button{ margin-top:10px;	}
+	</style>
+</head>
+<?
+	include "../inc/func.php";
+	include "../inc/dbConn.php";
+	$sql = " SELECT * FROM gwd_revlist WHERE RIDX='%".$_GET[v]."%' ";
+	if( $r = mysql_query($sql) ){
+		$row=mysql_fetch_array($r);
+	}
+?>
+<body>
+<div style="padding:20px;">
+	<form method="post" action="mod_post.html">
+	<input type="hidden" name="ridx" value='<?=$_GET[v];?>'/>
+	처리상황 : 
+	<select name="WSTATE" id="">
+		<option value="등록" <? echo ($row['WSTATE']=="등록" or $row['WSTATE']=="") ? "selected" : ""; ?>>등록</option>
+		<option value="예약처리" <? echo ($row['WSTATE']=="예약처리") ? "selected" : ""; ?>>예약처리</option>
+		<option value="보류" <? echo ($row['WSTATE']=="보류") ? "selected" : ""; ?>>보류</option>
+	</select><br>
+	처리메모 : 
+	<textarea name="AMEMO" cols='40'><?=$row['AMEMO'];?></textarea><br>
+	<button>저장</button>&nbsp;&nbsp;&nbsp;<button type="button" onclick="location.href='mod_post.html?v=<?=$_GET[v];?>';" style='font-weight:bold;color:red;'>삭제</button>
+	</form>
+</div>
+</body>
+</html>

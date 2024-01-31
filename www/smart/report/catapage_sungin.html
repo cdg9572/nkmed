@@ -1,0 +1,550 @@
+<?
+include "./inc/topConf.html";
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="cataPage09">
+<div data-role="header" data-position="fixed">
+		<h1><a href="index.html" class="head_title"><img src="images/logoFull.png" height="30" alt="21세기하나내과의원 로고"/></a></h1>
+		<a href="index.html" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		<a href="login.html?mode=D"  rel="external" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power">Logout</a>
+	</div>
+<div data-role="content" class="cataBG_03">
+		<div class="banner"></div>
+		<h2 class="h2_title">성인병검사</h2>
+
+		<!--horizontal navigation tab start-->
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a class="ui-btn-active" href="#cata01-01" data-ajax="false">고지혈증검사</a></li>
+                    <li><a href="#cata01-02" data-ajax="false">당뇨병 검사</a></li>
+					<li><a href="#cata01-03" data-ajax="false">췌장 검사</a></li>
+					<li><a href="#cata01-04" data-ajax="false">성병 검사</a></li>
+
+					
+                </ul>
+            </div>
+            <div id="cata01-01" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<?
+					$src_item = "TCholesterol_총콜레스테롤_" ;
+					$dsp_item = "총콜레스테롤(Total-Cholesterol)" ;
+					$data = ${"data_".$src_item}.${"data_총콜레스테롤"} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "HDL_Cholesterol" ;
+					$dsp_item = "HDL콜레스테롤(HDL-Cholesterol)" ;
+					$data = ${"data_".$src_item}.${"data_HDL_콜레스테롤"} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "LDL_Cholesterol" ;
+					$dsp_item = "LDL콜레스테롤(LDL-Cholesterol(실측정)" ;
+					$data = ${"data_".$src_item}.${"data_LDL_콜레스테롤"} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "Triglyceride_중성지방_" ;
+					$dsp_item = "중성지방(Trigliyceride)" ;
+					$data = ${"data_".$src_item}.${"data_중성지방_TG_"} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "Homocysteine_FPIA법_" ;
+					$dsp_item = "호모시스테인(Homocystein)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "아포지단백B" ;
+					$dsp_item = "아포지단백B" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+				
+				 //=====================================================
+
+			   $src_item = "CRF_심장위험인자_" ;
+					$dsp_item = "심장위험인자" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+					
+				?>
+
+
+				
+				</ul>
+
+				<?=get_category_desc("고지혈증검사", 1)?>
+
+
+            </div>
+
+			<div id="cata01-02" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<?
+					$src_item = "Glucose_FBS_공복혈당_" ;
+					$dsp_item = "혈당(Glocose)(식전)" ;
+					$data = ${"data_".$src_item}.${"data_혈당_식전_"} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+					$src_item = "HbA1c_당화혈색소_" ;
+					$dsp_item = "당화혈색소(HbA1c)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+					$src_item = "C_peptide" ;
+					$dsp_item = "C-peptide" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+								?>
+
+
+				
+				</ul>
+
+				<?=get_category_desc("당뇨병 검사")?>
+
+            </div>
+
+
+			<div id="cata01-03" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+					$src_item = "Amylase_아밀라제_" ;
+					$dsp_item = "아밀라제(Amylase)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   	$src_item = "Lipase_리파제_" ;
+					$dsp_item = "리파제(Lipase)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			  
+					
+				?>
+				</ul>
+
+				<?=get_category_desc("췌장 검사")?>
+            </div>
+
+
+
+			<div id="cata01-04" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+					$src_item = "VDRL_비특이매독반응_" ;
+					$dsp_item = "VDRL (비특이매독반응)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+
+					$src_item = "매독반응_비특이_정량_RPR" ;
+					$dsp_item = "매독검사(RPR)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   	$src_item = "매독특이항체_TPHA_" ;
+					$dsp_item = "매독특이항체(TPHA)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			    	$src_item = "AIDS" ;
+					$dsp_item = "인간 면역 결핍 바이러스(HIV Ab)" ;
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+					
+				?>
+				</ul>
+
+				<?=get_category_desc("성병 검사")?>
+            </div>
+
+			
+
+            
+            <!--horizontal navigation tab end-->
+	</div>
+	<?
+		include "./inc/bottom.html";
+	?>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function(){
+
+function changeNavTab(left) {
+    var $tabs = $("div[data-role=navbar] li a");
+    var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+    var nextidx = 0;
+    if (left) {
+        nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+    } else {
+        nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+    }
+    $tabs.eq(nextidx).click();
+}
+
+$("#tabs").on("swipeleft", function (event) {
+    changeNavTab(true);
+});
+$("#tabs").on("swiperight", function (event) {
+    changeNavTab(false);
+});
+
+
+});//]]> 
+
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once $GP -> INC_WWW . '/count_inc.php';
+$title = "뉴고려커뮤니티";
+$page_title = "뉴고려소개";
+$page_sub_title = "채용정보";
+
+include_once "../inc/head.php";
+$dep1 = "2";$dep2 = "2-1";$dep3 = "2-1-4";
+
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr06.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+
+			<div id="innerCont">
+				<!-- 게시판 검색 -->
+				<div class="search">
+					<input type="text" placeholder="검색어를 입력하세요.">
+					<button><img src="/resource-pc/images/search-gray.png" alt="검색"></button>
+				</div>
+				<!-- 게시판 목록 -->
+				<ul class="cardList typeRecruit">
+					<li>
+						<a href="#">
+							<span class="subject">2021년도 신규 및 경력 간호사 채용 공고</span>
+							<span class="txt">2021년도 신규 및 경력간호사 채용공고뉴고려병원은 김포한강신도시에 위치하고 있으며 2009년도 5월에 ...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="subject">2021년도 신규 및 경력 간호사 채용 공고</span>
+							<span class="txt">2021년도 신규 및 경력간호사 채용공고뉴고려병원은 김포한강신도시에 위치하고 있으며 2009년도 5월에 ...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="subject">2021년도 신규 및 경력 간호사 채용 공고</span>
+							<span class="txt">2021년도 신규 및 경력간호사 채용공고뉴고려병원은 김포한강신도시에 위치하고 있으며 2009년도 5월에 ...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+				</ul>
+				<!-- 글스기 수정 삭제 등등.. 버튼 -->
+				<div id="btn-box" class="right">
+					<a href="#" class="btn bg-red">글쓰기</a>
+					<a href="#" class="btn bg-deepblue">수정</a>
+				</div>
+				<!-- 페이지네이션 -->
+				<div class="pagination">
+					<a href="#none" title="처음으로 이동하기" class="btn prev">
+						<img src="/resource-pc/images/page-all-left.png" width="100%" alt="">
+					</a>
+					<a href="#none" title="이전으로 이동하기" class="btn prev">
+						<img src="/resource-pc/images/page-left.png" width="100%" alt="">
+					</a>
+
+					<strong class="btn current" title="현재 페이지">1</strong>
+					<a href="#none" class="btn">2</a>
+
+					<a href="#none" title="다음 페이지 이동하기" class="btn next">
+						<img src="/resource-pc/images/page-right.png" width="100%" alt="">
+					</a>
+					<a href="#none" title="마지막 페이지 이동하기" class="btn next">
+						<img src="/resource-pc/images/page-all-right.png" width="100%" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

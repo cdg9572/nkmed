@@ -1,0 +1,32 @@
+<?
+$page_no = 14 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					14. 피임약을 복용하고 계시거나 과거에 복용하신 적이 있습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="없음" <?=getChecked($v, "없음")?> > 피임약을 복용한 적 없음.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="~1" <?=getChecked($v, "~1")?> > 1년 미만 복용</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1~" <?=getChecked($v, "1~")?> > 1년 이상 복용</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="모름" <?=getChecked($v, "모름")?> > 모르겠음.</td>
+			</tr>
+		</table>
+	
+	

@@ -1,0 +1,18 @@
+<?
+header("Content-Type:text/html;charset=utf-8") ;
+include "inc/dbConn.php";
+include  "inc/func.php";
+$sql = " SELECT * FROM `gr28` 
+	WHERE 1 
+	order by dong, cast(ho as unsigned) ";
+
+echo "<table>";
+if( $r = mysql_query($sql) ){
+	while($row=mysql_fetch_array($r)){
+		echo "<tr><td>".$row['DONG']."</td>
+				<td>".$row['HO']."</td>
+				<td>".$row['PNAME']."</td></tr>";
+	}
+}
+echo "</table>";
+?>

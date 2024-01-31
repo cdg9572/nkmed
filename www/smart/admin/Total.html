@@ -1,0 +1,59 @@
+<? header("Content-Type:text/html;charset=utf-8") ;
+include "../inc/dbConn.php"; ?>
+종합검진 예약정보<br>
+<table border='1' cellspacing='0' style="font-size:10pt;">
+<tr><td>예약유형</td><td>예약자</td><td>연락처</td><td>예약일</td><td>검진상품</td><td>선택검사</td>
+	<td>등록일</td><td>메모</td></tr>
+<?
+
+# 뉴고려병원 기본 검진 예약
+$sql = GetSql( "smart_reserve", "reg_date", $_GET[dt] );
+if( $r = mysql_query($sql) ){	
+	while($row=mysql_fetch_array($r) ){
+		echo "<tr><td>기본홈페이지</td><td>".$row[name]."</td><td>".$row[mobile_no]."</td>
+			<td>".$row[reserve_date]." ".$row[reserve_hour].":".$row[reserve_min]."</td>
+			<td>".$row[exam_category_il]." ".$row[exam_category_am]."".$row[item_category]."</td>
+			<td>&nbsp;</td><td>".$row[reg_date]."</td><td>&nbsp;</td>
+			</tr>";
+	}
+}
+
+$sql = GetSql( "smart_resscomp", "wdt", $_GET[dt] );
+if( $r = mysql_query($sql) ){	
+	while($row=mysql_fetch_array($r) ){
+		echo "<tr><td>".$row[CPNAME]."</td><td>".$row[RNAME]."</td>
+			<td>".$row[RTEL]."</td>
+			<td>".$row[RDATE]." ".$row[RHOUR].":".$row[RMIN]."</td>
+			<td>".$row[CTYPE]."</td><td>".$row[CSTYPE1]."<br/>".$row[CSTYPE2]."<br/>".$row[CSTYPE3]."<br/></td>
+			<td>".$row[WDT]."</td><td>담당:".$row[PNAME]."<br>".$row[MEMO]."</td></tr>";
+	}
+}
+?>
+</table>
+<br>학생검진 예약정보<br>
+<table border='1' cellspacing='0' style="font-size:10pt;">
+<tr><td>학교명</td><td>학생명</td><td>연락처</td><td>학년</td><td>반</td><td>번호</td>
+	<td>예약일시</td><td>비번</td><td>등록일시</td></tr>
+<?
+$sql = GetSql( "smart_r_student", "wdt", $_GET[dt] );
+if( $r = mysql_query($sql) ){	
+	while($row=mysql_fetch_array($r) ){
+		echo "<tr><td>".$row[HNAME]."</td><td>".$row[SNAME]."</td>
+			<td>".$row[TEL]."</td><td>".$row[HY]."</td><td>".$row[BAN]."</td><td>".$row[BNUM]."</td>
+			<td>".$row[RDATE]." ".$row[RTIME]."</td><td>".$row[PW]."</td>
+			<td>".$row[WDT]."</td></tr>";
+	}
+}
+mysql_close();
+
+?>
+</table>
+
+<?
+function GetSql( $tbl, $wdt, $td ){
+	$tmp = "";
+	$tmp = " SELECT * FROM ".$tbl."	 WHERE substring( ".$wdt.", 1, 10 ) = '".$td."' ";
+	return $tmp;
+}
+
+?>

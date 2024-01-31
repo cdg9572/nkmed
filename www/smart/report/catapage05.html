@@ -1,0 +1,201 @@
+<?
+include "./inc/topConf.html";
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21C smart Medical Clinic</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="cataPage07">
+<div data-role="header" data-position="fixed">
+		<h1><a href="index.html" class="head_title"><img src="images/logoFull.png" height="30" alt="21세기하나내과의원 로고"/></a></h1>
+		<a href="index.html" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		<a href="login.html?mode=D" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power">Logout</a>
+</div>
+
+<div data-role="content" class="cataBG_05">
+		<div class="banner"></div>
+		<h2 class="h2_title"><?=tr_cn("췌장 검사", $tr_check)?></h2>
+
+		<!--horizontal navigation tab start-->
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <!--<li><a class="ui-btn-active" href="#cata05-01" data-ajax="false"><?=tr_cn("초음파", $tr_check)?></a></li>
+                    <!--<li><a href="#cata05-01" data-ajax="false"><?=tr_cn("", $tr_check)?></a></li>-->
+					<li><a class="ui-btn-active" href="#cata05-01" data-ajax="false"><?=tr_cn("혈당", $tr_check)?><?=tr_cn("검사", $tr_check)?></a></li>
+					<li><a href="#cata05-02" data-ajax="false"><?=tr_cn("췌장암표지자", $tr_check)?><?=tr_cn("검사", $tr_check)?></a></li>
+
+                </ul>
+            </div>
+
+			<!--
+            <div id="cata05-01" data-inset="true" class="comentBox">
+				 <ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("초음파", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("복부초음파", $tr_check)?> :  <?=tr_cn($data_복부초음파, $tr_check) ?> </td>
+						</tr>
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("초음파(췌장)", $tr_check)?>
+            </div>
+			-->
+
+
+            <div id="cata05-01" data-inset="true" class="comentBox">
+				<ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("혈당", $tr_check)?><?=tr_cn("검사", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("혈당", $tr_check)?> :  <?=$data_혈당_Glucose_  ?> </td>
+						</tr>
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_혈당_Glucose_, $tr_check) ?> </td>
+						</tr>
+
+						<tr><td colspan=2 height=10>&nbsp;</td></tr>
+
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("당화혈색소", $tr_check)?> :  <?=tr_cn($data_당화혈색소, $tr_check)?> </td>
+						</tr>
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_당화혈색소, $tr_check) ?> </td>
+						</tr>
+						<!--
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						-->
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("혈액(당뇨)", $tr_check)?>
+            </div>
+
+
+			<div id="cata05-02" data-inset="true" class="comentBox">
+				 <ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("췌장암표지자", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("CA 19-9", $tr_check)?> :  <?=$data_췌장암검사_CA_19_9_ ?> </td>
+						</tr>
+						<tr>
+							<th width="100" rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_췌장암검사_CA_19_9_, $tr_check) ?> </td>
+						</tr>
+						<!--
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						-->
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("종양표지자", $tr_check)?>
+
+            </div>
+
+			<!--
+			<div id="cata05-03" data-inset="true" class="comentBox">
+				<ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="80" rowspan=20><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("", $tr_check)?> :  <?=$data_ ?> </td>
+						</tr>
+						<tr>
+							
+							<td> <?=tr_cn("", $tr_check)?> :  <?=$data_?> </td>
+						</tr>
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("")?>
+            </div>
+			-->
+            <!--horizontal navigation tab end-->
+	</div>
+	
+	<?
+		include "./inc/bottom.html";
+	?>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function(){
+
+function changeNavTab(left) {
+    var $tabs = $("div[data-role=navbar] li a");
+    var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+    var nextidx = 0;
+    if (left) {
+        nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+    } else {
+        nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+    }
+    $tabs.eq(nextidx).click();
+}
+
+$("#tabs").on("swipeleft", function (event) {
+    changeNavTab(true);
+});
+$("#tabs").on("swiperight", function (event) {
+    changeNavTab(false);
+});
+
+
+});//]]> 
+
+</script>
+</body>
+</html>

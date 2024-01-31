@@ -1,0 +1,36 @@
+<?
+include "../inc/dbConn.php";
+
+if( $_POST['dong'] <> "" ){
+	$wsql = " and DONG = '".$_POST['dong']."' ";
+}
+
+if( $_POST['ho'] <> "" ){
+	$wsql .= " and HO like '%".$_POST['ho']."%' ";
+}
+
+if( $_POST['pnm'] <> "" ){
+	$wsql .= " and PNAME = '".$_POST['pnm']."' ";
+}
+
+if( $_POST['ptel'] <> "" ){
+	$wsql .= " and REPLACE( PTEL, '-', '' ) = '".str_replace("-","",$_POST['ptel'])."' ";
+}
+
+$sql = " SELECT * FROM gr26
+			WHERE 1=1 ". $wsql ;
+
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+if( $row['RIDX'] == "" ){
+	echo "<script>alert('내용이 일치 하지 않습니다.');</script>";
+}else{
+	echo "<form name='frm' method='post' action='view.html' target='_parent'>
+			<input type='text' name='RIDX' value='".$row['RIDX']."' />
+			</form>
+			<script>
+				document.frm.submit();
+			</script>";
+}
+?>

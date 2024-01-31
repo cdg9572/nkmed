@@ -1,0 +1,130 @@
+<?	#인지기능장애
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = "SELECT A.* FROM smart_mj_mntinjintb A
+			LEFT OUTER JOIN smart_mj_il B ON A.MNTIJUBNO=B.MIDX
+			WHERE MNTIJUBNO='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+	$MNTIIJ1EM = $row["MNTIIJ1EM"];	$MNTIIJ2EM = $row["MNTIIJ2EM"];	$MNTIIJ3EM = $row["MNTIIJ3EM"];
+	$MNTIIJ4EM = $row["MNTIIJ4EM"];	$MNTIIJ5EM = $row["MNTIIJ5EM"];	$MNTIIJ6EM = $row["MNTIIJ6EM"];
+	$MNTIIJ7EM = $row["MNTIIJ7EM"];	$MNTIIJ8EM = $row["MNTIIJ8EM"];	$MNTIIJ9EM = $row["MNTIIJ9EM"];
+	$MNTIIJ10EM = $row["MNTIIJ10EM"];	$MNTIIJ11EM = $row["MNTIIJ11EM"];	$MNTIIJ12EM = $row["MNTIIJ12EM"];
+	$MNTIIJ13EM = $row["MNTIIJ13EM"];	$MNTIIJ14EM = $row["MNTIIJ14EM"];	$MNTIIJ15EM = $row["MNTIIJ15EM"];
+
+	#합계요청
+	$tm = 0;
+	if( $row[MNTIIJ1EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ1EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ2EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ2EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ3EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ3EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ4EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ4EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ5EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ5EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ6EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ6EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ7EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ7EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ8EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ8EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ9EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ9EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ10EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ10EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ11EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ11EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ12EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ12EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ13EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ13EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ14EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ14EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+	if( $row[MNTIIJ15EM]=="2" ){ $tm += 1 ; }else if($row[MNTIIJ15EM]=="3"){ $tm += 2 ;  }else{ $tm +=0; }
+?>
+<center>
+<form name="frm" method="post" action="vi_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<font style="font-size:12px; color:red;">※ 인지기능장애 평가도구 </font> &nbsp;<font  style="font-size:12px;"><!--추가문진 8/8--></font>
+<table width="100%" style="font-size:10pt;">
+<tr><td align='center' style="font-size:11pt;">Korean Dementia Screening Questionnaire ? C</td></tr>
+<tr><td align='left'>본 설문은 인지기능장애평가를 위한 문진표입니다. 아래의 각 항목에 대하여, 1년 전과 비교하여 현재 상태에 해당하는 곳에 표시해 주십시오. (동행한 가족이 있으면 가족이 작성하시고, 없으면 본인이 작성하십시오)</td></tr>
+</table>
+<table width="100%" class="tbst02" border='1'>
+<tr><th>orean Dementia Screening Questionnaire - C</th><th>아니다<br>(0점)</th>
+	<th>가끔(조금) <br>그렇다<br>(1점)</th>
+	<th>자주(많이)<br>그렇다<br>(2점)</th></tr>
+<tr><td align='left'>1. 오늘이 몇 월이고, 무슨 요일인지를 잘 모른다</td>
+	<td><input type="radio" name="MNTIIJ1EM" value='1' <? if( $MNTIIJ1EM=="" || $MNTIIJ1EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ1EM" value='2' <? if( $MNTIIJ1EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ1EM" value='3' <? if( $MNTIIJ1EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>2. 자기가 놔둔 물건을 찾지 못 한다</td>
+	<td><input type="radio" name="MNTIIJ2EM" value='1' <? if( $MNTIIJ2EM=="" || $MNTIIJ2EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ2EM" value='2' <? if( $MNTIIJ2EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ2EM" value='3' <? if( $MNTIIJ2EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>3. 같은 질문을 반복해서 한다</td>
+	<td><input type="radio" name="MNTIIJ3EM" value='1' <? if( $MNTIIJ3EM=="" || $MNTIIJ3EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ3EM" value='2' <? if( $MNTIIJ3EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ3EM" value='3' <? if( $MNTIIJ3EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>4. 약속을 하고서 잊어버린다</td>
+	<td><input type="radio" name="MNTIIJ4EM" value='1' <? if( $MNTIIJ4EM=="" || $MNTIIJ4EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ4EM" value='2' <? if( $MNTIIJ4EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ4EM" value='3' <? if( $MNTIIJ4EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>5. 물건을 가지러 갔다가 잊어버리고 그냥 온다</td>
+	<td><input type="radio" name="MNTIIJ5EM" value='1' <? if( $MNTIIJ5EM=="" || $MNTIIJ5EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ5EM" value='2' <? if( $MNTIIJ5EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ5EM" value='3' <? if( $MNTIIJ5EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>6. 물건이나, 사람의 이름을 대기가 힘들어 머뭇거린다</td>
+	<td><input type="radio" name="MNTIIJ6EM" value='1' <? if( $MNTIIJ6EM=="" || $MNTIIJ6EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ6EM" value='2' <? if( $MNTIIJ6EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ6EM" value='3' <? if( $MNTIIJ6EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>7. 대화 중 내용이 이해되지 않아 반복해서 물어 본다</td>
+	<td><input type="radio" name="MNTIIJ7EM" value='1' <? if( $MNTIIJ7EM=="" || $MNTIIJ7EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ7EM" value='2' <? if( $MNTIIJ7EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ7EM" value='3' <? if( $MNTIIJ7EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>8. 길을 잃거나 헤맨 적이 있다</td>
+	<td><input type="radio" name="MNTIIJ8EM" value='1' <? if( $MNTIIJ8EM=="" || $MNTIIJ8EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ8EM" value='2' <? if( $MNTIIJ8EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ8EM" value='3' <? if( $MNTIIJ8EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>9. 예전에 비해서 계산능력이 떨어졌다 (예: 물건값이나 거스름돈 계산을 못한다)</td>
+	<td><input type="radio" name="MNTIIJ9EM" value='1' <? if( $MNTIIJ9EM=="" || $MNTIIJ9EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ9EM" value='2' <? if( $MNTIIJ9EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ9EM" value='3' <? if( $MNTIIJ9EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>10. 예전에 비해 성격이 변했다</td>
+	<td><input type="radio" name="MNTIIJ10EM" value='1' <? if( $MNTIIJ10EM=="" || $MNTIIJ10EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ10EM" value='2' <? if( $MNTIIJ10EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ10EM" value='3' <? if( $MNTIIJ10EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>11. 이전에 잘 다루던 기구의 사용이 서툴러졌다 (세탁기, 전기밥솥, 경운기 등)</td>
+	<td><input type="radio" name="MNTIIJ11EM" value='1' <? if( $MNTIIJ11EM=="" || $MNTIIJ11EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ11EM" value='2' <? if( $MNTIIJ11EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ11EM" value='3' <? if( $MNTIIJ11EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>12. 예전에 비해 방이나 집안의 정리정돈을 하지 못 한다</td>
+	<td><input type="radio" name="MNTIIJ12EM" value='1' <? if( $MNTIIJ12EM=="" || $MNTIIJ12EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ12EM" value='2' <? if( $MNTIIJ12EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ12EM" value='3' <? if( $MNTIIJ12EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>13. 상황에 맞게 스스로 옷을 선택하여 입지 못 한다</td>
+	<td><input type="radio" name="MNTIIJ13EM" value='1' <? if( $MNTIIJ13EM=="" || $MNTIIJ13EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ13EM" value='2' <? if( $MNTIIJ13EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ13EM" value='3' <? if( $MNTIIJ13EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>14. 혼자 대중교통 수단을 이용하여 목적지에 가기 힘들다<br/>
+     (신체적인 문제(관절염)로 인한 것은 제외됨)</td>
+	<td><input type="radio" name="MNTIIJ14EM" value='1' <? if( $MNTIIJ14EM=="" || $MNTIIJ14EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ14EM" value='2' <? if( $MNTIIJ14EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ14EM" value='3' <? if( $MNTIIJ14EM=="3" ){ echo "checked"; }?> /></td></tr>
+<tr><td align='left'>15. 내복이나 옷이 더러워져도 갈아입지 않으려고 한다</td>
+	<td><input type="radio" name="MNTIIJ15EM" value='1' <? if( $MNTIIJ15EM=="" || $MNTIIJ15EM=="1" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ15EM" value='2' <? if( $MNTIIJ15EM=="2" ){ echo "checked"; }?> /></td>
+	<td><input type="radio" name="MNTIIJ15EM" value='3' <? if( $MNTIIJ15EM=="3" ){ echo "checked"; }?> /></td></tr>
+</table>
+<table width='100%' border='0' cellspacing='0'>
+<tr><td align='right' width="100%"><table border='1' cellspacing='0'>
+													<tr><td>&nbsp;합계&nbsp;</td>
+															<td><input type="text" name="tl" value="<?=$tm;?>" size="10" readonly /></td></tr>
+												</table></td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

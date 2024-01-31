@@ -1,0 +1,54 @@
+<?php
+	include_once  '../_init.php';
+	include_once($GP -> CLS."/class.doctor.php");	
+	$C_Doctor 	= new Doctor;
+	$args['dr_idx'] = $_POST['dr_idx'];
+	$data = "";
+	$data = $C_Doctor->Doctor_Info($args);    
+	extract($data);
+  
+    $url = "http://1.214.232.188:8070/api/v1/";
+    $path01 = "time_reserve";                                              
+    
+    $data01 = array(                     
+            "is_doct" =>  $dr_mcode,//의사코드      
+            "is_dept" => $dr_mtreat_no, //진료과코드
+            "is_date" => $_POST["date"]
+            );       
+    
+    $json_data = json_encode($data01);
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => $url.$path01,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_POSTFIELDS => $json_data,
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json'),
+    ));
+    $response = curl_exec($curl);                  
+    $data = json_decode($response, true);
+
+    //echo "echo : ". print_r($data);    
+    for($i=0;$i<count($data["data"]);$i++){ 
+		if( substr($data['data'][$i]['reserv_time'],0,2) < "09" ) continue;
+
+        $vTime = substr($data['data'][$i]['reserv_time'],0,2)."시 ".substr( $data['data'][$i]['reserv_time'],-2,2)."분";
+
+		echo "<button type='button' value='".$data['data'][$i]['reserv_time']."'>".$vTime."</button>";            
+       
+    } 
+
+?>
+<script>
+    $(function(){		
+           $(".schedule-box .label-time button").on("click",function(){   
+            $(this).addClass("on").siblings().removeClass("on")    
+            var value = $(this).val(); 
+            var text = $(this).text();                        
+            $("#is_time").val(value);                
+            $(".tit-time").text(text);
+		});
+		
+	});
+</script>

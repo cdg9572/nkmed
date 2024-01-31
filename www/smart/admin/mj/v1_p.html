@@ -1,0 +1,73 @@
+<?
+	include "../../inc/dbConn.php";
+
+	if( $_POST["MNON60EUM"] == 1 ){
+		$MNON60NUM = $_POST["no6v1"]; 
+	}elseif( $_POST["MNON60EUM"] == 2 ){
+		$MNON60NUM = $_POST["no6v2"]; 
+	}elseif( $_POST["MNON60EUM"] == 3 ){
+		$MNON60NUM = $_POST["no6v3"]; 
+	}elseif( $_POST["MNON60EUM"] == 4 ){
+		$MNON60NUM = ""; 
+	}
+
+$sql = " UPDATE smart_mj_il SET
+				MNON1NJJD='".$_POST["MNON1NJJD"]."' ,  MNON1NJYC='".$_POST["MNON1NJYC"]."'
+			  , MNON1SJJD='".$_POST["MNON1SJJD"]."' ,  MNON1SJYC='".$_POST["MNON1SJYC"]."'
+			  , MNON1GHJD='".$_POST["MNON1GHJD"]."' ,  MNON1GHYC='".$_POST["MNON1GHYC"]."'
+			  , MNON1DNJD='".$_POST["MNON1DNJD"]."' ,  MNON1DNYC='".$_POST["MNON1DNYC"]."'
+			  , MNON1JJJD='".$_POST["MNON1JJJD"]."' ,  MNON1JJYC='".$_POST["MNON1JJYC"]."'
+			  , MNON1PHJD='".$_POST["MNON1PHJD"]."' ,  MNON1PHYC='".$_POST["MNON1PHYC"]."'
+			  , MNON1ETJD='".$_POST["MNON1ETJD"]."' ,  MNON1ETYC='".$_POST["MNON1ETYC"]."'
+			  , MNON2NJCK='".$_POST["MNON2NJCK"]."' ,  MNON2SJCK='".$_POST["MNON2SJCK"]."'
+			  , MNON2GHCK='".$_POST["MNON2GHCK"]."' ,  MNON2DNCK='".$_POST["MNON2DNCK"]."'
+			  , MNON2ETCK='".$_POST["MNON2ETCK"]."' ,  MNON3BGEM='".$_POST["MNON3BGEM"]."'
+			  , MNON41SEM='".$_POST["MNON41SEM"]."' ,  MNON42YER='".$_POST["MNON42YER"]."'
+			  , MNON42GAB='".$_POST["MNON42GAB"]."' ,  MNON43YER='".$_POST["MNON43YER"]."'
+			  , MNON43GAB='".$_POST["MNON43GAB"]."' ,  MNON51ECG='".$_POST["MNON51ECG"]."'
+			  , MNON51EUS='".$_POST["MNON51EUS"]."'
+			  , MNON60EUM = '".$_POST["MNON60EUM"]."', MNON60NUM = '".$MNON60NUM." '
+			  , MNON61SJA = '".$_POST["MNON61SJA"]."',	MNON61SBO = '".$_POST["MNON61SBO"]." '
+			  , MNON61SCA = '".$_POST["MNON61SCA"]."', MNON61SCC = '".$_POST["MNON61SCC"]." '
+			  , MNON61BJA = '".$_POST["MNON61BJA"]."',	MNON61BBO = '".$_POST["MNON61BBO"]." '
+			  , MNON61BCA = '".$_POST["MNON61BCA"]."', MNON61BCC = '".$_POST["MNON61BCC"]." '
+			  , MNON61LJA = '".$_POST["MNON61LJA"]."',	MNON61LBO = '".$_POST["MNON61LBO"]." '
+			  , MNON61LCA = '".$_POST["MNON61LCA"]."', MNON61LCC = '".$_POST["MNON61LCC"]." '
+			  , MNON61KJA = '".$_POST["MNON61KJA"]."',	MNON61KBO = '".$_POST["MNON61KBO"]." '	
+			  , MNON61KCA = '".$_POST["MNON61KCA"]."', MNON61KCC = '".$_POST["MNON61KCC"]." '
+			  , MNON61WJA = '".$_POST["MNON61WJA"]."', MNON61WBO = '".$_POST["MNON61WBO"]." '		
+			  , MNON61WCA = '".$_POST["MNON61WCA"]."', MNON61WCC = '".$_POST["MNON61WCC"]." '
+			  , MNON62SJA = '".$_POST["MNON62SJA"]."', MNON62SBO = '".$_POST["MNON62SBO"]." '
+			  , MNON62SCA = '".$_POST["MNON62SCA"]."', MNON62SCC = '".$_POST["MNON62SCC"]." '
+			  , MNON62BJA = '".$_POST["MNON62BJA"]."', MNON62BBO = '".$_POST["MNON62BBO"]." '	
+			  , MNON62BCA = '".$_POST["MNON62BCA"]."', MNON62BCC = '".$_POST["MNON62BCC"]." '
+			  , MNON62LJA = '".$_POST["MNON62LJA"]."', MNON62LBO = '".$_POST["MNON62LBO"]." '
+			  , MNON62LCA = '".$_POST["MNON62LCA"]."', MNON62LCC = '".$_POST["MNON62LCC"]." '
+			  , MNON62KJA = '".$_POST["MNON62KJA"]."', MNON62KBO = '".$_POST["MNON62KBO"]." '	
+			  , MNON62KCA = '".$_POST["MNON62KCA"]."', MNON62KCC = '".$_POST["MNON62KCC"]." '
+			  , MNON62WJA = '".$_POST["MNON62WJA"]."', MNON62WBO = '".$_POST["MNON62WBO"]." '		
+			  , MNON62WCA = '".$_POST["MNON62WCA"]."', MNON62WCC = '".$_POST["MNON62WCC"]." '
+			  , MNON71DAY= '".$_POST["MNON71DAY"]."' ,	MNON72HOU= '".$_POST["MNON72HOU"]."' 
+			  , MNON72MIN= '".$_POST["MNON72MIN"]."' ,	MNON81DAY= '".$_POST["MNON81DAY"]."' 
+			  , MNON82HOU= '".$_POST["MNON82HOU"]."' ,	MNON82MIN= '".$_POST["MNON82MIN"]."' 
+			  , MNON90DAY= '".$_POST["MNON90DAY"]."'
+			  , MNONA10AA= '".$_POST["MNONA10AA"]."' ,	MNONA20AA= '".$_POST["MNONA20AA"]."' 
+			  , MNONA31AA= '".$_POST["MNONA31AA"]."' ,	MNONA32AA= '".$_POST["MNONA32AA"]."' 
+			  ,MNONA33AA= '".$_POST["MNONA33AA"]."' ,	MNONA34AA= '".$_POST["MNONA34AA"]."' 
+			  ,MNONA35AA= '".$_POST["MNONA35AA"]."',	MNONA36AA= '".$_POST["MNONA36AA"]."'
+			  ,MNONA40AA= '".$_POST["MNONA40AA"]."',	MNONA50AA= '".$_POST["MNONA50AA"]."'
+			  , MJ4='".$_POST["MJ4"]."', MJ41Y1='".$_POST["MJ41Y1"]."', MJ41D1='".$_POST["MJ41D1"]."'
+			  , MJ42Y1='".$_POST["MJ42Y1"]."', MJ42D1='".$_POST["MJ42D1"]."', MJ42Y2='".$_POST["MJ42Y2"]."'
+			  , MJ5='".$_POST["MJ5"]."', MJ51Y1='".$_POST["MJ51Y1"]."', MJ51D1='".$_POST["MJ51D1"]."'
+			  , MJ52Y1='".$_POST["MJ52Y1"]."', MJ52D1='".$_POST["MJ52D1"]."', MJ52Y2='".$_POST["MJ52Y2"]."'
+			  , MJ6='".$_POST["MJ6"]."', MJ61='".$_POST["MJ61"]."'
+			WHERE midx='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("저장되었습니다.");
+location.href="v1.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/><br/>". mysql_error();
+}?>

@@ -1,0 +1,38 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMI</title>
+</head>
+<style>
+img { margin-bottom:10px; }
+</style>
+<body>
+<a href="../"><img width="100%" src="../img/3.png" /></a>
+<img width="100%"  alt="이미지1"/>
+<img width="100%"  alt="이미지2"/>
+<img width="100%"  alt="이미지3"/>
+</body>
+</html>

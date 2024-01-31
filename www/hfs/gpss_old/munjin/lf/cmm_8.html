@@ -1,0 +1,108 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	$mseq = $_POST[mseq];
+	if( $mseq<>"" & $_POST[md]=="reg"  ){ 
+	#영양정보 저장
+	$sql = " UPDATE smart_mj_mnnutritbl SET 
+					MNNUQST07='".$_POST[MNNUQST07]."', MNNUQST08='".$_POST[MNNUQST08]."'	, MNNUQST09='".$_POST[MNNUQST09]."'
+					, MNNUQST10='".$_POST[MNNUQST10]."', MNNUQST11='".$_POST[MNNUQST11]."', MNNUJUMSU='".$_POST[MNNUJUMSU]."'
+				WHERE 	MNNUJUBNO='".$mseq."' 	";
+	#echo $sql;
+	if( mysql_query( $sql ) ){
+	}else{
+		echo mysql_error()."<br/>".$sql;
+	}
+}
+
+#비만생활습관
+#초기화 
+$MNOBQST01 = "";	$MNOBQST02 = "";	$MNOBQST03 = "";
+
+$sql = " SELECT * FROM smart_mj_mnobesytbl WHERE MNOBJUBNO='".$mseq."'  ";
+#정보 확인하고 
+if($r = mysql_query($sql)){
+	$val = mysql_fetch_array($r);
+	if($val["MNOBJUBNO"] == ""){
+		mysql_query( " INSERT INTO smart_mj_mnobesytbl ( MNOBJUBNO, WDT ) VALUES ( '".$mseq."', '".DATE("YmdHis")."' ) " );
+	}	}
+if( $r = mysql_query($sql) ){
+	$val = mysql_fetch_array($r);
+	$MNOBQST01 = $val["MNOBQST01"];
+	$MNOBQST02 = $val["MNOBQST02"];
+	$MNOBQST03 = $val["MNOBQST03"];
+}
+?>
+
+<form name="fm" method="post" action="cmm_9.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<input type="hidden" name="YN" value=""/>
+<font style="font-size:12px; color:red;">※ 비만 생활습관 평가도구 </font> &nbsp;<!--<font  style="font-size:12px;">추가문진 8/8</font>-->
+<table width="100%" style="display:none;">
+<tr><td width='25%'>신장:<input type="" name="t" value="" size="4"/>cm</td>
+	<td width='25%'>체중:<input type="" name="w" value="" size="4"/>kg</td>
+	<td width='50%'><input type="button" value="체질량확인" onclick="CKBMI();"/>
+		<input type="" name="bmi" value="" size="4"/>kg/㎡</td></tr>
+</table>
+<table width="100%" class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	1. 현재 체중이 10대 후반이나 20대 초반이었을 때와 비교하여 10kg 이상 늘었습니까?   </th></tr>
+<tr><td><input type="radio" name="MNOBQST01" value="1" <? if( $MNOBQST01==1){ echo "checked"; }?> />예
+		<input type="radio" name="MNOBQST01" value="2" <? if( $MNOBQST01==2 || $MNOBQST01==""){ echo "checked"; }?> />아니오</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	2. 당신은 현재까지 체중감량을 몇 차례나 시도해 보았습니까? </th></tr>
+<tr><td><input type="radio" name="MNOBQST02" value="1" <? if( $MNOBQST02==1){ echo "checked"; }?> />전혀 해 본 적이 없다
+		<input type="radio" name="MNOBQST02" value="2" <? if( $MNOBQST02==2){ echo "checked"; }?> />1~3회
+		<input type="radio" name="MNOBQST02" value="3" <? if( $MNOBQST02==3){ echo "checked"; }?> />4회 이상
+		<input type="radio" name="MNOBQST02" value="4" <? if( $MNOBQST02==4 || $MNOBQST02=="" ){ echo "checked"; }?> />항상 노력하고 있다</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	3. 당신은 체중감량을 통해 정상 체중을 지속적으로 유지하는데 관심이 있습니까? </th></tr>
+<tr><td><input type="radio" name="MNOBQST03" value="1" <? if( $MNOBQST03==1){ echo "checked"; }?> />별로 관심이 없다
+		<input type="radio" name="MNOBQST03" value="2" <? if( $MNOBQST03==2 || $MNOBQST03==""){ echo "checked"; }?> />어느 정도 관심이 있다
+		<input type="radio" name="MNOBQST03" value="3" <? if( $MNOBQST03==3){ echo "checked"; }?> />매우 관심이 있다.</td></tr>
+</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="submit" value="다음 문진표"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+<script>
+function hisBack(){
+	document.fm.action="cmm_7.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+function CKBMI(){
+	//alert( document.fm.t.value );
+	bmi = document.fm.w.value / ( (document.fm.t.value * 0.1) * ( document.fm.t.value * 0.1 ) ) * 100
+	document.fm.bmi.value = bmi.toFixed(1);
+	if ( bmi.toFixed(1) >= 25){
+		document.fm.bmi.value = "Y";
+		alert("대상자 입니다.\n다음 문진표를 작성해주세요");
+	}else{
+		document.fm.bmi.value = "N";
+		alert("비대상자 입니다.\n다음으로 넘어갑니다.");
+		
+	}
+}
+
+</script>

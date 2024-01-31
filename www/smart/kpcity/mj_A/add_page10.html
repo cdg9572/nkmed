@@ -1,0 +1,36 @@
+<?
+$page_no = 10 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					10. 폐경 후 증상을 완화하기 위해서 호르몬 제제를 복용하고 계시거나 과거에 복용하신 적이 있습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="없음" <?=getChecked($v, "없음")?> > 호르몬 제제를 복용한 적 없음.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="~2" <?=getChecked($v, "~2")?> > 2년 미만 복용.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="2~5" <?=getChecked($v, "2~5")?> > 2년 이상~5년 미만 복용.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="5~" <?=getChecked($v, "5~")?> > 5년 이상 복용.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="모름" <?=getChecked($v, "모름")?> > 모르겠음.</td>
+			</tr>
+		</table>
+	
+		
+	

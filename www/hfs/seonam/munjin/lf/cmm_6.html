@@ -1,0 +1,113 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	$mseq = $_POST[mseq];
+	if( $mseq<>"" & $_POST[md]=="reg"  ){ 
+	#운동정보 저장
+	$sql = " UPDATE smart_mj_mnexerctbl SET 
+					MNEXQ0500='".$_POST[MNEXQ0500]."', MNEXQ0600='".$_POST[MNEXQ0600]."'	, MNEXQ0700='".$_POST[MNEXQ0700]."'
+					, MNEXQ0800='".$_POST[MNEXQ0800]."', MNEXQ0900='".$_POST[MNEXQ0900]."', MNEXQ1000='".$_POST[MNEXQ1000]."'
+					, MNEXQ1100='".$_POST[MNEXQ1100]."', MNEXQ1200='".$_POST[MNEXQ1200]."', LDT= '".DATE("YmdHis")."'
+				WHERE 	MNEXJUBNO='".$mseq."' 	";
+	if( mysql_query( $sql ) ){
+	}else{
+		echo mysql_error()."<br/>".$sql;
+	}
+}
+
+#초기화 
+$MNNUQST01 = "";	$MNNUQST02 = "";	$MNNUQST03 = "";
+$MNNUQST04 = "";	$MNNUQST05 = "";	$MNNUQST06 = "";
+$MNNUQST07 = "";	$MNNUQST08 = "";	$MNNUQST09 = "";
+$MNNUQST10 = "";	$MNNUQST11 = "";
+#영양정보
+$sql = " SELECT * FROM smart_mj_mnnutritbl WHERE MNNUJUBNO='".$mseq."'  ";
+#정보 확인하고 
+if($r = mysql_query($sql)){
+	$val = mysql_fetch_array($r);
+	if($val["MNNUJUBNO"] == ""){
+		mysql_query( " INSERT INTO smart_mj_mnnutritbl ( MNNUJUBNO, WDT ) VALUES ( '".$mseq."', '".DATE("YmdHis")."' ) " );
+	}	}
+
+if( $r = mysql_query($sql) ){
+	$val = mysql_fetch_array($r);
+	$MNNUQST01 = $val["MNNUQST01"];
+	$MNNUQST02 = $val["MNNUQST02"];
+	$MNNUQST03 = $val["MNNUQST03"];
+	$MNNUQST04 = $val["MNNUQST04"];
+	$MNNUQST05 = $val["MNNUQST05"];
+	$MNNUQST06 = $val["MNNUQST06"];
+	$MNNUQST07 = $val["MNNUQST07"];
+	$MNNUQST08 = $val["MNNUQST08"];
+	$MNNUQST09 = $val["MNNUQST09"];
+	$MNNUQST10 = $val["MNNUQST10"];
+	$MNNUQST11 = $val["MNNUQST11"];
+}
+
+?>
+
+<form name="fm" method="post" action="cmm_7.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<font style="font-size:12px; color:red;">※ 영양 생활습관 평가도구 [1/2]</font> &nbsp;<!--<font  style="font-size:12px;">추가문진 6/7</font>-->
+<table width="100%" class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	1. 우유나 칼슘강화두유, 기타 유제품(요구르트 등)을 매일 1컵(200㎖) 이상 마신다. </th></tr>
+<tr><td><input type="radio" name="MNNUQST01" value="1" <? if( $MNNUQST01==1){ echo "checked"; }?> />항상 그런 편이다(5점)
+		<input type="radio" name="MNNUQST01" value="2" <? if( $MNNUQST01==2 || $MNNUQST01 ==""){ echo "checked"; }?> />보통이다(3점)
+		<input type="radio" name="MNNUQST01" value="3" <? if( $MNNUQST01==2){ echo "checked"; }?> />아닌 편이다(1점)</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	2. 육류, 생선, 달걀, 콩, 두부 등으로 된 음식을 매일 3회 이상 먹는다.  </th></tr>
+<tr><td><input type="radio" name="MNNUQST02" value="1" <? if( $MNNUQST02==1){ echo "checked"; }?> />항상 그런 편이다(5점)
+		<input type="radio" name="MNNUQST02" value="2" <? if( $MNNUQST02==2 || $MNNUQST02 ==""){ echo "checked"; }?> />보통이다(3점)
+		<input type="radio" name="MNNUQST02" value="3" <? if( $MNNUQST02==3){ echo "checked"; }?> />아닌 편이다(1점)</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	3. 김치 이외의 채소를 식사할 때마다 먹는다. </th></tr>
+<tr><td><input type="radio" name="MNNUQST03" value="1" <? if( $MNNUQST03==1){ echo "checked"; }?> />항상 그런 편이다(5점)
+		<input type="radio" name="MNNUQST03" value="2" <? if( $MNNUQST03==2 || $MNNUQST03 ==""){ echo "checked"; }?> />보통이다(3점)
+		<input type="radio" name="MNNUQST03" value="3" <? if( $MNNUQST03==3){ echo "checked"; }?> />아닌 편이다(1점)</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	4. 과일(1개)을 매일 먹는다. (갈아먹는 형태 포함) </th></tr>
+<tr><td><input type="radio" name="MNNUQST04" value="1" <? if( $MNNUQST04==1){ echo "checked"; }?> />항상 그런 편이다(5점)
+		<input type="radio" name="MNNUQST04" value="2" <? if( $MNNUQST04==2 || $MNNUQST04 =="" ){ echo "checked"; }?> />보통이다(3점)
+		<input type="radio" name="MNNUQST04" value="3" <? if( $MNNUQST04==3){ echo "checked"; }?> />아닌 편이다(1점)</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	5. 튀김이나 볶음 요리를 얼마나 자주 먹습니까?</th></tr>
+<tr><td><input type="radio" name="MNNUQST05" value="1" <? if( $MNNUQST05==1){ echo "checked"; }?> />주 4회 이상(1점)
+		<input type="radio" name="MNNUQST05" value="2" <? if( $MNNUQST05==2 || $MNNUQST05 ==""){ echo "checked"; }?> />주 2-3회(3점)
+		<input type="radio" name="MNNUQST05" value="3" <? if( $MNNUQST05==3){ echo "checked"; }?> />주 1회 이하(5점)</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	6. 콜레스테롤이 많은 식품(삼겹살, 달걀노른자, 오징어 등)을 얼마나 자주 먹습니까?  </th></tr>
+<tr><td><input type="radio" name="MNNUQST06" value="1" <? if( $MNNUQST06==1){ echo "checked"; }?> />주 4회 이상(1점)
+		<input type="radio" name="MNNUQST06" value="2" <? if( $MNNUQST06==2 || $MNNUQST06 ==""){ echo "checked"; }?> />주 2-3회(3점)
+		<input type="radio" name="MNNUQST06" value="3" <? if( $MNNUQST06==3){ echo "checked"; }?> />주 1회 이하(5점)</td></tr>
+</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="submit" value="다음 문진표"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+<script>
+function hisBack(){
+	document.fm.action="cmm_5.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+</script>

@@ -1,0 +1,102 @@
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+body { margin: 0; font-size: 1em; line-height: 1.4; }
+
+* {font-family:sans-serif;}
+
+a { text-decoration: none; }
+a { color: #00e; }
+a:visited { text-decoration:none;color: #551a8b; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+
+.menu_list { list-style: none; padding:0px; margin:0px; }
+.menu_list li { float:left; width: 50%; }
+.menu_list li a img { width:100%; height:auto; }
+
+.menu_list_sub { list-style: none; padding:0px; margin:0px; }
+.menu_list_sub li { float:left; width: 33%; }
+.menu_list_sub li:last-child { width:34%; }
+.menu_list_sub li a { display:block; line-height:40px; border-right: 1px solid #aaa; background:#ccc; color: #333; font-size:12px; text-align:center; }
+.menu_list_sub li:last-child a { border-right: none; }
+.menu_list_sub li a.active { background:#333; color:#FFF; border-right: 1px solid #f0f0f0; }
+
+/* Contain floats: h5bp.com/q */
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+/* =============================================================================
+   HTML5 display definitions
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+
+h2 { font-size:16px; margin:0px 0px 0px 10px; padding:10px 5px; }
+
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+footer {padding:20px 0px; }
+footer p {
+	font-size:12px; color: #666; text-align:center;
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight:normal;
+}
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+.top_logo, .sub_logo { margin-bottom:10px; width:100%; }
+
+.tbst01 { margin-bottom: 15px; }
+.tbst01 thead {}
+.tbst01 thead tr {}
+.tbst01 thead tr th { background: #D6E9F6; color: #187DC0; font-size: 13px; border: 1px solid #187DC0; padding:5px; }
+.tbst01 tbody {}
+.tbst01 tbody tr {}
+.tbst01 tbody tr td { padding:10px 5px; vertical-align:middle; text-align:center; font-size:12px; border-bottom: 1px solid #D6E9F6; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+
+.tbst02 { margin-bottom: 15px; }
+.tbst02 tr th { background: #D6E9F6; color: #187DC0; font-size: 13px; border: 1px solid #187DC0; padding:5px; }
+.tbst02 tr td { padding: 5px; vertical-align:middle; text-align:left; font-size:12px; border: 1px solid #187DC0; font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+
+.btnst01, .btnst01:visited { background: #25b07d; color: #FFF; display:block; text-align:center; padding:15px 0px; }
+.btnst01:hover { background: #129666; color: #FFF; }
+
+.btnst02, .btnst02:visited { background: #e93647; color: #FFF; display:block; text-align:center; padding:15px 0px; }
+.btnst02:hover { background: #C72E3D; color: #FFF; }
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
+
+html, button, input, select, textarea { font-family: serif; color: #222; }
+
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+.intextst01 { width: 95%; border: none; padding:5px; }

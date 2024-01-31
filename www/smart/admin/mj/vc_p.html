@@ -1,0 +1,20 @@
+<? session_start(); 
+//include "mj_function.php";
+
+	include "../../inc/dbConn.php";
+
+$sql = " UPDATE smart_mj_mndrinktbl SET
+				MNDRQST01='".$_POST[MNDRQST01]."', MNDRQSTA2='".$_POST[MNDRQSTA2]."'	, MNDRQSTB2='".$_POST[MNDRQSTB2]."'
+				, MNDRQST03='".$_POST[MNDRQST03]."', MNDRQST04='".$_POST[MNDRQST04]."', MNDRQST05='".$_POST[MNDRQST05]."'
+				, MNDRQST06='".$_POST[MNDRQST06]."', MNDRQST07='".$_POST[MNDRQST07]."', MNDRQST08='".$_POST[MNDRQST08]."'
+				, MNDRQST09='".$_POST[MNDRQST09]."' , MNDRQST10='".$_POST[MNDRQST10]."'
+			WHERE MNDRJUBNO='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("수정되었습니다.");
+location.href="vc.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/><br/>". mysql_error();
+}?>

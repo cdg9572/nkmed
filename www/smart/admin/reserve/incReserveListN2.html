@@ -1,0 +1,234 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+	<div class="historyText">홈 &gt; 예약 관리 &gt; 예약 관리</div>
+
+	<div class="propBox2">
+		
+		<h2 class="pageTitle"><i class="fa fa-th-large"></i> <?=$_GET[cpname];?> 예약 관리</h2>
+
+
+		<form name='formSearch' method='get'>
+		<input type='hidden' name='tbl' value='<?=$tbl?>'>
+		<input type='hidden' name='dir' value='<?=$dir?>'>
+		<input type='hidden' name='menu' value='<?=$menu?>'>
+		<input type='hidden' name='cpname' value='<?=$_GET[cpname]?>'>
+		<table width='100%' class="table_style_1" style="margin-bottom:10px;">
+			<tr>
+                <td width="125">
+					<div class="select_box select_w120">
+						<label for="selecter1" id="lab_selecter1">이름/연락처</label>
+						
+					</div>
+				</td>
+				<td  width="258">
+					<div class="inputa_box input_w250">
+						<input type='text' name='keyword' class='inputer inputer_w250' value='<?=$keyword?>'>
+					</div>
+				</td>
+				<td><input type='submit' value='검 색' class='btn_g_s1' onFocus='this.blur();'></td>
+				<td width="110" align="right">
+				<!--	<input type='button' value='전체보기' class='btn_w_s1' onClick="document.location.href='?dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&cpname=<?=$_GET[cpname]?>'" onfocus='this.blur();'>-->
+				</td>
+				
+			
+			</tr>
+		</table>
+		</form>
+
+
+		<!--<a href="#" onClick="document.location='?dir=<?=$dir?>&menu=<?=$menu?>&form=Write&mode=new'" class="resBtn01 potopright">등록 &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+
+<?
+
+if($keyword) {
+				$where .= " AND ( rname LIKE '%$keyword%' OR rtel LIKE '%$keyword%' )";
+
+				$field = "";
+				$keyword = "";
+			}
+			$orderBycolumn = $orderBycolumn."RDATE ";
+			$orderBy = $orderBy."desc";
+
+//echo $sess_ALV;
+if($sess_ALV >1){
+    //$where = " and name2='$_SESSION[sess_ADEPT]' ";
+}
+
+$where .= " and use_yn = 'Y' and CPNAME='$_GET[cpname]' " ;
+
+
+list($que, $res, $nowData, $totalCount, $start, $numPerPage, $pagePerList, $pageNum, $searchQuery) = funcList($dir, $menu, $tbl, $field, $keyword, $where, $searchQuery, $listNum, $pageNum, 'STATEFLAG , RIDX', 'ASC');
+//echo $searchQuery;
+//testing_dsp($que);
+
+//exit;
+//echo $que;
+?>
+		
+
+		<table width="100%" class="tableSt01">
+			<thead>
+				<tr>
+					<th>번호</th>	
+					<th>이름</th>
+					<th>연락처</th>
+					<th>기수</th>
+					<th>상품명</th>
+					<th>선택항목</th>
+					<th>검진희망일</th>
+					<th>등록일</th>
+					<th>메모</th>
+					<th>문진표보기</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?
+				if($nowData == 0) {
+				?>
+				<tr>
+					<td colspan='11' align='center' style="height:250px; vertical-align:middle;">등록된 리스트가 없습니다.</td>
+				</tr>
+				<?
+				} else {
+					for($i = 0; $i < $nowData; $i++) {
+						$no = $totalCount - $start - $i;
+						@$row = MYSQL_FETCH_ARRAY($res);
+
+						if($row['state'] == "Y") {
+							$btnValue = "사용";
+							$btnClass = "btn";
+							//$profState = "<span style='color:blue; cursor:hand' onClick=\"chgState('".$row['state']."')\">사용</span>";
+						}
+						else if($row['state'] == "N") {
+							$btnValue = "중지";
+							$btnClass = "btn";
+							//$profState = "<span style='color:red; cursor:hand' onClick=\"chgState('".$row['state']."')\">중지</span>";
+						}
+				?>
+
+
+
+				<tr>
+					<td rowspan=2><?=$no?></td> 
+					<td><?=$row['RNAME']?></td>
+					<td><?=$row['RTEL']?></td>
+					<td><?=$row['PNAME']?><br/><?=$row['CPNAME2']?></td>
+					<td> <?=$row['CTYPE']?></td>
+					<td align="left">위 : <?=$row['CSTYPE1']?>
+						<br>A그룹 : <?=$row['CSTYPE2']?>
+						<br>B그룹 :<?=$row['CSTYPE3']?>
+						<br>대장/심초 : <?=$row['CSTYPE5']?>
+						<br>C그룹 : <?=$row['CSTYPE4']?></td>
+					<td><?=$row['RDATE']?> <?=$row[RHOUR]?>:<?=$row[RMIN]?></td>
+					<td><?=$row['WDT']?> </td>
+					<td><?=$row['MEMO']?> </td>
+
+
+					<td>
+						<?
+						$am_sql = "select * from smart_munjin2018 where reserve_seq = $row[RIDX] and munjin_category='5대암'" ;
+						#echo $am_sql;
+						$am_res = mysql_query($am_sql);
+						$am_num = @mysql_num_rows($am_res);
+						$am_row = @mysql_fetch_array($am_res) ;
+
+						if($am_num)
+						{
+							$line_check = "Y" ;
+							echo "
+								<a href='#' class='delSmallBtn' onclick=\"window.open('printpage/print_am2018.html?seq=$am_row[seq]', 'newWindow');\">5대암</a> 
+							" ;
+						}
+
+
+						$am_sql = "select * from smart_munjin2018 where reserve_seq = $row[RIDX] and munjin_category='일반검진'" ;
+						#echo $am_sql;
+						$am_res = mysql_query($am_sql);
+						$am_num = @mysql_num_rows($am_res);
+						$am_row = @mysql_fetch_array($am_res) ;
+
+						if($am_num)
+						{
+							//if($line_check ) echo "<p style='height:5px;'>";
+							echo "
+								<a href='#' class='delSmallBtn' onclick=\"window.open('printpage/print_il2018.html?seq=$am_row[seq]', 'newWindow');\">일반검진</a> 
+							" ;
+						}
+
+						?>
+
+						
+						
+					</td>
+
+
+
+					<td><a href="#" class="delSmallBtn" data-featherlight="#fl1<?=$i?>" >삭제</a></td>
+				</tr>
+
+				<tr  bgcolor='<?=$tableBg?>'>
+					<td colspan=8 style="padding-left:10px;">
+					
+					<form name="form" target="company_proc"  method="post" name="company_frm<?=$row[RIDX]?>" enctype="multipart/form-data" action="./reserve/procReserve2.php">
+
+						<input type='hidden' name='tbl' value='<?=$tbl?>'>
+						<input type='hidden' name='mode' value='update'>
+						<input type='hidden' name='seq' value='<?=$row[RIDX]?>'>
+					<?
+						$state_flag_temp = $row[STATEFLAG] ;
+
+						unset($state_flag) ;
+						if($state_flag_temp == "예약대기") $state_flag = "<font color=blue>$state_flag_temp</font>" ;
+						else $state_flag = "<font color=red>$state_flag_temp</font>" ;
+
+						echo "[ $state_flag]  &nbsp;" ;
+					?>
+						
+						<input type=text name=admin_comment value='<?=$row[admin_comment]?>' style='width:70%;height:30px;' placeholder="관리자 comment를 입력해주세요">
+						
+						<select name="state_flag" style="width: 80px; height: 22px;">
+							<option value="예약대기" <? if($state_flag_temp == "예약대기") echo "selected"; ?> > 예약대기</option>
+							<option value="진행중" <? if($state_flag_temp == "진행중") echo "selected"; ?> > 진행중</option>
+							<option value="예약완료" <? if($state_flag_temp == "예약완료") echo "selected"; ?> > 예약완료</option>
+						</select>
+
+
+						<input type=submit value='등록'>
+					</form>
+				</td>
+			</tr>
+
+	<div class="lightbox" id="fl1<?=$i?>">
+		<h3>정말 삭제 하시겠습니까?</h3>
+		<div>
+			<a href="#" onclick="javascript:location.href='reserve/procReserve2.php?dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&mode=del&seq=<?=$row['RIDX']?>&cpname=<?=$row['CPNAME']?>'" class="boxYesBtn">예, 삭제합니다.</a>
+			<a href="./index.html?dir=manager&menu=Manager" class="boxNoBtn">아니오, 취소합니다.</a>
+			<img src="./images/logo.png" class="lightLogo" alt=""/ width=100>
+		</div>
+	</div>
+
+
+				<?
+					}
+				}
+				?>
+			</tbody>
+		</table>
+		
+		<div class="pageList">
+			<?=funcPaging($totalCount, $numPerPage, $pagePerList, $pageNum, $searchQuery."&cpname=$_GET[cpname]");?>
+		</div>
+
+	</div>
+				
+	<iframe name="company_proc" width=0 height=0></iframe>
+	
+	
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="../js/featherlight.min.js"></script>
+		
+		

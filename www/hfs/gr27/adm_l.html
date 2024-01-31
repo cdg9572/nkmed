@@ -1,0 +1,60 @@
+<style>
+#ctbl th { padding:5px; font-size:1em;	}
+#ctbl td { padding:5px; font-size:1em;	}
+.tac { text-align: center!important; }
+.vac{	vertical-align: middle!important; }
+.w30{	width:30%; min-width:300px;	}
+.w-30{	width:30px;	}
+</style>
+<?
+include "../inc/dbConn.php";
+#echo $_POST['txt']." ".$_POST['dong'];
+$wsql = ($_POST['dong'] <> "" and $_POST['dong'] <> "ALL" ) ? " DONG='".$_POST['dong']."' " : " 1=1 " ;
+$wsql .= ($_POST['txt'] <> "" ) ? " AND ( RNAME like '%".$_POST['txt']."%' or RTEL like '%".$_POST['txt']."%' ) " : "";
+$wsql .= ($_POST['state'] == "ALL" or $_POST['state']=="" ) ? "" : " AND STATE='".$_POST['state']."' "; 
+$sql = " SELECT * FROM gr27
+		WHERE $wsql ";
+#echo $sql;
+
+echo "<table id='ctbl' class='table is-text-small is-bordered is-hoverable is-size-7 ml-1 is-max-widescreen ' style='min-width:700px;'>
+	<tr><th>No.</th>
+		<th>동</th>
+		<th>호수</th>
+		<th>예약자</th>
+		<th>연락처</th>
+		<th>희망일</th>
+		<th>선택상품</th>
+		<th>고객메모</th></tr>";
+if($res=mysql_query($sql)){
+	$i=1;
+	while($row = mysql_fetch_array($res)){
+		echo "<tr>
+				<td rowspan='2' class='tac vac w-30'>$i</td>
+				<td class='tac'>".$row['DONG']."</td>
+				<td class='tac'>".$row['HO']."</td>
+				<td class='tac'>".$row['RNAME']."</td>
+				<td class='tac'>".$row['RTEL']."</td>
+				<td class='tac'>".$row['RDT']."</td>
+				<td class='tac'>".$row['SP']."</td>
+				<td class='w30' rowspan='2'>".$row['BIGO']."</td>
+			</tr>";
+		$sta = ($row['STATE']=="등록") ? "selected" : "" ;
+		$stb = ($row['STATE']=="처리") ? "selected" : "" ;
+		$stc = ($row['STATE']=="취소") ? "selected" : "" ;
+		echo "<tr><td colspan='6' >
+				<form style='display:flex;' method='post' action='adm_post.html' target='ifrm'>
+					<div style='text-align:right;'><input type='hidden' name='ridx' value='".$row['RIDX']."'>
+					<label>진행사항:</label><select name='state' class='ml-2 mr-3' style='font-size:0.8em;'>
+						<option value='등록' $sta>예약대기</option>
+						<option value='처리' $stb>예약처리</option>
+						<option value='취소' $stc>예약취소</option>
+					</select>
+					<label>내용:</label><br>
+					<button class='mt-2 button is-primary is-small' style='font-size:0.9em;font-weight:bold;'>저장하기</button></div>
+					<textarea class='ml-3 is-size-7' name='amemo' cols='60' rows='3'>".$row['AMEMO']."</textarea></form></tr>";
+		$i++;
+	}
+	if($i=="1"){	echo "<tr><td colspan='9' align='center'>현재 조건으로 조회 되는 내용은 없습니다. </td></tr>";	}
+}
+echo "</table>";
+?>

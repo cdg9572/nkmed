@@ -1,0 +1,1113 @@
+<?php
+$page_title = "main";
+include_once  './_init.php';
+if($chkMobile) $C_Func -> go_url ("/v3/");
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once $GP -> INC_WWW . '/head.php';
+include_once 'member/login.html';
+include_once($GP->CLS."class.doctor.php");
+include_once($GP->CLS."class.video.php");
+$C_Doctor 		= new Doctor;
+$C_Video 	= new Video;
+
+?>
+<style>
+header.header {
+	display:none;
+}
+header.test {
+	display: flex;
+    position: relative;
+    top: 103px;
+    width: 100%;
+    max-width: 1920px;
+    min-height: 103px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background-color: #fff;
+    z-index: 9999;
+    justify-content: flex-end;
+}
+header.test:after {
+	position: absolute;
+	top: 103px;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background-color: #e2e2e2;
+	z-index: -1;
+	content:'';
+}
+header.test.on {
+	border-bottom: 1px solid #e2e2e2;
+}
+header.test * {
+	font-family: 'Noto Sans Kr';
+}
+header.test .logo {
+	position: absolute;
+    top: 6px;
+    left: 200px;
+}
+header.test .logo a {
+	display: block;
+	padding:18px 0;
+	box-sizing: border-box;
+}
+header.test nav {
+	width: 100%;
+    margin: 0 auto;
+    justify-content: flex-end;
+    min-width: 950px;
+    padding-right: 200px;
+}
+
+header.test .menu {
+	display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 950px;
+}
+
+header.test .menu li span a {
+	  font-family: 'Noto Sans Kr';
+	  font-size: 18px;
+	  font-weight: 500;
+	  font-stretch: normal;
+	  font-style: normal;
+	  line-height: normal;
+	  letter-spacing: -0.9px;
+	  color: #333;
+}
+
+header.test #gnb {
+	display: none;
+	padding: 0;
+	height: 843px;
+	background: #fbfbfb;
+	border-top: 1px solid #e2e2e2;
+}
+header.test #gnb li {
+	width: calc(100%/7);
+    border-right: 1px solid #ececec;
+    padding: 30px 0;
+}
+header.test #gnb li:last-child {
+	border-right: 0;
+}
+header.test #gnb li:hover {
+	background: #fff;
+}
+
+header.test #gnb li:first-child .snb li a {
+	color: #a1a1a1;
+}
+
+header.test .top-menu {
+    font-family: 'Noto Sans Kr';
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.06;
+    letter-spacing: -0.8px;
+    text-align: center;
+    color: #333;
+}
+
+header.test #gnb>li>span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+	margin-bottom: 30px;
+}
+header.test #gnb>li:last-of-type>span::after {
+	display: none;
+}
+
+header.test #gnb>li:hover>span::before {
+	width: 100%;
+}
+header.test #gnb li span a {
+	font-family: 'Noto Sans Kr';
+	font-size: 20px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: -1px;
+	text-align: left;
+	color: #2e4e91;
+}
+header.test #gnb .snb {
+	display: none;
+	width: 100%;
+    flex-direction: column;
+}
+
+header.test #gnb .snb a {
+	position: relative;
+}
+header.test #gnb .snb a:hover {
+	color:#4fa1c7;
+}
+
+header.test #gnb .snb a:hover::before {
+	color: #2188b9;
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 55%;
+    transform: translateY(-55%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #2188b9;
+    margin-right: 10px;
+}
+
+header.test #gnb .snb>li {
+	text-align: center;
+    width: 100%;
+    border-right: 0;
+    padding: 0;
+}
+header.test #gnb .snb>li>a {
+	  font-family: 'Noto Sans Kr';
+	  font-size: 16px;
+	  font-weight: normal;
+	  font-stretch: normal;
+	  font-style: normal;
+	  line-height: 2.06;
+	  letter-spacing: -0.8px;
+	  text-align: center;
+	  color: #333;
+}
+header.test .head-tel {
+	position: absolute;
+	display: flex;
+	top: 28px;
+	right: 50px;
+	font-size: 16px;
+}
+
+header.test .head-tel .mb-hide {
+    align-items: center;
+}
+
+header.test .head-tel a {
+	position: relative;
+	margin-left: 11px;
+	padding-left: 11px;
+	color:#101820;
+	font-size: 20px;
+	font-weight: 900;
+}
+header.test .head-tel a:before {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 1px;
+	height: 14px;
+	margin-top: -6px;
+	background-color: rgba(60, 60, 60, 0.43);
+	content:'';
+}
+header.test .m-quick,
+header.test .ham {
+	display: none;
+}
+header.test .menu-close {
+	display: none;
+}
+#main-bnnr {height: 650px;}
+
+#center-list {
+    padding: 290px 0 156px;
+	position: relative;
+	background-position: 0 140px;
+    background-size: initial;
+}
+#rsv-list2 {
+	position: absolute;
+    top: -80px;
+    left: 0;
+    width: 100%;
+	height: 285px;
+    z-index: 1000;
+}
+#rsv-list2 .inner {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+#rsv-list2 .list {
+	overflow: hidden;
+    width: 33.33%;
+    padding: 89px 97px 79px;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+#rsv-list2 .list:nth-child(1) {background-color: #1991ca;}
+#rsv-list2 .list:nth-child(2) {background-color: #fff;}
+#rsv-list2 .list:nth-child(3) {background-color: #efe9e5;}
+#rsv-list2 .list .list-title {
+	color: #333;
+	font-size: 30px;
+	font-weight: bold;
+	letter-spacing: -1.5px;
+	text-align: center;
+}
+
+#rsv-list2 .list .list-btn a, 
+#rsv-list2 .list .list-btn button {
+	display: block;
+	width: 100%;
+	margin-top: 30px;
+	padding: 12px;
+	color:#fff;
+	font-family: 'Noto Sans KR';
+	font-size: 20px;
+	font-weight: 500;
+	text-align: center;
+	border: solid 1px rgba(255, 255, 255, 0.35);
+	box-sizing: border-box;
+	background-color: transparent;
+	cursor: pointer;
+}
+#rsv-list2 .list .list-btn button {
+	/* margin-top: 20px; */
+}
+
+#center-list #tab1-2 .list li:hover a {
+    border-color: #1991ca;
+}
+
+.swiper-cont {
+	position: relative;
+}
+
+#top-bnnr .swiper-button-prev {
+    left: initial;
+    right: 160px;
+}
+
+#top-bnnr .swiper-button-next {
+    left: initial;
+    right: 40px;
+}
+
+#top-bnnr .swiper-pagination {
+    left: initial;
+    right: 105px;
+}
+
+#login-bar ul li {
+	padding: 0;
+}
+
+#main-bnnr .swiper-pagination {
+    bottom: 255px;
+    left: 74.5%;
+    transform: translateX(-74.5%);
+    max-width: 1300px;
+    width: 100%;
+    text-align: left;
+}
+
+#main-bnnr .swiper-slide>a .swiper-cont {
+    position: absolute;
+    top: 25%;
+    left: 74.5%;
+    width: 100%;
+    max-width: 1300px;
+    transform: translateX(-74.5%);
+}
+
+#login-bar .right {
+	min-width: 500px;
+    margin-left: 50px;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 1600px) { 
+	#top-bnnr .swiper-button-prev {
+		left: initial;
+		right: 140px;
+	}
+
+	#top-bnnr .swiper-button-next {
+		left: initial;
+		right: 20px;
+	}
+
+	#top-bnnr .swiper-pagination {
+		left: initial;
+		right: 85px;
+	}
+}
+
+
+@media screen and (max-width: 1800px) {
+	#login-bar .right {
+		margin-right: 20px;
+		margin-left: 20px;
+	}
+}
+
+@media screen and (max-width: 1670px) {
+	header.test nav {
+		padding-right: 0px;
+	}
+}
+
+#main-notice .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	margin-bottom: 60px;
+}
+
+#main-notice .main-list-menu .inner ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-top: 13px;
+    padding-bottom: 30px;
+    justify-content: center;
+}
+
+#main-notice .main-list-menu .inner ul li {
+    position: relative;
+    width: 360px;
+    margin-right: 40px;
+    margin-top: 0px;
+    height: auto;
+    transition: all 0.2s;
+}
+
+#main-notice .main-list-menu .inner ul li:nth-of-type(4n+4) {
+    margin-right: 40px;
+}
+
+#main-notice .main-list-menu .inner ul li .dec .img {
+    overflow: hidden;
+    max-height: initial;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+	height: 360px;
+}
+
+#main-notice .main-list-menu .inner ul li .dec .img img {
+    width: 100%;
+    min-height: initial;
+    width: 360px;
+}
+
+#main-notice .main-list-menu .inner ul li .dec-foot span.label {
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+    margin-right: 5px;
+    color: #333;
+    line-height: 25px;
+    text-align: center;
+    border: 1px solid #333;
+    border-radius: 14px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: -1px;
+    text-align: center;
+    color: #1991ca;
+    display: block;
+    width: initial;
+    margin-top: 34px;
+}
+
+#main-notice .main-list-menu .inner ul li .dec-foot span {
+    padding: 0 10px;
+    color: #a6a6a6;
+    font-size: 1.4rem;
+    font-weight: 300;
+    vertical-align: middle;
+    display: none;
+}
+
+#main-notice .main-list-menu .inner ul li .dec .txt p {
+    margin-top: 1rem;
+    color: #999;
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.9px;
+    display: none;
+}
+
+#main-notice .main-list-menu .inner ul li .dec-foot {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    color: #333;
+    font-size: 0.938rem;
+    padding: 0 0 0;
+    box-sizing: border-box;
+}
+
+#main-notice .main-list-menu .inner ul li .dec .txt {
+    display: block;
+    padding: 20px 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#main-info {
+    padding-bottom: 0;
+    margin-bottom: -3px;
+}
+
+</style>
+
+<body>
+	<div id="wrap" class="main">
+		<div id="login-bar" style="
+    padding: 0;
+    align-items: center;
+    min-width: 1330px;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+">
+    <div id="top-bnnr" class="swiper-container swiper-container-initialized swiper-container-horizontal" style="
+    width: 1276px;
+	background: #fff;
+    margin: 0;
+	max-width: initial;
+">
+					<ul class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-2808px, 0px, 0px);">
+						
+				<li class="swiper-slide swiper-slide-duplicate-next" data-swiper-slide-index="0" style="width: 936px;">
+					<a href="https://nkhospital.net/notice/notice.php?jb_code=10&amp;jb_mode=tdetail&amp;jb_idx=2714&amp;search_key=&amp;search_keyword=&amp;page=&amp;dep1=2&amp;dep2=2-0">
+						<img class="mb-hide" src="/resource-pc/images/top-banner-01.png">
+						<img class="mb-show" src="http://nkhospital.net/common/slide/">
+					</a>
+				</li>
+				<li class="swiper-slide swiper-slide-active" data-swiper-slide-index="2" style="width: 936px;">
+					<a href="/notice/notice.php?jb_code=100&amp;jb_mode=tdetail&amp;jb_idx=2686">
+						<img class="mb-hide" src="/resource-pc/images/top-banner-02.png">
+						<img class="mb-show" src="http://nkhospital.net/common/slide/16891482504087.png">
+					</a>
+				</li>					<li class="swiper-slide swiper-slide-duplicate swiper-slide-next" data-swiper-slide-index="0" style="width: 936px;">
+					<a href="https://nkhospital.net/notice/notice.php?jb_code=10&amp;jb_mode=tdetail&amp;jb_idx=2714&amp;search_key=&amp;search_keyword=&amp;page=&amp;dep1=2&amp;dep2=2-0">
+						<img class="mb-hide" src="/resource-pc/images/top-banner-03.png">
+						<img class="mb-show" src="http://nkhospital.net/common/slide/">
+					</a>
+				</li></ul>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination swiper-pagination-fraction"><span class="swiper-pagination-current">3</span> / <span class="swiper-pagination-total">3</span></div>
+					<!-- Add Arrows -->
+					<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
+					<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
+				 <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+				
+                <form id="search_all" name="search_all" method="post">
+				<ul class="right">
+					<li>
+						진료상담 및 예약
+						<span>031-980-9114</span>
+					</li>
+										<li><a href="#" onclick="modal_on_login(); return false;">LOGIN <span class="bar"></span> JOIN</a></li>
+					                   
+					<!-- <li>
+						<input type="text" id="schtxt" placeholder="통합검색어를 입력하세요.">
+						<button id="schbtn"><img src="/resource-pc/images/search-gray.png" alt="검색" ></button>
+					</li> -->
+					<li class="h-sns">
+						<ol>
+							<li>
+								<a href="https://blog.naver.com/nkblog2014">
+									<img class="mb-hide" src="/resource-pc/images/h-naver.png" alt="네이버" target="_blank">
+									<img class="mb-show" src="/resource-pc/images/h-naver-m.png" alt="네이버" target="_blank">
+								</a>
+							</li>
+							<li>
+								<a href="https://www.youtube.com/channel/UC_8u752emktPchD8eSpYVNg">
+									<img class="mb-hide" src="/resource-pc/images/h-you.png" alt="유튜브" target="_blank">
+									<img class="mb-show" src="/resource-pc/images/h-you-m.png" alt="유튜브" target="_blank">
+								</a>
+							</li>
+							<li>
+								<a href="https://www.facebook.com/nkhospital7">
+									<img class="mb-hide" src="/resource-pc/images/h-face.png" alt="페이스북" target="_blank">
+									<img class="mb-show" src="/resource-pc/images/h-face-m.png" alt="페이스북" target="_blank">
+								</a>
+							</li>
+						</ol>
+					</li>
+					<li class="m-close mb-show">
+						<a href="#none" onclick="$('#gnb').slideUp(300);$('#login-bar').removeClass('on');"><img src="/resource-pc/images/m-close.png" alt=""></a>
+					</li>
+				</ul>
+                </form>               
+			</div>
+		<header class="test">
+			<h1 class="logo">
+				<a href="/">
+					<img class="mb-hide" src="/resource-pc/images/img_logo.png" alt="뉴고려병원 로고">
+				</a>
+			</h1>
+			<nav>
+				<ul class="menu">
+					<li><span><a href="/sub1/page01.html">서비스 이용 안내</a></span></li>
+					<li><span><a href="/sub2/page01.html">전문센터</a></span></li>
+					<li><span><a href="/sub3/page01.html">진료과</a></span></li>
+					<li><span><a href="/sub4/page01.html">특수클리닉</a></span></li>
+					<li><span><a href="/sub5/page01.html">의료진 소개</a></span></li>
+					<li><span><a href="/sub6/page01.html">소통/공감</a></span></li>
+					<li><span><a href="/sub7/page01.html">병원소개</a></span></li>
+				</ul>
+				<ul id="gnb">
+					<li>
+						<span><a href="#">서비스 이용 안내</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+
+							<span class="top-menu">예약/발급</span>
+							<li><a href="/service/page01.html">진료예약안내</a></li>
+							<li><a href="/service/page02-1.html">진료 예약(재진)</a></li>
+							<li><a href="/service/page14.html">예약 조회</a></li>
+							<li><a href="/service/page03.html">증명서발급안내</a></li>
+
+							<span class="top-menu">입/퇴원 안내</span>
+							<li><a href="/service/page06.html">입/퇴원 안내</a></li>
+							<li><a href="/service/page07.html">입원생활안내</a></li>
+							<li><a href="/service/page08.html">면회안내</a></li>
+							
+							<span class="top-menu">진료안내</span>
+							<li><a href="/service/page04.html">외래진료안내</a></li>
+							<li><a href="/service/page05.html">응급진료안내</a></li>
+							<li><a href="/service/page13.html">특수검진 외국인 문진표 양식</a></li>
+					
+							<span class="top-menu">병원안내</span>
+							<li><a href="/service/page09-2.html">병원둘러보기</a></li>
+							<li><a href="/service/page10-1.html">오시는길/주차안내</a></li>
+							<li><a href="/service/page11.html">장례식장</a></li>
+						
+							<span class="top-menu">건강검진</span>
+							<li><a href="/service/page15-1.html">건강검진 안내</a></li>
+							<li><a href="#none" onclick="window.open('http://smart.nkhospital.net/index.html', 'pop', 'menubar=no,status=no,scrollbars=yes,resizable=no ,width=500,height=600,top=100,left=100');">검진 예약/결과</a></li>
+
+						</ul>
+					</li>
+					<li>
+						<span><a href="#">전문센터</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							
+							<li><a href="/center01/page.php?depart=A&gubun=A">관절센터</a></li>
+							<li><a href="/center01/page.php?depart=C&gubun=A">외상센터</a></li>
+							<li><a href="/center01/page.php?depart=B&gubun=A">척추센터</a></li>
+							<li><a href="/center01/page.php?depart=D&gubun=A">뇌신경센터</a></li>
+							<li><a href="/center01/page.php?depart=F&gubun=A">심혈관센터</a></li>
+							<li><a href="/center01/page.php?depart=E&gubun=A">소화기센터</a></li>
+							<li><a href="/center01/page.php?depart=S&gubun=A">신장센터</a></li>
+							<li><a href="/center01/page.php?depart=I&gubun=A">응급의료센터</a></li>
+							<li><a href="/center01/page.php?depart=J&gubun=A">평생건강증진센터</a></li>
+							<li><a href="/center01/page.php?depart=AJ&gubun=A">재활치료센터</a></li>
+						</ul>
+					</li>
+					<li>
+						<span><a href="#">진료과</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							<li><a href="/center01/page.php?depart=AB&gubun=B">정형외과</a></li>
+							<li><a href="/center01/page.php?depart=AC&gubun=B">신경외과</a></li>
+							<li><a href="/center01/page.php?depart=M&gubun=B">신경과</a></li>
+							<li><a href="/center01/page.php?depart=K&gubun=B">일반외과</a></li>
+							<li><a href="/center01/page.php?depart=AK&gubun=B">심장혈관흉부외과</a></li>
+							<li><a href="/center01/page.php?depart=AD&gubun=B">소화기내과</a></li>
+							<li><a href="/center01/page.php?depart=AE&gubun=B">순환기내과</a></li>
+							<li><a href="/center01/page.php?depart=Z&gubun=B">정신건강의학과</a></li>
+							<li><a href="/center01/page.php?depart=AF&gubun=B">신장내과</a></li>
+							<li><a href="/center01/page.php?depart=T&gubun=B">호흡기내과</a></li>
+							<li><a href="/center01/page.php?depart=R&gubun=B">내분비내과</a></li>
+							<li><a href="/center01/page.php?depart=AG&gubun=B">소아청소년과</a></li>
+							<li><a href="/center01/page.php?depart=X&gubun=B">가정의학과</a></li>
+							<li><a href="/center01/page.php?depart=N&gubun=B">산부인과</a></li>
+							<li><a href="/center01/page.php?depart=V&gubun=B">피부비뇨의학과</a></li>
+							<li><a href="/center01/page.php?depart=W&gubun=B">재활의학과</a></li>
+							<li><a href="/center01/page.php?depart=O&gubun=B">치과</a></li>
+							<li><a href="/center01/page.php?depart=P&gubun=B">영상의학과</a></li>
+							<li><a href="/center01/page.php?depart=AH&gubun=B">마취통증의학과</a></li>
+							<li><a href="/center01/page.php?depart=Q&gubun=B">진단검사의학과</a></li>
+							<li><a href="/center01/page.php?depart=AA&gubun=B">직업환경의학과</a></li>
+							<li><a href="/center01/page.php?depart=AI&gubun=B">응급의학과</a></li>
+						</ul>
+					</li>
+					<li>
+						<span><a href="/sub4/page01.html">특수클리닉</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							<li><a href="/center01/page.php?depart=A&gubun=C">하지정맥류클리닉</a></li>
+							<li><a href="/center01/page.php?depart=C&gubun=C">요실금클리닉</a></li>
+							<li><a href="/center01/page.php?depart=G&gubun=C">비만클리닉</a></li>
+							<li><a href="/center01/page.php?depart=I&gubun=C">갑상선클리닉</a></li>
+							<li><a href="/center01/page.php?depart=J&gubun=C">복강경클리닉</a></li>
+							<li><a href="/center01/page.php?depart=H&gubun=C">당뇨클리닉</a></li>
+							<li><a href="/center01/page.php?depart=E&gubun=C">맘모톰클리닉</a></li>	
+						</ul>
+					</li>
+					<li>
+						<span><a href="/sub5/page01.html">의료진 소개</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							<li><a href="/doctor/page05.html">의료진 전체보기</a></li>
+							<li><a href="/doctor/page.php?depart=A&gubun=A">전문센터</a></li>
+							<li><a href="/doctor/page.php?depart=AB&gubun=B">진료과</a></li>
+						</ul>
+					</li>
+					<li>
+						<span><a href="/sub6/page01.html">소통/공감</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							<li><a href="/notice/notice.php?jb_code=10">병원소식</a></li>
+							<li><a href="/notice/notice.php?jb_code=80">포토뉴스</a></li>
+							<li><a href="/notice/notice.php?jb_code=140">CH NK</a></li>
+							<li><a href="/notice/notice.php?jb_code=90">언론보도</a></li>
+							<li><a href="/notice/notice.php?jb_code=50">건강정보</a></li>
+							<li><a href="/notice/notice.php?jb_code=20">칭찬합니다</a></li>
+						</ul>
+					</li>
+					<li>
+						<span><a href="/sub7/page01.html">병원소개</a></span>
+						<ul class="snb" style="display: none; height: calc(100% - 86px);">
+							<li><a href="/notice/page06.html">소개영상</a></li>
+							<li><a href="/notice/page07.html">인사말</a></li>
+							<li><a href="/notice/page12.html">HI소개</a></li>
+							<li><a href="/notice/page08.html">연혁</a></li>
+							<li><a href="/notice/page09.html">미션,비전,가치</a></li>
+							<li><a href="/notice/notice.php?jb_code=100&jb_mode=tdetail&jb_idx=<?=$data['data']['0']['jb_idx']?>">채용정보</a></li>
+							<li><a href="/notice/page11.html">협력병원 및 기관</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+            
+			<a class="ham" href="#none"><img src="/resource/images/ham.png" alt="메뉴"></a>
+		</header>
+		<?php
+		include_once  $GP -> INC_WWW . "/header.php";
+
+			$Main_all = Main_Notice2("news");//모아보기
+			$Main_notice = Main_Notice2("10");//병원소식
+			$Main_ch = Main_Notice2("140");//CH NK
+            $Main_health = Main_Notice2("50"); //건강정보
+
+            $Main_Slide = Main_Slide("main");//슬라이드
+
+		?>
+		<div id="container" style="padding-top:103px">
+			<div id="main-bnnr" class="swiper-container">
+				<ul class="swiper-wrapper">
+                   <?=$Main_Slide?>
+				   <!-- <li class='swiper-slide'>  
+						<a href='/center01/page.php?depart=F&gubun=A'>        
+							<img src='http://www.nkhospital.net/common/slide/210408main.jpg' alt=''>                        
+							<div class='swiper-cont' style="text-align:right;;">
+							<p class='tit'>                            
+								김포 지역 최초 대한심혈관중재학회<br />
+								심혈관중재시술 인증을 획득한 심혈관센터
+								</p>
+								<span class='text'>
+								고혈압, 부정맥으로 시작하여 심근경색이나 심정지 등<br />
+								골든타임이 중요한 심장혈관질환자들을 위해 24시간 365일 언제나 멈추지 않습니다.
+								</span>
+							</div>
+						</a>
+					</li> -->
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+					<!-- Add Scroll Icon -->
+				</ul>
+				<!-- <div class="move-scroll">
+					<span>↓</span>
+				</div> -->
+			</div>
+			<!-- //end #main-bnnr -->
+
+
+			<div id="center-list">
+				<div id="rsv-list2">
+					<div class="inner">
+						<div class="list">
+							<p class="list-title" style="color: #fff;">첫 진료 간편예약</p>
+							<div class="list-btn">						
+								<button type="button" onclick="$('.rsv-submit').fadeIn(100);" style="color: #1991ca; background: #fff;">예약신청</button>
+							</div>                            
+						</div>
+						<div class="list">
+							<p class="list-title">진료 예약(재진)</p>
+							<div class="list-btn" style="background: #101c5a;">
+								<a href="/service/page02-1.html">온라인 예약 바로가기</a>
+							</div>
+						</div>
+						<div class="list">
+							<p class="list-title">건강검진 예약</p>
+							<div class="list-btn" style="background: #fff;">
+								<a href="" onclick="window.open('http://smart.nkhospital.net/index.html', 'pop', 'menubar=no,status=no,scrollbars=yes,resizable=no ,width=500,height=600,top=100,left=100');" style="background: #fff; border: 1px solid #d7cdc7; color: #333;">검진 예약 바로가기</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="inner">
+					<ul class="tab">
+						<li><a href="#none">의료진</a></li>
+						<li class="on"><a href="#none">전문센터</a></li>
+						<li><a href="#none">진료과</a></li>
+						<li><a href="#none">특수클리닉</a></li>
+					</ul>
+					<p style="margin-bottom: 40px;">찾으시는 의료진, 전문센터, 진료과, 특수클리닉을 빠르게 찾을 수 있습니다.</p>
+					<!-- <ul id="filter" class="tab-1">
+						<li class="on"><a href="#none" data-target="all">ALL</a></li>
+						<li><a href="#none" data-target="ㄱ">ㄱ</a></li>
+						<li><a href="#none" data-target="ㄴ">ㄴ</a></li>
+						<li><a href="#none" data-target="ㄷ">ㄷ</a></li>
+						<li><a href="#none" data-target="ㄹ">ㄹ</a></li>
+						<li><a href="#none" data-target="ㅁ">ㅁ</a></li>
+						<li><a href="#none" data-target="ㅂ">ㅂ</a></li>
+						<li><a href="#none" data-target="ㅅ">ㅅ</a></li>
+						<li><a href="#none" data-target="ㅇ">ㅇ</a></li>
+						<li><a href="#none" data-target="ㅈ">ㅈ</a></li>
+						<li><a href="#none" data-target="ㅊ">ㅊ</a></li>
+						<li><a href="#none" data-target="ㅋ">ㅋ</a></li>
+						<li><a href="#none" data-target="ㅌ">ㅌ</a></li>
+						<li><a href="#none" data-target="ㅍ">ㅍ</a></li>
+						<li><a href="#none" data-target="ㅎ">ㅎ</a></li>
+					</ul> -->
+					<form id="search_all2" name="search_all2" method="post" style="
+    position: absolute;
+    top: -250px;
+    z-index: 1000;
+    left: 50%;
+    transform: translateX(-50%);
+">
+					<div class="search-filter" style="
+    width: 1000px;
+    border-radius: 0;
+    border: 3px solid #1991ca;
+    display: flex;
+    align-items: center;
+    height: 80px;
+">
+    <div><span style="
+    font-family: NotoSansKR;
+    font-size: 25px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.88;
+    letter-spacing: -1.25px;
+    text-align: left;
+    color: #1991ca;
+    display: block;
+    padding: 0 64px;
+	border-right: 1px solid #c8c8c8;
+">검색</span></div>
+						<input type="text" id="schtxt2" placeholder="찾으시는 의료진/전문센터/진료과/특수클리닉 를 검색해주세요.">
+						<button id="schbtn" style="
+    right: 0;
+    background: #1991ca;
+    width: 80px;
+    height: 80px;
+"><img src="/resource-pc/images/icon-main-search.png" alt="검색"></button>
+					</div>
+					</form>
+					<div id="tab1-1" class="tab-cont">
+						<div class="doc">
+							<div class="swiper-container">
+								<ul class="swiper-wrapper">
+									<?
+									//print_r($args);
+									$args["order"] = "order by FIELD(dr_position, 'E',  'I', 'G', 'H', 'F', 'C') desc, dr_position asc, dr_name asc";
+									$data = $C_Doctor->Doctor_Detail_List($args);
+									$data_list 		= $data['data'];
+									$data_list_cnt 	= count($data_list);
+
+									foreach($data as $key=>$val){
+									$dr_idx = $val["dr_idx"];
+									$dr_name = $val["dr_name"];
+									$dr_position = $val["dr_position"][0];
+									$val["dr_clinic2"] = explode(',',$val["dr_clinic2"]);					                       
+									$dr_clinic2 = $val["dr_clinic2"];
+								
+									$treat2 = ($GP->NEW_MOBILE_CENTER[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]] : $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]];
+									$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]];		
+									if(!$treat3){
+										$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]];		
+									}
+
+									$dr_img = "<img src='" . $GP -> UP_DOCTOR_URL . $val["dr_face_img"] . "' class='block' alt='" .  $dr_name ."' />";
+
+									$gubun = "";
+									if($treat2 && $treat3 ){
+										$gubun = "/";
+									}
+
+									?>
+									<li class="swiper-slide" data-idx="" data-name="<?=$dr_name?>">
+										<a href="/doctor/doc-view.php?idx=<?=$dr_idx?>&gubun=<?=$gubun?>">
+											<span class="pic">
+											<?=$dr_img?>
+											</span>
+											<span class="center"><?=$treat2 ?><?=$gubun?><?=$treat3 ?></span>
+											<span class="name">
+											<b><?=$dr_name?></b> <?=$GP -> DOCTOR_POSITION[$dr_position]?>
+											</span>
+										</a>
+									</li>
+									<? } ?>
+								</ul>
+							</div>
+							
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</div>
+					</div>
+					<div id="tab1-2" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㄱ"><a href="/center01/page.php?depart=A&gubun=A"><img src="/resource-pc/images/main-center-01.png" alt="">관절센터</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=C&gubun=A"><img src="/resource-pc/images/main-center-19.png" alt="">외상센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=F&gubun=A"><img src="/resource-pc/images/main-center-03.png" alt="">심혈관센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=S&gubun=A"><img src="/resource-pc/images/main-center-12.png" alt="">신장센터</a></li>
+							<li data-group="ㅌ"><a href="/center01/page.php?depart=H&gubun=A"><img src="/resource-pc/images/main-center-20.png" alt="">통증센터</a></li>
+							<li data-group="ㅍ"><a href="/center01/page.php?depart=J&gubun=A"><img src="/resource-pc/images/main-center-21.png" alt="">평생건강증진센터</a></li>
+							<li data-group="ㅊ"><a href="/center01/page.php?depart=B&gubun=A"><img src="/resource-pc/images/main-center-22.png" alt="">척추센터</a></li>
+							<li data-group="ㄴ"><a href="/center01/page.php?depart=D&gubun=A"><img src="/resource-pc/images/main-center-05.png" alt="">뇌신경센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=E&gubun=A"><img src="/resource-pc/images/main-center-11.png" alt="">소화기센터</a></li>
+							<!-- <li data-group="ㅅ"><a href="/center01/page.php?depart=G&gubun=A"><img src="/resource-pc/images/main-center-14.png" alt="">소아청소년센터</a></li> -->
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=I&gubun=A"><img src="/resource-pc/images/main-center-18.png" alt="">응급의료센터</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AJ&gubun=A"><img src="/resource-pc/images/main-center-07.png" alt="">재활치료센터</a></li>
+						</ul>
+					</div>
+					<div id="tab1-3" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AB&gubun=B"><img src="/resource-pc/images/main-center-01.png" alt="">정형외과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=K&gubun=B"><img src="/resource-pc/images/main-center-02.png" alt="">일반외과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AE&gubun=B"><img src="/resource-pc/images/main-center-03.png" alt="">순환기내과</a></li>
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=T&gubun=B"><img src="/resource-pc/images/main-center-04.png" alt="">호흡기내과</a></li>
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=AK&gubun=B"><img src="/resource-pc/images/main-center-31.jpg" alt="">흉부외과</a></li>
+							<li data-group="ㅊ"><a href="/center01/page.php?depart=O&gubun=B"><img src="/resource-pc/images/main-center-30.png" alt="">치과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=M&gubun=B"><img src="/resource-pc/images/main-center-05.png" alt="">신경과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=N&gubun=B"><img src="/resource-pc/images/main-center-06.png" alt="">산부인과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=W&gubun=B"><img src="/resource-pc/images/main-center-07.png" alt="">재활의학과</a></li>
+							<li data-group="ㅁ"><a href="/center01/page.php?depart=AH&gubun=B"><img src="/resource-pc/images/main-center-08.png" alt="">마취통증의학과</a></li>
+                            <li data-group="ㅈ"><a href="/center01/page.php?depart=Z&gubun=B"><img src="/resource-pc/images/main-center-19.jpg" alt="">정신건강의학과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AA&gubun=B"><img src="/resource-pc/images/main-center-09.png" alt="">직업환경의학과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AC&gubun=B"><img src="/resource-pc/images/main-center-10.png" alt="">신경외과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AD&gubun=B"><img src="/resource-pc/images/main-center-11.png" alt="">소화기내과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AF&gubun=B"><img src="/resource-pc/images/main-center-12.png" alt="">신장내과</a></li>
+							<li data-group="ㄴ"><a href="/center01/page.php?depart=R&gubun=B"><img src="/resource-pc/images/main-center-13.png" alt="">내분비내과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AG&gubun=B"><img src="/resource-pc/images/main-center-14.png" alt="">소아청소년과</a></li>
+							<li data-group="ㅍ"><a href="/center01/page.php?depart=V&gubun=B"><img src="/resource-pc/images/main-center-15.png" alt="">피부비뇨의학과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=P&gubun=B"><img src="/resource-pc/images/main-center-16.png" alt="">영상의학과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=Q&gubun=B"><img src="/resource-pc/images/main-center-17.png" alt="">진단검사의학과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=AI&gubun=B"><img src="/resource-pc/images/main-center-18.png" alt="">응급의학과</a></li>
+							<li data-group="ㄱ"><a href="/center01/page.php?depart=X&gubun=B"><img src="/resource-pc/images/main-center-32.jpg" alt="">가정의학과</a></li>
+						</ul>
+					</div>
+					<div id="tab1-4" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=A&gubun=C"><img src="/resource-pc/images/main-center-23.png" alt="">하지정맥류 클리닉</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=C&gubun=C"><img src="/resource-pc/images/main-center-24.png" alt="">요실금클리닉</a></li>
+							<li data-group="ㅂ"><a href="/center01/page.php?depart=G&gubun=C"><img src="/resource-pc/images/main-center-25.png" alt="">비만클리닉</a></li>
+							<li data-group="ㄱ"><a href="/center01/page.php?depart=I&gubun=C"><img src="/resource-pc/images/main-center-26.png" alt="">갑상선클리닉</a></li>
+							<li data-group="ㅂ"><a href="/center01/page.php?depart=J&gubun=C"><img src="/resource-pc/images/main-center-27.png" alt="">복강경클리닉</a></li>
+							<li data-group="ㄷ"><a href="/center01/page.php?depart=H&gubun=C"><img src="/resource-pc/images/main-center-28.png" alt="">당뇨클리닉</a></li>
+							<li data-group="ㅁ"><a href="/center01/page.php?depart=E&gubun=C"><img src="/resource-pc/images/main-center-29.png" alt="">맘모톰클리닉</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- //end center-list  -->
+			<div id="main-notice">
+				<div class="main-list-menu">
+					<ul class="tab">
+						<li class="on"><a href="#none">모아보기</a></li>
+						<li><a href="#none">병원소식</a></li>
+						<li><a href="#none">CH NK</a></li>
+						<li><a href="#none">건강정보</a></li>
+					</ul>
+					<div class="inner">
+						<div id="tab2-1" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_all?>
+							</ul>
+						</div>
+						<div id="tab2-2" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_notice?>
+							</ul>
+						</div>
+						<div id="tab2-3" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_ch?>
+							</ul>
+						</div>
+						<div id="tab2-4" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_health?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //end #main-notice -->
+			<div id="main-info">
+				<div class="inner">
+					<h3>뉴고려병원 진료 센터 안내 <small>nkhospital</small></h3>
+					<img usemap="#map1" src="/resource-pc/images/1f.png" alt="">
+					<map name="map1">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map2" src="/resource-pc/images/2f.png" alt="">
+					<map name="map2">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map3" src="/resource-pc/images/4f.png?v=0.1" alt="">
+					<map name="map3">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map4" src="/resource-pc/images/8f.png" alt="">
+					<map name="map4">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map5" src="/resource-pc/images/10f.png" alt="">
+					<map name="map5">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<ul class="floor-list">
+						<li class="map5">
+							<a href="/service/page09-2.html#location10">
+								<label>10F</label>
+								<span>재활치료센터</span>
+							</a>
+						</li>
+						<li class="map4">
+							<a href="/service/page09-2.html#location8">
+								<label>8F</label>
+								<span>중증환자집중치료 음압병동</span>
+							</a>
+						</li>
+						<li class="map3">
+							<a href="/service/page09-2.html#location4">
+								<label>4F</label>
+								<span>
+									평생건강증진센터<span class="bar"></span>소화기센터<span class="bar mb-show"></span><br class="mb-hide">
+									내분비내과<span class="bar"></span>피부비뇨기과<span class="bar mb-show"></span><br class="mb-hide">
+									산부인과<span class="bar"></span>치과<span class="bar"></span>정신건강의학과<br class="mb-hide">
+                                    가정의학과
+								</span>
+							</a>
+						</li>
+						<li class="map2">
+							<a href="/service/page09-2.html#location2">
+								<label>2F</label>
+								<span>
+									관절센터<span class="bar"></span>외상센터<span class="bar"></span>척추센터<span class="bar mb-show"></span><br class="mb-hide">
+									뇌신경센터<span class="bar"></span>심혈관센터<span class="bar"></span>신장센터<span class="bar mb-show"></span><br class="mb-hide">
+									흉부외과
+								</span>
+							</a>
+						</li>
+						<li class="map1 active">
+							<a href="/service/page09-2.html#location1">
+								<label>1F</label>
+								<span>
+									응급의학센터<span class="bar"></span>영상의학과
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+		<?php include_once $GP -> INC_WWW . "/footer.php" ?>
+        <?
+            $mobile_agent = '/(iPod|iPhone|Android|BlackBerry|SymbianOS|SCH-M\d+|Opera Mini|Windows CE|Nokia|SonyEricsson|webOS|PalmOS)/';
+
+            // preg_match() 함수를 이용해 모바일 기기로 접속하였는지 확인
+            if(preg_match($mobile_agent, $_SERVER['HTTP_USER_AGENT'])) {
+                include "./popup/popup_layer.php";
+            }else{
+                include "./popup/popup_script.php";
+            }
+        ?>
+
+	</div>
+	<!-- //end #wrap -->
+    <script>
+		$(function(){
+			$("#rsv-list .list").on("mouseenter",function(){
+				$(this).find('.list-btn').slideDown(200)
+			});
+			$("#rsv-list .list").on("mouseleave", function () {
+				$(this).find('.list-btn').slideUp(200)
+			});
+		});
+	</script>
+
+	<script>
+	  $(document).ready(function() {
+		// Select the header and the gnb menu
+		var header = $('.test');
+		var gnb = $('#gnb');
+		var snb = $('.snb');
+
+		// Add hover event to the header
+		header.hover(
+		  function() {
+			// When hovered in, set display to flex
+			gnb.css('display', 'flex');
+			snb.css('display', 'flex');
+		  },
+		  function() {
+			// When hovered out, set display to none
+			gnb.css('display', 'none');
+			snb.css('display', 'none');
+		  }
+		);
+
+		var scrollThreshold = 103;
+    
+        $(window).scroll(function() {
+          if ($(this).scrollTop() > scrollThreshold) {
+            header.addClass('on');
+          } else {
+            header.removeClass('on');
+          }
+        });
+	  });
+</script>
+</body>
+</html>

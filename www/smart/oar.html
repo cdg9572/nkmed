@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>뉴고려병원 해외환자유치 간편예약</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.nkhospital.net/favicon/favicon-32x32.png">
+	<!-- jQuery UI CSS파일 -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+	<!-- jQuery 기본 js파일 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	<!-- jQuery UI 라이브러리 js파일 -->
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+	<script src="../js/datepicker_kr.js"></script> 
+	<script>
+	$(function() {
+	  // 오늘 날짜 가져오기
+      var today = new Date();
+      
+      // 4일 뒤의 날짜 계산
+      var futureDate = '<?=date("Y-m-d", strtotime("+4 days",strtotime(date("Y-m-d"))));?>';
+	  
+	  // 비활성화할 날짜 배열
+	  var disabledDates = ['2023-08-15','2023-09-28','2023-09-29'];
+      
+		$( "#rdt" ).datepicker({  
+			minDate: futureDate,
+			beforeShowDay: function(date) {
+			  var dateString = $.datepicker.formatDate('yy-mm-dd', date);
+			  if (disabledDates.indexOf(dateString) !== -1) {
+				return [false, 'disabled-date']; // 비활성화된 날짜에 'disabled-date' 클래스 추가
+			  }
+			  var day = date.getDay();
+			  return [(day !== 0 && day !== 6), ''];
+			}
+		});
+	});
+	</script>
+	<style>
+	.tbox {	
+		height: 200px;    
+		width: 100%;    
+		border: 1px solid #d6d6d6;    
+		background: #fff;    
+		padding: 30px 25px;    
+		line-height: 18px;    
+		overflow-y: scroll;	
+	}
+	input { margin-bottom:10px; }
+	</style>
+<script>
+	document.addEventListener("DOMContentLoaded", function(event) {
+      // 로드 완료 후 실행할 작업을 이곳에 작성합니다.
+      document.getElementById("DEPT").style.display="none";
+      document.getElementById("DEPT2").style.display="none";
+
+	  let frm = document.getElementById("frm");
+	  frm.addEventListener("submit",function(e){
+		  e.preventDefault();
+		  if(document.getElementsByName("rtype")[0].checked){
+			if(document.getElementById("dept2").value==""){
+				alert( "상품을 선택해주세요." );
+				document.getElementById("dept2").focus();
+				return false;  
+			}
+		  }else{
+			if(document.getElementById("dept").value==""){
+				alert( "진료과를 작성해주세요." );
+				document.getElementById("dept").focus();
+				return false;  
+			}
+		  }
+		  frm.submit();
+	  });
+      
+      // 예시: 버튼 클릭 시 얼럿 창 표시
+      //var button = document.getElementById("myButton");
+      //button.addEventListener("click", function() {        alert("버튼이 클릭되었습니다.");      });
+    });
+
+	function dV( v ){
+		document.getElementById("DEPT").style.display="none";
+		document.getElementById("DEPT2").style.display="none";
+		if(v=="G"){
+			document.getElementById("DEPT2").style.display="";
+		}else{
+			document.getElementById("DEPT").style.display="";
+		}
+		
+	}
+</script>
+  </head>
+
+<body>
+	<section class="hero is-info">
+		<div class="hero-body">
+			<p class="title">뉴고려병원 해외환자유치 간편예약등록</p>
+			<p class="subtitle"> 계약된 에이젼시만 이용가능합니다.</p>
+		</div>
+	</section>
+
+	<section class="section">
+  	
+		<div class="container">
+			<form id="frm" name="frm" method="post" action="oar_post.html" autocomplete="off">
+				<div class="media-content mb-3">
+				
+					<div class="content tbox mb-2" >
+						<p class="list_big_title">개인정보 수집 및 이용에 관한 동의</p>
+						<p class="s_txt mgt_20">의료법인 인봉의료재단 뉴고려병원 해외환자유치 간편등록예약 서비스를 이용하실때 개인정보를 수집합니다.</p>
+						<p class="s_txt"><strong>수집되는 개인정보 항목은 아래와 같습니다.</strong></p>
+						<p class="s_txt">- 에이전시, 에이전시 담당자, 담당자 전화번호, 외국인고객명 </p>
+						<p class="s_txt">- 수집된 개인정보는 삭제요청이 없을 경우 2년동안 보관됩니다.</p>
+						<p class="s_txt">- 개인정보의 삭제를 원하실 경우 지체 없이 해당 정보를 삭제합니다.</p>
+						<p class="s_txt">- 귀하는 개인정보 수집 및 이용에 대하여 동의를 거부할 권리가 있으며, 동의를 거부할 경우 본 서비스를 이용할 수 없음을 알려 드립니다. </p>
+					</div>
+
+					<p class="agree">
+						<label>
+							<input type="checkbox" name="agree_policy" id="agree_policy" required class=' is-primary mr-3' value="1">
+							<span class="agree_txt">상기 개인정보 취급 및 이용에 관한 내용을 읽었으며, 동의합니다.</span>
+						</label>
+					</p>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">유치기관명</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered" type="text" name="agency" value="" placeholder="유치기관명" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">담당자</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered" type="text" name="agname" value="" placeholder="유치담당자" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">담당자연락처</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered" type="number" name="agtel" value="" placeholder="담당자연락처" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">예약유형</label></div>
+
+					<div class="field-body">
+						<label class="pt-2"><input class=" ml-3 mr-3" type="radio" name="rtype" value="G" placeholder="Primary input" required onclick="dV(this.value);">건강검진</label>
+						<div id="DEPT2" class="select is-link ml-3 mr-3">
+							<select id="dept2" name='dept2'>
+								<option value=''>검진상품을 선택하세요</option>
+								<option value='상담후선택'>상담후선택</option>
+								<option value='검진상품1'>검진상품1</option>
+								<option value='검진상품2'>검진상품2</option>
+								<option value='검진상품3'>검진상품3</option>
+								<option value='검진상품4'>검진상품4</option>
+							  </select>
+							</div>
+
+						<label class="pt-2"><input class=" ml-3 mr-3" type="radio" name="rtype" value="O" placeholder="Primary input" required onclick="dV(this.value);">외래진료</label>
+					
+						<div id="DEPT" class="ml-3" >
+							<input type="text" class="input is-hovered" id="dept" name="dept" value="" placeholder="희망진료과 :" /></div>
+
+						
+					</div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">고객명</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered" type="text"  name="pname" value="" placeholder="고객명" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">예약희망일</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered" type="text"  id="rdt" name="rdt" value="" placeholder="예약희망일" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">메모사항</label></div>
+
+					<div class="field-body">
+						<textarea name="rmemo" class="textarea is-hovered" placeholder="문의사항은 여기에 작성해주세요."></textarea></div>
+				</div>
+
+				<div class="field " style='text-align:center;'>
+					<button class="button is-primary">예약하기</button>
+					<button type="reset" class="ml-4 button" >초기화</button>
+					<button class="ml-4 button is-danger" onclick="self.close();">종료하기</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<?php
+
+$title = "서비스 이용안내";
+$page_title = "진료안내";
+$page_sub_title = "특수검진 외국인 문진표 양식";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-1";$dep3 = "0-1-2";
+
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr11.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<h3 class="cont-tit">특수건강검진 문진표</h3>
+				<div class="cont-box">
+					<h4 class="cont-label">특수건강검진 문진표<br>(외국인용)</h4>
+					<div class="cont">
+						<div class="s-pad-box blue">
+							<span>아래 <font class="c-yellow">다운로드 버튼</font> <img src="/resource-pc/images/download.png" alt="" style="margin-top:-5px">을 통해 문진표를 다운받아주세요.</span>
+						</div>
+						<div class="down-list">
+							<a href="/resource-pc/files/특수건강진단문진표(영어).doc" download="특수건강진단문진표(영어).doc">영어</a>
+							<a href="/resource-pc/files/특수건강진단문진표(중국어).doc" download="특수건강진단문진표(중국어).doc">중국</a>
+							<a href="/resource-pc/files/특수건강진단문진표(베트남).doc" download="특수건강진단문진표(베트남).doc">베트남</a>
+							<a href="/resource-pc/files/특수건강진단문진표(네팔).doc" download="특수건강진단문진표(네팔).doc">네팔</a>
+							<a href="/resource-pc/files/특수건강진단문진표(몽골).doc" download="특수건강진단문진표(몽골).doc">몽골</a>
+							<a href="/resource-pc/files/특수건강진단문진표(미얀마).doc" download="특수건강진단문진표(미얀마).doc">미얀마</a>
+							<a href="/resource-pc/files/특수건강진단문진표(방글라데시).doc" download="특수건강진단문진표(방글라데시).doc">방글라데시</a>
+							<a href="/resource-pc/files/특수건강진단문진표(스리랑카).docx" download="특수건강진단문진표(스리랑카).docx">스리랑카</a>
+							<a href="/resource-pc/files/특수건강진단문진표(우즈베키스탄).doc" download="특수건강진단문진표(우즈베키스탄).doc">우즈베키스탄</a>
+							<a href="/resource-pc/files/특수건강진단문진표(인도네시아).doc" download="특수건강진단문진표(인도네시아).doc">인도네시아</a>
+							<a href="/resource-pc/files/특수건강진단문진표(캄보디아).doc" download="특수건강진단문진표(캄보디아).doc">캄보디아</a>
+							<a href="/resource-pc/files/특수건강진단문진표(태국어).doc" download="특수건강진단문진표(태국어).doc">태국</a>
+							<a href="/resource-pc/files/특수건강진단문진표(파키스탄).docx" download="특수건강진단문진표(파키스탄).docx">파키스탄</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="cont-box">
+					<h4 class="cont-label">야간작업 문진표<br>(외국인용)</h4>
+					<div class="cont">
+						<div class="s-pad-box blue">
+							<span>아래 <font class="c-yellow">다운로드 버튼</font> <img src="/resource-pc/images/download.png" alt="" style="margin-top:-5px">을 통해 문진표를 다운받아주세요.</span>
+						</div>
+						<div class="down-list">
+							<a href="/resource-pc/files/야간작업문진표(영어).doc" download="야간작업문진표(영어).doc">영어</a>
+							<a href="/resource-pc/files/야간작업문진표(중국어).doc" download="야간작업문진표(중국어).doc">중국</a>
+							<a href="/resource-pc/files/야간작업문진표(베트남).doc" download="야간작업문진표(베트남).doc">베트남</a>
+							<a href="/resource-pc/files/야간작업문진표(네팔).doc" download="야간작업문진표(네팔).doc">네팔</a>
+							<a href="/resource-pc/files/야간작업문진표(몽골).doc" download="야간작업문진표(몽골).doc">몽골</a>
+							<a href="/resource-pc/files/야간작업문진표(미얀마).doc" download="야간작업문진표(미얀마).doc">미얀마</a>
+							<a href="/resource-pc/files/야간작업문진표(방글라데시).doc" download="야간작업문진표(방글라데시).doc">방글라데시</a>
+							<a href="/resource-pc/files/야간작업문진표(스리랑카).docx" download="야간작업문진표(스리랑카).docx">스리랑카</a>
+							<a href="/resource-pc/files/야간작업문진표(우즈베키스탄).doc" download="야간작업문진표(우즈베키스탄).doc">우즈베키스탄</a>
+							<a href="/resource-pc/files/야간작업문진표(인도네시아).doc" download="야간작업문진표(인도네시아).doc">인도네시아</a>
+							<a href="/resource-pc/files/야간작업문진표(캄보디아).doc" download="야간작업문진표(캄보디아).doc">캄보디아</a>
+							<a href="/resource-pc/files/야간작업문진표(태국).doc" download="야간작업문진표(태국).doc">태국</a>
+							<a href="/resource-pc/files/야간작업문진표(파키스탄).docx" download="야간작업문진표(파키스탄).docx">파키스탄</a>
+						</div>
+						<br>
+					</div>
+				</div>
+
+			</div>
+			<!-- //end #innerCont -->
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

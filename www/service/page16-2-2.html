@@ -1,0 +1,185 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 예약/결과";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+
+include_once($GP->CLS."class.list.php");
+include_once($GP->CLS."class.multi.php");
+include_once($GP->CLS."class.button.php");
+$C_ListClass 	= new ListClass;
+$C_multi 	= new multi;
+$C_Button 		= new Button;
+
+$args = array( 		
+    "tm_menu" => "medicalcheckup",	
+    "tm_content5" => $_GET['tm_content5'],	
+    "tm_content6" => $_GET['tm_content6'],	
+    "s_date" => date("Y-m-d"),	
+    "e_date" => "2999-12-31"
+) ;  
+
+$data = "";
+$data = $C_multi->multi_List(array_merge($_GET,$_POST,$args));
+
+$data_list 		= $data['data'];
+$page_link 		= $data['page_info']['link'];
+$page_search 	= $data['page_info']['search'];
+$totalcount 	= $data['page_info']['total'];
+
+$totalpages 	= $data['page_info']['totalpages'];
+$nowPage 		= $data['page_info']['page'];
+$totalcount_l 	= number_format($totalcount,0);
+
+$data_list_cnt 	= count($data_list);
+?>
+<style>
+	.tableType-01 > table > tbody > tr > th,
+	.tableType-01 > table > tbody > tr > td {padding:15px 20px;}
+	.form .form-control {border:1px solid #ccc;background-color: #fff;}
+</style>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li><a href="page16-1.html">건강검진 예약</a></li>
+						<li class="active"><a href="page16-2.html">예약 확인</a></li>
+						<li><a href="https://eo-m.com/2023/HSP/HSP_Controller.asp?part=nfc&mehId=GV2984&mtype=1" target="_blank">문진표 작성</a></li>
+						<li><a href="page16-4.html">검진순서</a></li>
+						<li><a href="page16-5.html">검진 주의사항</a></li>
+					</ul>
+				</div>
+				<div class="sub-middle-tit">
+					<h2>예약 확인</h2>
+					<span class="bar"></span>
+				</div>
+				<h3 class="cont-tit"><small>예약 확인</small></h3>              
+                    
+                        
+                            <?
+								$dummy = 1;
+								if($data_list_cnt > 0 ) {
+									for ($i = 0 ; $i < $data_list_cnt ; $i++) {
+										$tm_idx        = $data_list[$i]['tm_idx']; 
+                                        $tm_type       = $data_list[$i]['tm_type'];		                                                                             
+                                        $tm_content5      = $data_list[$i]['tm_content5'];
+                                        $tm_content6      = $data_list[$i]['tm_content6'];
+                                        $tm_content12      = $data_list[$i]['tm_content12'];
+							?>
+                        <div class="tableType-01 text-center" style="">
+                            <table>
+                                <colgroup>
+                                    <col style="width: 50%;">
+                                    <col>                               
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>이름</th>
+                                        <td>                                        
+                                            <?=$tm_content5 ?>                                     
+                                        </td>								
+                                    </tr>
+                                    <tr>								
+                                        <th>검진유형</th>
+                                        <td>
+                                            <?=$GP -> checkup_RESULT[$tm_type]?>
+                                        </td>
+                                    </tr>
+                                    <tr>								
+                                        <th>예약날짜</th>
+                                        <td>
+                                            <?=$tm_content12?>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                                <?
+										$dummy++;
+									}
+								}
+
+								$no = 0;
+								$tmp_sql = " SELECT * FROM smart_reserve 
+											WHERE name='".$_GET['tm_content5']."' and mobile_no='".str_replace('-','',$_GET['tm_content6'])."'
+												and reserve_date>'".date('Y-m-d')."' ";
+								if($r = mysql_query($tmp_sql) ){
+									//echo "test";	
+									while($row = mysql_fetch_array($r)){ ?>
+										<div class="tableType-01 text-center" style="">
+										<table>
+											<colgroup>
+												<col style="width: 50%;">
+												<col>                               
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>이름</th>
+													<td>                                        
+														<?=$tm_content5 ?>                                     
+													</td>								
+												</tr>
+												<tr>								
+													<th>검진유형</th>
+													<td>
+														<?=$row['item_category']?>
+													</td>
+												</tr>
+												<tr>								
+													<th>예약날짜</th>
+													<td>
+														<?=$row['reserve_date']?>
+													</td>
+												</tr>
+												</tbody>
+										</table>
+									</div>
+<?										$no++;
+									}
+								}
+
+								#echo $no;
+
+								if( $no==0 and $data_list_cnt==0 ) {
+									echo "<tr><td colspan='2' align='center'>데이터가 없습니다.</td></tr>";
+								}
+							?>		
+                    <div id="btn-box" class="center">
+                        <a href="/service/page16-2.html" class="btn bg-blue" style="width: 270px;">확인 완료</a>
+                    </div>
+                
+
+				<div class="l-pad-box gray text-left" style="margin-top: 80px;">
+					<ul class="c-middot-list">
+						<li>뉴고려병원 건강검진 프로그램은 예약제입니다.</li>
+						<li>홈페이지나 상담전화를 이용하여 미리 예약하십시오. (평생건강증진센터 1833-9988)</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

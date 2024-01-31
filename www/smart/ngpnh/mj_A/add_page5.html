@@ -1,0 +1,40 @@
+
+<?
+$page_no = 5 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					5. 현재 또는 과거에 진단받은 위장질환이 있으십니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1"  <?=getChecked($v, "1")?> > 위궤양</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="2"  <?=getChecked($v, "2")?> > 위축성 위염</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="3"  <?=getChecked($v, "3")?> > 장상피화생</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="4"  <?=getChecked($v, "4")?> > 위용종</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="5"  <?=getChecked($v, "5")?> > 기타</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="6"  <?=getChecked($v, "6")?> > 없음</td>
+			</tr>
+		</table>
+	
+		
+	

@@ -1,0 +1,64 @@
+<?
+ session_start(); 
+
+include "inc/dbConn.php";
+include  "inc/func.php";
+$tbl = "smart_ir";
+header("Content-Type:text/html;charset=utf-8") ;
+#echo "<script>alert('".$_SESSION['name2']."');</script>";
+mysql_query("set names utf8;");
+echo "<iframe name=\"ifrm\" src=\"\" style=\"display:none\"></iframe>";
+#예약처리
+
+#echo $_SERVER['REMOTE_ADDR'];
+
+#echo "<br/>".$_POST[sname];
+#echo "<br/>".$_POST[tel];
+#echo "<br/>".$_POST[t];
+#echo "<br/>".$_POST[tdate];
+#echo "<br/>".$_POST[memo];
+#echo "<br/>".count($_POST[sname2]);
+
+if( $_POST[sname] == "" ){
+	echo "<script>alert(\"정보가 부정확합니다..\");history.back();</script>";
+}else{
+
+	$sql = " SELECT COUNT(*) CNT FROM $tbl WHERE sname='$_POST[sname]' AND tel='$_POST[tel]' AND idate='$_POST[tdate]'   ";
+	if( $r = mysql_query($sql) ){
+
+		$row = mysql_fetch_array($r);
+
+		if( $row[CNT]==0 ){
+
+			$sql = " INSERT INTO $tbl 
+						VALUES	( 0, 
+							'$_POST[sname]', '$_POST[tel]', '$_POST[tdate]',	'$_POST[t]', '$_POST[memo]'
+							, '".date("Y-m-d H:i:s")."', '처리대기','','".$_POST[nm2]."'	, '".$_POST[rtime]."', 'N'	) ";
+
+			if( mysql_query($sql) ){
+				#echo "<script>alert( '".count($_POST[sname2])."' );</script>";
+				for ( $i = 0 ; $i < count($_POST[sname2]) ; $i ++){
+					#echo "<br/>$i / ".$_POST[sname2][$i]." / ".$_POST[tel2][$i]." / ".$_POST[t2][$i];
+					if( $_POST[sname2][$i]<> "" ){
+						$sql = " INSERT INTO $tbl ( idx, sname, tel, idate, t, wdt, state_flag, cname, memo, rtime, hosp  )
+									VALUES ( 0, '".$_POST[sname2][$i]."', '".$_POST[tel2][$i]."', '".$_POST[tdate]."',	'".$_POST[t2][$i]."'
+										, '".date("Y-m-d H:i:s")."', '처리대기','".$_POST[nm2]."', '$_POST[memo]',	'".$_POST[rtime]."', '".$_POST[hosp]."' )	";
+						if( mysql_query($sql) ){ }else{	echo mysql_error(); }
+					}
+				}
+				
+				#if( $_POST[hosp]=="Y" ){
+				#	echo "<script>alert(\"신청이 완료 되었습니다.\"); window.close(); location.href='http://ydphospital.com/'</script>";
+				#}else{
+					echo "<script>alert(\"신청이 완료 되었습니다.\"); window.close(); location.href='http://smart.nkhospital.net/ir2023.html'</script>";
+				#}
+			}else{
+				echo mysql_error();
+			}
+		}else{
+			echo "<script>alert(\"이미 예약이 되어 있습니다.\");history.back();</script>";
+		}
+	}
+}
+
+?>

@@ -1,0 +1,22 @@
+<?
+	include "../inc/func.php";
+	include "../inc/dbConn.php";
+
+	if($_GET[v]==""){
+		$sql = " update gwd_revlist SET
+				WSTATE='".$_POST['WSTATE']."', AMEMO='".$_POST['AMEMO']."'
+				, AWDT='".date("Y-m-d H:i:s")."', AIP='".$_SERVER['REMOTE_ADDR']."'
+			WHERE RIDX = '".$_POST['ridx']."' ";
+	}else{
+		$sql = " delete from gwd_revlist WHERE RIDX = '".$_GET['v']."' ";
+	}
+	if( $r = mysql_query($sql) ){
+		echo "
+		<script>
+			opener.location.href=opener.location.href;
+			self.close();
+		</script>
+		";
+	}
+
+?>

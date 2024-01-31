@@ -1,0 +1,181 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+	if( $_POST[mseq]<>"" && $_POST[md]=="reg"  ){ 
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET 
+					 MNON71DAY= '".$_POST["MNON71DAY"]."' ,	MNON72HOU= '".$_POST["MNON72HOU"]."' 
+					,MNON72MIN= '".$_POST["MNON72MIN"]."' ,	MNON81DAY= '".$_POST["MNON81DAY"]."' 
+					,MNON82HOU= '".$_POST["MNON82HOU"]."' ,	MNON82MIN= '".$_POST["MNON82MIN"]."' 
+					,MNON90DAY= '".$_POST["MNON90DAY"]."', mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."' , wend='E'
+					WHERE midx='".$_POST[mseq]."'  ";
+		mysql_query($sql);
+	}
+?>
+<center>
+ <? if ( $_POST[ty] == "t"){ 
+ 		#초기화 
+		$MNONA10AA = "";
+			$MNONA20AA = "";			$MNONA31AA = "";			$MNONA32AA = "";
+			$MNONA33AA = "";			$MNONA34AA = "";			$MNONA35AA = "";
+			$MNONA36AA = "";			$MNONA40AA = "";			$MNONA50AA = "";
+
+		if( $r  = mj_il_info( $_POST[mseq] ) ){
+			$val = mysql_fetch_array($r);
+			$MNONA10AA= $val["MNONA10AA"];			$MNONA20AA= $val["MNONA20AA"];
+			$MNONA31AA= $val["MNONA31AA"];			$MNONA32AA= $val["MNONA32AA"];
+			$MNONA33AA= $val["MNONA33AA"];			$MNONA34AA= $val["MNONA34AA"];
+			$MNONA35AA= $val["MNONA35AA"];			$MNONA36AA= $val["MNONA36AA"];
+			$MNONA40AA= $val["MNONA40AA"];			$MNONA50AA= $val["MNONA50AA"];
+		}
+ ?>
+<form name="fm" method="post"   action="n_g7.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<table width='100%'>
+<tr><td align='left'>
+		<font style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※  노인기능평가 관련 문항( 66세, 70세 80세 해당)
+		</font><!--<font style="font-size:12px; ">공통 6/<?=$tp1;?></font>--></td></tr>
+</table>
+<table width="100%" class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	1.인플루엔자(독감) 예방접종을 매년 하십니까?</th>	</tr>
+<tr><td><input type="radio" name="MNONA10AA" value="1" <? if( $MNONA10AA=="1" || $MNONA10AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+				<input type="radio" name="MNONA10AA" value="2" <? if( $MNONA10AA=="2"){ echo "checked"; }?>> 아니오</td></tr>
+
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					2. 폐렴예방접종을 받으셨습니까? 
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MNONA20AA" value="1" <? if( $MNONA20AA=="1" || $MNONA20AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+				<input type="radio" name="MNONA20AA" value="2"  <? if( $MNONA20AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					3. 다음은 일상생활 수행능력에 대한 질문입니다. 아래 문항을 읽고 현재 상태에 해당하는 답에 O 표시를 해주십시오.
+				</th>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-1). 음식을 차려주면 남의 도움 없이 혼자서 식사하십니까? <br/>
+					<input type="radio" name="MNONA31AA" value="1" <? if( $MNONA31AA=="1" || $MNONA31AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA31AA" value="2" <? if( $MNONA31AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-2). 옷을 챙겨 입을 때 남의 도움 없이 혼자서 하십니까? <br/>
+					<input type="radio" name="MNONA32AA" value="1" <? if( $MNONA32AA=="1" || $MNONA32AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA32AA" value="2" <? if( $MNONA32AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-3). 대소변을 보기위해 화장실 출입할 때 남의 도움 없이 혼자서 하십니까? <br/>
+					<input type="radio" name="MNONA33AA" value="1" <? if( $MNONA33AA=="1" || $MNONA33AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA33AA" value="2" <? if( $MNONA33AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-4). 목욕하실 때 남의 도움 없이 혼자서 하십니까? <br/>
+					<input type="radio" name="MNONA34AA" value="1" <? if( $MNONA34AA=="1" || $MNONA34AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA34AA" value="2" <? if( $MNONA34AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-5). 식사 준비를 다른 사람의 도움 없이 혼자서 하십니까? <br/>
+					<input type="radio" name="MNONA35AA" value="1" <? if( $MNONA35AA=="1" || $MNONA35AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA35AA" value="2" <? if( $MNONA35AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<td style="!important; text-align:left;">
+					3-6). 상점, 이웃, 병원, 관공서 등 걸어서 갔다 올 수 있는 곳의 외출을 다른 사람의 도움 없이 혼자서 하십니까? <br/>
+					<input type="radio" name="MNONA36AA" value="1" <? if( $MNONA36AA=="1" || $MNONA36AA==""){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+					<input type="radio" name="MNONA36AA" value="2" <? if( $MNONA36AA=="2"){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					4. 낙상에 관한 질문입니다. 지난 6개월 간 넘어진 적이 있습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MNONA40AA" value="1" <? if( $MNONA40AA=="1"){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+				<input type="radio" name="MNONA40AA" value="2" <? if( $MNONA40AA=="2" || $MNONA40AA==""){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					5. 배뇨장애에 관한 질문입니다. 소변을 보는데 장애가 있거나 소변을 지릴 경우가 있습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MNONA50AA" value="1" <? if( $MNONA50AA=="1"){ echo "checked"; }?>> 예 &nbsp;&nbsp;&nbsp; 
+				<input type="radio" name="MNONA50AA" value="2" <? if( $MNONA50AA=="2" || $MNONA50AA==""){ echo "checked"; }?>> 아니오
+				</td>
+			</tr>
+		</table>
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+ <? } else { ?>
+ <br/>
+<script>
+	alert("공단 공통문진이 완료되었습니다.");
+	parent.document.frm.gtxt.value= "작성완료";
+	parent.document.frm.gtxt.style.color = "red";
+</script>
+
+<form name="fm" method="post" action="../al/a_1.html" >
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<!--
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='33%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='34%' height="40" bgcolor="#FFA7A7" onclick="location.href='http://nkhospital.net';" style="cursor:hand">종료</td>
+		<td width='33%' bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">암문진표(대상자만)</td></tr>
+</table>-->
+</form>
+ <? } ?>
+</center>
+<script>
+
+document.fm.submit();
+
+function hisBack(){
+	document.fm.action="n_g5.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+</script>

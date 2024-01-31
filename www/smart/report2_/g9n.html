@@ -1,0 +1,29 @@
+<style>
+hr{ border:1px dobule orange;}
+</style>
+<!--심전도/폐기능/X-ray 촬영-->
+<h2>심전도 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "D3" );?></td></tr>
+</table><br/>
+
+<h2>폐기능 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>임상참고치</th></tr>
+<? echo GetArrIdx3( $arr, "A1560" );?>
+<? echo GetArrIdx3( $arr, "A1570" );?>
+<? echo GetArrIdx3( $arr, "A1580" );?>
+<!-- 필요 내용 보여주기 -->
+<tr><td colspan='3' align='left'>판독소견</td></tr>
+<tr><td colspan='3' align='left'><?=GetArrTXT( $arr, "D5" );?></td></tr>
+</table><br/>
+
+<h2>흉부촬영 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "D7" );?></td></tr>
+</table><br/>
+
+<h2>유방촬영 검사</h2>
+<table width='100%'>
+<tr><td align='left'><?=GetArrTXT( $arr, "F1" );?></td></tr>
+</table><br/>

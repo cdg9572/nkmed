@@ -1,0 +1,93 @@
+<?
+session_start();
+include "../../inc/dbConn.php";
+include "../../inc/chkLogin.php";
+include "../../inc/func.php";
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+
+header("Content-Type:text/html;charset=utf-8") ;
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."/smart/";
+
+mysql_query("set names utf8;");
+
+testing_dsp("post");
+
+
+
+//===================== file 처리 ==================
+
+testing_dsp("post");
+
+testing_dsp("excel : $uploadFile");
+
+require_once '../phpExcelReader/Excel/reader.php';
+
+// ExcelFile($filename, $encoding);
+$data = new Spreadsheet_Excel_Reader();
+
+
+// Set output Encoding.
+$data->setOutputEncoding('UTF8');
+
+$data->read("serain_esti_data.xls");
+
+error_reporting(E_ALL ^ E_NOTICE);
+
+$k=0;
+
+$row_num = $data->sheets[0]['numRows'] ;
+$col_num = $data->sheets[0]['numCols'] ;
+
+echo "row_num / col : $row_num / $col_num	" ;
+echo " <br>";
+
+
+for ($k =  2 ; $k <= $data->sheets[0]['numRows']; $k++) 
+{
+
+	$dsp_item = $data->sheets[0]['cells'][$k][1] ;
+	$xls_item = $data->sheets[0]['cells'][$k][2] ;
+
+	$esti_M = $data->sheets[0]['cells'][$k][3] ;
+	$esti_F = $data->sheets[0]['cells'][$k][4] ;
+
+	
+	$src_item = eli($xls_item);
+
+	
+	$sql = "INSERT INTO `seran_esti`
+					(
+					 `dsp_item`,
+					 `xls_item`,
+					 `src_item`,
+					 `esti_M`,
+					 `esti_F`,
+					 `comment`,
+					 `reg_date`,
+					 `state`,
+					 `use_yn`,
+					 `view_state`)
+		VALUES (
+				'$dsp_item',
+				'$xls_item',
+				'$src_item',
+				'$esti_M',
+				'$esti_F',
+				'$comment',
+				NOW(),
+				'Y',
+				'Y',
+				'Y');
+			";
+
+	testing_dsp($sql);
+
+	//exit;
+	mysql_query($sql);
+
+}
+
+?>

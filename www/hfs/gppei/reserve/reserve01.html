@@ -1,0 +1,722 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$cpname;?> 간편예약</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+
+	<form name='form' method='post' action='reserve_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_resscomp'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='seq' value='<?=$seq?>'>
+
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>상품안내 <a href='t.jpg' target="_blank" style="font-size:12px;">상세보기</a></h2>
+
+	<section style="padding:0px 10px;">
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th width="100%">상품선택</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="text-align:left;">
+						<select name="ctype" style="margin-left:20px;" onchange="cb_check( this.value );">
+						<option value="">=선택해주세요=</option>
+						<option value="건강형_여">건강형_여 (<I>927,180</I>원 => <b>여 30만원</b>)</option>
+						<option value="건강형_남">건강형_남 (<I>847,180</I>원 => <b>남 25만원</b>)</option>
+						<option value="소망형_여">소망형_여 (<I>1,147,180</I>원 => <b>여 40만원</b>)</option>
+						<option value="소망형_남">소망형_남 (<I>1,147,180</I>원 => <b>남 35만원</b>)</option>
+						<option value="행복형_여">행복형_여 (<I>1,647,180</I>원 => <b>여 55만원</b>)</option>
+						<option value="행복형_남">행복형_남 (<I>1,567,180</I>원 => <b>남 50만원</b>)</option>
+						<option value="사랑해_여">사랑해_여 (<I>2,500,000</I>원 => <b>여 90만원</b>)</option>
+						<option value="사랑해_남">사랑해_남 (<I>2,500,000</I>원 => <b>남 90만원</b>)</option>
+						</select><br/>
+					   <span  style="margin-left:20px;">19년 공단검진 대상자는 <font color="red">공단청구 금액을 차감</font>해드립니다. </span>
+					   </td>
+				</tr>
+			</tbody>
+		</table>
+
+		
+		<table width="100%" class="tbst01" id="tbl_d">
+			<thead>
+				<tr>
+					<th width="100%">선택상품 기본검사</th>
+				</tr>
+			</thead>
+			<tr><td style="text-align:left">
+				<div id="C1" style="margin-left:20px;font-size:12px;">
+				<span>==80여종 혈액(소변)검사==<br/></span>
+				<span>간기능/간염/순환기계/췌장기능/철결핍성/빈혈/혈액질환<br/></span>
+				<span>전해질/신장기능/골격계질환/종양표지자/갑상선기능<br/></span>
+				<span>부갑상선기능/감염성질환/소변/생체나이 등 80여종<br/><br/></span>
+				<span>==장비검사==<br/></span>
+				<span>신장/체중/혈압/시력/청력/체성분/안압/심전도<br/></span>
+				<span>흉부X-ray/폐기능/위내시경/복부초음파<br/></span>
+				<span id="C1W" style="display:none;">자궁경부암/유방특수촬영/경질초음파<br/></span>
+
+							
+				<span id="C4" style="display:;"><br/>유전자[10종]-뇌졸증/치매/파킨슨병/심근경색</br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				심근경색/고혈압/제2형당뇨병/관상동맥질환<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				뇌동맥류/녹내장/비만</span>
+				<span id="C4M" style="display:;"><br/>대장수면내시경/심장초음파/전립선초음파</span>
+				<span id="C4W" style="display:;"><br/>대장수면내시경/심장초음파</span>
+				
+				</div></td></tr>
+		</table>
+<style>
+span input {  margin-top:1px;	}
+</style>
+		<table width="100%" class="tbst01"  id="tbl_s">
+			<thead>
+				<tr>
+					<th width="100%">선택검사1
+					<span id="TSEL1"><input type="text" id="txtTSel1" name="txtTSel1" value="" size="1"   style="background-color:#D6E9F6;text-align:right;border:0;" readonly/>가지 가능<br></span></th>
+				</tr>
+			</thead>
+			<tbody style="border:0px;">
+				<tr>				
+					<td style="vertical-align:top;text-align:left;"  width="100%">
+					<table id="cg_table" width='100%' style="margin-top:-15px;margin-bottom:-10px;">
+					<tr><td style="text-align:left;vertical-align:top;margin-left:20px;margin-bottom:-10px;" width='50%'>
+						<span id="S01"><input type="checkbox" id="sc01" name="sc01" value="경동맥초음파" onclick="cCheck( this.id, this.checked, 1 )" /> 경동맥초음파<br></span>
+						<span id="S02"><input type="checkbox" id="sc02" name="sc02" value="갑상선초음파" onclick="cCheck( this.id,  this.checked, 1 )" /> 갑상선초음파<br></span>
+						<span id="S03"><input type="checkbox" id="sc03" name="sc03" value="유방초음파" onclick="cCheck( this.id, this.checked, 1 )"/> 유방초음파[여]<br></span>
+						<span id="S04"><input type="checkbox" id="sc04" name="sc04" value="전립선초음파" onclick="cCheck( this.id, this.checked, 1 )"/> 전립선초음파[남]<br></span>
+						<span id="S05"><input type="checkbox" id="sc05" name="sc05" value="ABI" onclick="cCheck( this.id, this.checked, 1 )"/> ABI(혈관협착도)<br></span>
+						<span id="S06"><input type="checkbox" id="sc06" name="sc06" value="NK뷰키트" onclick="cCheck( this.id, this.checked, 1 )"/> NK뷰키트<br></span>						
+						<span id="S07"><input type="checkbox" id="sc07" name="sc07" value="유전자[암3종]" onclick="cCheck( this.id, this.checked, 1 )"/> 유전자[암3종]<br></span>
+						<span id="S08"><input type="checkbox" id="sc08" name="sc08" value="심장초음파" onclick="cCheck( this.id, this.checked, 2 )"/> 심장초음파<br></span>							
+						<span id="S09"><input type="checkbox" id="sc09" name="sc09" value="대장수면내시경" onclick="cCheck( this.id, this.checked, 2 )"/> 대장수면내시경<br></span>	
+						</td>
+						<td style="text-align:left;vertical-align:top;margin-left:20px;" width='50%'>
+						<span id="S10"><input type="checkbox" id="sc10" name="sc10" value="QCT" onclick="cCheck( this.id, this.checked, 1 )"/> QCT(골다공증)<br></span>
+						<span id="S11"><input type="checkbox" id="sc11" name="sc11" value="뇌CT" onclick="cCheck( this.id, this.checked, 1 )"/> 뇌CT<br></span>
+						<span id="S12"><input type="checkbox" id="sc12" name="sc12" value="폐CT" onclick="cCheck( this.id, this.checked, 1 )"/> 폐CT<br></span>
+						<span id="S13"><input type="checkbox" id="sc13" name="sc13" value="요추CT" onclick="cCheck( this.id, this.checked, 1 )"/> 요추CT<br></span>
+						<span id="S14"><input type="checkbox" id="sc14" name="sc14" value="경추CT" onclick="cCheck( this.id, this.checked, 1 )"/> 경추CT<br></span>
+						<span id="S15"><input type="checkbox" id="sc15" name="sc15" value="심장MDCT" onclick="cCheck( this.id, this.checked, 1 )"/> 심장MDCT<br></span><td></tr>					
+					</table>
+					<table id="cg_table3" width='100%' style="border:0px;">
+					<tr><td style="border:0;">선택검사 2가지 미선택시 심장초음파 또는 대장검사 대체 가능</td></tr>
+					</table></td></tr>
+			</tbody>
+		</table>
+		<table width="100%" class="tbst01"  id="tbl_s2">
+			<thead>
+				<tr>
+					<th width="100%" >선택검사2
+					<span id="TSEL1"><input type="text" id="txtTSel2" name="txtTSel2" value="" size="1"   style="background-color:#D6E9F6;text-align:right;border:0;" readonly/>가지 가능<br></span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>				
+					<td style="vertical-align:top;text-align:left;border:0px;"  width="100%">					
+					<table id="cg_table2" width='100%' style="margin-top:-10px;margin-bottom:-10px;">
+					<tr style="margin-top:-30px;"><td style="text-align:left;vertical-align:top;margin-top:-20px;margin-left:20px;border:0px;" width='50%'>
+						<span id="S16"><input type="checkbox" id="sc16" name="sc16" value="유전자[암7종]" onclick="cCheck2( this.id, this.checked, 1 )"/> 유전자[암7종]<br></span>
+						<span id="S17"><input type="checkbox" id="sc17" name="sc17" value="뇌MRA+MRI" onclick="cCheck2( this.id, this.checked, 1 )"/> 뇌MRA+MRI<br></span>
+						<span id="S18"><input type="checkbox" id="sc18" name="sc18" value="경추MRI" onclick="cCheck2( this.id, this.checked, 1 )"/> 경추MRI<br></span>
+						<span id="S19"><input type="checkbox" id="sc19" name="sc19" value="요추MRI" onclick="cCheck2( this.id, this.checked, 1 )"/> 요추MRI<br></span>
+						<span id="S20"><input type="checkbox" id="sc20" name="sc20" value="유전자10종" onclick="cCheck2( this.id, this.checked, 1 )"/> 유전자10종<br></span>						
+						<span id="SEL1" style="display:none;">선택1수:<input type="text" id="txtSel1" name="txtSel1" value="" size="4"/> <br></span>
+						<span id="SEL2" style="display:none;">선택2수:<input type="text" id="txtSel2" name="txtSel2" value="" size="4"/> <br></span>
+						</td></tr>
+					</table>
+					</td></tr>
+			</tbody>
+		</table>
+
+		
+<script>
+//기본 선택 설명 안보이게
+document.getElementById("C1").style.display="none";
+document.getElementById("C1W").style.display="none";
+document.getElementById("C4").style.display="none";
+document.getElementById("C4M").style.display="none";
+document.getElementById("C4W").style.display="none";
+document.getElementById("cg_table").style.display="none";
+document.getElementById("cg_table2").style.display="none";
+document.getElementById("cg_table3").style.display="none";
+document.getElementById("tbl_d").style.display="none";
+document.getElementById("tbl_s").style.display="none";
+document.getElementById("tbl_s2").style.display="none";
+
+function cCheck( tid, tf, val ){
+	var t = Number(document.form.txtSel1.value);
+	if( document.form.txtTSel1.value == document.form.txtSel1.value ||  Number(document.form.txtTSel1.value)<(t + val) ){
+		if( val==2 ){	alert( "심장초음파 또는 대장수면내시경은 다른 검사 2개 미 선택시 가능합니다." );		}
+		if( tf ){
+			alert( "더이상 추가 선택을 할 수 없습니다." );
+			document.getElementById(tid).checked = false;
+		}else{
+			document.form.txtSel1.value = t - val
+		}
+	}else{
+		if( tf ){
+			document.form.txtSel1.value = t + val
+		}else{
+			document.form.txtSel1.value = t - val
+		}
+	}
+}
+
+function cCheck2( tid, tf, val ){
+	var t2 = Number(document.form.txtSel2.value);
+	
+	if( tf ){
+		if( document.form.txtTSel2.value == document.form.txtSel2.value ){
+			alert( "더이상 추가 선택을 할 수 없습니다." );
+			document.getElementById(tid).checked = false;
+		}else{
+			document.form.txtSel2.value = t2 + val;
+		}
+	}else{
+		document.form.txtSel2.value = t2 - val;
+	}
+}
+
+function cb_check(val){
+	var tbl_d="",	tbl_s="", tbl_s2="",	tbl3="";
+	var c1="none", c1w="none", c2="none", c3="none", c4="none", c4m="none", c4w="none";
+    var scv1 = "", scv2 = "", scv3 = "", scv4 = "", scv5 = "", scv6 = "";
+	var scv7 = "", scv8 = "", scv9 = "", scv10 = "", scv11 = "", scv12 = "";
+	var scv13 = "", scv14 = "", scv15 = "", scv16 = "", scv17 = "", scv18 = "", scv19 = ""; scv20 = "none";
+	var sTSEL1 = 0, sTSEL2 = 0; 
+
+	for( i=1 ; i < 21 ; i++ ){
+		if ( i < 10){		mm = "sc0" + i;	}else{		mm = "sc" + i;	}
+		document.getElementById(mm).checked=false;
+	}
+	
+	if ( val == "건강형_여" ){
+		c1 = ""; c1w="";  scv4="none";  scv8 = "none"; scv9 = "none"; scv16="none";  scv17="none";  scv18="none";  scv19="none";  scv20="none"; sTSEL1=2; tbl3="none"; tbl_s2="none";
+	}else if ( val == "건강형_남" ){
+		c1 = "";    scv3="none";  scv8 = "none"; scv9 = "none"; scv16="none"; scv17="none";  scv18="none";  scv19="none";  scv20="none"; sTSEL1=2; scv18 = "none"; scv19 = "none"; tbl3="none"; tbl_s2="none";
+	}else if ( val == "소망형_여" ){
+		c1 = "";  c1w=""; c2="";  scv4="none";   scv17="none";  scv16="none"; scv17="none"; scv18="none";  scv19="none";  scv20="none"; sTSEL1=4; tbl_s2="none";
+	}else if ( val == "소망형_남" ){
+		c1 = "";  c2="";  scv3="none"; scv17="none";  scv16="none"; scv17="none"; scv18="none";  scv19="none";  scv20="none";  sTSEL1=4; tbl_s2="none";
+	}else if ( val == "행복형_여" ){
+		c1 = "";  c1w="";  c3="";  scv4="none"; scv7="none";  sTSEL1=4;  sTSEL2=1; 
+	}else if ( val == "행복형_남" ){
+		c1 = "";  c3="";	scv3="none";  scv7="none";  sTSEL1=4;  sTSEL2=1; 
+	}else if ( val == "사랑해_여" ){
+		c1 = "";  c1w="";  c4=""; c4w=""; scv4="none"; scv7="none";  scv8 = "none"; scv9 = "none";  scv16 = "none"; scv20 = ""; sTSEL1=6;  sTSEL2=1;
+	}else if ( val == "사랑해_남" ){
+		c1 = "";  c4="";  c4m=""; scv3="none"; scv7="none"; scv8 = "none"; scv9 = "none"; scv16 = "none"; scv20 = ""; sTSEL1=6;  sTSEL2=1;
+	}else{ 
+		tbl_d="none";	 tbl_s="none"; tbl_s2="none";
+	}
+
+	document.getElementById("tbl_d").style.display=tbl_d;
+	document.getElementById("tbl_s").style.display=tbl_s;
+	document.getElementById("tbl_s2").style.display=tbl_s2;
+	
+	document.getElementById("C1").style.display=c1;
+	document.getElementById("C1W").style.display=c1w;
+	document.getElementById("C4").style.display=c4;
+	document.getElementById("C4M").style.display=c4m;
+	document.getElementById("C4W").style.display=c4w;
+
+	document.getElementById("cg_table").style.display="";
+	document.getElementById("cg_table2").style.display="";	
+	document.getElementById("cg_table3").style.display=tbl3;
+
+	document.getElementById("S01").style.display=scv1;
+	document.getElementById("S02").style.display=scv2;
+	document.getElementById("S03").style.display=scv3;
+	document.getElementById("S04").style.display=scv4;
+	document.getElementById("S05").style.display=scv5;
+	document.getElementById("S06").style.display=scv6;
+	document.getElementById("S07").style.display=scv7;
+	document.getElementById("S08").style.display=scv8;
+	document.getElementById("S09").style.display=scv9;
+	document.getElementById("S10").style.display=scv10;
+	document.getElementById("S11").style.display=scv11;
+	document.getElementById("S12").style.display=scv12;
+	document.getElementById("S13").style.display=scv13;
+	document.getElementById("S14").style.display=scv14;
+	document.getElementById("S15").style.display=scv15;
+	document.getElementById("S16").style.display=scv16;
+	document.getElementById("S17").style.display=scv17;
+	document.getElementById("S18").style.display=scv18;
+	document.getElementById("S19").style.display=scv19;
+	document.getElementById("S20").style.display=scv20;
+
+	document.form.txtTSel1.value = sTSEL1;	document.form.txtSel1.value = 0;
+	document.form.txtTSel2.value = sTSEL2;	document.form.txtSel2.value = 0;
+
+	
+}
+</script>
+
+<script src="../../js/jquery.js" type="text/javascript"></script>
+<script src="../../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#datepicker1').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '2016:2020'
+	});	
+});
+
+</script>
+
+
+
+
+<?
+
+$datetemp =  date("Y-m-d", strtotime(date("Y-m-d")." + 4 day"));
+
+?>
+
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important;">일정 및 개인정보 입력</th>
+			</tr>
+			<tr>
+				<th width="35%">검진 희망일</th>
+				<td width="65%">
+					
+					<input type="text" name = "reserve_date"  id="datepicker1" class="intextst01" placeholder="예약은 <?= $datetemp ?> 부터 가능합니다." onfocus="blur();"  >
+					<!--<input type="date" name = "reserve_date"  class="intextst01" placeholder="DD/MM/YYYY">-->
+				</td>
+			</tr>
+			<tr>
+				<th>검진시간</th>
+				<td>
+					<select name="reserve_hour">
+						<option value="07">07시</option>
+						<option value="08">08시</option>
+						<option value="09">09시</option>
+						<option value="10">10시</option>
+						<option value="11">11시</option>
+						<option value="12">12시</option>
+						<option value="13">13시</option>
+						<option value="14">14시</option>
+						<option value="15">15시</option>
+						<option value="16">16시</option>
+						<option value="17">17시</option>
+						<option value="18">18시</option>
+					</select>
+					<select name="reserve_min">
+						<option value="00">00분</option>
+						<option value="15">15분</option>
+						<option value="30">30분</option>
+						<option value="45">45분</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name="name"  placeholder="성명을 입력해주세요"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" class="intextst01" name="mobile_no" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<!--<tr>
+				<th>기수</th>
+				<td><input type="text" class="intextst01" name="mobile_no2" placeholder="가족은 기수와 가족이라고 입력해주세요."></td>
+			</tr>			-->
+			<tr>
+				<th>메모</th>
+				<td><input type="text" class="intextst01" name="memo"  placeholder="문의사항을 입력해주세요."></td>
+			</tr>
+		</table>
+
+<style>
+div.caluse-common {
+	color: #666;
+	padding: 10px;
+	height: 70px;
+	border: 1px solid #ccc;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-bottom: 15px;
+	text-align:left;
+}
+</style>
+
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">개인정보보호정책 동의</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					
+		<h3>개인정보보호</h3>
+		<div id="caluse-02" class="caluse-common">
+인봉의료재단 뉴고려병원이 운영하는 온라인 예약 시스템에서 제공하는 서비스를 이용함에 있어 서비스 이용자들의 개인정보를 보호하기 위해 다음과 같이 개인정보보호정책을 수립하고 이를 준수합니다. 뉴고려병원의 『개인정보보호정책』은 수시로 내용이 변경될 수 있으므로 정기적으로 방문하셔서 확인해 보시기 바랍니다.  
+<br>
+<br>
+<br>제1조 (총칙)
+<br>
+<br>① 뉴고려병원은 귀하의 개인정보보호를 매우 중요시하며, 『정보통신망이용촉진등에 관한법률』상의 개인정보보호 규정 및 정보통신부가 제정한 『개인정보보호지침』을 준수하고 있습니다. 뉴고려병원은 개인정보보호방침을 통하여 귀하께서 제공하시는 개인 정보가 어떠한 용도와 방식으로 이용되고 있으며 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다. 
+<br>
+<br>② 뉴고려병원은 개인정보보호방침을 홈페이지 첫 화면에 공개함으로써 귀하께서 언제나 용이하게 보실 수 있도록 조치하고 있습니다. 
+<br>
+<br>③ 뉴고려병원은 개인정보보호방침의 지속적인 개선을 위하여 개인정보보호방침을 개정하는데 필요한 절차를 정하고 있습니다. 그리고 개인정보보호방침을 개정하는 경우 버전번호 등을 부여하여 개정된 사항을 귀하께서 쉽게 알아볼 수 있도록 하고 있습니다. 
+<br>
+<br>
+<br>제2조(개인정보 수집에 대한 동의)
+<br>
+<br>뉴고려병원은 귀하께서 뉴고려병원의 개인정보보호방침 또는 이용약관의 내용에 대해 「동의합니다」버튼 또는 「동의하지 않음」버튼을 선택할 수 있는 절차를 마련하여, 「동의합니다」버튼을 선택하면 개인정보 수집에 대해 동의한 것으로 봅니다. 
+<br>
+<br>
+<br>제3조(개인정보의 수집목적 및 이용목적)
+<br>
+<br>① 뉴고려병원은 다음과 같은 목적을 위하여 개인정보를 수집하고 있습니다.
+<br>  - 서비스의 이행(예약/결과보기)
+<br>  - 기타 새로운 서비스, 신상품이나 이벤트 정보 안내 
+<br>
+<br>② 단, 이용자의 기본적 인권 침해의 우려가 있는 민감한 개인정보(인종 및 민족, 사상 및 신조, 출신지 및 본적지, 정치적 성향 및 범죄기록, 건강상태 및 성생활 등)는 수집하지 않습니다. 
+<br>
+<br>
+<br>제4조(세션에 의한 개인정보 수집) 
+<br>
+<br>뉴고려병원은 귀하에 대한 정보를 저장하고 수시로 찾아내는 '세션(session)'을 사용합니다. 세션은 웹사이트가 귀하의 컴퓨터 브라우저(넷스케이프, 인터넷 익스플로러 등)로 전송하는 소량의 정보입니다. 귀하께서 웹사이트에 접속을 하면 당사의 서버에 있는 세션의 내용을 읽고, 귀하의 추가정보를 찾아 접속에 따른 성명 등의 추가 입력없이 서비스를 제공할 수 있습니다. 세션은 귀하의 컴퓨터는 식별하지만 귀하를 개인적으로 식별하지는 않습니다. 
+<br>
+<br>
+<br>제5조(목적외 사용 및 제3자에 대한 제공)
+<br>
+<br>①뉴고려병원은 귀하의 개인정보를 <개인정보의 수집목적 및 이용목적>에서 고지한 범위내에서 사용하며, 동범위를 초과하여 이용하거나 타인 또는 타기업, 기관에 제공하지 않습니다. 
+<br>
+<br>② 그러나 보다 나은 서비스 제공을 위하여 귀하의 개인정보를 제휴사에게 제공하거나 또는 제휴사와 공유할 수 있습니다. 개인정보를 제공하거나 공유할 경우에는 사전에 귀하께 제휴사가 누구인지, 제공 또는 공유되는 개인정보항목이 무엇인지, 왜 그러한 개인정보가 제공되거나 공유되어야 하는지, 그리고 언제까지 어떻게 보호. 관리되는지에 대해 개별적으로 전자우편 및 서면을 통해 고지하여 동의를 구하는 절차를 거치게 되며, 귀하께서 동의하지 않는 경우에는 제휴사에게 제공하거나 제휴사와 공유하지 않습니다. 
+<br>
+<br>
+<br>제6조(개인정보의 열람/정정) 
+<br>
+<br>① 귀하는 언제든지 등록되어 있는 귀하의 개인정보를 열람하거나 정정하실 수 있습니다. 개인정보 열람 및 정정을 하고자 할 경우에는 <회원정보 조회/수정>을 클릭하여 직접 열람 또는 정정을 해야합니다.  
+<br>
+<br>② 귀하가 개인정보의 오류에 대한 정정을 요청한 경우, 정정을 완료하기 전까지 당해 개인정보를 이용하지 않습니다.
+<br>
+<br>
+<br>제7조(개인정보 수집/이용/제공에 대한 동의철회) 
+<br>
+<br>① 회원가입 등을 통해 개인정보의 수집, 이용, 제공에 대해 귀하께서 동의하신 내용을 귀하는 언제든지 철회하실 수 있습니다. 동의철회는 개인정보관리책임자에게 E-mail 등으로 연락하시면 즉시 개인정보의 삭제 등 필요한 조치를 하겠습니다. 
+<br>
+<br>② 뉴고려병원은 개인정보의 수집에 대한 동의철회(회원탈퇴)를 개인정보 수집시와 동등한 방법 및 절차로 행사할 수 있도록 필요한 조치를 하겠습니다.
+<br>
+<br>
+<br>제8조(개인정보의 보유기간 및 이용기간)
+<br>
+<br>뉴고려병원은 귀하의 개인정보를 취급함에 있어 개인정보가 분실, 도난, 누출, 변조 또는 훼손되지 않도록 안전성 확보를 위하여 다음과 같은 기술적 대책을 강구하고 있습니다. 
+<br>
+<br>① 귀하의 개인정보는 비밀번호에 의해 보호되며, 파일 및 전송데이터를 암호화하거나 파일잠금기능(Lock)을 사용하여 중요한 데이터는 별도의 보안기능을 통해 보호되고 있습니다. 
+<br>
+<br>② 뉴고려병원은 백신프로그램을 이용하여 컴퓨터 바이러스에 의한 피해를 방지하기 위한 조치를 취하고 있습니다. 백신프로그램은 주기적으로 업데이트되며 갑작스런 바이러스가 출현할 경우 백신이 나오는 즉시 이를 제공함으로써 개인정보가 침해되는 것을 방지하고 있습니다. 
+<br>
+<br>③ 해킹 등에 의해 귀하의 개인정보가 유출되는 것을 방지하기 위해, 외부로부터의 침입을 차단하는 장치를 이용하고 있으며, 각 서버마다 침입탐지시스템을 설치하여 24시간 침입을 감시하고 있습니다.
+<br>
+<br>
+<br>제9조(개인정보의 위탁처리) 
+<br>
+<br>뉴고려병원은 서비스 향상을 위해서 귀하의 개인정보를 외부에 위탁하여 처리할 수 있습니다. 
+<br>
+<br>① 개인정보의 처리를 위탁하는 경우에는 미리 그 사실을 귀하에게 고지하겠습니다.
+<br>
+<br>② 개인정보의 처리를 위탁하는 경우에는 위탁계약 등을 통하여 서비스제공자의 개인정보보호관련 지시엄수, 개인정보에 관한 비밀유지, 제3자 제공의 금지 및 사고시의 책임부담 등을 명확히 규정하고 당해 계약내용을 서면 또는 전자적으로 보관하겠습니다.
+<br>
+<br>
+<br>제10조(의견수렴 및 불만처리)
+<br>
+<br>뉴고려병원은 개인정보보호와 관련하여 귀하가 의견과 불만을 제기할 수 있는 창구를 개설하고 있습니다. 개인정보와 관련한 불만이 있으신 분은 뉴고려병원의 개인정보 관리책임자에게 의견을 주시면 접수 즉시 조치하여 처리결과를 통보해 드립니다. 또는 정부에서 설치하여 운영중인 개인정보침해신고센터에 불만처리를 신청할 수 있습니다.
+<br>(개인정보침해신고센터 - http://www.cyberprivacy.or.kr 전화 02-1336) 
+<br>
+<br>
+<br>
+<br>- 성 명 :  전산팀장
+<br>- 전화번호 :  031-980-9199
+<br>		</div>
+		
+
+
+		<p class="calusep"><input type="checkbox" id="agree" name="agree" value="yes"> 개인정보보호정책에 동의합니다.</p>
+		
+	</section>
+</article>
+
+
+					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div style="padding:20px 0px;">
+			<a href="#" class="btnst01" onClick="chkForm(document.form)">검진 예약하기</a>
+			
+		</div>
+	</section>
+
+	</form>
+
+</div>
+
+
+<?
+//================= 예약일 일자 설정 
+$reserve_interval = 4 ;
+
+?>
+
+
+<!--//=== 시간체크를 위한 스크립트 -->
+<script language="JavaScript">
+
+function toTimeObject(time) // 2011-11-11
+{
+	/*
+	var year = time.substr(0,4) ;
+	var month = time.substr(5,2) ;
+	var day = time.substr(8,2) ;
+	*/
+
+	var arr_t = time.split("-") ;
+	var year = arr_t[0] ;
+	var month = arr_t[1] ;
+	var day = arr_t[2] ;
+
+	var c_date = new Date(year, month, day) ;
+	var t = c_date.getTime() ;
+
+	return t ;
+
+}
+
+function getDateInterval(time1, time2)
+{
+
+	var date1 = toTimeObject(time1);
+	var date2 = toTimeObject(time2);
+	var day = 1000 * 3600 * 24 ;
+	var temp =  date2 - date1 ;
+
+	return parseInt((date2 - date1)/day, 10);
+}
+
+function converDateString(dt){
+	return dt.getFullYear() + "-" + addZero(eval(dt.getMonth()+1)) + "-" + addZero(dt.getDate());
+}
+
+function addZero(i){
+	var rtn = i + 100;
+	return rtn.toString().substring(1,3);
+}
+
+function calDateRange(val1, val2)
+{
+	var FORMAT = "-";
+	// FORMAT을 포함한 길이 체크
+	if (val1.length != 10 || val2.length != 10)
+		return null;
+	// FORMAT이 있는지 체크
+	if (val1.indexOf(FORMAT) < 0 || val2.indexOf(FORMAT) < 0)
+		return null;
+	// 년도, 월, 일로 분리
+	var start_dt = val1.split(FORMAT);
+	var end_dt = val2.split(FORMAT);
+
+	// 월 - 1(자바스크립트는 월이 0부터 시작하기 때문에...)
+	// Number()를 이용하여 08, 09월을 10진수로 인식하게 함.
+	start_dt[1] = (Number(start_dt[1]) - 1) + "";
+	end_dt[1] = (Number(end_dt[1]) - 1) + "";
+	var from_dt = new Date(start_dt[0], start_dt[1], start_dt[2]);
+	var to_dt = new Date(end_dt[0], end_dt[1], end_dt[2]);
+	return (to_dt.getTime() - from_dt.getTime()) / 1000 / 60 / 60 / 24;
+}
+
+</script>
+
+
+<script language="JavaScript">
+<!--	
+
+/*
+var sd = "2016-10-28" ;
+//var ed = "2016-10-31" ;
+var ed = "2016-11-01" ;
+var tt = getDateInterval(sd, ed) ;
+var cc = calDateRange(sd, ed) ;
+
+alert(tt + " || " + cc + " &&--> " + sd + " ||| " + ed) ;
+
+var today = new Date();  
+var dateString ="2016-10-29" ;
+var dateArray = dateString.split("-");  
+var dateObj = new Date(dateArray[0], Number(dateArray[1])-1, dateArray[2]);  
+var betweenDay = (today.getTime() - dateObj.getTime())/1000/60/60/24;  
+*/
+
+
+function chkForm(frm) {
+
+
+
+	if (!$("#agree").attr("checked"))
+	 {
+	  alert('개인정보활용에 동의해 주세요');
+	  frm.agree.focus();
+	  return;
+	 }
+
+	
+
+	if(!frm.reserve_date.value) {
+		alert('검진희망일을 선택해 주세요.');
+		frm.reserve_date.focus();
+		return false;
+	}else{
+		var val =  new Date(frm.reserve_date.value).getDay();
+		if(val == 0){
+			alert('일요일은 예약이 안됩니다.\n검진희망일을 선택해 주세요.');
+			frm.reserve_date.focus();
+			return false;
+		}
+	}
+
+
+	//== 검진 가능일 계산
+	var newDt = new Date();
+	var intd = <?=$reserve_interval?> + 1 ;
+	newDt.setDate( newDt.getDate() + intd );
+	var nextDate = converDateString(newDt);
+
+	var Today = new Date(); //오늘의 날짜정보를 가져옴.
+	var year = Today. getFullYear();//객체에생선된 년도 정보를 가져옴.
+	var month = Today.getMonth() + 1;//객체에 생선된 월의 정보를 가져옴…
+	var day = Today.getDate();//객체에 생선된 일의 정보를 가져옴.
+	var date1 = year + "-" + addZero(month) + "-" + addZero(day) ;
+
+
+	if(frm.reserve_date.value )
+	{
+		//var temp = getDateInterval(date1, frm.reserve_date.value) ;
+		var temp = calDateRange(date1, frm.reserve_date.value) ;
+		
+
+		//alert(temp + " --> " + date1 + " ||| " + frm.reserve_date.value) ;
+
+
+		if(temp <= <?=$reserve_interval?>) 
+		{
+			alert('검진은 ' + nextDate + ' 이후부터 가능합니다') ;
+			frm.reserve_date.focus();
+			return false;
+		}		
+	}
+
+
+	if(!frm.name.value) {
+		alert('성명을 입력해 주세요.');
+		frm.name.focus();
+		return false;
+	}
+
+
+	if(!frm.mobile_no.value) {
+		alert('연락처를 입력해 주세요.');
+		frm.mobile_no.focus();
+		return false;
+	}
+
+	if(!frm.ctype.value) {
+		alert('상품을 선택해 주세요.');
+		frm.ctype.focus();
+		return false;
+	}
+	
+	frm.submit();
+}
+
+
+
+function chk_radio() 
+{ 
+	 num_temp = document.all.item_category.length; 
+
+	 for (i=0;i<num_temp ;i++) 
+	 { 
+	  if (document.all.item_category[i].checked == true) 
+	  { 
+		 break; 
+	  } 
+	 } 
+	 if (i == num_temp) 
+	 { 
+		//alert("하나를 선택하세요"); 
+		return false ;
+	 }
+	 else 
+	{
+		return true ;
+	}
+} 
+//-->
+</script>
+
+
+<iframe name="company_proc" width=700 height=700 style="display:;"></iframe>
+
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>
+
+

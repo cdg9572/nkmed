@@ -1,0 +1,64 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	$mseq = $_POST[mseq];
+	if( $mseq<>"" & $_POST[md]=="reg"  ){ 
+	$sql = " UPDATE smart_mj_mntinjintb SET 
+			MNTIIJ1EM='".$_POST[MNTIIJ1EM]."' , MNTIIJ2EM='".$_POST[MNTIIJ2EM]."' , MNTIIJ3EM='".$_POST[MNTIIJ3EM]."'
+			, MNTIIJ4EM='".$_POST[MNTIIJ4EM]."' , MNTIIJ5EM='".$_POST[MNTIIJ5EM]."' , MNTIIJ6EM='".$_POST[MNTIIJ6EM]."'
+			, MNTIIJ7EM='".$_POST[MNTIIJ7EM]."' , MNTIIJ8EM='".$_POST[MNTIIJ8EM]."' , MNTIIJ9EM='".$_POST[MNTIIJ9EM]."'
+			, MNTIIJ10EM='".$_POST[MNTIIJ10EM]."' , MNTIIJ11EM='".$_POST[MNTIIJ11EM]."' , MNTIIJ12EM='".$_POST[MNTIIJ12EM]."'
+			, MNTIIJ13EM='".$_POST[MNTIIJ13EM]."' , MNTIIJ14EM='".$_POST[MNTIIJ14EM]."' , MNTIIJ15EM='".$_POST[MNTIIJ15EM]."'
+		WHERE MNTIJUBNO='".$mseq."'  ";
+	mysql_query( $sql );
+}
+
+if ( $_POST[ty2]=="t" ){	
+	$ty="cmm_10.html"; echo "<script> parent.document.frm.m4txt.value= \"작성완료\"; parent.document.frm.m4txt.style.color = "red";</script>"; 
+}else{		
+	$ty="cmm_9.html";	 
+} 
+
+if ( $_POST[ty1]=="t" ){ echo "<script> parent.document.frm.m3txt.value= \"작성완료\";parent.document.frm.m3txt.style.color = "red"; </script>";  }
+
+?>
+<script>
+	alert("생활습관이 작성되었습니다.");	
+</script>
+ 문진표가 작성되었습니다. <br/>
+ 추가 문진이 있으시면 상단 해당 버튼을 눌러주세요.
+<form name="fm" method="post" >
+<input type="hidden" name="seq" value="<?=$_POST[seq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<table width='100%' cellspacing='10'>
+	<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack( '<?=$ty;?>' );" style="cursor:hand">이전설문</td>
+			<td width='50%' height="40" bgcolor="#86E57F" onclick="parent.location.href='../munjin.html?seq=<?=$_POST[rseq];?>" style="cursor:hand">처음화면</td></tr>
+</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="button" value="창닫기" onclick="self.close();"/> &nbsp; &nbsp;-->
+</form>
+
+
+<script>
+
+function hisBack( val ){
+	document.fm.action=val;
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+</script>

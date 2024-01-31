@@ -1,0 +1,56 @@
+<?	#음주
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = "SELECT A.* FROM smart_mj_mnobesytbl A
+			LEFT OUTER JOIN smart_mj_il B ON A.MNOBJUBNO=B.MIDX
+			WHERE MNOBJUBNO='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+?>
+<center>
+<form name="frm" method="post" action="vf_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<!--공통문진표-->
+<tr><td width='100%'>
+	<table border='1'  width='100%' cellspacing='0' style="font-size:10pt;">
+	<tr><td width='20%'>수검자성명</td>
+		<td width='80%'>&nbsp;</td></tr>
+	<tr><td colspan='2'>
+1. 현재 체중이 10대 후반이나 20대 초반이었을 때와 비교하여 10kg 이상 늘었습니까?<br/>
+<input type="radio" name="MNOBQST01" value="1" <? if($row[MNOBQST01]=="1"){ echo "checked";}?> /> 예	
+<input type="radio" name="MNOBQST01" value="2" <? if($row[MNOBQST01]=="2"){ echo "checked";}?> /> 아니오<br/><br/>
+<br/>
+
+2. 당신은 현재까지 체중감량을 몇 차례나 시도해 보았습니까?<br/>
+<input type="radio" name="MNOBQST02" value="1" <? if($row[MNOBQST02]=="1"){ echo "checked";}?> /> 전혀 해 본 적이 없다	
+<input type="radio" name="MNOBQST02" value="2" <? if($row[MNOBQST02]=="2"){ echo "checked";}?> /> 1~3회<br/>
+<input type="radio" name="MNOBQST02" value="3" <? if($row[MNOBQST02]=="3"){ echo "checked";}?> /> 4회 이상 	
+<input type="radio" name="MNOBQST02" value="4" <? if($row[MNOBQST02]=="4"){ echo "checked";}?> /> 항상 노력하고 있다<br/>
+<br/><br/>
+
+3. 당신은 체중감량을 통해 정상 체중을 지속적으로 유지하는데 관심이 있습니까?<br/>
+<input type="radio" name="MNOBQST03" value="1" <? if($row[MNOBQST03]=="1"){ echo "checked";}?> /> 별로 관심이 없다	
+<input type="radio" name="MNOBQST03" value="2" <? if($row[MNOBQST03]=="2"){ echo "checked";}?> /> 어느 정도 관심이 있다	
+<input type="radio" name="MNOBQST03" value="3" <? if($row[MNOBQST03]=="3"){ echo "checked";}?> /> 매우 관심이 있다<br/>
+</td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

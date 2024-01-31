@@ -1,0 +1,328 @@
+<?
+header("Content-Type:text/html;charset=utf-8");
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCM Academy Online Training Management</title>
+<link href="../../boilerplate.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../../css/font.css">
+<link href="../css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="../../respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script>
+ WebFont.load({
+  custom: {
+   families: ['Nanum Barun Gothic'],
+   urls: ['/css/font.css']
+  }
+ });
+</script>
+</head>
+<body>
+	<div class="gridContainer02 clearfix bgColor03">
+	
+		<div class="container clearfix">
+		
+			<div class="navBox">
+				<div class="logo"><img src="../images/MCM_Logo_big.png" width="200" alt=""/></div>
+				<div style="position:relative; height:50px;" class="clearfix">
+					<span class="userName">홍길동 님</span>
+					<a href="#" class="logOutBtn">LOGOUT</a>
+				</div>
+				<nav class="menuBar">
+					<ul>
+						<li><a href="../index.html">대쉬보드</a></li>
+						<li><a href="../sitemanage/manager.html">사이트 관리</a></li>
+						<li><a href="../usermanage/user.html">사용자 관리</a></li>
+						<li>
+							<a href="content.html" class="actived">콘텐츠 관리</a>
+							<ul class="subMenu">
+								<li><a href="content.html" class="subActived"><i class="fa fa-angle-right" aria-hidden="true"></i> 콘텐츠 관리</a></li>
+								<li><a href="collection.html">콜렉션테스트 관리</a></li>
+								<li><a href="month.html">월별평가 관리</a></li>
+							</ul>
+						</li>
+						<li><a href="../lecture/lecture.html">강좌 관리</a></li>
+						<li><a href="../operate/operate.html">운영 관리</a></li>
+						<li><a href="../offline/offline.html">오프라인 관리</a></li>
+						<li><a href="../board/board.html">게시판 관리</a></li>
+					</ul>
+				</nav>
+			</div>
+			
+			
+			<div class="mainContent">
+			
+				<div class="historyText">홈 &gt; 콘텐츠 관리 &gt; 콘텐츠 관리 &gt; 콘텐츠 등록 </div>
+				
+				<div class="propBox2">
+					<h3>콘텐츠 등록</h3>
+
+					<table width="100%" class="tableSt02" style="margin-bottom:30px;">
+						<tr>
+							<th>시즌</th>
+							<td style="padding:10px 5px;">
+								<select style="width:99%;">
+									<option>선택</option>
+									<option>OOOO</option>
+									<option>OOOO</option>
+									<option>OOOO</option>
+									<option>OOOO</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>카테고리</th>
+							<td>
+								<input class="inputDef" type="text" name="" style="width:85%;" />
+								<a href="#" class="nomMidBtn" style="padding:3px 25px;">검색</a>
+							</td>
+						</tr>
+						<tr>
+							<th>타입</th>
+							<td style="padding:10px 5px;">
+								<input type="radio" name=""> VOD &nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" name=""> EBOOK &nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" name=""> IMAGE
+							</td>
+						</tr>
+					</table>
+					
+					<h3>콘텐츠 정보 (VOD)</h3>
+
+					<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+						<tr>
+							<th>콘텐츠명</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>키워드</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>CDN URL</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>수료기준</th>
+							<td style="padding:10px 5px;">
+								<select style="width:80px;">
+									<option>시</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>분</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>초</option>
+									<option>00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>평가노출</th>
+							<td style="padding:10px 5px;">
+								<select style="width:80px;">
+									<option>시</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>분</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>초</option>
+									<option>00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>연계 평가명</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th valign="top">썸네일</th>
+							<td>
+								<input class="inputDef" type="file" name="" style="width:98%;" />
+								<div class="thumbnail clearfix">
+									<div class="thnProp">
+										<img src="../images/logoMcm.png" width="160" height="100" alt="">
+										<input type="checkbox"/> 썸네일 삭제
+									</div>
+								</div>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 썸네일 사이즈는 000X000(pixel)의 비율로 jpg 또는 png 파일을 등록하셔야 합니다.</p>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 어떤 사이즈로 올리시든 자동으로 사이즈를 맞춰집니다만, 비율이 다를 경우 이미지의 형태가 변할 수 있습니다.</p>
+							</td>
+						</tr>
+					</table>
+					
+					<h3>콘텐츠 정보 (EBOOK)</h3>
+
+					<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+						<tr>
+							<th>콘텐츠명</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>키워드</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>EBOOK</th>
+							<td><input class="inputDef" type="file" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>IMAGE</th>
+							<td><input class="inputDef" type="file" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>기능제한</th>
+							<td>
+								<input type="checkbox" name=""> 다운로드 금지 &nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="checkbox" name=""> 프린트 금지
+							</td>
+						</tr>
+						<tr>
+							<th>수료기준</th>
+							<td style="padding:10px 5px;">
+								<select style="width:80px;">
+									<option>시</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>분</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>초</option>
+									<option>00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>평가노출</th>
+							<td style="padding:10px 5px;">
+								<select style="width:80px;">
+									<option>시</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>분</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>초</option>
+									<option>00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>연계 평가명</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th valign="top">썸네일</th>
+							<td>
+								<input class="inputDef" type="file" name="" style="width:98%;" />
+								<div class="thumbnail clearfix">
+									<div class="thnProp">
+										<img src="../images/logoMcm.png" width="160" height="100" alt="">
+										<input type="checkbox"/> 썸네일 삭제
+									</div>
+								</div>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 썸네일 사이즈는 000X000(pixel)의 비율로 jpg 또는 png 파일을 등록하셔야 합니다.</p>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 어떤 사이즈로 올리시든 자동으로 사이즈를 맞춰집니다만, 비율이 다를 경우 이미지의 형태가 변할 수 있습니다.</p>
+							</td>
+						</tr>
+					</table>
+					
+					<h3>콘텐츠 정보 (IMAGE)</h3>
+
+					<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+						<tr>
+							<th>콘텐츠명</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>키워드</th>
+							<td><input class="inputDef" type="text" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>IMAGE</th>
+							<td><input class="inputDef" type="file" name="" style="width:98%;" /></td>
+						</tr>
+						<tr>
+							<th>수료기준</th>
+							<td style="padding:10px 5px;">
+								<select style="width:80px;">
+									<option>시</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>분</option>
+									<option>00</option>
+								</select> &nbsp;&nbsp;
+								<select style="width:80px;">
+									<option>초</option>
+									<option>00</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th valign="top">썸네일</th>
+							<td>
+								<input class="inputDef" type="file" name="" style="width:98%;" />
+								<div class="thumbnail clearfix">
+									<div class="thnProp">
+										<img src="../images/logoMcm.png" width="160" height="100" alt="">
+										<input type="checkbox"/> 썸네일 삭제
+									</div>
+								</div>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 썸네일 사이즈는 000X000(pixel)의 비율로 jpg 또는 png 파일을 등록하셔야 합니다.</p>
+								<p><i class="fa fa-asterisk" aria-hidden="true"></i> 어떤 사이즈로 올리시든 자동으로 사이즈를 맞춰집니다만, 비율이 다를 경우 이미지의 형태가 변할 수 있습니다.</p>
+							</td>
+						</tr>
+					</table>
+					
+					<div style="position:relative;">
+						<a href="#" class="resBtn02 poright">등록</a>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<div class="footer">
+			<p>MCM ACADEMY. All Rights Reserved.</p>
+		</div>
+		
+		
+		
+	</div>
+
+</body>
+</html>
+

@@ -1,0 +1,203 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 기분상태 관련 문항 (만40세 생애전환기 건강진단 대상자만 답하시오)
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8. 최근 일주일 동안 아래와 같은 일들이 얼마나 자주 일어났었는지 답변해 주십시오.
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>8-1.평소에는 아무렇지도 않던 일들이 괴롭고 귀찮게 느껴졌다.</th>
+			</tr>
+			<tr>
+				<td>
+					<b>최근 일주일간 나는</b>
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="극히"  <?=getChecked($v, "극히")?> > 극히 드물었다.(일주일간 1일 이하) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="가끔"  <?=getChecked($v, "가끔")?> > 가끔 있었다.(일주일간 2일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="종종"  <?=getChecked($v, "종종")?> > 종종 있었다.(일주일간 3~4일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="대부분"  <?=getChecked($v, "대부분")?> > 대부분 그랬다.(일주일간 5일 이상) &nbsp;
+				</td>
+			</tr>
+
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>8-2.먹고 싶지 않고, 식욕이 없었다.</th>
+			</tr>
+			<tr>
+				<td>
+					<b>최근 일주일간 나는</b>
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="극히"  <?=getChecked($v, "극히")?> > 극히 드물었다.(일주일간 1일 이하) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="가끔"  <?=getChecked($v, "가끔")?> > 가끔 있었다.(일주일간 2일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="종종"  <?=getChecked($v, "종종")?> > 종종 있었다.(일주일간 3~4일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="대부분"  <?=getChecked($v, "대부분")?> > 대부분 그랬다.(일주일간 5일 이상) &nbsp;
+				</td>
+			</tr>
+			
+		
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_3" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>8-3.어느 누가 도와준다 하더라도, 나의 울적한 기분을 떨쳐 버릴 수 없을 것 같았다. </th>
+			</tr>
+			<tr>
+				<td>
+					<b>최근 일주일간 나는</b>
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="극히"  <?=getChecked($v, "극히")?> > 극히 드물었다.(일주일간 1일 이하) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="가끔"  <?=getChecked($v, "가끔")?> > 가끔 있었다.(일주일간 2일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="종종"  <?=getChecked($v, "종종")?> > 종종 있었다.(일주일간 3~4일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="대부분"  <?=getChecked($v, "대부분")?> > 대부분 그랬다.(일주일간 5일 이상) &nbsp;
+				</td>
+			</tr>
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_4" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>8-4.상당히 우울했다. </th>
+			</tr>
+			<tr>
+				<td>
+					<b>최근 일주일간 나는</b>
+
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="극히"  <?=getChecked($v, "극히")?> > 극히 드물었다.(일주일간 1일 이하) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="가끔"  <?=getChecked($v, "가끔")?> > 가끔 있었다.(일주일간 2일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="종종"  <?=getChecked($v, "종종")?> > 종종 있었다.(일주일간 3~4일) &nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="대부분"  <?=getChecked($v, "대부분")?> > 대부분 그랬다.(일주일간 5일 이상) &nbsp;
+				</td>
+			</tr>
+
+
+
+
+
+		</table>

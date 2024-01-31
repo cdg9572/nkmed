@@ -1,0 +1,19 @@
+<?
+include "../inc/dbConn.php";
+
+
+$sql = " UPDATE gr28 SET		
+				MEMO='".$_POST['memo']."' 
+			WHERE RIDX='".$_POST['RIDX']."' ";
+
+if( $res = mysql_query($sql) ){
+
+	echo "<script>
+				alert( ' 메모가 등록이되었습니다. ' );
+			</script> ";
+
+}
+
+?>
+
+<!-- 4650  3600 -->

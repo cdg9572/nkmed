@@ -1,0 +1,113 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include  "../inc/func.php";
+$tbl = "smart_resscomp";
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+//$secret = "Y";
+$subject = addslashes($subject);
+$content = addslashes($content);
+$comment = addslashes($comment);
+
+//echo $sess_userid;
+//exit;
+
+
+unset($_SESSION["exam_category_il"]);
+unset($_SESSION["exam_category_am"]);
+unset($_SESSION["item_category"]);
+unset($_SESSION["item_sex"]);
+unset($_SESSION["mobile_no"]);
+unset($_SESSION["name"]);
+unset($_SESSION["reserve_seq"]);
+
+if($sess_userid == "" || $sess_username == ""){
+	//echo "<script language='JavaScript'>alert('죄송합니다. 세션이 종료되어서 다시 로그인 후 이용하시기 바랍니다.'); history.go(-1);</script>";
+	//exit;
+}
+
+if($mode == "new" || $mode == "write") {
+
+	$state_flag = "예약대기" ;
+
+
+   $ctype="김포대학교"
+	$AG = $gB_selA; $BG = $gB_selB; $AB_S = $SB1.$SB2;  $CG = "";
+
+	
+	$sql = " INSERT INTO $tbl ( 
+					RIDX, CPNAME, YY, CTYPE, CSTYPE1, CSTYPE2, CSTYPE3,  CSTYPE4,   CSTYPE5, 
+					RDATE, RHOUR, RMIN, RNAME, RTEL, WDT, IPADDR, STATEFLAG,
+					PNAME, MEMO, CPNAME2
+				) VALUES ( 0, '$cpname', '".substr($reserve_date,0,4)."', '$ctype', '$cstype1', '$AG', '$BG', '$CG', '$AB_S',
+					'$reserve_date', '$reserve_hour', '$reserve_min', '$_POST[name]', '$_POST[mobile_no]',
+					'".DATE("Y-m-d H:i:s")."' , '".$_SERVER['REMOTE_ADDR']."' , '$state_flag', '$_POST[name2]', '$_POST[memo]', '$_POST[name2]'
+				) ";
+	
+	//등록
+	mysql_query($sql) ;
+
+	$newSeq = mysql_insert_id();
+	$_SESSION[reserve_seq] = $newSeq ;
+	
+	if(!$newSeq) {
+		MYSQL_CLOSE();
+		#echo $sql;
+		echo "<script language='JavaScript'>alert('알 수 없는 오류로 정상적으로 처리되지 못했습니다.'); </script>";
+	} else {
+		//echo "<iframe id='smsifr'  name='smsifr' style='displaye:none;' width='100' height='100' ></iframe>";
+		//문자발송내용
+		//예약자에게 문자
+		if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트"  ){
+			$smsf_phone = $_POST[mobile_no];
+			$smsf_msg = "$_POST[name] 님 $_POST[ctype] 검진 $reserve_date $reserve_hour : $reserve_min 에 등록되었습니다. 전문상담원이 연락 드릴예정입니다." ;
+			$smsf_opt1 = "seq=".$newSeq ;
+			$frm="from1"; $ifrm="ifrm1"; $reyn = "N"; //리턴여부
+			include "../inc/nksms.html" ;
+		}
+
+		//추천인관련
+
+		//검진담당자에게 문자 발송
+		if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트"  ){
+			$smsf_phone = "010-3294-4009"; #"010-8837-3441"; # 
+			$smsf_msg = "김포대학교 검진 $_POST[name] 님 $_POST[mobile_no] 예약일시: $reserve_date $reserve_hour : $reserve_min 에 예약등록되었습니다. " ;
+
+			$smsf_opt1 = "seq=".$newSeq ;
+			$frm="from2"; $ifrm="ifrm2"; $reyn = "Y"; //리턴여부
+			include "../inc/nksms.html" ;
+		}
+		// 본부장님
+		if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트" && $_POST[mobile_no] <> "010-8837-3441" && $_POST[mobile_no] <> "01088373441"  ){
+			$smsf_phone = "010-4490-7575";
+			$smsf_msg = "김포대학교 검진 $_POST[name] 님 $_POST[mobile_no] 예약일시: $reserve_date $reserve_hour : $reserve_min 에 예약등록되었습니다. " ;
+
+			$smsf_opt1 = "seq=".$newSeq ;
+			$frm="from3"; $ifrm="ifrm3"; $reyn = "Y"; //리턴여부
+			include "../inc/nksms.html" ;
+		}
+
+		
+
+		MYSQL_CLOSE();
+		exit;
+	}
+
+}
+
+
+?>

@@ -1,0 +1,455 @@
+<?
+session_start();
+include $DOCUMENT_ROOT."/admin/inc/dbConn.php";
+include $DOCUMENT_ROOT."/admin/inc/chkLogin.php";
+
+/*
+echo $PRO_NAME."<br>";
+echo $textfield1."<br>";
+echo $item1."<br>";
+echo $item2."<br>";
+echo $item3."<br>";
+echo $item4."<br>";
+echo $item5."<br>";
+echo $item6."<br>";
+
+echo $start_date."<br>";
+echo $end_date."<br>";
+*/
+
+
+$uploadDir	= $DOCUMENT_ROOT."/admin/log/upFiles/";
+$sel_day  = ( $_GET['input_date'])? date("Y-m-d", strtotime($_GET['input_date'])) : date( "Y-m-d" );
+$ye_date = date("Y-m-d", strtotime("-1 day", strtotime($sel_day))); //어제
+$to_date = date("Y-m-d", strtotime("+1 day", strtotime($sel_day))); //내일
+
+$to_date2 = date("Y-m-d", strtotime("+1 day", strtotime(date( "Y-m-d" )))); //내일
+
+
+$doms            = array( "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" );
+$week = date('w', strtotime($sel_day)); //요일
+?>
+<!doctype html>
+<html>
+	<head>
+	<meta charset="euc-kr">
+	<title>Untitled Document</title>
+	<link href="/admin/_css/style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="/admin/_js/tabmenu.js"></script>
+	<script type="text/javascript" src="/admin/_js/contant_box_01.js"></script>
+	<script src="/admin/test/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/admin/_js/chkBoxtoImg.js"></script>
+	<script src="/admin/test/jquery.filestyle.js" type="text/javascript"></script>
+	<script src="/admin/_js/Calendar.js" type="text/javascript"></script>
+	
+	<link type="text/css" href="/admin/ui/themes/base/ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="/admin/ui/ui.core.js"></script>
+	<script type="text/javascript" src="/admin/ui/ui.datepicker.js"></script>
+	<link type="text/css" href="/admin/ui/demos.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+	$(function() {
+		$('#datepicker').datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '2009:2020'
+		});
+		$('#datepicker1').datepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '2009:2020'
+		});
+	});
+</script>
+	
+	<link rel="stylesheet" href="http://kops.co.kr/assets/_css/jquery-ui.css" />
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+   <script>
+
+  $(function() {
+
+    var names = [ 
+<?
+mysql_select_db("mediroad_liss", $dbconn);
+
+$sql = "SELECT DISTINCT COMPANY_NAME FROM `COMPANY` where COMPANY_CODE <> 0 ORDER BY COMPANY_CODE desc";
+$rsd = mysql_query($sql);
+
+while($rs = mysql_fetch_array($rsd)) {
+	$cname = $rs['COMPANY_NAME'];
+	echo "'".$cname."',";
+}
+?>
+	"John Resig"
+		
+	];
+
+ 
+
+    var accentMap = {
+
+      "a": "a",
+
+      "o": "o"
+
+    };
+
+    var normalize = function( term ) {
+
+      var ret = "";
+
+      for ( var i = 0; i < term.length; i++ ) {
+
+        ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+
+      }
+
+      return ret;
+
+    };
+
+ 
+
+   for(var j=1; j <= 30; j++){
+
+		 $( "#developer"+j ).autocomplete({
+
+		  source: function( request, response ) {
+
+			var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+
+			response( $.grep( names, function( value ) {
+
+			  value = value.label || value.value || value;
+
+			  return matcher.test( value ) || matcher.test( normalize( value ) );
+
+			}) );
+
+		  }
+
+		});
+   }
+
+  });
+
+  </script>
+
+<style>
+
+  .ui-autocomplete {
+	  
+	 width: 210px;
+
+    max-height: 100px;
+
+    overflow-y: auto;
+
+    /* prevent horizontal scrollbar */
+
+    overflow-x: hidden;
+
+  }
+
+  /* IE 6 doesn't support max-height
+
+   * we use height instead, but this forces the menu to always be this tall
+
+   */
+
+  * html .ui-autocomplete {
+
+    height: 100px;
+
+  }
+
+  </style>
+
+
+
+	<script>
+		function file_browse(num)
+		{
+		
+			var file_list = "file"+num;
+			var text_list = "text"+num;
+			document.form.elements[file_list].click();
+			document.form.elements[text_list].value=document.form.elements[file_list].value; 
+		}
+	</script>
+	<script type="text/javascript">
+			function closeiFrame() {
+			window.parent.location.reload();
+			window.parent.CloseManageFrame();
+			}
+			function send(){
+				document.form.submit();
+			}
+			function add_item(item,start_date){
+				window.open("/admin/slotset/add_item.html?item="+item+"&start_date="+start_date,"additem","width=540,height=600");
+			}
+			function clear_item(sel_item){
+				
+
+				eval('document.form.'+sel_item).value = "";
+				
+				
+			}
+
+			function openWin(page, bar) {
+				if(!bar) bar = "no";
+
+				var win = window.open(page, 'POP', 'left=100, top=100, toolbar=no, location=no, directories=no, status=yes, menuBar=no, scrollBars='+bar+', resizable=no');
+				win.focus();
+			}
+
+			function item_cnt(time){
+
+				alert(time);
+			}
+
+			function startRe(PRO_NAME){
+				startRequest2(PRO_NAME);
+				
+			}
+
+	</script>
+
+	
+
+	<script> 
+	var xmlHttp; 
+
+	function createXMLHttpRequest() { 
+	if (window.ActiveXObject) 
+	{ 
+	xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+	} 
+	else if (window.XMLHttpRequest) 
+	{ 
+	xmlHttp = new XMLHttpRequest(); 
+	} 
+	} 
+
+	function startRequest() { 
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange; 
+	xmlHttp.open("GET","/admin/reservation/business.html?business_name="+document.form.textfield1.value, true); 
+	xmlHttp.send(null); 
+	} 
+
+	function handleStateChange() { 
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView").innerHTML = xmlHttp.responseText; 
+	} 
+	} 
+	} 
+
+
+	function startRequest2(PRO_NAME) {
+		
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange2; 
+	xmlHttp.open("GET","/admin/reservation/business2.html?PRO_NAME="+PRO_NAME, true); 
+	xmlHttp.send(null); 
+
+		
+
+	} 
+
+	function handleStateChange2() { 
+
+	
+	
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView2").innerHTML = xmlHttp.responseText; 
+	
+	} 
+	}
+	
+	} 
+
+	function startRequest3(PRO_NAME) { 
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange3; 
+	xmlHttp.open("GET","/admin/reservation/business3.html?PRO_NAME="+PRO_NAME, true); 
+	xmlHttp.send(null); 
+	} 
+
+	function handleStateChange3() { 
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView3").innerHTML = xmlHttp.responseText; 
+	
+
+	} 
+	} 
+	} 
+	</script> 
+
+		<script type="text/javascript" src="/admin/ui/ui.datepicker-ko.js"></script>
+
+	</head>
+ <?
+ mysql_select_db("new_mediroad", $dbconn);
+ ?> 
+<div class="contants_01_1440">
+<div style="padding:10px 0 0 0; margin:0;"> 
+<form name="form" autocomplete="off"  method="post" name="FRM" enctype="multipart/form-data" action="/admin/reservation/search.html">
+
+<table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td width="400" valign="top">
+        	<table width="98%" border="0" cellspacing="0" cellpadding="5" class="write_table_02">
+            	<tr>
+                    <th colspan="2" height="30">사업장 정보</th>
+                </tr>
+				
+                <tr>
+                	<th style="font-size:12px;" width="120">사업장&nbsp;&nbsp;선택</th>
+                    <td>
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="non_table">
+                            <tr>
+                                <td style="padding:0;" width="170">
+                                    <label for="textfield"></label><input id="developer1" name="textfield1" value="<?=$rows[log_business]?>" style="width:160px;" />
+                                    <a href="#" onClick="fnPopup()"></a>
+                                </td>
+                                <td style="padding:0;"><input type="button" class="btn03" onclick="javascript:startRequest();" value="검색 >>"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+               <tr height="40" >
+                    <th height="25" colspan="2" style="font-size:12px;">예약검진항목선택</th>
+                </tr>
+				<tr>
+                	<td  colspan="2" style="padding:0;">
+                    	<?
+						if($seq != ""){
+							echo $rows[reserve_type_name];
+						}
+						?>
+						<div class="res_menu_result03">
+                            
+							<ul>
+                                <span id="idView"></span>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        
+        <td valign="top" width="300">
+        	<table width="95%" border="0" cellspacing="0" cellpadding="5" class="write_table_02" align="center">
+            	
+                <tr>
+                	<th height="30" style="font-size:12px;">기본선택목록</th>
+                </tr>
+                <tr>
+                	<td style="padding:0;" valign="top">
+						<?
+							if($seq != ""){
+								mysql_select_db("mediroad_liss", $dbconn);
+
+
+								$sql_b = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$rows[reserve_type_name]."'";
+									//echo $sql;
+									$result_b = mysql_query($sql_b); 
+									$rows_b = mysql_fetch_array($result_b);
+
+								$codes = explode(",",$rows_b[PRO_CODE]);
+
+								for($i=0;$i<sizeof($codes);$i++){
+									echo $codes[$i]."<br>";
+								}
+								mysql_select_db("new_mediroad", $dbconn);
+
+							}
+							?>
+                    	<div class="res_menu_result04">
+                            <ul>
+                                <span id="idView2"></span>
+                            </ul>
+                        </div>
+
+                    </td>
+                </tr>
+				<!--<tr height="40">
+                    <th height="25" style="font-size:12px;">추가 사항</th>
+                </tr>
+                <tr>
+                	<td style="padding:0;">
+                    	<?
+						if($seq != ""){
+							echo $rows[reserve_type_name];
+						}
+						?>
+						<div class="res_menu_result01">
+                            
+							<ul>
+                                <span id="idView3"></span>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>-->
+            </table>
+        </td> 
+		<td valign="top" width="300">
+        	<table width="95%" border="0" cellspacing="0" cellpadding="5" class="write_table_02" align="center">
+            	<tr>
+                    <th height="30" colspan="2" style="font-size:12px;">예약검진항목선택</th>
+				</tr>
+				<tr>
+					<td valign="top" colspan="2" height="238">
+              
+					 <input name="item1" type="checkbox" value="Y" checked readonly>기본 검사 (필수사항)<br>			
+					
+					 <input name="item2" type="checkbox" value="Y">수면대장<br>			
+					
+					 <input name="item3" type="checkbox" value="Y">MR 검사<br>			
+					
+					 <input name="item4" type="checkbox" value="Y">PET-CT 검사<br>		
+					
+					 <input name="item5" type="checkbox" value="Y">심장초음파<br>			
+					
+					 <input name="item6" type="checkbox" value="Y">유방초음파<br>		
+					</td>
+				</tr>
+				<tr align="center">
+					<th>예약기간</th>
+					<td align="left"><input type="text" name="start_date" id="datepicker" value="" size="10" class="textfield" style='cursor:pointer;'>  ~ <input type="text" name="end_date" id="datepicker1" value="" size="10" class="textfield" style='cursor:pointer;'>  </td>
+				</tr>
+				<tr align="center">
+					<th>예약자수</th>
+					<td align="left"><input type="text" name="num" size="10"> 명  </td>
+				</tr>
+				<tr align="center">
+
+					<td colspan="2"><input type="button" value="검색" class="btn03" onclick="javascript:send();"></td>
+				</tr>
+				
+			</table>
+		</td>
+    </tr>
+</table>
+</form> 
+</div>
+</div>
+</body>
+</html>

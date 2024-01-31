@@ -1,0 +1,43 @@
+<? session_start(); 
+if($_SESSION["jbno"]==""){ echo "<script>alert(\"비정상접근 또는 세션이 종료되었습니다. \\n다시로그인 해주세요.\");location.href=\"index.html\";</script>"; }
+include "topC.html";  ?>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<div class="container">			
+			
+			<div class="sp-slideshow">
+			
+				<input id="button-1" type="radio" name="radio-set" class="sp-selector-1" checked="checked" />
+				<label for="button-1" class="button-label-1"></label>
+				
+				<input id="button-2" type="radio" name="radio-set" class="sp-selector-2" />
+				<label for="button-2" class="button-label-2"></label>
+				
+				<input id="button-3" type="radio" name="radio-set" class="sp-selector-3" />
+				<label for="button-3" class="button-label-3"></label>
+				
+				<input id="button-4" type="radio" name="radio-set" class="sp-selector-4" />
+				<label for="button-4" class="button-label-4"></label>
+				
+				<input id="button-5" type="radio" name="radio-set" class="sp-selector-5" />
+				<label for="button-5" class="button-label-5"></label>
+				
+				<label for="button-1" class="sp-arrow sp-a1"></label>
+				<label for="button-2" class="sp-arrow sp-a2"></label>
+				<label for="button-3" class="sp-arrow sp-a3"></label>
+				<label for="button-4" class="sp-arrow sp-a4"></label>
+				<label for="button-5" class="sp-arrow sp-a5"></label>
+				
+				<div class="sp-content">
+
+					<ul class="sp-slider clearfix">
+						<li><div  style="background-color:#FFFFFF;"><?#  include "g_top1.html"; include "gr.html"; #include "g_footer.html"; ?></div></li>
+						<li><div  style="background-color:#FFFFFF;"><?# include "g_top2.html";  include "g1n.html"; #include "g_footer.html"; ?></div></li>
+						<li><div  style="background-color:#FFFFFF;"><?#  include "g_top2.html"; include "g2n.html"; #include "g_footer.html"; ?></div></li>
+						<li><div  style="background-color:#FFFFFF;"><?#  include "g_top2.html"; include "g3n.html"; #include "g_footer.html"; ?></div></li>
+						<li><div  style="background-color:#FFFFFF;"><?#  include "g_top2.html"; include "g4n.html"; #include "g_footer.html"; ?></div></li>
+					</ul>
+				</div><!-- sp-content -->
+				
+			</div><!-- sp-slideshow -->
+			
+		</div>

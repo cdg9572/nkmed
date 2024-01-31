@@ -1,0 +1,225 @@
+@charset "EUC-KR";
+
+#lisk_container {
+	width:90%;
+	margin: 20px auto;
+}
+#lisk_container h2 {
+	line-height: normal;
+	font-weight:bold;
+	border-left: 25px solid #666;
+	border-bottom: 1px solid #666;
+	margin-bottom:10px;
+	padding: 3px 10px;
+	
+}
+#lisk_container h3 {
+	font-size: 13px;
+	margin-bottom:5px;
+	font-weight: normal;
+}
+#lisk_container h3  i {
+	padding-right: 10px;
+}
+#lisk_container .ex_box {
+	border:1px solid #ccc;
+	background:#eee;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+#lisk_container .ex_box p.mb10 {
+	margin-bottom:10px;
+}
+#lisk_container .ex_box p {
+	line-height:normal;
+	font-size:12px;
+}
+#lisk_container .ex_box p span.ex_de {
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border:1px solid #589316;
+	background: #75C925;
+	padding: 3px 15px;
+	color: #fff;
+	font-size: 12px;
+}
+#lisk_container .comm_box {
+	border:1px solid #ccc;
+	background:#eee;
+	padding: 10px;
+	margin-bottom: 35px;
+	text-align: right;
+}
+#lisk_container .comment_input {
+	border: 1px solid #aaa;
+	box-shadow: none;
+	resize:none;
+	height: 60px;
+	width: 99%;
+	outline: none;
+}
+#lisk_container .btn_reply_ok {
+	display: inline-block;
+	padding: 0 10px;
+	line-height:26px;
+	font-size:16px !important; 
+	color: #fff !important;
+	text-align:center;
+	background: #196EB9;
+	border: 1px solid #196EB9;
+	-webkit-border-radius: 3px;
+	 border-radius: 3px;
+	 margin: 3px 5px;
+}
+#lisk_container table.lisk_result {
+	margin-bottom: 15px;
+}
+#lisk_container table.lisk_result th {
+	padding: 2px 0 8px 0;
+	border-bottom: 1px solid #666;
+	vertical-align:middle;
+}
+#lisk_container table.lisk_result th.colth {
+	padding: 8px 0;
+	border-bottom: 1px solid #ccc;
+}
+#lisk_container table.lisk_result td {
+	padding: 8px 0;
+	border-bottom: 1px solid #ccc;
+	vertical-align:middle;
+}
+#lisk_container table.lisk_result td.res_title {
+	padding-left: 10px;
+}
+#lisk_container table.lisk_result td.sel_A {
+	border: 1px solid #ccc;
+	background: #eee;
+}
+
+.btn_cc {
+	border: 1px solid #ccc;
+	background: #fff;
+	color: #666;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding:5px 10px;
+	font-size:12px;
+}
+
+.morebox {
+	font-size: 12px;
+	font-weight:bold;
+	color:#ccc;
+	text-align:center;
+	border:solid 1px #ccc;
+	padding:10px 0;
+	margin-top:8px;
+	margin-bottom:8px;
+	-moz-border-radius: 6px;-webkit-border-radius: 6px;
+}
+.morebox a{ color:#333333; text-decoration:none}
+.morebox a:hover{ color:#333333; text-decoration:none}
+
+.fleftde {float:left; padding-left:30px; font-size:12px;}
+.frightde {float:right; padding-right: 30px; font-size:12px;}
+
+.onsela {
+	width: 260px;
+	margin:0 auto;
+}
+.onsela li {
+	float: left;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	background: #fff;
+	text-align:center;
+	width:48px;
+	margin-right:2px;
+	line-height:25px;
+}
+.onsela li label {
+	font-size:12px;
+}
+
+
+
+fieldset {
+    border:none;
+}
+
+div.checkItem {
+    clear:both;
+    margin:1em 0;
+}
+
+/*_________________________*/
+
+    
+    input[type=checkbox] {
+    visibility:hidden;
+    /*hides default checkboxes*/
+
+        margin:0 -8px;
+}
+
+label.checkbox {
+    cursor:pointer;
+    text-indent:3em;
+    line-height:1.5em;
+    overflow:visible;
+    display:inline-block;
+    position:relative;
+}
+
+label.checkbox:before {
+    background:#e5e5e5;
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:1.6em;
+    height:1.6em;
+}
+
+label.checkbox:after {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter:alpha(opacity=0);
+    opacity:0;
+    content:'';
+    position:absolute;
+    width:0.7em;
+    height:0.3em;
+    background:transparent;
+    top:0.5em;
+    left:0.4em;
+    border:3px solid #6E898B;
+    border-top:none;
+    border-right:none;
+    -webkit-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+}
+
+label.checkbox:hover:after {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    filter:alpha(opacity=30);
+    opacity:0.3;
+}
+
+input[type=checkbox]:checked + label:after {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter:alpha(opacity=100);
+    opacity:1;
+}
+
+input[type=checkbox]:checked + label:before {
+    background:#fff;
+}
+
+input[type=checkbox]:checked + label {
+    color:#4B8362;
+}
+  

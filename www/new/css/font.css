@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face{
+font-family: "ns"; 
+src: url("../font/nanumsquare.eot"); src:local(※);
+src: url("../font/nanumsquare.eot?#iefix") format("embedded-opentype"), url("../font/nanumsquare.woff") format("woff"), url(nanumsquare.ttf) format('truetype');
+}
+@font-face{
+font-family: "nbg"; 
+src: url("../font/NanumBarunGothic.eot"); src:local(※);
+src: url("../font/NanumBarunGothic.eot?#iefix") format("embedded-opentype"), url("../font/NanumBarunGothic.woff") format("woff");
+}
+@font-face{
+font-family: "grUL"; 
+src: url("../font/gravity-ultralight-webfont.eot"); src:local(※);
+src: url("../font/gravity-ultralight-webfont.eot?#iefix") format("embedded-opentype"), url("../font/gravity-ultralight-webfont.woff") format("woff");
+}
+@font-face{
+font-family: "grL"; 
+src: url("../font/gravity-light-webfont.eot"); src:local(※);
+src: url("../font/gravity-light-webfont.eot?#iefix") format("embedded-opentype"), url("../font/gravity-light-webfont.woff") format("woff");
+}
+@font-face{
+font-family: "grB"; 
+src: url("../font/gravity-bold-webfont.eot"); src:local(※);
+src: url("../font/gravity-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../font/gravity-bold-webfont.woff") format("woff");
+}

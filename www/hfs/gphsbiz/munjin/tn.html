@@ -1,0 +1,101 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	<h2>문진표 작성</h2>
+	<form name='frm' method='post' action='' target="ifrm" style="font-size:10pt;">
+	<input type='hidden' name='rseq' value="<?=$rseq;?>"/>
+	<input type='hidden' name='mseq' value="<?=$mseq;?>"/>
+	<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+	<input type='hidden' name='ty' value="<?=$_POST[ty];?>"/>
+	<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>"/>
+	<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>"/>
+	<input type='hidden' name='md' value="reg"/>
+	<table  width='100%' border='0'cellspacing='4' style="font-size:10pt;">
+<tr align='center' >
+	<td bgcolor="#B2EBF4" width='20%' onclick="Show( 'g' ); " style="cursor:hand;"><b>공통문진</b><br/><input type="text" name="gtxt" value="" readonly size="7" style="background-color:transparent;font-size:9pt;border:0;cursor:hand;" /></td>
+	<td bgcolor="#B5B2FF" width='20%' onclick="Show( 'ga' ); " style="cursor:hand;" ><b>암문진</b><br/><input type="text" name="gatxt" value="" readonly size="7" style="background-color:transparent;font-size:9pt;border:0;cursor:hand;"/></td>
+	<td <? if ( $_POST[ty1] == "t" ) { ?>bgcolor="#B2CCFF" width='20%' style="cursor:hand;cursor:hand;"   onclick="Show( 'm3' ); "<? } ?>><? if ( $_POST[ty1] == "t" ) { ?><b>생활습관</b><br/><input type="text" id="m3txt" name="m3txt" readonly size="7" style="background-color:transparent;font-size:9pt;border:0;"/><? } ?></td>
+	<td width='20%' <? if ( $_POST[ty2] == "t" ) { ?>style="cursor:hand;"  bgcolor="#B70BF1" onclick="Show( 'm4' ); "<? } ?>><? if ( $_POST[ty2] == "t" ) { ?><b>인지기능</b><br/><input type="text" id="m4txt" name="m4txt" readonly size="7" style="background-color:transparent;font-size:9pt;border:0;"/><? } ?></td></tr>
+</table>
+</form>
+<iframe id="ifrm" name="ifrm" src="" width="100%"  onload="autoresize(this)" frameborder="no" scrolling="no" marginwidth="0" marginheight="0" name="tip" hspace="0" vspace="0"></iframe>
+</body>
+<script type="text/javascript">
+
+// iframe resize
+
+function autoresize( i ){
+//	alert("test");
+    var iframeHeight= i.contentWindow.document.body.scrollHeight;
+
+    i.height=iframeHeight + 20;
+
+}
+
+function Show( val ){
+	if ( val=="g" ){
+		document.frm.action="il/n_g1.html";
+		document.frm.submit();
+		document.frm.gtxt.value= "작성중";
+	}else if ( val=="ga" ){
+		document.frm.action="al/a_1.html";
+		document.frm.submit();
+		document.frm.gatxt.value= "작성중";
+	}else if ( val=="m3" ){
+		document.frm.action="lf/cmm_1.html";
+		document.frm.submit();
+		document.frm.m3txt.value= "작성중";
+	}else if ( val=="m4" ){
+		document.frm.action="lf/cmm_10.html";
+		document.frm.submit();
+		document.frm.m4txt.value= "작성중";
+	}
+}
+
+Show( "g" ); //기본으로 공단 나오게
+</script>
+	
+	<iframe name="company_proc" width=600 height=600 style="display:none;"></iframe>
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

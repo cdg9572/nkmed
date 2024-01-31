@@ -1,0 +1,218 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+testing_dsp("session") ;
+$_SESSION['cpname']  = "구래26통";
+
+//echo $_SERVER['REMOTE_ADDR'];
+
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구래 26통 의료지원사업 관리자</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<style>
+header{
+	padding-left:30px;
+	padding-right:30px;
+}
+header span{
+	color:yellow;
+	font-size:20px;
+	font-weight:bold;
+}
+.topdiv{
+	padding:10px 20px 10px 20px;
+	border-bottom-left-radius : 20px;
+	border-bottom-right-radius : 20px;
+}
+
+.mcont{
+	padding-left:40px;
+	padding-right:40px;
+}
+
+.mcont div{
+	padding:5px;
+	border:1px solid black;
+}
+
+.mcont2{
+	padding:20px 40px;
+}
+
+.mcont2 div{
+	padding:10px;
+	text-align:left;
+	background-color:#9DCFFF;
+}
+
+.tr1{
+	border:1px solid #cdcdcd;
+}
+
+.td1{
+	background-color:yellow;
+}
+
+</style>
+</head>
+
+<body>
+	<header>
+		<div class="topdiv" style="background-color:#2478FF;">
+			<span>구래 26통 의료지원사업 관리자</span>
+		</div>
+	</header>
+	<p></p>
+	<nav class="mcont">
+		<div> 등록된 동 :
+<?		#동별 카운트
+$sql = " SELECT replace(dong,'동','') dong, count(dong) CNT
+			FROM t29 
+			GROUP BY replace(dong,'동','')";
+$tcnt = 0;
+if( $r = mysql_query($sql) ){
+	while( $row= mysql_fetch_array($r) ){
+		$oc = " onclick=\"location.href='admin_info.html?dong=$row[dong]';\" ";
+		$tcnt += $row[CNT];
+		echo "<span $oc style='cursor:pointer'>$row[dong]동($row[CNT])</span>&nbsp;";
+	}
+}
+?>
+  		</div>
+		
+		<div style="border:0px;">
+		<? 
+		if(  $_GET[dong]<>"" ){
+			echo "<table border='1' cellspacing='0' cellpadding='3' width='90%' style='text-align:center;'>";
+			echo "<tr><td>No.</td><td>동</td><td>호수</td>
+						<td>이름</td><td>연락처</td>
+						<td width='100'>선택1<br>종합검진</td>
+						<td width='90'>선택2<br>대상포진</td>
+						<td width='80'>선택3<br>독감접종</td><td>등록일자</td></tr>";
+			$sql = " SELECT *
+						FROM t29 
+						WHERE replace(dong,'동','')='".$_GET[dong]."' 
+						ORDER BY CAST(replace(ho,'호','') AS SIGNED INTEGER) ";
+			if( $r = mysql_query($sql) ){
+				$no = 1;
+				while( $row= mysql_fetch_array($r) ){
+					$c1 = "&nbsp;";	$c2 = "&nbsp;";	$c3 = "&nbsp;";	$pcnt = "&nbsp;";
+					if( $row[cho]=="1" ){	$c1 = "V";		}
+					if( $row[cho]=="2" ){	$c2 = "V";		}
+					if( $row[cho]=="3" ){	$c3 = "V";	$pcnt="[".$row[pcnt]."명]";	}
+					echo "<tr>
+								<td>$no</td>
+								<td>".str_replace("동","",$row[dong])." 동</td>
+								<td>".str_replace("호","",$row[ho])." 호</td>
+								<td>$row[sname]</td>
+								<td>$row[tel]</td>
+								<td>$c1</td>
+								<td>$c2</td>
+								<td>$c3 $pcnt</td>
+								<td>$row[wdt]</td></tr>";
+					$no++;
+				}
+			}
+			echo "</table>";
+		}
+		?>
+		</div>
+	</nav>
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+<iframe id="ifrm" name="ifrm" src="" height="150" style="display:none;"></iframe>
+</body>
+</html>
+
+<script>
+
+function CheckForm(){
+	
+	if( document.all.YN[0].checked == false ){
+		alert( "개인정보 수집 동의하지 않으면 진행이 안됩니다." );
+		return false;
+	}
+	
+	if( document.all.cho[0].checked == false 
+		&& document.all.cho[1].checked == false 
+		&& document.all.cho[2].checked == false ){
+		alert( "의료지원 항목을 선택 해주세요" );
+		return false;
+	}
+
+	if( document.all.cho[2].checked && document.all.pcnt.value=="" ){
+		alert( "독감 접종인원을 선택해주세요." );
+		document.all.pcnt.focus();
+		return false;
+	}
+
+	if( document.all.dong.value=="" ){
+		alert( "동을 입력해주세요." );
+		document.all.dong.focus();
+		return false;
+	}
+
+	if( document.all.ho.value=="" ){
+		alert( "호를 입력해주세요." );
+		document.all.ho.focus();
+		return false;
+	}
+
+	if( document.all.sname.value=="" ){
+		alert( "성함을 입력해주세요." );
+		document.all.sname.focus();
+		return false;
+	}
+
+	if( document.all.tel.value=="" ){
+		alert( "연락처를 입력해주세요." );
+		document.all.tel.focus();
+		return false;
+	}
+
+	return true;
+}
+
+function chk_btn(){
+	document.getElementById("btn").style.display = "";
+}
+
+function ck( v ){
+	if( v == 3 ){
+		document.getElementById("pcnt").style.display = "";
+	}else{
+		document.getElementById("pcnt").style.display = "none";
+		document.getElementById("pcnt").value = "";
+	}
+}
+</script>

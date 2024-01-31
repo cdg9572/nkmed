@@ -1,0 +1,53 @@
+<? 
+session_start(); 
+if($_SESSION[jbno]=="" and $_GET[v]<>"v" ){ 
+	echo "<script>
+		alert(\"비정상접근 또는 세션이 종료되었습니다. \\n다시로그인 해주세요.\");
+		location.href=\"index.html\";
+		</script>"; 
+}
+if(	$_GET[v]=="v" ){	$_SESSION['jbno'] = $_GET[l];	}
+include "topC.html";  ?>
+
+<script src="script/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="script/turn.js" type="text/javascript"></script>
+<style>
+h2{ border-left: 3px solid #5B8DE7;	padding-left:5px;	font-size: 1em;	margin-bottom:15px;}
+table{ border:10px solid rgba(0,107,253,0.42);	border-collapse: collapse;	}
+</style>
+<div class="flip" id="flip" style="margin: 5px 10px;">
+	<div id="div1"  style="background-color:#FFFFFF;"><?  include "g_top1.html"; include "gr.html"; #include "g_footer.html"; ?></div>
+	<div id="div2"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html";  include "g1n.html"; #include "g_footer.html"; ?></div>
+	<div id="div3"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g2n.html"; #include "g_footer.html"; ?></div>
+	<div id="div4"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g3n.html"; #include "g_footer.html"; ?></div>
+	<div id="div5"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g4n.html"; #include "g_footer.html"; ?></div>
+	<div id="div6"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g5n.html"; #include "g_footer.html"; ?></div>
+	<div id="div7"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g6n.html"; #include "g_footer.html"; ?></div>
+	<div id="div8"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g7n.html"; #include "g_footer.html"; ?></div>
+	<div id="div9"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g8n.html"; #include "g_footer.html"; ?></div>
+	<div id="div10"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g9n.html"; #include "g_footer.html"; ?></div>
+	<div id="div11"  style="background-color:#FFFFFF;display:none;"><?  include "g_top2.html"; include "g10n.html"; #include "g_footer.html"; ?></div>
+	<div id="div12"  style="background-color:#FFFFFF;display:none;"><?  include "g_top3.html"; include "g11n.html"; #include "g_footer.html"; ?></div>
+</div>
+
+
+<script>
+d_num=1;
+
+function ClickRL( val ){
+	if ( val == "R" ){
+		d_num += 1;
+	}else{
+		d_num -= 1;
+	}
+
+	var divn = "div"+d_num
+
+	for( c=1; c<13; c++){
+		document.getElementById( "div"+c ).style.display="none";
+	}
+	document.getElementById( divn ).style.display="";
+
+}
+
+</script>

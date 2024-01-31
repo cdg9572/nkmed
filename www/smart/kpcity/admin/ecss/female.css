@@ -1,0 +1,194 @@
+p span {
+	font-family: 고딕;
+}
+
+.wrap {
+	width: 1100px;
+	min-height: 207px;
+	background-image: url(/images/female/female01_1.jpg);
+}
+
+.wrap2 {
+	width: 1100px;
+	min-height: 187px;
+	background-image: url(/images/female/female02_1.jpg);
+}
+
+.wrap3 {
+	width: 1100px;
+	min-height: 197px;
+	background-image: url(/images/female/female03_1.jpg);
+}
+
+.wrap4 {
+	width: 1100px;
+	min-height: 207px;
+	background-image: url(/images/female/female04_1.jpg);
+}
+
+.wrap5 {
+	width: 1100px;
+	height: 239px;
+	background-image: url(/images/female/female04_2.jpg);
+}
+
+.middot {
+	padding-left: 15px;
+	background-image: url(/images/about/e_dot.JPG);
+    background-repeat: no-repeat;
+    background-position: left 3px;
+}
+
+div.doc_cont1 {
+	padding-left: 370px;
+    padding-top: 20px;
+}
+
+div.doc_cont2 {
+	padding-left: 410px;
+    padding-top: 20px;
+}
+
+div.doc_cont3 {
+	padding-left: 270px;
+    padding-top: 20px;
+}
+
+div.doc_cont4 {
+	padding-left: 260px;
+    padding-top: 65px;
+}
+
+.title {
+	font-family: 바탕;
+    margin: 15px 0px 16px 0px;
+    font-size: 32pt;
+    letter-spacing: -6px;
+}
+
+.cont1 {
+    font-size: 11pt;
+	font-weight: bold;
+    padding-left: 3px;
+    line-height: 24px;
+	letter-spacing: -0.5px;
+    margin-bottom: 12px;
+	color: #525252;
+}
+
+.cont2 {
+    font-size: 11pt;
+	font-weight: bold;
+    padding-left: 3px;
+    line-height: 24px;
+	letter-spacing: -0.5px;
+	margin-top: 5px;
+    margin-bottom: 12px;
+	color: #525252;
+}
+
+.subject {
+    font-size: 18pt;
+    font-family: 고딕;
+    line-height: 45px;
+    letter-spacing: -2px;
+    background-image: url(/images/female/upline.jpg);
+    background-repeat: no-repeat;
+    background-position: 0px -2px;
+}
+
+.numbox{
+	margin-top: 15px;
+	width: 1100px;
+	height: 464px;
+	background-image: url(/images/female/numbox.jpg);
+}
+
+.numbox2{
+	margin-top: 15px;
+	width: 1100px;
+	height: 514px;
+	background-image: url(/images/female/numbox2.jpg);
+}
+
+.numbox3{
+	margin-top: 15px;
+	padding-top: 5px;
+	width: 1100px;
+	height: 315px;
+	background-image: url(/images/female/numbox3.jpg);
+}
+
+.numbox4{
+	margin-top: 15px;
+	padding-top: 5px;
+	width: 1100px;
+	height: 360px;
+	background-image: url(/images/female/numbox4.jpg);
+}
+
+.inner_block {
+	height: 85px;
+}
+
+.inner_block72 {
+	height: 72px;
+}
+
+.inner_block75 {
+	height: 75px;
+}
+
+.inner_block115 {
+	height: 115px;
+}
+
+.mid_title {
+    font-size: 13pt;
+	font-family: 고딕;
+	font-weight: bold;
+	color: #525252;
+}
+
+.pad-l75 {
+    padding-left: 75px;
+}
+
+.pad-l85 {
+    padding-left: 85px;
+}
+
+.pad-t20 {
+    padding-top: 20px;
+}
+
+.pad-t23 {
+    padding-top: 23px;
+}
+
+.pad-t30 {
+    padding-top: 30px;
+}
+
+.pad-t40 {
+    padding-top: 40px;
+}
+
+.numbox2 table {
+	margin-left: 140px;
+    margin-top: 15px;
+}
+
+.numbox2 table td {
+	height: 120px;
+}
+
+.cont_title {
+	margin-top: 13px;
+	margin-bottom: 5px;
+    font-size: 14pt;
+    font-weight: bold;
+    letter-spacing: 0px;
+    word-spacing: -2.5px;
+	color: #525252;
+}

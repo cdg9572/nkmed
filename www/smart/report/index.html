@@ -1,0 +1,241 @@
+<?
+
+include "inc/topConf.html";
+
+//exit;
+
+
+//==================== 모바일에서 세션값 바로 처리 안될때 
+
+if(!$data_serial_no && !$session_reload_check)
+{
+	/*
+		$_SESSION["session_reload_check"] = "Y" ;  
+
+		echo "<script language=\"javascript\"> 
+				document.reload();
+		</script>" ;
+	*/
+}
+
+testing_dsp("session") ;
+?>
+
+
+
+<body>
+<div data-role="page" id="home">
+	<div data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1><a href="index.html" class="head_title"><img src="images/logo.png" height="30" alt=" 로고"/></a></h1>
+		<a href="login.html?mode=D"  rel="external" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power" rel="external">Logout</a>
+	</div>
+	<div data-role="content" class="homeBG">
+		<p class="ment_z">최고의 의료진들이 모여<br/><span style="font-size:1.2em;"><span style="color:#237CC5;">고객의 건강</span>만을</span><br/><span style="font-size:1.2em;">최우선으로 생각합니다.</span></p>
+		<div class="user_info">
+			<h2>수검자 정보</h2>
+			<table width="100%">
+				<tr>
+					<th width="100">단체명</th>
+					<td>뉴고려병원</td>
+				</tr>
+				<tr>
+					<th>성명</th>
+					<td><?=$_SESSION[sess_UNAME]?></td>
+				</tr>
+				
+				<!--<tr>
+					<th>생년월일</th>
+					<td><?=$_SESSION[data_birth_date]?></td>
+				</tr>-->
+				<tr>
+					<th>검진일</th>
+					<td><?=$_SESSION[data_exam_date]?></td>
+				</tr>
+
+				<?
+
+					if($_SESSION[data_핸드폰번호]) $phone= $_SESSION[data_핸드폰번호] ;
+					else  $phone= $_SESSION[data_전화번호] ;
+
+				?>
+				<!--
+				<tr>
+					<th>연락처</th>
+					<td><?=$phone?> </td>
+				</tr>
+				<tr>
+					<th>부서(코드)</th>
+					<td></td>
+				</tr>
+				-->
+			</table>
+		</div>
+		
+		<h2 class="h2_title">검진 목록</h2>
+		<ul data-role="listview" data-inset="true" class="cataBox">
+		
+			<li><a href="catapage01.html" data-ajax="false">
+				<img src="images/cata_icon_01.png" alt="전문의 종합 진단 소견"/>
+				<h2>전문의 종합 진단 소견</h2>
+				<p>전문의 종합 진단 소견</p></a>
+			</li>
+		
+
+			<li><a href="catapage01s.html" data-ajax="false">
+				<img src="images/cata_icon_01s.png" alt="기초검사"/>
+				<h2>기초검사</h2>
+				<p>신장, 체중, 비만도, 혈압, 맥박, 청력, 시력 검사등...</p></a>
+			</li>
+
+			<li><a href="catapage_sungin.html" data-ajax="false">
+				<img src="images/cata_icon_22.png" alt="성인병검사"/>
+				<h2>성인병검사</h2>
+				<p>고지혈증, 당뇨병, 췌장, 성병 검사등...</p></a>
+			</li>
+
+			<li><a href="catapage_gan.html" data-ajax="false">
+				<img src="images/cata_icon_08.png" alt="간기능검사"/>
+				<h2>간기능검사</h2>
+				<p>간기능, 간염, 심근검사 등...</p></a>
+			</li>
+
+			<li><a href="catapage02.html" data-ajax="false">
+				<img src="images/cata_icon_02.png" alt="일반혈액검사"/>
+				<h2>일반혈액검사</h2>
+				<p>혈액학적, 백혈구백분율, 빈혈, 풍진 검사</p></a>
+			</li>
+
+			<li><a href="catapage04.html" data-ajax="false">
+				<img src="images/cata_icon_04.png" alt="갑상선/관절/전해질,호르몬검사"/>
+				<h2>갑상선·관절·전해질·호르몬검사</h2>
+				<p>갑상선 , 관절질환, 염증반응, 전해질, 호르몬 검사</p></a>
+			</li>
+
+			<li><a href="catapage06.html" data-ajax="false">
+				<img src="images/cata_icon_06.png" alt="신장/요검사"/>
+				<h2>신장·요검사</h2>
+				<p>신장기능, 일반소변, 뇨현미경, 통풍 검사</p></a>
+			</li>
+
+
+			<li><a href="catapage_pg.html" data-ajax="false">
+				<img src="images/cata_icon_23.png" alt="종양표지자"/>
+				<h2>종양표지자<!--·골밀도--></h2>
+				<p>종양표지자혈액검사</p></a>
+			</li>
+
+			<li><a href="catapage11.html" data-ajax="false">
+				<img src="images/cata_icon_11.png" alt="위장및대장검사"/>
+				<h2>위장및대장검사</h2>
+				<p>위장, 헬리박터균, 대장내시경, 분변 검사 </p></a>
+			</li>
+
+			<li><a href="catapage_x.html" data-ajax="false">
+				<img src="images/cata_icon_09.png" alt="흉부-X선 · 심전도"/>
+				<h2>흉부-X선·심전도·동맥경화</h2>
+				<p>흉부-X선, 심전도 검사, 동맥경화 </p></a>
+			</li>
+
+			<li><a href="catapage_cho.html" data-ajax="false">
+				<img src="images/cata_icon_24.png" alt="흉부-X선 · 심전도"/>
+				<h2>초음파·골밀도검사</h2>
+				<p>초음파, 골밀도검사 </p></a>
+			</li>
+
+
+			<?
+			if($data_sex <>  "M" || $_SESSION[data_성별] <> "M")
+			{
+			?>
+				<li><a href="catapage12.html" data-ajax="false">
+					<img src="images/cata_icon_12.png" alt="부인과 검사"/>
+					<h2>부인과 검사</h2>
+					<p>유방암, 자궁경부암 검사</p></a>
+				</li>
+				
+			<?
+			}
+			else
+			{
+			?>
+				
+			<?
+			}
+			?>
+
+
+			<li><a href="catapage_ct.html" data-ajax="false">
+				<img src="images/cata_icon_25.png" alt="CT · MRI 검사"/>
+				<h2>CT · MRI 검사</h2>
+				<p>CT, MRI 검사 </p></a>
+			</li>
+
+
+			<li><a href="catapage_chung.html" data-ajax="false">
+				<img src="images/cata_icon_21.png" alt="CT · MRI 검사"/>
+				<h2>청력·뇌혈류·스트레스·폐기능 검사</h2>
+				<p>정밀청력, 뇌혈류, 폐기능, 스트레스 검사 </p></a>
+			</li>
+
+			<li><a href="catapage_etc.html" data-ajax="false">
+				<img src="images/cata_icon_15.png" alt="기타 검사"/>
+				<h2>기타 검사</h2>
+				<p>NK cell, 유전자검사 등등...</p></a>
+			</li>
+			<? if( $_SESSION["damdang"]=="정선희" ){
+					$tel = "010-7639-9204";
+				}elseif(  $_SESSION["damdang"]=="손민정" ){
+					$tel = "010-7639-9202";
+				}elseif(  $_SESSION["damdang"]=="오경은" ){
+					$tel = "010-7639-9203";
+				}elseif(  $_SESSION["damdang"]=="김아람" ){
+					$tel = "010-9648-9205";
+				}elseif(  $_SESSION["damdang"]=="김민선" ){
+					$tel = "010-7361-9206";
+				}else{
+					$tel = "010-7639-9291";
+				} ?>
+			<li><a href="tel:<?=$tel;?>" data-ajax="false">
+				<img src="images/crm.png" alt="상담"/>
+				<h2>상담 연락</h2>
+				<p>추가 궁금하신것은 헬스케어 담당자가 상담해드립니다.</p></a>
+			</li>
+
+			
+
+<!--
+			<?
+
+			$sql = "select * from smart_image where item_data_seq = '$sess_item_data_seq' and view_state='Y' and use_yn = 'Y' " ;
+			$res = @mysql_query($sql) ;
+			$i_total = mysql_num_rows($res) ;
+
+			if($i_total)
+			{
+			?>
+				<li><a href="catapage_image.html" data-ajax="false">
+					<img src="images/cata_icon_15.png" alt="기타 검사"/>
+					<h2>검사 Image</h2>
+					<p>별도 검사지 첨부 (위,대장조직검사결과지,뇌혈류검사(TCD),스트레스, 심박변이, 동맥경화, pap smear, STD, 체성분결과지)</p></a>
+				</li>
+			<?
+			}
+			?>
+
+-->
+
+			
+			
+		</ul>
+		
+	</div>
+	
+
+	<?
+		include "./inc/bottom.html";
+	?>
+
+</div>
+
+</body>
+</html>

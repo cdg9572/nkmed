@@ -1,0 +1,96 @@
+<?
+session_start() ;
+include  "./inc/cn_lib.php";
+include $DOCUMENT_ROOT."/inc/dbConn.php";
+
+mysql_select_db("mediroad_liss", $dbconn);
+
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko">
+<head>
+<title>21C Hana Clinic</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+
+
+
+<script>
+function printPage() {
+	document.body.innerHTML = pagea.innerHTML;
+    window.print();
+	location.reload(true);
+};
+</script>
+</head>
+
+
+<?
+
+$company_name =  "jian" ;
+
+
+
+if($_SESSION[s_code])
+{
+	echo "<script language=javascript>self.location='./data.php'</script>" ;
+}
+else if($code)
+{
+	
+	if($code == "12345") 
+	{
+		$code = "3315006" ; // 지안용
+		$check_code = $row[_key] ;
+		$p_birth = substr($row[birth_date],0, 6) ;
+		$p_name = $row[name] ;
+		$p_date = $row[exam_date] ;
+
+		$_SESSION[s_code] = "21cHana" ; // 챠트번호
+
+		echo "<script language=javascript>self.location='./data.php?category_code=test'</script>" ;
+		
+	}
+
+	if($code == "9225007") 
+	{
+		$check_code = $row[_key] ;
+		$p_birth = substr($row[birth_date],0, 6) ;
+		$p_name = $row[name] ;
+		$p_date = $row[exam_date] ;
+
+		$_SESSION[s_code] = "21cHana" ; // 챠트번호
+
+		echo "<script language=javascript>self.location='./data.php?category_code=2016sajung'</script>" ;
+		
+	}
+
+	
+	else {
+		echo "<script language=javascript>alert('코드값이 정확하지 않습니다.\\n올바른 코드값을 입력해주세요')</script>" ;
+	}
+
+}
+
+?>
+
+
+<body>
+	<div id="wrap">
+		<div id="container" class="main_bg">
+			<div class="main">
+
+				<form method="post" action="<?=$PHP_SELF?>">
+				<div class="contnets">
+					<input type="text" class="first_inp" title="id" name='code' value='<?=$code?>'><img src="./images/btn_login.png"  onclick="submit();">
+				</div>
+				</form>
+			</div><!-- main -->
+		</div><!-- container -->
+	</div><!-- wrap -->
+
+
+
+</body>
+</html>

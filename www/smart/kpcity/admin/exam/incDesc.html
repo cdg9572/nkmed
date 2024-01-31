@@ -1,0 +1,154 @@
+<?
+header("Content-Type:text/html;charset=utf-8") ;
+mysql_query("set names utf8;");
+
+$jumin = explode("-", $row_data['jumin_no']);
+$zipCode = explode("-", $row_data['zip_code']);
+//echo $uploadDir.$row_data['file'];
+if(is_file($uploadDir.$row_data['file'])) $upImg = "/new_mcm/admin/member/upFiles/member/".$row_data['file'];
+else $upImg = "imgs/noImg.gif";
+
+$phone_no = explode("-",$row_data['phone_no']);
+$phone_no2 = explode("-",$row_data['phone_no2']);
+
+$mobile_no = explode("-",$row_data['mobile_no']);
+$email = explode("@",$row_data['email']);
+
+
+//echo $seq;
+?>
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+
+	if(!frm.m_item.value) {
+		alert('item명을 입력해 주세요.');
+		frm.m_item.focus();
+		return false;
+	}
+	else if(!frm.m_desc.value) {
+		alert('Desc.를 입력해 주세요.');
+		frm.m_desc.focus();
+		return false;
+	}
+	
+	else{
+
+		frm.target = "main";
+		frm.submit();
+	}
+}
+
+
+function chkForm_modi(frm) {
+	
+		frm.mode.value="modify";
+		frm.target = "main";
+		frm.submit();
+}
+
+function chkForm_del(frm) {
+
+		frm.mode.value="del";
+		frm.target = "main";
+		frm.submit();
+}
+
+
+
+//-->
+</script>
+
+
+
+<div class="historyText">홈 &gt; 검진 관리 &gt; Desc. 관리  </div>
+				
+	<div class="propBox2">
+		<h3>Description 수정</h3>
+
+		<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+			<form  target='main' name='form' method='post' action='<?=$actionPage?>' enctype='multipart/form-data'>
+			<input type='hidden' name='uploadDir' value='<?=$uploadDir?>'>
+			<input type='hidden' name='tbl' value='<?=$tbl?>'>
+			<input type='hidden' name='dir' value='<?=$dir?>'>
+			<input type='hidden' name='menu' value='<?=$menu?>'>
+			<input type='hidden' name='mode' value='new'>
+			<input type='hidden' name='seq' value='<?=$seq?>'>
+			<input type='hidden' name='team_prof_list' value=''>
+			<tr>
+				<th>item명</th>
+				<td><input class="inputDef" type="text" name="m_item" value='<?=$row_data['m_item']?>' style="width:400px;"/></td>
+			</tr>
+
+			<tr>
+				<th>Desc.</th>
+				<td>
+					<textarea name="m_desc" cols=100 rows=3></textarea>
+				</td>
+			
+		</table>
+		
+		<div style="position:relative;text-align:right">
+			<a href="#" onClick="chkForm(document.form)" class="resBtn02 pocenter520">등록</a>
+			<a href="#" onClick="history.go(-1);" class="cancelBtn02 poright">취소</a>
+		</div>
+
+		</form>
+	</div>
+
+
+	<div class="propBox2">
+		<h3>Description 관리</h3>
+		<?
+			$sql = "select * from hana_m_desc where use_yn = 'Y' order by reg_date desc " ;
+			$res = mysql_query($sql) ;
+			
+			$i = 0 ;
+			while($row = mysql_fetch_array($res))
+			{
+				$i ++ ;
+		?>
+
+		<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+			<form  target='main' name='form<?=$i?>' method='post' action='<?=$actionPage?>' enctype='multipart/form-data'>
+			<input type='hidden' name='dir' value='<?=$dir?>'>
+			<input type='hidden' name='menu' value='<?=$menu?>'>
+			<input type='hidden' name='mode' value=''>
+			<input type='hidden' name='seq' value='<?=$row[seq]?>'>
+			<tr>
+				<th>item명</th>
+				<td><input class="inputDef" type="text" name="m_item" value='<?=$row['m_item']?>' style="width:400px;"/></td>
+				<td>
+					<input type=button onClick="chkForm_modi(document.form<?=$i?>)" value="수정"></a>&nbsp;
+					<input type=button onClick="chkForm_del(document.form<?=$i?>)" value="삭제"></a>
+				</td>
+			</tr>
+
+			<tr>
+				<th>Desc.</th>
+				<td colspan=2>
+					<textarea name="m_desc" cols=100 rows=3><?=$row['m_desc']?></textarea>
+				</td>
+			</form>
+		</table>
+
+		<?
+		}
+		?>
+		
+		<div style="position:relative;text-align:right">
+			
+		</div>
+	</div>
+
+
+
+
+
+	
+
+
+	<iframe name="main" width=700 height=600></iframe>
+
+
+</div>

@@ -1,0 +1,19 @@
+<!--http://119.197.19.46:8000-->
+<? if($_SERVER['REMOTE_ADDR']=="114.129.126.128" || $_SERVER['REMOTE_ADDR']=="36.39.74.41" || $_SERVER['REMOTE_ADDR']=="119.197.19.46" || $_SERVER['REMOTE_ADDR']=="192.168.0.252"){ 
+		$r = "http://192.168.1.252/gumjin/SMS/asp_sms_send.php"; 
+	}else{ 
+		$r = "http://119.197.19.46:8000/gumjin/SMS/asp_sms_send.php"; 
+	}		?>
+<form action="<?=$r;?>" method="post" name="<?=$frm;?>" target='<?=$ifrm;?>'>
+	<input type="text" name="smsf_returl" value="<?=$p;?>inc/sms_return.php" /><br/>
+	<input type="text" name="smsf_phone" value="<?=$smsf_phone?>" /> 전송번호<br/>
+	<input type="text" name="smsf_msg" value="<?=$smsf_msg?>" />내용<br/>
+	<input type="text" name="smsf_opt1" value="<?=$smsf_opt1?>" /> 추가 파라미터 <br/>
+	<input type="text" name="reyn" value="<?=$reyn;?>" />리턴유무<br/>
+	<input type="submit" value="전송테스트" />
+</form>
+<iframe id='<?=$ifrm;?>'  name='<?=$ifrm;?>' style='display:;' width='200' height='200' ></iframe>
+
+<? echo "<script>document.$frm.submit() ;</script>"; ?>
+<script>
+</script>

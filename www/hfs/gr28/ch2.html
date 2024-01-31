@@ -1,0 +1,64 @@
+<?
+include "../inc/dbConn.php";
+
+if( $_POST['dong'] <> "" ){
+	$wsql = " and DONG = '".$_POST['dong']."' ";
+}
+
+if( $_POST['ho'] <> "" ){
+	$wsql .= " and HO = ".$_POST['ho']."  ";
+}
+
+#if( $_POST['pnm'] <> "" ){	$wsql .= " and PNAME = '".$_POST['pnm']."' ";		}
+
+if( $_POST['ptel'] <> "" ){
+	$wsql .= " and REPLACE( PTEL, '-', '' ) = '".str_replace("-","",$_POST['ptel'])."' ";
+}
+
+$sql = " SELECT * FROM gr28
+			WHERE 1=1 ". $wsql ;
+#echo $sql;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+if( $row['RIDX'] == ""  ){
+	$time = time();
+	$sql = " INSERT INTO gr28 (
+					RIDX, DONG, HO, WDT, WIP
+				) VALUES ( 
+					0, '".$_POST['dong']."', '".$_POST['ho']."'
+					, $time, '".$_SERVER['REMOTE_ADDR']."' ) ";
+	mysql_query($sql);
+
+	echo "<form name='frm' method='post' action='reg2.html' target='_parent'>
+			<input type='text' name='dong' value='".$_POST['dong']."' />
+			<input type='text' name='ho' value='".$_POST['ho']."' />
+			<input type='text' name='wdt' value='".$time."' />
+			</form>
+			<script>
+				document.frm.submit();
+			</script>";
+}else{
+	#echo "<script>alert('중복 여부 확인 처리중...');</script>";
+	if($row["PNAME"]=="" and $row["PTEL"]=="" ){
+		echo "<form name='frm' method='post' action='reg2.html' target='_parent'>
+			<input type='text' name='dong' value='".$_POST['dong']."' />
+			<input type='text' name='ho' value='".$_POST['ho']."' />
+			<input type='text' name='RIDX' value='".$row['RIDX']."' />
+			</form>
+			<script>
+				document.frm.submit();
+			</script>"; 
+	}else{
+		echo "<form name='frm' method='post' action='reg2_1.html' target='_parent'>
+			<input type='text' name='dong' value='".$_POST['dong']."' />
+			<input type='text' name='ho' value='".$_POST['ho']."' />
+			<input type='text' name='RIDX' value='".$row['RIDX']."' />
+			</form>
+			<script>
+				alert('이미 등록되어 있는 세대 입니다.');
+				document.frm.submit();
+			</script>"; 
+	}
+}
+?>

@@ -1,0 +1,132 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 음주 ( 지난 1년간 기준입니다. )
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					6. 술을 마시는 횟수는 어느 정도입니까?
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<td>
+				<input type="radio" name="no6" value="1"  > 일주일에  <input type="text" name="no6v1" value=""  size='3' >번 
+				<input type="radio" name="no6" value="2"  > 한 달에  <input type="text" name="no6v2" value=""  size='3' >번 
+				</td>
+			</tr>
+			<tr><td>
+				<input type="radio" name="no6" value="3"  > 1년에  <input type="text" name="no6v3" value=""  size='3' >번 
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="no6" value="4"  > 술을 마시지 않는다.
+			</tr>
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th style="!important; text-align:left;">6-1. 술을 마시는 날은 보통 어느 정도 마십니까? </th>
+			</tr>
+			<tr>
+				<td>
+				<table width='100%'>
+				<tr><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6111' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6112' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6113' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6114' /></td></tr>
+				<tr><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6121' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6122' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6123' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6124' /></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6131' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6132' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6133' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6134' /></td></tr>
+				<tr><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6141' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6142' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6143' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6144' /></td></tr>
+				<tr><td style="important; text-align:center;">기타<input type="text" size='4' name='no6150' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6151' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6152' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6153' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6154' /></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<th style="!important; text-align:left;">6-2. 가장 많이 마셨던 하루 음주량은 어느 정도입니까? </th>
+			</tr>
+			<tr>
+				<td>
+				<table width='100%'>
+				<tr><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6211' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6212' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6213' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6214' /></td></tr>
+				<tr><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6221' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6222' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6223' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6224' /></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6231' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6232' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6233' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6234' /></td></tr>
+				<tr><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6241' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6242' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6243' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6244' /></td></tr>
+				<tr><td style="important; text-align:center;">기타<input type="text" size='4' name='no6250' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6251' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6252' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6253' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6254' /></td></tr>
+				</table>
+				</td>
+			</tr>
+		</table>

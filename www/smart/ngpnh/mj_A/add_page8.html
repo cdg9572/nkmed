@@ -1,0 +1,26 @@
+<?
+$page_no = 8 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8. 월경을 언제 시작하셨습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="예"  <?=getChecked($v, "예")?> > 만 
+								<input type="text" name="no<?=$page_no?>_add" value="<?=$v_add?>"/>세</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="없음"> 초경이 없었음.</td>
+			</tr>
+		</table>
+	
+	

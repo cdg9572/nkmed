@@ -1,0 +1,191 @@
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원</title>
+
+<link href="../css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="../css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/font.css">
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<div class="historyText">홈 &gt; 검진 관리 &gt; 종합검진 Listup</div>
+	<div class="propBox2">
+	<form  name='formS' method='post' action='' >
+			<input type='hidden' name='search' value='search'>
+
+			<input type='hidden' name='uploadDir' value='<?=$uploadDir?>'>
+			<input type='hidden' name='tbl' value='<?=$tbl?>'>
+			<input type='hidden' name='dir' value='<?=$dir?>'>
+			<input type='hidden' name='menu' value='<?=$menu?>'>
+			<input type='hidden' name='mode' value='new'>
+			<input type='hidden' name='seq' value='<?=$seq?>'>
+			<input type='hidden' name='team_prof_list' value=''>
+
+		<h3>종합검진 Listup
+		
+		
+		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+
+			<input type=text name="keyword" style='width:200px;' placeholder='이름을 입력하세요' value="<?=$keyword;?>" > <input type=submit class="delSmallBtn" value=검색  >
+			접수번호 클릭하면 미리보기로 넘어갑니다.
+		</h3>
+
+		</form>
+
+		<!--
+		<a href="#" onClick="document.location='?dir=<?=$dir?>&menu=<?=$menu?>&form=Write&mode=new'" class="resBtn01 potopright">등록 &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+		-->
+
+<?
+include "../../inc/func.php";
+include "../../inc/dbConn.php";
+$tbl = "smart_r_m";
+$where = "";
+if($keyword){	$where = " WHERE  rname like '%$keyword%'  " ;		}
+
+$sql = " SELECT * FROM  smart_r_m ";
+$sql .= $where;
+$sql .= " ORDER BY wdt desc ";
+if ( $res = mysql_query($sql) ){
+	$nowData = mysql_num_rows($res);
+	//echo $nowData;
+}else{
+	echo "test";
+}
+?>
+		
+
+		<table width="100%" class="tableSt01">
+			<thead>
+				<tr><th>No.</th>
+					<th>접수번호</th>
+					<th>인증번호</th>
+					<th>이름</th>
+					<!--<th>성별</th>-->
+					<th>핸드폰번호</th>
+					<th>[등록일]</th>
+					<th>인증번호발송</th>
+					<th>이미지등록</th>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?
+				if($nowData == 0) {
+				?>
+				<tr>
+					<td colspan='12' align='center' style="height:250px; vertical-align:middle;">등록된 리스트가 없습니다.</td>
+				</tr>
+				<?
+				} else {
+					for($i = 0; $i < $nowData; $i++) {
+						$no = $totalCount - $start - $i;
+						@$row = MYSQL_FETCH_ARRAY($res);
+				?>
+
+
+
+				<tr><td><?=$i;?></td>
+					<td style="cursor:hand;" onclick="window.open('http://smart.nkhospital.net/report2/main.html?l=<?=$row['rnum']?>&v=v','','width=450;height=700;scrollbars=yes;')"><?=$row['rnum']?></td>
+					<!--<td><?=$row['exam_title']?></td>-->
+					<td><?=$row['apnum']?></td>
+					<td><?=$row['rname']?></td>
+
+				<!--
+				<form name='form<?=$no?>' target="main" method='post' action='exam/procWechat.php' enctype='multipart/form-data'>
+					<input type='hidden' name='seq' value='<?=$row[seq]?>'>
+					<input type='hidden' name='pageNum' value='<?=$pageNum?>'>
+					<input type='hidden' name='dir' value='<?=$dir?>'>
+					<input type='hidden' name='menu' value='<?=$menu?>'>
+					<input type='hidden' name='tbl' value='<?=$tbl?>'>
+					<input type='hidden' name='mode' value='Login Code'>
+
+					<td>
+						<input type='text' name='wechat' value='<?=$row[wechat]?>' style='width:120px;'>
+						<input type=submit value="Login Code 등록">
+					</td>
+				</form>-->
+					<!--<td><?=$row['birth_date']?></td>-->
+					<td><?=$row['tel']?></td>
+					<td><?=$row['wdt']?></td>
+
+					<?
+						$sql2 = "select * from smart_r_image where rnum = '$row[rnum]'  " ;
+						$res2 = @mysql_query($sql2) ;
+						$total = mysql_num_rows($res2) ;
+					?>
+
+					<td><a style="cursor:hand;" target="nkifrm" onclick="SMS_SEND( '<?=$row['apnum']?>', '<?=$row['rname']?>', '<?=$row['tel']?>' );">SMS발송</a></td>
+
+					<td>	
+						<a href="#" onClick="document.location='incTotalExamNKHWrite2.html?rname=<?=$row[rname]?>&rnum=<?=$row[rnum]?>&dir=<?=$dir?>&menu=<?=$menu?>&form=Write&mode=new'" class="resBtn01">등록 [<?=$total?>] &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+					</td>
+					<td><form  target='main' name='form<?=$i?>' method='post' action='<?=$actionPage?>' enctype='multipart/form-data'>
+							<input type='hidden' name='dir' value='<?=$dir?>'>
+							<input type='hidden' name='menu' value='<?=$menu?>'>
+							<input type='hidden' name='mode' value=''>
+							<input type='hidden' name='rnum' value='<?=$row[rnum]?>'>
+
+						<p style="height:1;">	</p>
+
+						<a href="#" class="delSmallBtn" data-featherlight="#fl<?=$no?>" >삭제</a>
+
+						</form></td>
+					
+				</tr>
+					<div class="lightbox" id="fl<?=$no?>">
+						<h3>정말 삭제 하시겠습니까?</h3>
+						<div>
+							<a href="#" onclick="javascript:location.href='./examnk/procExamList.php?pageNum=<?=$pageNum?>&dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&mode=del&rnum=<?=$row['rnum']?>'" class="boxYesBtn">예, 삭제합니다.</a>
+							<a href="./index.html?dir=examnk&menu=TotalExamNKH" class="boxNoBtn">아니오, 취소합니다.</a>
+							<img src="../images/logo.png" class="lightLogo" alt=""/ width=100>
+						</div>
+					</div>
+
+				<?
+					}
+				}
+				?>
+			</tbody>
+		</table>
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="../js/featherlight.min.js"></script>
+		
+		<div class="pageList">
+			<?=funcPaging($totalCount, $numPerPage, $pagePerList, $pageNum, $searchQuery);?>
+		</div>
+
+	</div>
+	<iframe id="nkifrm" src="http://192.168.1.252" style="display:none;"></iframe>
+				
+	<script language="JavaScript">
+		function SMS_SEND( a, b, c, d){
+			//alert( a + " " + b + " " + c + " " + d);
+			document.getElementById("nkifrm").src="http://192.168.1.252/rinfoSMSN.php?a="+a+"&b="+b+"&c="+c;
+		}
+
+		function openPopup(seq)    
+		{ 
+				window.open('./exam/popExamData.php?seq='+seq,'pop1','width=750,height=500,top=50,left=200,scrollbars=1');     
+		}
+
+
+		function chkForm_del(frm) {
+
+			frm.mode.value="del";
+			frm.target = "main";
+			frm.submit();
+		}
+
+	</script>
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="../js/featherlight.min.js"></script>
+		
+		
+<iframe name="main" width=0 height=0></iframe>

@@ -1,0 +1,31 @@
+<?
+
+include "inc/dbConn.php";
+include  "inc/func.php";
+$tbl = "smart_ir";
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+echo "<iframe name=\"ifrm\" src=\"\" style=\"display:none\"></iframe>";
+#예약처리
+
+$sql = " INSERT INTO $tbl 
+			VALUES	( 0, 
+				'$_POST[sname]', '$_POST[tel]', '$_POST[tdate]',
+				'$_POST[ncnt]', '$_POST[memo]', '".date("Y-m-d H:i:s")."', '처리대기','','미확인'
+				) ";
+
+#echo $sql;
+if( mysql_query($sql) ){
+	echo "<form name=\"frm\" method=\"post\" action=\"http://119.197.19.46:8000/gumjin/SMS/asp_sms_send2.php\" target=\"ifrm\" style=\"display:none;\">
+		<input type=\"text\" name=\"smsf_phone\" value=\"010-3294-4009\"  /><!---->
+		<input type=\"text\" name=\"tdate\" value=\"$_POST[tdate]\"  />
+		<input type=\"text\" name=\"sname\" value=\"$_POST[sname]\"  />
+		<input type=\"text\" name=\"tel\" value=\"$_POST[tel]\"  />
+		<input type=\"text\" name=\"ncnt\" value=\"$_POST[ncnt]\"  />
+		<input type=\"text\" name=\"memo\" value=\"$_POST[memo]\"  />
+		<!--전송메시지<input type=\"text\" name=\"smsf_msg\" value=\"$msg\"/>--></form>";
+	echo "<script>document.frm.submit(); alert(\"신청이 완료 되었습니다.\\n최종확인을 위해 안내전화가 평일기준 24시간 이내 연락드리겠습니다.\"); window.close(); location.href='http://nkhospital.net'</script>";
+}
+
+?>

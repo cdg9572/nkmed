@@ -1,0 +1,397 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 예약/결과";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+$sel_email = $C_Func->makeSelect('tm_content10_3', $GP -> EMAIL , $tm_content10, "class='form-control'",'직접입력'); 
+?>
+<style>
+	.agreeSection .title,
+	.label_wrap {display: none;}
+	.tableType-01 > table > thead > tr > th {color:#fff;background-color: #1795d0;}
+	.tableType-01 > table > tfoot > tr > th {color:#fff;background-color: #032a5b;}
+	.tableType-01 > table > tfoot > tr > th span {display: inline-block;margin-left: 20px;font-size: 24px;}
+	.tableType-01 > table > tbody > tr > th,
+	.tableType-01 > table > tbody > tr > td {padding:15px 20px;}
+	.tableType-01 .calBody tr,
+	.tableType-01 .calBody th,
+	.tableType-01 .calBody td {padding:0;border:none !important;background-color: transparent;}
+	.cal {overflow: hidden;width: 80%;margin:30px auto;}
+    .calInfo .today:before {border:none;background-color: #fffa90;}
+	.calInfo .possible:before {background-color: #eee;}
+	.form .form-control {border:1px solid #ccc;background-color: #fff;}
+	.agreeSection {padding:60px;box-sizing: border-box;background-color: #f1f1f1;}
+	.agreeSection .agreeTxtWrap {padding:30px;border: none;border-radius: 50px;}
+</style>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li class="active"><a href="page16-1.html">건강검진 예약</a></li>
+						<li><a href="page16-2.html">예약 확인</a></li>
+						<li><a href="https://eo-m.com/2023/HSP/HSP_Controller.asp?part=nfc&mehId=GV2984&mtype=1" target="_blank">문진표 작성</a></li>
+						<li><a href="page16-4.html">검진순서</a></li>
+						<li><a href="page16-5.html">검진 주의사항</a></li>
+					</ul>
+				</div>
+				<div class="sub-middle-tit">
+					<h2>건강검진 예약</h2>
+					<span class="bar"></span>
+				</div>
+				<h3 class="cont-tit"><small>사랑해 검진 프로그램 <i>기본종합검진 + A선택검사 6종류 + C선택검사 1종류 + 대장내시경 + 심장초음파 + 선천적 유전자검사(남34종/여35종)</i></small></h3>
+                <form name="base_form" id="base_form" method="POST" action="?" enctype="multipart/form-data">
+                <input type="hidden" name="mode" id="mode" value="MULTI_REG" />
+                <input type="hidden" name="tm_menu" id="tm_menu" value="medicalcheckup" />   
+                <input type="hidden" name="tm_type" id="tm_type" value="F"  />                             
+                <input type="hidden" name="tm_content1" id="tm_content1" />                
+				<input type="hidden" name="tm_content2" id="tm_content2" />                
+                <input type="hidden" name="tm_content3" id="tm_content3" />                
+                <input type="hidden" name="tm_content4" id="tm_content4" value="대장내시경,심장초음파,선천적 유전자검사 34종" />                
+                <input type="hidden" name="tm_content12" id="tm_content12" />                
+                <input type="hidden" name="page_link" id="page_link" value="/service/page16-1-6.html" />
+				<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col style="width: 55%;">
+							<col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>프로그램</th>
+								<th>검진 유형</th>
+								<th colspan="2">선택</th>
+								<th>금액</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th rowspan="6">사랑해</th>
+								<td align="center" rowspan="3">
+									<div class="radio-box">
+										<label for=""><input type="radio" name="tm_title" id="tm_title" value="남" checked> 남</label>
+									</div>
+								</td>
+								<td align="center">
+									<b>A검사</b><br>
+									택6
+								</td>
+								<td>
+                                    <div class="check-box" id="checkbox1">
+										<label for="check1"><input type="checkbox" name="tm_checkbox1" id="check1" value="갑상선초음파"> 갑상선초음파</label>
+										<label for="check2"><input type="checkbox" name="tm_checkbox1" id="check2" value="경동맥초음파"> 경동맥초음파</label>
+										<label for="check3"><input type="checkbox" name="tm_checkbox1" id="check3" value="뇌CT"> 뇌CT</label>
+										<label for="check4"><input type="checkbox" name="tm_checkbox1" id="check4" value="폐CT"> 폐CT</label>
+										<label for="check5"><input type="checkbox" name="tm_checkbox1" id="check5" value="요추CT"> 요추CT</label>
+										<label for="check6"><input type="checkbox" name="tm_checkbox1" id="check6" value="경추CT"> 경추CT</label>
+										<label for="check7"><input type="checkbox" name="tm_checkbox1" id="check7" value="심장MDCT"> 심장MDCT</label>
+										<label for="check8"><input type="checkbox" name="tm_checkbox1" id="check8" value="복부비만CT"> 복부비만CT</label>
+										<label for="check9"><input type="checkbox" name="tm_checkbox1" id="check9" value="골다공증QCT"> 골다공증QCT</label>
+										<label for="check10"><input type="checkbox" name="tm_checkbox1" id="check10" value="혈관협착도 ABI"> 혈관협착도 ABI</label>
+										<label for="check11"><input type="checkbox" name="tm_checkbox1" id="check11" value="(혈액)N.K.뷰키트"> (혈액)N.K.뷰키트</label>
+										<label for="check12"><input type="checkbox" name="tm_checkbox1" id="check12" value="스마트암검사"> 스마트암검사</label>
+										<label for="check13"><input type="checkbox" name="tm_checkbox1" id="check13" value="남성호르몬검사"> 남성호르몬검사</label>
+									</div>
+								</td>
+								<th rowspan="3">1,550,000</th>
+							</tr>
+							<tr>
+								<td align="center">
+									<b>C검사</b><br>
+									택1
+								</td>
+								<td>
+                                    <div class="check-box" id="checkbox1"> 
+										<label for="check2_1"><input type="checkbox" name="tm_checkbox3" id="check2_1" value="뇌MRA + MRI"> 뇌MRA + MRI</label>
+										<label for="check2_2"><input type="checkbox" name="tm_checkbox3" id="check2_2" value="경추MRI"> 경추MRI</label>
+										<label for="check2_3"><input type="checkbox" name="tm_checkbox3" id="check2_3" value="요추MRI"> 요추MRI</label>
+										<label for="check2_4"><input type="checkbox" name="tm_checkbox3" id="check2_4" value="스마트암(남6종/여7종)"> 스마트암(남6종/여7종)</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center">
+									기본사항
+								</td>
+								<td>
+									<div class="check-box" id="checkbox1">
+										<label for="check3_1"><input type="checkbox" name="tm_checkbox4" id="check3_1" value="대장내시경"> 대장내시경</label>
+										<label for="check3_2"><input type="checkbox" name="tm_checkbox4" id="check3_2" value="심장초음파"> 심장초음파</label>
+										<label for="check3_3"><input type="checkbox" name="tm_checkbox4" id="check3_3" value="선천적 유전자검사 34종"> 선천적 유전자검사 34종</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" rowspan="3">
+									<div class="radio-box">
+										<label for=""><input type="radio" name="tm_title" id="tm_title" value="여"> 여</label>
+									</div>
+								</td>
+								<td align="center">
+									<b>A검사</b><br>
+									택6
+								</td>
+								<td>
+                                    <div class="check-box" id="checkbox2">
+                                        <label for="check4_1"><input type="checkbox" name="tm_checkbox1" id="check4_1" value="갑상선초음파"> 갑상선초음파</label>
+										<label for="check4_2"><input type="checkbox" name="tm_checkbox1" id="check4_2" value="경동맥초음파"> 경동맥초음파</label>
+										<label for="check4_3"><input type="checkbox" name="tm_checkbox1" id="check4_3" value="뇌CT"> 뇌CT</label>
+										<label for="check4_4"><input type="checkbox" name="tm_checkbox1" id="check4_4" value="폐CT"> 폐CT</label>
+										<label for="check4_5"><input type="checkbox" name="tm_checkbox1" id="check4_5" value="요추CT"> 요추CT</label>
+										<label for="check4_6"><input type="checkbox" name="tm_checkbox1" id="check4_6" value="경추CT"> 경추CT</label>
+										<label for="check4_7"><input type="checkbox" name="tm_checkbox1" id="check4_7" value="심장MDCT"> 심장MDCT</label>
+										<label for="check4_8"><input type="checkbox" name="tm_checkbox1" id="check4_8" value="복부비만CT"> 복부비만CT</label>
+										<label for="check4_9"><input type="checkbox" name="tm_checkbox1" id="check4_9" value="골다공증QCT"> 골다공증QCT</label>
+										<label for="check4_10"><input type="checkbox" name="tm_checkbox1" id="check4_10" value="혈관협착도 ABI"> 혈관협착도 ABI</label>
+										<label for="check4_11"><input type="checkbox" name="tm_checkbox1" id="check4_11" value="(혈액)N.K.뷰키트">  (혈액)N.K.뷰키트</label>
+										<label for="check4_12"><input type="checkbox" name="tm_checkbox1" id="check4_12" value="스마트암검사"> 스마트암검사</label>
+										<label for="check4_14"><input type="checkbox" name="tm_checkbox1" id="check4_14" value="경질초음파"> 경질초음파</label>
+										<label for="check4_15"><input type="checkbox" name="tm_checkbox1" id="check4_15" value="액상 자궁경부세포진 HPV바이러스"> 액상 자궁경부세포진 HPV바이러스</label>
+										<label for="check4_16"><input type="checkbox" name="tm_checkbox1" id="check4_16" value="여성호르몬검사"> 여성호르몬검사</label>
+									</div>
+								</td>
+								<th rowspan="3" style="border: none !important;">1,600,000</th>
+							</tr>
+							<tr>
+								<td align="center">
+									<b>C검사</b><br>
+									택1
+								</td>
+								<td>
+                                     <div class="check-box" id="checkbox2">
+                                        <label for="check5_1"><input type="checkbox" name="tm_checkbox3" id="check5_1" value="뇌MRA + MRI"> 뇌MRA + MRI</label>
+										<label for="check5_2"><input type="checkbox" name="tm_checkbox3" id="check5_2" value="경추MRI"> 경추MRI</label>
+										<label for="check5_3"><input type="checkbox" name="tm_checkbox3" id="check5_3" value="요추MRI"> 요추MRI</label>
+										<label for="check5_4"><input type="checkbox" name="tm_checkbox3" id="check5_4" value="스마트암(남6종/여7종)"> 스마트암(남6종/여7종)</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center">
+									기본사항
+								</td>
+								<td>
+                                    <div class="check-box" id="checkbox2">
+										<label for="check6_1"><input type="checkbox" name="tm_checkbox4" id="check6_1" value="대장내시경"> 대장내시경</label>
+										<label for="check6_2"><input type="checkbox" name="tm_checkbox4" id="check6_2" value="심장초음파"> 심장초음파</label>
+										<label for="check6_3"><input type="checkbox" name="tm_checkbox4" id="check6_3" value="선천적 유전자검사 34종"> 선천적 유전자검사 35종</label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="5">
+									총 검진 비용 <span id="total_cost">1,550,000원</span>
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<br>
+				<?php include_once "page16-info.html" ?>
+				<h3 class="cont-tit"><small>개인정보 수집/이용 동의<span class="c-red">(필수)</span></small></h3>
+				<?php include "../member/agree2.php"; ?>
+
+				<div id="btn-box" class="center">
+					<a href="#" class="btn bg-blue" style="width: 270px;" id="service_submit">검진 예약하기</a>
+				</div>
+			</div>
+		</div>
+        </form>
+		<!-- //end #container -->
+        <script type="text/javascript">	
+        $(document).ready(function() {           
+           
+            // checkbox 그룹 비활성화            
+            $("#checkbox1 input[name='tm_checkbox3']").prop("disabled", true);           
+            $("#checkbox1 input[name='tm_checkbox4']").prop("checked", true);            
+            $("#checkbox2 input[name^='tm_checkbox']").prop("disabled", true);    
+			
+			var checkboxes = document.querySelectorAll('input[name="tm_checkbox4"]');
+
+			checkboxes.forEach(function (checkbox) {
+				checkbox.addEventListener("click", function (event) {
+					event.preventDefault(); // 클릭 이벤트의 기본 동작(체크박스 상태 변경)을 막음
+				});
+			});
+
+            $('input[name="tm_title"]').click(function() {
+                // 클릭한 라디오 버튼의 value 값을 가져옴
+                var value = $(this).val();                         
+                
+                //체크박스 초기화
+                $('input[name^="tm_checkbox"]').prop("checked", false);                    
+  
+                //total_cost 에 text 값 변경
+                if(value == "남"){
+					$("#tm_content1").val("");
+					$("#tm_content2").val("");
+					$("#tm_content3").val("");
+                    $("#total_cost").text("1,550,000원");                    
+                    // checkbox1 그룹 활성화
+                    $("#checkbox1 input[name='tm_checkbox1']").prop("disabled", false);                   
+					$("#checkbox1 input[name='tm_checkbox4']").prop("disabled", false);                   
+                    // checkbox2 그룹 비활성화
+                    $("#checkbox2 input[name^='tm_checkbox']").prop("disabled", true);
+                    $("#checkbox1 input[name='tm_checkbox4']").prop("checked", true); 
+                    //$("#checkbox1 input[name='tm_checkbox4']").prop("disabled", false); 
+                    $("#tm_content4").val("대장내시경,심장초음파,선천적 유전자검사 34종");    
+                }else{
+					$("#tm_content1").val("");
+					$("#tm_content2").val("");
+					$("#tm_content3").val("");
+                    $("#total_cost").text("1,600,000원");
+                   
+                    // checkbox2 그룹 활성화
+                    $("#checkbox2 input[name='tm_checkbox1']").prop("disabled", false);                   
+					$("#checkbox2 input[name='tm_checkbox4']").prop("disabled", false);                   
+                    // checkbox1 그룹 비활성화
+                    $("#checkbox1 input[name^='tm_checkbox']").prop("disabled", true);
+                    $("#checkbox2 input[name='tm_checkbox4']").prop("checked", true); 
+                    //$("#checkbox2 input[name='tm_checkbox4']").prop("disabled", false); 
+                    $("#tm_content4").val("대장내시경,심장초음파,선천적 유전자검사 35종");    
+                }
+
+            });
+
+            $('input[name="tm_checkbox1"]').click(function() {
+                // 선택된 모든 체크박스 요소를 순회
+                var selectedValues = [];
+               
+                $('input[name="tm_checkbox1"]:checked').each(function() {
+                    selectedValues.push($(this).val());
+                });               
+                                                             
+                
+                if(selectedValues.length > 6){                             
+                    $(this).prop("checked", false);
+                    alert("6개 이상 선택 할 수 없습니다.");
+                    return false;
+                } 
+                
+                $("#tm_content1").val(selectedValues);          
+                
+                // 선택된 tm_checkbox1의 상위 div 엘리먼트를 찾음
+                var parentDiv = $(this).closest('div');
+
+                // 상위 div 엘리먼트의 id 값을 가져옴
+                var parentId = parentDiv.attr('id');                
+                
+                if (selectedValues.length === 6) {                    
+                    // parentId를 사용하여 해당하는 tm_checkbox3를 찾아 활성화하고, 나머지는 비활성화                                    
+                    $("#" + parentId + " input[name='tm_checkbox3']").prop("disabled", false);
+
+                    // tm_checkbox4에서 1개만 선택하도록 설정
+                    $("#" + parentId + " input[name='tm_checkbox3']").click(function() {
+						var selectedValues3 = [];
+						$('input[name="tm_checkbox3"]:checked').each(function() {
+							selectedValues3.push($(this).val());
+						});                       
+						
+
+						var selectedValues3_length = $('input[name="tm_checkbox3"]:checked');
+                        if (selectedValues3_length.length > 1) {
+                            $(this).prop("checked", false);
+                            alert("C검사에서는 1개만 선택 가능합니다.");
+                        }
+                        
+						$("#tm_content3").val(selectedValues3);    
+                    });
+                } else {
+                    // tm_checkbox1에서 2개가 선택되지 않은 경우 tm_checkbox4 비활성화
+                    $('input[name="tm_checkbox3"]').prop("disabled", true);
+                    $('input[name="tm_checkbox3"]').prop("checked", false);
+                }
+            });
+           
+        });
+        
+        $("#service_submit").click(function(){				
+
+			var tm_count = $('#tm_content1').val().split(',');						           
+            var tm_count3 = $('#tm_content3').val();
+            var itemCount3 = 0;
+
+            if (tm_count3.trim() !== '') {
+				itemCount3 = tm_count3.split(',').length;
+			}
+
+            if($('#tm_content1').val() == '')	{
+                alert("검진 종류를 선택하세요.");
+                return false;
+            }  
+            
+            if (tm_count.length != 6) {
+                 alert("검진 개수를 정확히 선택하세요.");
+                 return false;
+            }  
+
+            if (tm_count.length == 6 && itemCount3 != 1) {
+                 alert("C검사를 정확히 선택하세요.");
+                 return false;
+            }  
+           
+            if($('#tm_content5').val() == '')	{
+                alert('성함을 정확히 입력하세요');
+                $('#tm_content5').focus();
+			return false;
+	    	}	
+
+            if($('#tm_content6').val() == '')	{
+                alert('연락처를 정확히 입력하세요');
+                $('#tm_content6').focus();
+			return false;
+	    	}	
+            //이메일 검사
+            if($('#tm_content10_1').val() == '')	{
+                alert('이메일을 정확히 입력하세요');
+                $('#tm_content10_1').focus();
+                return false;
+	    	}	
+
+			if($('#tm_content12').val() == '')	{
+                alert('검진 희망일 선택 하세요');
+	            return false;
+            }
+         
+            if ($('input[name="info"]').is(':checked') == false) {
+                alert("개인정보 취급 방침에 동의해 주세요.");
+                return false;
+            }       
+            
+            $("#base_form").attr("action","./proc/multi_proc.php");
+            $("#base_form").submit();                 
+            
+            return false;
+        });			
+	</script>
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

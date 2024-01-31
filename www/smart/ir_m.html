@@ -1,0 +1,30 @@
+<meta charset="utf-8" />
+<?
+
+include "inc/dbConn.php";
+include  "inc/func.php";
+
+$sql = " SELECT * FROM smart_ir WHERE idx='".$_GET[v]."' ";
+if( $r = mysql_query($sql) ){
+	$row = mysql_fetch_array($r);
+}else{
+	echo "<script>alert('오류발생');self.close();</script>";
+}
+?>
+<style>
+input {	font-size:11px;	}
+</style>
+
+<center>
+<form action="ir_p2.html" method="post">
+<input type='hidden' name='idx' value='<?=$_GET[v];?>'/>
+<table width='380' border='1' cellspacing='0' cellpadding='5' style='font-size:11px;'>
+<tr><td>성명</td><td><input type='text' name='sname' value='<?=$row[sname];?>'/></td>
+	<td>연락처</td><td><input type='text' name='tel' value='<?=$row[tel];?>'/></td></tr>
+<tr><td>예약일</td><td><input type='text' name='idate' value='<?=$row[idate];?>'/></td>
+	<td>예약시간</td><td><input type='text' name='rtime' value='<?=$row[rtime];?>'/></td></tr>
+<tr><td>메모</td><td colspan='3'><textarea name='memo' cols='30' rows='4'><?=$row[memo];?></textarea></td></tr>
+</table>
+<input type="submit" value="수정하기"/>
+</form>
+</center>

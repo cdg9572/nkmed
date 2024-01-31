@@ -1,0 +1,100 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+
+$title = "진료과/의료진";
+$page_title = "의료진소개";
+$page_sub_title = "의료진 전체보기";
+
+include_once($GP->CLS."class.doctor.php");
+include_once($GP->CLS."class.video.php");
+$C_Doctor 		= new Doctor;
+$C_Video 	= new Video;
+
+$gubun = ($_GET["gubun"]) ? $_GET["gubun"] : "A";
+$depart = ($_GET["depart"]) ? $_GET["depart"] : $_GET["depart"];
+$dep1 = "1";
+$dep2 = "1-3";
+$dep3 = "1-3-0";
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr04.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu">
+					<ul>
+						<li class="active"><a href="/doctor/page05.html"><?=$page_sub_title?></a></li>
+                        <li class="<?=$activeA?>"><a href="page.php?depart=A&gubun=A">전문센터</a></li>
+                        <li class="<?=$activeB?>"><a href="page.php?depart=A&gubun=B">진료과</a></li>
+					</ul>
+				</div>
+				<div class="docList">
+					<ul class="list">
+                    <?
+                        //병원장, 이사 , 
+                        $args["order"] = "order by FIELD(dr_position, 'E',  'I', 'G','K', 'D','J', 'H', 'F', 'C') desc, dr_position asc, dr_name asc";
+                        $data = $C_Doctor->Doctor_Detail_List($args);
+                        $data_list 		= $data['data'];
+                        $data_list_cnt 	= count($data_list);
+
+                        foreach($data as $key=>$val){
+                        $dr_idx = $val["dr_idx"];
+                        $dr_name = $val["dr_name"];
+                        $dr_position = $val["dr_position"][0];
+                        $val["dr_clinic2"] = explode(',',$val["dr_clinic2"]);					                       
+                        $dr_clinic2 = $val["dr_clinic2"];
+                       
+					    $treat2 = ($GP->NEW_MOBILE_CENTER[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]] : $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]];
+						$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]];		
+						if(!$treat3){
+							$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]];		
+                        }
+
+                        $dr_img = "<img src='" . $GP -> UP_DOCTOR_URL . $val["dr_face_img"] . "' class='block' alt='" .  $dr_name ."' />";
+
+                        $gubun = "";
+                        if($treat2 && $treat3 ){
+                            $gubun = "/";
+                        }
+
+                    ?>
+						<li data-idx="" data-name="<?=$dr_name?>">
+                        <a href="/doctor/doc-view.php?idx=<?=$dr_idx?>&gubun=<?=$gubun?>">
+								<span class="pic">
+                                <?=$dr_img?>
+									<i></i>
+								</span>
+								<span class="center"><?=$treat2 ?><?=$gubun?><?=$treat3 ?></span>
+								<span class="name">
+                                <b><?=$dr_name?></b> <?=$GP -> DOCTOR_POSITION[$dr_position]?>
+								</span>
+							</a>
+						</li>
+                        <? } ?>
+					</ul>
+				</div>
+				<!-- //end .docList -->
+			</div>
+			<!-- //end #innerCont -->
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

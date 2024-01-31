@@ -1,0 +1,116 @@
+<?
+#echo $gname." ".$gbdt." ".$gtel." ".$gcmp; 
+?>
+<style>
+.frmDiv{		font-size:1.2em;font-weight:bold; line-height: 1.5em;	}
+.frmDiv input[type=raido]{	width: 16px; height: 16px;	}
+#frm{		    border: 3px solid #0000ff59;    margin: 20px;    padding: 20px;    line-height: 2;    font-size: 1.3em;	}
+</style>
+	<img class="mimg" src="../images/logo_sub2.png" class="top_logo" alt="" width='100%' style="margin-right:5px;"/>
+<nav>
+	<div style="padding:10px;">
+		<div class="frmDiv">
+			<?=$gname;?> 님 반갑습니다.<br>
+			<font color='blue'>간편예약</font>사이트로 확정예약아닙니다. <br>
+			<font color='blue'>평일기준 24시간이내</font>로 최대한 빠르게 연락 드리겠습니다.<br>
+			 예약 구분 : <select id="rev_gubun" name="rev_gubun" onchange="regSelect( this.value );">
+			 	<option value="">선택해주세요</option>
+			 	<option value="gj">종합검진예약</option>
+			 	<option value="opd">진료예약</option>
+			 </select> <br>
+		</div>
+		
+		<form id="frm" name="frm" autocomplete="off" action="post.html" method="post">
+			<input type="hidden" id="gname" name="gname" value="<?=$gname;?>"/>
+			<input type="hidden" id="gbdt" name="gbdt" value="<?=$gbdt;?>"/>
+			<input type="hidden" id="gtel" name="gtel" value="<?=$gtel;?>"/>
+			<input type="hidden" id="rev_gubun2" name="rev_gubun2" value=""/>
+ 		<div id="opd_div">
+			<label style='border: 0px solid red;padding-left: 38px;cursor:default;'>진료과 : </label>  <input type="text" id="dept" name="dept" value=""/><br>
+			<label style='border: 0px solid red;padding-left: 58px;cursor:default;'>증상 :  </label><input type="text" id="symptom" name="symptom" value=""/><br>
+			
+		</div>
+
+		<div id="gj_div">
+			<img class="mimg"  src="../images/gj_list.png" alt="전담문의"  width='100%'/><br>
+			종합검사 선택 : 
+			<select id="gjtype" name="gjtype" onchange="selGtype(this.value);">
+				<option value="">=상품을 선택해주세요==</option>
+				<option value="건강">건강형</option>
+				<option value="소망">소망형</option>
+				<option value="믿음">믿음형</option>
+				<option value="행복">행복형</option>
+			</select><br>
+			<label id="mTxt"></label>
+		</div>
+		<label style='cursor:default;'>예약희망일 : </label><input type="text" id="rdate" name="rdate" value="" autocomplete="off" required/><br>
+		<label style='border: 0px solid red;padding-left: 58px;cursor: default;'>메모 : </label><textarea name="memo" ></textarea><br>
+		<div style='border:0px solid red;text-align:center;padding:10px;'>
+			<button style='padding:10px 20px;'>간편예약하기</button></div>
+		</form>
+	
+		<img class="mimg"  src="../images/2022_6_s.png" alt="전담문의"  width='100%' onclick="location.href='tel:1833-9988';"/>
+	</div>
+		<!--ul class="menu_list clearfix">
+			<li ><a href="about/page01.html"><img src="images/2022_1.png" alt="기관소개"/></a></li>
+			<li ><a href="reserve/img.html"><img src="images/2022_2.png" alt="내용보기"/></a></li>
+			<li ><a href="reserve/reserve01.html"><img src="images/2022_3.png" alt="간편예약"/></a></li>
+			<li><a href="https://eo-m.com/2021/HSP/HSP_Controller.asp?part=nfc&mehId=GV2984&mtype=1" target="_blank"><img src="images/2022_4.png" alt="문진표 & 동의서 & 주의사항"/></a></li>
+			<li><a href="http://smart.nkhospital.net/report2/index.html" target="_blank"><img src="images/2022_5.png" alt="검진 결과 보기"/></a></li>
+			<li><a href="tel:1833-9988"><img src="images/2022_6.png" alt="검진 문의"/></a></li>
+		</ul-->
+</nav>
+<script>
+		const opd_div=document.getElementById("opd_div");
+		const gj_div=document.getElementById("gj_div");
+		const frm=document.getElementById("frm");
+		const rev_gubun=document.getElementById("rev_gubun");
+		const rev_gubun2=document.getElementById("rev_gubun2");
+		
+		frm.style.display="none";
+		opd_div.style.display = "none";
+		gj_div.style.display = "none";
+		function regSelect(val){	
+			if(val==""){
+				frm.style.display="none";
+			}else{
+				frm.style.display="";
+				gj_div.style.display = (val=="gj") ? "" : "none";
+				opd_div.style.display = (val=="opd") ? "" : "none";
+				rev_gubun2.value = val;
+			}
+		}
+
+	function selGtype(v){
+		const mTxt=document.getElementById("mTxt");
+		mTxt.value = "";
+		if(v=="건강"){	mTxt.value = "A그룹 3가지 ";	}
+		if(v=="소망"){	mTxt.value = "A그룹 5가지 또는 A그룹 3가지 B그룹 1가지";	}
+		if(v=="믿음"){	mTxt.value = "A그룹 7가지 또는 A그룹 5가지 B그룹 1가지 ";	}
+		if(v=="행복"){	mTxt.value = "A그룹 4가지+C그룹 1가지";	}
+	}
+
+	frm.addEventListener("submit",(event) => {
+		event.preventDefault();
+		const dept=document.getElementById("dept");
+		const symptom=document.getElementById("symptom");
+		const gjtype=document.getElementById("gjtype");
+		
+		if( rev_gubun.value=="" ){
+			alert( "정보가 이상합니다." );
+		}else{
+			if(rev_gubun.value=="gj"){
+				//종검예약
+				if(gjtype.value==""){ 
+					alert("상품을 선택해주세요"); gjtype.focus(); return false;}
+			}else{
+				//진료예약
+				if(dept.value==""){ 
+					alert("진료과를 입력해주세요"); dept.focus(); return false;}
+				if(symptom.value==""){ 
+					alert("증상을 입력해주세요"); symptom.focus();  return false; }
+			}		
+			frm.submit();	
+		}
+	});
+</script>

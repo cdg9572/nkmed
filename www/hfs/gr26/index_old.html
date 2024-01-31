@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래26통 의료지원사업 </title>
+  <link href="default.css" rel="stylesheet" >
+ </head>
+ <body>
+
+  <div id="mtitle">
+      뉴고려병원과 함께하는<br>
+	  구래26통 의료지원사업
+  </div>
+  <br>
+  
+  <div id="mdiv">
+      사전 예약자 조회
+	  <form name="frm" action="ch.html" method="post" target="ifrm" onsubmit=" return CSubmit(); ">
+	  <select name="dong">
+	  	<option value="">선택하세요</option>
+		<option value="401동">401</option>
+		<option value="402동">402</option>
+		<option value="403동">403</option>
+		<option value="404동">404</option>
+		<option value="405동">405</option>
+		<option value="406동">406</option>
+		<option value="407동">407</option>
+	  </select>동
+	  <input type="text" name="ho" value="" size="5" />호<br>
+	  예약자<input type="text" name="pnm" value="" size="13" class="required"/><br>
+	  연락처<input type="text" name="ptel" value="" size="13" class="required"/>
+	  </form>
+  </div>
+  <br><br>
+  <div id="mbtn" onclick="document.frm.onsubmit();">
+    조회하기
+  </div><br>
+  <iframe name="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+ </body>
+</html>
+
+<script>
+function CSubmit(){
+	if( document.frm.pnm.value == "" ){
+		alert( "예약자명은 필수 사항입니다." );
+		document.frm.pnm.focus();
+		return false;
+	}
+
+	if( document.frm.ptel.value == "" ){
+		alert( "연락처는 필수 사항입니다." );
+		document.frm.ptel.focus();
+		return false;
+	}
+	return document.frm.submit();
+}
+</script>

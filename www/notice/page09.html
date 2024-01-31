@@ -1,0 +1,40 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once $GP -> INC_WWW . '/count_inc.php';
+$title = "뉴고려커뮤니티";
+$page_title = "뉴고려소개";
+$page_sub_title = "미션,비전,가치";
+
+include_once "../inc/head.php";
+$dep1 = "2";$dep2 = "2-1";$dep3 = "2-1-3";
+
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr14.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+
+			<div id="mission" class="pad">
+				<img class="mb-hide" src="/resource-pc/images/mission.png" alt="">
+				<img class="mb-show" src="/resource-pc/images/mission-m.png" alt="">
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

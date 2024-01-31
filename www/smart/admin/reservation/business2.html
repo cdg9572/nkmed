@@ -1,0 +1,81 @@
+<?
+include $DOCUMENT_ROOT."/admin/inc/dbConn.php";
+include $DOCUMENT_ROOT."/admin/inc/func.php";
+include $DOCUMENT_ROOT."/admin/inc/conf.php";
+
+mysql_select_db("mediroad_liss", $dbconn);
+?>
+<?
+echo "<img src='http://new.mediroad.net/admin/imgs/txt02.gif'><br>";
+
+
+$sql = "select a.PRO_NAME , a.PRO_CODE, a.PRO_RMARK, a.PRO_DTETC from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+	//echo $sql;
+	$result = mysql_query($sql); 
+	$rows = mysql_fetch_array($result);
+
+
+echo "<font color=blue> $rows[PRO_DTETC] </font> / <font color=green> $rows[PRO_RMARK] </font> <p>";
+
+$codes = explode(",",$rows[PRO_CODE]);
+
+for($i=0;$i<sizeof($codes);$i++){
+	
+	
+	// ======= 1204 신규 -- 아이템 항목명 출력 
+	// =============  Aliss 디비 정보추출 
+	include $DOCUMENT_ROOT."/admin/inc/dbConn_mssql.php";
+	$conn = mssql_connect($DB_IP, $DB_USERID, $DB_USERPW);
+	$result = mssql_select_db($DB_NAME, $conn);
+	// =============  Aliss 디비 정보추출 
+	
+	$i_code = $codes[$i] ;
+
+	$exam_result = mssql_query("SELECT * FROM EXAMITEM where EXAM_CODE = '$i_code' order by EXAM_CODE ");
+	$exam_row = mssql_fetch_array($exam_result) ;
+	$exam_NAME = trim(iconv('utf-8','euc-kr',$exam_row[1])) ;
+
+	if(!$exam_NAME)
+	{
+		$exam_result = mssql_query("SELECT * FROM PROFILE where PRO_CODE = '$i_code' order by PRO_CODE ");
+		$exam_row = mssql_fetch_array($exam_result) ;
+		$exam_NAME = trim(iconv('utf-8','euc-kr',$exam_row[1])) ;
+
+		$exam_NAME = "<a href='#' onClick=\"window.open('popViewItem.php?profile=$exam_NAME','new','toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, width=400, height=500')\">$exam_NAME</a>";
+	}
+
+	echo "<li>$exam_NAME</li>" ;
+}
+
+/*
+$sql = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+//echo $sql;
+$result = mysql_query($sql); 
+$rows = mysql_fetch_array($result);
+
+$codes = explode(",",$rows[PRO_CODE]);
+
+for($i=0;$i<sizeof($codes);$i++){
+	echo $codes[$i]."<br>";
+}
+
+
+
+$sql = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+//	echo $sql;
+//echo "aa";
+$result = mysql_query($sql); 
+$rows = mysql_fetch_array($result);
+
+$codes = explode(",",$rows[PRO_CODE]);
+
+for($i=0;$i<sizeof($codes);$i++){
+	echo $codes[$i]."<br>";
+}
+*/
+
+
+?>
+
+				
+<!--<input type="checkbox" name="chk" onclick="javasript:startRequest3('<?=$PRO_NAME?>');"> 필수 검진 포함 확인-->

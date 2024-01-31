@@ -1,0 +1,134 @@
+<table style='font-size:8pt;'>
+<tr><td>1. 다음과 같은 질병으로 진단을 받았거나, 현재 약물 치료 중 이십니까?</td></tr>
+<tr align='center'><td><table border='1' style='font-size:8pt;' width='370' cellspacing='0'>
+	<tr align='center'><td width='100'>&nbsp;</td><td colspan='2'>진단</td><td colspan='2'>약물치료</td></tr>
+	<tr align='center'><td align='left'>뇌졸중(중풍)</td>
+		<td width='60'><input type="radio" name="MNON1NJJD" value="1" <? if( $row[MNON1NJJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1NJJD" value="0" <? if( $row[MNON1NJJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1NJYC" value="1" <? if( $row[MNON1NJYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1NJYC" value="0" <? if( $row[MNON1NJYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>심근경색/협심증</td>
+		<td width='60'><input type="radio" name="MNON1SJJD" value="1" <? if( $row[MNON1SJJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1SJJD" value="0" <? if( $row[MNON1SJJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1SJYC" value="1" <? if( $row[MNON1SJYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1SJYC" value="0" <? if( $row[MNON1SJYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>고혈압</td>
+		<td width='60'><input type="radio" name="MNON1GHJD" value="1" <? if( $row[MNON1GHJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1GHJD" value="0" <? if( $row[MNON1GHJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1GHYC" value="1" <? if( $row[MNON1GHYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1GHYC" value="0" <? if( $row[MNON1GHYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>당뇨병</td>
+		<td width='60'><input type="radio" name="MNON1DNJD" value="1" <? if( $row[MNON1DNJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1DNJD" value="0" <? if( $row[MNON1DNJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1DNYC" value="1" <? if( $row[MNON1DNYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1DNYC" value="0" <? if( $row[MNON1DNYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>이상지질혈증</td>
+		<td width='60'><input type="radio" name="MNON1JJJD" value="1" <? if( $row[MNON1JJJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1JJJD" value="0" <? if( $row[MNON1JJJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1JJYC" value="1" <? if( $row[MNON1JJYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1JJYC" value="0" <? if( $row[MNON1JJYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>폐결핵</td>
+		<td width='60'><input type="radio" name="MNON1PHJD" value="1" <? if( $row[MNON1PHJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1PHJD" value="0" <? if( $row[MNON1PHJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1PHYC" value="1" <? if( $row[MNON1PHYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1PHYC" value="0" <? if( $row[MNON1PHYC]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>기타(암포함)</td>
+		<td width='60'><input type="radio" name="MNON1ETJD" value="1" <? if( $row[MNON1ETJD]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1ETJD" value="0" <? if( $row[MNON1ETJD]!="1"){ echo "checked"; }?> >아니오</td>
+		<td width='60'><input type="radio" name="MNON1ETYC" value="1" <? if( $row[MNON1ETYC]=="1"){ echo "checked"; }?> >예</td>
+		<td width='60'><input type="radio" name="MNON1ETYC" value="0" <? if( $row[MNON1ETYC]!="1"){ echo "checked"; }?> >아니오</td></tr></table></td></tr>
+<tr><td>2. 부모, 형제, 자매 중에 다음 질환을 앓았거나 해당 질환으로 사망한 경우가 있습니까?</td></tr>
+<tr align='center'><td><table border='1' style='font-size:8pt;' width='370' cellspacing='0'>
+	<tr align='center'><td width='150' align='left'>뇌졸중(중풍)</td>
+		<td width='90'><input type="radio" name="MNON2NJCK" value="1" <? if( $row[MNON2NJCK]=="1"){ echo "checked"; }?> >예</td>
+		<td width='90'><input type="radio" name="MNON2NJCK" value="0" <? if( $row[MNON2NJCK]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>심근경색/협심증</td>
+		<td><input type="radio" name="MNON2SJCK" value="1" <? if( $row[MNON2SJCK]=="1"){ echo "checked"; }?> >예</td>
+		<td><input type="radio" name="MNON2SJCK" value="0" <? if( $row[MNON2SJCK]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>고혈압</td>
+		<td><input type="radio" name="MNON2GHCK" value="1" <? if( $row[MNON2GHCK]=="1"){ echo "checked"; }?> >예</td>
+		<td><input type="radio" name="MNON2GHCK" value="0" <? if( $row[MNON2GHCK]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>당뇨병</td>
+		<td><input type="radio" name="MNON2DNCK" value="1" <? if( $row[MNON2DNCK]=="1"){ echo "checked"; }?> >예</td>
+		<td><input type="radio" name="MNON2DNCK" value="0" <? if( $row[MNON2DNCK]!="1"){ echo "checked"; }?> >아니오</td></tr>
+	<tr align='center'><td align='left'>기타(암포함)</td>
+		<td><input type="radio" name="MNON2ETCK" value="1" <? if( $row[MNON2ETCK]=="1"){ echo "checked"; }?> >예</td>
+		<td><input type="radio" name="MNON2ETCK" value="0" <? if( $row[MNON2ETCK]!="1"){ echo "checked"; }?> >아니오</td></tr></table></td></tr>
+<tr><td>3.  B형간염 바이러스 보유자입니까?</td></tr>
+<tr><td><input type="radio" name="MNON3BGEM" value="1" <? if( $row[MNON3BGEM]=="1"){ echo "checked"; }?> >예&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="radio" name="MNON3BGEM" value="2" <? if( $row[MNON3BGEM]=="2"){ echo "checked"; }?> >아니오&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="radio" name="MNON3BGEM" value="3" <? if( $row[MNON3BGEM]=="3"){ echo "checked"; }?> >모름</td></tr>
+<tr><td>4. 지금까지 평생 총 5갑(100개비)이상의 담배를 피운 적이 있습니까?</td></tr>
+<tr><td><input type="radio" name="MNON41SEM" value="1" <? if( $row[MNON41SEM]=="1"){ echo "checked"; }?> > 아니오(☞ 5번 문항으로 가세요). <br/>
+<input type="radio" name="MNON41SEM" value="2" <? if( $row[MNON41SEM]=="2"){ echo "checked"; }?>> 예, 지금은 끊었음 (☞ 4-1번 문항으로 가세요)<br/>
+<input type="radio" name="MNON41SEM" value="3" <? if( $row[MNON41SEM]=="3"){ echo "checked"; }?> > 예, 현재도 흡연 중 (☞ 4-2번 문항으로 가세요)
+</td></tr>
+<tr><td>4-1. 과거에 흡연을 하였으나 현재는 끊으셨다면</td></tr>
+<tr align='center'><td><table width='370' border='1'  style='font-size:8pt;' cellspacing='0'>
+								<tr><td width='77%' >금연 전까지 담배를 몇 년이나 피우셨습니까?</td>
+									<td width='23%' align='right'>&nbsp;총 <input type="text" size='3' name="MNON42YER" value="<?=$row[MNON42YER];?>"  style="text-align:right"/> 년</td></tr>
+								<tr><td>금연하시기 전 평균 하루 흡연량은 몇 개비였습니까?</td>
+									<td align='right'><input type="text" size='3' name="MNON42GAB" value="<?=$row[MNON42GAB];?>" style="text-align:right"/> 개비</td></tr>
+								</table></td></tr>
+<tr><td>4-2. 현재도 흡연을 하신다면</td></tr>
+<tr align='center'><td><table width='370' border='1'  style='font-size:8pt;' cellspacing='0'>
+				<tr><td width='77%'>몇 년째 담배를 피우시고 계십니까?</td>
+					<td  width='23%' align='right'>&nbsp;총  <input type="text" size='3' name="MNON43YER" value="<?=$row[MNON43YER];?>" style="text-align:right"/>년</td></tr>
+				<tr><td>평균 하루 몇 개비를 피우십니까?</td>
+					<td align='right'><input type="text" size='3' name="MNON43GAB" value="<?=$row[MNON43GAB];?>" style="text-align:right"/> 개비</td></tr>
+				</table></td></tr>
+<tr><td>5. 전자담배를 사용한 경험이 있습니까?</td></tr>
+<tr><td><input type="radio" name="MNON51ECG" value="1" <? if( $row[MNON51ECG]=="1"){ echo "checked"; }?>  > 예 (☞ 5-1번 문항으로 가세요). 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="MNON51ECG" value="2" <? if( $row[MNON51ECG]=="2"){ echo "checked"; }?>  >아니오 </td></tr>
+<tr><td style="!important; text-align:left;">5-1. 최근 한 달 동안 전자담배를 사용한 경험이 있습니까?</td></tr>
+<tr><td><input type="radio" name="MNON51EUS" value="1" <? if( $row[MNON51EUS]=="1"){ echo "checked"; }?> >아니오
+				<input type="radio" name="MNON51EUS" value="2" <? if( $row[MNON51EUS]=="2"){ echo "checked"; }?> > 월 1-2일
+				<input type="radio" name="MNON51EUS" value="3" <? if( $row[MNON51EUS]=="3"){ echo "checked"; }?> > 월 3-9일<br/>
+				<input type="radio" name="MNON51EUS" value="4" <? if( $row[MNON51EUS]=="4"){ echo "checked"; }?> > 월 10-25일
+				<input type="radio" name="MNON51EUS" value="5" <? if( $row[MNON51EUS]=="5"){ echo "checked"; }?> > 매일
+				</td></tr>
+<tr><td>※ 지난 1 년간</br>
+6. 술을 마시는 횟수는 어느 정도입니까? (1개만응답)</td></tr>
+<tr><td><input type="radio" name="MNON60EUM" value="1" <? if( $row[MNON60EUM]=="1"){ echo "checked"; }?>> 일주일에  
+<input type="text" id="no6v1" name="no6v1" value="<? if( $row[MNON60EUM]=="1"){ echo $row[MNON60NUM]; }?>" size="4"   style="text-align:right">번 
+<input type="radio" name="MNON60EUM" value="2" <? if( $row[MNON60EUM]=="2"){ echo "checked"; }?>> 한 달에  
+<input type="text" id="no6v2" name="no6v2" value="<? if( $row[MNON60EUM]=="2"){ echo $row[MNON60NUM]; }?>"   size="4"  style="text-align:right">번 </td></tr>
+<tr><td><input type="radio" name="MNON60EUM" value="3" <? if( $row[MNON60EUM]=="3"){ echo "checked"; }?>> 1년에  
+<input type="text" id="no6v3" name="no6v3" value="<? if( $row[MNON60EUM]=="3"){ echo $row[MNON60NUM]; }?>"  size='3'  style="text-align:right">번 
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="MNON60EUM" value="4"  <? if( $row[MNON60EUM]=="4"){ echo "checked"; }?>> 술을 마시지 않는다.</td></tr>
+<tr><td style="!important; text-align:left;">6-1. 술을 마시는 날은 보통 어느 정도 마십니까? </td></tr>
+<tr align='center'><td><table border='1' style='font-size:8pt;'  cellspacing='0' width='370'>
+				<tr align='center'><td>술종류</td>
+					<td>잔</td>
+					<td>병</td>
+					<td>캔</td>
+					<td>CC</td></tr>
+				<tr align='center'><td>소주</td>
+					<td><input type="text" size='2' name='MNON61SJA' value="<?=$row[MNON61SJA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61SBO' value="<?=$row[MNON61SBO];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61SCA' value="<?=$row[MNON61SCA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61SCC' value="<?=$row[MNON61SCC];?>"  style="text-align:right"/></td></tr>
+				<tr align='center'><td>맥주</td>
+					<td><input type="text" size='2' name='MNON61BJA' value="<?=$row[MNON61BJA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61BBO' value="<?=$row[MNON61BBO];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61BCA' value="<?=$row[MNON61BCA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61BCC' value="<?=$row[MNON61BCC];?>"  style="text-align:right"/></td></tr>
+				<tr align='center'><td>양주</td>
+					<td><input type="text" size='2' name='MNON61LJA' value="<?=$row[MNON61LJA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61LBO' value="<?=$row[MNON61LBO];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61LCA' value="<?=$row[MNON61LCA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61LCC' value="<?=$row[MNON61LCC];?>"  style="text-align:right"/></td></tr>
+				<tr align='center'><td>막걸리</td>
+					<td><input type="text" size='2' name='MNON61KJA' value="<?=$row[MNON61KJA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61KBO' value="<?=$row[MNON61KBO];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61KCA' value="<?=$row[MNON61KCA];?>"  style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61KCC' value="<?=$row[MNON61KCC];?>"  style="text-align:right"/></td></tr>
+				<tr align='center'><td>와인</td>
+					<td><input type="text" size='2' name='MNON61WJA' value="<?=$row[MNON61WJA];?>" style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61WBO' value="<?=$row[MNON61WBO];?>" style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61WCA' value="<?=$row[MNON61WCA];?>" style="text-align:right"/></td>
+					<td><input type="text" size='2' name='MNON61WCC' value="<?=$row[MNON61WCC];?>" style="text-align:right"/></td></tr>
+				</table>
+				</td>
+			</tr>
+</table>

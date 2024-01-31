@@ -1,0 +1,154 @@
+<?
+session_start();
+
+header("Content-Type:text/html;charset=utf-8");
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+include "../report/inc/func.php";
+include "../report/inc/dbConn.php";
+
+
+//testing_dsp("post");
+//testing_dsp("session");
+
+//============= 로그아웃 처리 
+if($mode == "D") {
+
+	session_destroy();
+	echo "<script language='JavaScript'>location.href='index.html?l=$_GET[l]'</script>";
+	exit;
+
+
+}
+
+
+
+
+if($_POST[mode] == "login" ) {	
+	session_destroy();
+	session_start();
+	if($name == "테스트" ){
+		//페이지 넘기기
+		echo "<script language='JavaScript'>document.location.href='main.html?l=$_GET[l]'</script>";
+		exit;
+	}
+
+	$sql ="select * from smart_r_m
+					where rname = '$name' and apnum='$mobile_right' " ;
+
+	testing_dsp($sql);
+
+	//exit;
+	
+	$que = MYSQL_QUERY($sql);
+	$row = MYSQL_FETCH_ARRAY($que);
+
+
+
+	if($row[rname] =="" && $row[apnum] == "") {
+		echo "<script language='JavaScript'>alert('사용자 정보가 일치하지 않습니다.'); document.location.href='index.html'</script>";
+		exit;
+	}
+	else {
+		
+		//include "http://192.168.1.252";
+		echo "test";
+		$_SESSION['jbno'] = $row['rnum'];
+
+/*		if($row[ridx] <> "")
+		{
+			echo "<script language='JavaScript'>
+				document.location.href='./main.html?l=$_GET[l]'</script>";
+		}
+*/
+	
+	}
+
+	MYSQL_CLOSE();
+	
+}
+
+if( $_GET[l]=="false" ){
+	$title = "Sample";
+}else{
+	$title = "뉴고려병원";
+}
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$title;?></title>
+<link rel="stylesheet" type="text/css" href="../report/jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="../report/jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="../report/css/custom.css">
+<script src="../report/jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="../report/js/sha1.js" type="text/javascript"></script>
+<script src="../report/jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+
+<style>
+.ui-body-a,.ui-page-theme-a .ui-body-inherit,html .ui-bar-a .ui-body-inherit,html .ui-body-a .ui-body-inherit,html body .ui-group-theme-a .ui-body-inherit,html .ui-panel-page-container-a{background-color:#fff;border-color:#1389F0;color:#333;text-shadow:0 1px 0 #f3f3f3; -webkit-border-radius: 0 !important; -moz-border-radius: 0 !important; border-radius: 0 !important;}
+
+.ui-page-theme-a .ui-btn:focus,html .ui-bar-a .ui-btn:focus,html .ui-body-a .ui-btn:focus,html body .ui-group-theme-a .ui-btn:focus,html head+body .ui-btn.ui-btn-a:focus,.ui-page-theme-a .ui-focus,html .ui-bar-a .ui-focus,html .ui-body-a .ui-focus,html body .ui-group-theme-a .ui-focus,html head+body .ui-btn-a.ui-focus,html head+body .ui-body-a.ui-focus{-webkit-box-shadow:0 0 5px #1389F0;-moz-box-shadow:0 0 5px #1389F0;box-shadow:0 0 5px #1389F0; }
+</style>
+
+
+<script language="JavaScript">
+<!--
+function Enter_Check()
+{
+     if(event.keyCode == 13)
+     chkForm(document.LOGIN);
+}
+
+function chkForm(frm) {
+	if(!frm.name.value) {
+		alert('이름을 입력해 주세요.');
+		frm.name.focus();
+		return false;
+	}else if(!frm.mobile_right.value) {
+		alert('인증번호를 입력해 주세요.');
+		frm.mobile_right.focus();
+		return false;
+	}else{
+		frm.submit();
+	}
+}
+//-->
+</script>
+
+</head>
+
+<body>
+<div data-role="page" id="loginPage" style="">
+	<div data-role="content" class="container">
+	<br/><br/>
+		<h1 class="login_title" style='padding-bottom:20px;'>
+			<? if( $_GET[l] == "false" ){	?><img src="../kmi/img/4.png" width="300" alt="로그인로고"/><?} else{ ?><img src="../report/images/logo_big.png" width="300" alt="로그인로고"/><? } ?>
+			<span class="hidden">종합병원 뉴고려병원</span>
+		</h1>
+		<?# echo $_SERVER['REMOTE_ADDR']; ?>
+		<div class="loginBox" style="display:;">
+			<form method="post" name='LOGIN' action="" data-ajax="false">
+				<input type=hidden name=mode value="login">
+					<input name="name" type="text" id="userNum" placeholder="이름을 입력해 주십시오." value="" />
+					<input name="mobile_right" type="text" id="mobile_right" placeholder="인증번호를 입력해 주십시오. " value="" />
+				
+				<button type="submit" onClick="return chkForm(document.LOGIN)">LOGIN</button>
+					<? if( $_GET[l] == "false" ){	?><table width="100%" bgcolor="#D1B2FF" height="40" style="color:white;font-face:맑은고딕"><tr onclick="location.href='http://smart.nkhospital.net/kmi/';" style="cursor:hand;"><td width="100%">종료</td></tr></table><? } ?>
+			</form>
+		</div>
+		<div class="ps_ment">
+			<p>본 사이트는 개인 건강검진결과 리포트를 위한 사이트이며, 모바일 전용으로 만들어진 사이트 입니다.</p>
+		</div>
+				
+	</div>
+</div>
+
+</body>
+</html>

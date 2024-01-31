@@ -1,0 +1,10 @@
+<?
+include "../inc/dbConn.php";
+
+$sql = " DELETE FROM smart_r_student
+			WHERE SIDX='".$_GET[n]."' ";
+if ( $result = mysql_query($sql) ){
+	echo "<script>location.href='sm_d.html?d=$_GET[d]&t=$_GET[t]';</script>";
+}
+
+?>

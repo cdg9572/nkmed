@@ -1,0 +1,111 @@
+p span {
+	font-family: 고딕;
+}
+
+.wrap {
+	width: 1100px;
+	min-height: 1670px;
+	background-image: url(/images/haifu/haifu01.jpg);
+}
+
+.middot {
+	background-image: url(/images/about/e_dot.JPG);
+    background-repeat: no-repeat;
+    background-position: left 3px;
+}
+
+div.doc_cont1 {
+	padding-left: 553px;
+    padding-top: 45px;
+	height: 293px;
+}
+
+.title {
+	font-family: 바탕;
+    margin: 12px 0px 16px 0px;
+    font-size: 37pt;
+    letter-spacing: -4px;
+}
+
+.cont1 {
+    font-size: 11pt;
+    padding-left: 14px;
+    letter-spacing: -1px;
+    line-height: 20px;
+    margin-bottom: 12px;
+}
+
+div.doc_cont2 {
+	height: 118px;
+}
+
+div.doc_cont3 {
+	height: 390px;
+}
+
+div.doc_cont4 {
+	height: 355px;
+}
+
+div.doc_cont5 {
+	height: 280px;
+}
+
+.mid_title {
+    position: absolute;
+    font-family: 바탕;
+    font-size: 24pt;
+    letter-spacing: -5px;
+    padding-left: 51px;
+}
+
+.pad38 {
+    padding-top: 38px;
+}
+
+.pad32 {
+    padding-top: 32px;
+}
+
+.cont2 {
+    font-size: 11pt;
+    padding-left: 295px;
+    letter-spacing: -1px;
+    line-height: 25px;
+}
+
+.cont3 {
+    font-size: 10pt;
+    letter-spacing: -1px;
+    line-height: 25px;
+    color: #f57735;
+    margin-top: -9px;
+}
+
+.contbox {
+	width: 1100px;
+    height: 220px;
+    background-color: #efefef;
+	margin-top: 15px;
+}
+
+.contbox img {
+	position: absolute;
+}
+
+.mid_title2 {
+    font-family: 바탕;
+    font-size: 24pt;
+	font-weight: bold;
+    letter-spacing: -2px;
+    padding-left: 440px;
+    padding-top: 40px;
+}
+
+.cont4 {
+    font-size: 10pt;
+    line-height: 25px;
+    margin-top: 8px;
+	padding-left: 440px;
+	font-weight: bold;
+}

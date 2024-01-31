@@ -1,0 +1,42 @@
+<center>
+<style>
+tr{ text-align:center;}
+</style>
+<? 
+echo "예약일: ".$_GET[d]."  시간대: ".$_GET[t]." <button onclick='self.close();opener.location.reload();'>닫기</button> ";
+echo "<button onclick=\"location.href='http://192.168.1.252/gumjin/student2/mj_mm.html';\">문진표 인적 변경조회</button>";
+
+include "../inc/dbConn.php";
+
+$sql = " SELECT * FROM smart_r_student
+				WHERE RDATE='".$_GET[d]."' AND RTIME='".$_GET[t]."'	 AND SNAME NOT LIKE '%".iconv("euc-kr","utf8","학생")."%'			
+				ORDER BY HNAME, HY, BAN, BNUM ";
+	#echo $sql;
+	echo "<table border='1' cellspacing='0' cellpadding='5' style='font-size:10pt;'>";
+	echo "<tr align='center'><td>NO</td><td>이름</td><td>연락처</td><td>학교명</td><td>학년</td><td>반</td><td>번호</td><td>문진표</td><td>예약<br>정보</td><td>예약<br>정보</td></tr>";
+	if ( $result = mysql_query($sql) ){
+		$i = 1;
+		while( $row = mysql_fetch_array($result) ){
+			#$btn_link = "YY=".substr($row['RDATE'],0,4)."&SCNAME=".$row['HNAME']."&SNAME=".$row['SNAME']."&HY=".$row['HY']."&BAN=".$row['BAN']."&BNUM=".$row['BNUM'];
+			$btn_link = "YY=".substr($row['RDATE'],0,4)."&SCNAME=".iconv("utf8","euc-kr",$row[HNAME])."&SNAME=".iconv("utf8","euc-kr",$row[SNAME])."&HY=".$row['HY']."&BAN=".$row['BAN']."&BNUM=".$row['BNUM'];
+		#echo $_SERVER['REMOTE_ADDR'];
+			if( $_SERVER['REMOTE_ADDR'] == "36.39.74.41" or $_SERVER[REMOTE_ADDR]=='106.250.185.227' ){ 
+					$act = "http://192.168.1.252/gumjin/student/svbtn2.html?".$btn_link;
+			}else{
+					$act = "http://119.197.19.46:8000/gumjin/student/svbtn2.html?".$btn_link;
+			}	
+
+			echo "<tr><td>$i</td><td>".iconv("utf8","euc-kr",$row[SNAME])."</td><td>".iconv("utf8","euc-kr",$row[TEL])."</td><td>".iconv("utf8","euc-kr",$row[HNAME])."</td>
+							<td>$row[HY]</td><td>$row[BAN]</td><td>$row[BNUM]</td>
+							<td><iframe src=\"".$act."\" frameborder='0' width='95' height='28'  scrolling='no' ></iframe></td>
+							<td><button onclick=\"location.href='sm_m.html?d=$_GET[d]&t=$_GET[t]&n=$row[SIDX]';\">수정</button></td>
+							<td><button onclick=\"location.href='sm_del.html?d=$_GET[d]&t=$_GET[t]&n=$row[SIDX]';\">삭제</button></td></tr>";		
+			$i++;
+		}
+	}
+	echo "</table>";
+
+
+
+?>
+</center>

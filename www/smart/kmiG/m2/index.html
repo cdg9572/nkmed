@@ -1,0 +1,192 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMI</title>
+</head>
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<style>
+h2{ border-bottom: 3px solid #5B8DE7; font-size: 1em;	padding-bottom:5px; margin-bottom:10px; }
+td{ border-bottom: 1px solid #D5D5D5; font-size: 9pt;	padding-left:5px; }
+div.caluse-common {	color: #666;	padding: 10px;	height: 70px;	border: 1px solid #ccc;	overflow-x: hidden;	overflow-y: auto;	margin-bottom: 15px;	text-align:left;}
+.tt tr{ text-align:center; }
+.ltr td{ border-bottom: 0px solid #D5D5D5; font-size: 9pt;	padding-left:5px; }
+.ltr2 td{ border-bottom: 0px solid #D5D5D5; font-size: 9pt; padding-left:5px; }
+.ltr3 td{ border-bottom: 1px solid #D5D5D5; font-size: 9pt; padding-left:5px; }
+#ltd{ border-right: 1px solid #D5D5D5;  border-bottom: 0px solid #D5D5D5; font-size: 9pt;	padding-left:5px; }
+#ltd2{ border-bottom: 0px solid #D5D5D5; font-size: 9pt;	padding-left:5px; }
+</style>
+<body>
+<a href="../"><img width="100%" src="../img/2.png" /></a>
+<form>
+<h2>검진상품보기</h2>
+<table width="100%" class="tbst02 tt">
+<tr><td colspan="5">종합형</td></tr>
+<tr><td id="ltd">프로그램</td><td id="ltd">검진 항목</td><td id="ltd">소요 시간</td>
+	<td id="ltd">검진비용</td><td id="ltd2">선택</td></tr>
+<tr class="ltr" onclick="Show('s1')" ><td>화이트</td><td>21개</td><td>2시간</td><td>55만원</td><td><input type="radio" name="sty" value="화아트" /></td></tr>
+<tr class="ltr2" ><td colspan="5"><div  id="s11"  style="display:none;" ><table width='100%'>
+	<tr class="ltr3"><td>위장검사(택1일)</td>
+		<td><input type="radio" name="endo" value="위장조영촬영" />위장조영촬영
+		<input type="radio" name="endo" value="위내시경" />위내시경 </td></tr></table></div></td></tr>
+<tr class="ltr2" ><td colspan="5"><img id="s1" style="display:none;" width="100%" src="../img/s1.png" /></td></tr>
+<tr class="ltr" onclick="Show('s2')"><td>실버</td><td>22개</td><td>2시간30분</td><td>100만원</td><td><input type="radio" name="sty" value="실버" /></td></tr>
+<tr class="ltr2" ><td colspan="5"><div  id="s21"  style="display:none;" ><table width='100%'>
+	<tr class="ltr3"><td>위장검사(택1일)</td>
+		<td><input type="radio" name="endo" value="위장조영촬영" />위장조영촬영
+		<input type="radio" name="endo" value="위내시경" />위내시경 </td></tr>
+	<tr class="ltr3"><td>CT검사(택1일)</td>
+		<td><input type="radio" name="CT" value="뇌" />뇌 &nbsp;
+		<input type="radio" name="CT" value="폐" />폐 &nbsp;
+		<input type="radio" name="CT" value="요추" />요추 &nbsp;
+		<input type="radio" name="CT" value="경추" />경추 &nbsp;</td></tr></table></div></td></tr>
+<tr class="ltr2"><td colspan="5"><img id="s2" style="display:none;"  width="100%" src="../img/s2.png" /></td></tr>
+<tr class="ltr" onclick="Show('s3')"><td>골드</td><td>28개</td><td>4시간30분</td><td>150만원</td><td><input type="radio" name="sty" value="골드" /></td></tr>
+<tr class="ltr2" ><td colspan="5"><div  id="s31"  style="display:none;" ><table width='100%'>
+	<tr class="ltr3"><td>CT검사(택1일)</td>
+		<td><input type="radio" name="CT" value="뇌" />뇌 &nbsp;
+		<input type="radio" name="CT" value="폐" />폐 &nbsp;
+		<input type="radio" name="CT" value="요추" />요추 &nbsp;
+		<input type="radio" name="CT" value="경추" />경추 &nbsp;</td></tr>
+	<tr class="ltr3"><td>MR검사(택1일)</td>
+		<td><input type="radio" name="MR" value="뇌" />뇌 &nbsp;
+		<input type="radio" name="MR" value="요추" />요추 &nbsp;
+		<input type="radio" name="MR" value="경추" />경추 &nbsp;</td></tr></table></div></td></tr>
+<tr class="ltr2"><td colspan="5"><img id="s3" style="display:none;"  width="100%" src="../img/s3.png" /></td></tr>
+<tr><td colspan="5"></td></tr>
+</table>
+
+<h2>검진예약</h2>
+<table width="100%" class="tbst02">
+			<tr>
+				<td>KMI 장소</td>
+				<td><select name="kmipl">
+					<option value="본원(광화문)">본원(광화문)</option>
+					<option value="여의도">여의도</option>
+					<option value="강남">강남</option>
+					<option value="수원">수원</option>
+					<option value="대구">대구</option>
+					<option value="부산">부산</option>
+					<option value="광주">광주</option>
+					</select></td>
+			</tr>
+			<tr>
+				<td width="35%">희망 검진일</td>
+				<td width="65%">					
+					<input type="text" name = "reserve_date"  id="datepicker1" class="intextst01" placeholder="예약일을 선택해 주세요." >
+				</td>
+			</tr>
+			<tr>
+				<td>희망 검진시간</td>
+				<td>
+					<select name="reserve_hour">
+						<option value="07">07시</option>
+						<option value="08">08시</option>
+						<option value="09">09시</option>
+						<option value="10">10시</option>
+						<option value="11">11시</option>
+						<option value="12">12시</option>
+						<option value="13">13시</option>
+						<option value="14">14시</option>
+						<option value="15">15시</option>
+						<option value="16">16시</option>
+					</select>
+					<select name="reserve_min">
+						<option value="00">00분</option>
+						<option value="15">15분</option>
+						<option value="30">30분</option>
+						<option value="45">45분</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>성명</td>
+				<td><input type="text" class="intextst01" name="name"  placeholder="성명을 입력해주세요"></td>
+			</tr>
+			<tr>
+				<td>연락처</td>
+				<td><input type="tel" class="intextst01" name="mobile_no" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<tr>
+				<td>사업장명</td>
+				<td><input type="text" class="intextst01" name="memo" placeholder="사업장명을 입력해주세요."></td>
+			</tr>
+		</table>
+
+<h2>개인정보 수집/이용동의서</h2>
+<section>
+<div id="caluse-02" class="caluse-common">
+"개인정보 보호법"에 따라 본인의 동의를 받아 검진 예약 상담을 진행하고자 합니다.
+<br>
+<br>
+<br>1. 개인정보 수집/이용 목적 : 검진 예약 및 상담
+<br>
+<br>2. 개인정보 수집 항목 : 성명, 연락처, 사업장명
+<br>
+<br>3. 보유 및 이용기간 : 수검 완료 또는 상담 종료시
+<br>
+<br></div>
+
+		<p class="calusep">개인정보 수집/이용에 동의합니다.(선택) <input type="checkbox" id="agree" name="agree" value="yes"> 동의 <input type="checkbox" id="agree2" name="agree2" value="no"> 동의하지 않음</p>
+</section>
+<h2></h2>
+<a href="#" onclick="alert('예약이 완료되었습니다.');"><img width="100%" src="../img/6.png" /></a>
+<h2></h2>
+</form>
+</body>
+</html>
+
+<script>
+
+function Show( val ){
+	//alert( document.getElementById(val).style.display );
+	if( document.getElementById(val).style.display == "" ){
+		document.getElementById(val).style.display = "none";
+	}else{
+		document.getElementById(val).style.display = "";
+		if( val == "s1" ){	
+			document.getElementById("s2").style.display = "none"; document.getElementById("s3").style.display = "none";	
+			document.getElementById("s11").style.display = "";
+			document.getElementById("s21").style.display = "none";
+			document.getElementById("s31").style.display = "none";
+		}
+		
+		if( val == "s2" ){	
+			document.getElementById("s1").style.display = "none"; 
+			document.getElementById("s3").style.display = "none";
+			document.getElementById("s11").style.display = "none";
+			document.getElementById("s21").style.display = "";
+			document.getElementById("s31").style.display = "none";	}
+		
+		if( val == "s3" ){	
+			document.getElementById("s2").style.display = "none"; 
+			document.getElementById("s1").style.display = "none";
+			document.getElementById("s11").style.display = "none";
+			document.getElementById("s21").style.display = "none";
+			document.getElementById("s31").style.display = "";}
+	}
+	
+}
+</script>

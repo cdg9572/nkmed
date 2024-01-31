@@ -1,0 +1,217 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	#초기값
+	$MJ4 = "";		
+	$MJ41Y1 = "";	$MJ41D1 = "";		
+	$MJ42Y1 = "";	$MJ42D1 = "";	$MJ42Y2 = ""; 
+	$MJ5 = "";		
+	$MJ51Y1 = "";	$MJ51D1 = "";		
+	$MJ52Y1 = "";	$MJ52D1 = "";	$MJ52Y2 = ""; 
+	$MJ6 = "";			$MJ61 = "";	
+
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET
+					MNON2NJCK='".$_POST["MNON2NJCK"]."' ,  MNON2SJCK='".$_POST["MNON2SJCK"]."'
+					, MNON2GHCK='".$_POST["MNON2GHCK"]."' ,  MNON2DNCK='".$_POST["MNON2DNCK"]."'
+					, MNON2ETCK='".$_POST["MNON2ETCK"]."' ,  MNON3BGEM='".$_POST["MNON3BGEM"]."'
+					, mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."'
+				WHERE midx='".$_POST[mseq]."'  ";
+		mysql_query($sql);
+	}
+
+	if( $r = mj_il_info( $_POST[mseq] ) ){
+		$val = mysql_fetch_array($r);
+		$MJ4 = $val["MJ4"];		
+		$MJ41Y1 = $val["MJ41Y1"];	$MJ41D1 = $val["MJ41D1"];		
+		$MJ42Y1 = $val["MJ42Y1"];	$MJ42D1 = $val["MJ42D1"];	$MJ42Y2 = $val["MJ42Y2"]; 
+		$MJ5 = $val["MJ5"];		
+		$MJ51Y1 = $val["MJ51Y1"];	$MJ51D1 = $val["MJ51D1"];		
+		$MJ52Y1 = $val["MJ52Y1"];	$MJ52D1 = $val["MJ52D1"];	$MJ52Y2 = $val["MJ52Y2"]; 
+		$MJ6 = $val["MJ6"];			$MJ61 = $val["MJ61"];
+	}	?>
+
+<form name="frm" method="post" action="n_g4.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+		<font style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 흡연 및 전자담배 관련 문항 <? if($_POST[mlfcode]<>""){ echo "<font color='blue'>이전문진 바탕으로 값이 세팅됩니다.</font>"; }?> 
+		</font>
+		<!--font style="font-size:12px; ">공통 3/<?=$tp1;?></font>-->
+		
+		<table width="100%" class="tbst02">
+		<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					4. 지금까지 평생 총 5갑(100개비)이상의 일반담배(궐련)를 피운 적이 있습니까?</th>
+			</tr>
+
+			<tr>
+				<td><input type="radio" name="MJ4" value="1" onclick="mmkk(0);" <? if( $MJ4=="1"  || $_SESSION["MJ4"]=="1"){ echo "checked"; }?> > 아니오(☞ 5번 문항으로 가세요). </td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MJ4" value="2" onclick="mmkk(1);" <? if( $MJ4=="2"  || $_SESSION["MJ4"]=="2"){ echo "checked"; }?>> 예 (☞ 4-1번 문항으로 가세요)</td>
+			</tr>
+
+			<? 
+		#	$d1 =  " style=\"display:none;\" "; 			$d2 =  " style=\"display:none;\" ";			$d3 =  " style=\"display:none;\" "; $d4 =  " style=\"display:none;\" "; 
+			
+	//		if( $MJ4=="1" or $MJ4==""  ){				$d1 ="";  $d2 =  " style=\"display:none;\" ";					if( $MNON51ECG == "1" ){ $d4=""; }			}elseif( $MJ4=="2" ){				$d2 = "";				}
+			
+		//if( $MJ5=="2"){		$d5 =  " style=\"\" "; 	}else{		$d5 =  " style=\"display:none;\" "; 	}
+			?>
+			
+			<tr id="C41"  <?=$d2;?> > 
+				<th style="!important; text-align:left;">4-1. 현재 일반담배(궐련)을 피우십니까?</th>
+			</tr>
+			<tr id="C411"  <?=$d2;?>>
+				<td>① 현재 피움 총 <input type="test" name="MJ41Y1" value="<?=$MJ41Y1;?>" style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2' >년 
+					하루평균 <input type="test" name="MJ41D1" value="<?=$MJ41D1;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>개비 </td></tr>
+			<tr id="C412"  <?=$d2;?>>
+				<td>② 과거에는 피웠으나 현재 피우지 않음? 
+				총 <input type="test" name="MJ42Y1" value="<?=$MJ42Y1;?>" style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>년 <br>
+				&nbsp;&nbsp;&nbsp;흡연했을 때  하루평균  <input type="test" name="MJ42D1" value="<?=$MJ42D1;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>개비 
+				끊은지  <input type="test" name="MJ42Y2" value="<?=$MJ42Y2;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>년
+				</td>
+			</tr>
+		</table>
+		<div id="C5"  <?=$d1;?>>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					5. 지금까지 궐련형 전자담배 ( 가열담배, 예)아이코스, 글로, 릴 등)을 피운적 있습니까? 
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MJ5" value="1" onclick="mmkk(3);" <? if( $MJ5=="1"){ echo "checked"; }?>  > 아니오 (☞ 6번 문항으로 가세요). </td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MJ5" value="2" onclick="mmkk(4);" <? if( $MJ5=="2"){ echo "checked"; }?>  > 예 (☞ 5-1번 문항으로 가세요) </td>
+			</tr>
+			<tr id="C51" <?=$d5;?>>
+				<th style="!important; text-align:left;">5-1. 현재 궐련형 전자담배(가열담배) 피우십니까?</th>
+			</tr>
+			<tr id="C511"  <?=$d5;?>>
+				<td>① 현재 피움 총 <input type="test" name="MJ51Y1" value="<?=$MJ51Y1;?>" style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2' >년 
+					하루평균 <input type="test" name="MJ51D1" value="<?=$MJ51D1;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>개비 </td></tr>
+			<tr id="C512"  <?=$d5;?>>
+				<td>② 과거에는 피웠으나 현재 피우지 않음? 
+				총 <input type="test" name="MJ52Y1" value="<?=$MJ52Y1;?>" style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>년 <br>
+				&nbsp;&nbsp;&nbsp;흡연했을 때  하루평균  <input type="test" name="MJ52D1" value="<?=$MJ52D1;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>개비 
+				끊은지  <input type="test" name="MJ52Y2" value="<?=$MJ52Y2;?>"  style="width:50px;" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'>년
+				</td>
+			</tr>
+		</table>
+		</div>
+		<div id="C6"  <?=$d1;?>>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					6. 액상형 전자담배를 사용한 경험이 있습니까? 
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MJ6" value="1" onclick="mmkk(5);" <? if( $MJ6=="1"){ echo "checked"; }?>  > 예 (☞ 6-1번 문항으로 가세요). </td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="MJ6" value="2" onclick="mmkk(6);" <? if( $MJ6=="2"){ echo "checked"; }?>  > 아니오</td>
+			</tr>
+			<tr id="C61" <?=$d4;?>>
+				<th style="!important; text-align:left;">6-1. 최근 한 달 동안 액상형 전자담배를 사용한 경험이 있습니까?</th>
+			</tr>
+			<tr id="C611"  <?=$d4;?>>
+				<td><input type="radio" name="MJ61" value="1" <? if( $MJ61=="1"){ echo "checked"; }?> >아니오
+				<input type="radio" name="MJ61" value="2" <? if( $MJ61=="2"){ echo "checked"; }?> > 월 1~2일
+				<input type="radio" name="MJ61" value="3" <? if( $MJ61=="3"){ echo "checked"; }?> > 월 3~9일<br/>
+				<input type="radio" name="MJ61" value="4" <? if( $MJ61=="4"){ echo "checked"; }?> > 월 10~29일
+				<input type="radio" name="MJ61" value="5" <? if( $MJ61=="5"){ echo "checked"; }?> > 매일				
+				</td>
+			</tr>
+		</table>
+		</div>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="CheckForm();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+
+<script>
+function CheckForm(){
+	if ( document.frm.MJ4[0].checked==false && document.frm.MJ4[1].checked==false    ){
+		alert("4.번 문항을 선택하셔야 합니다.");
+		document.frm.MJ4[0].focus();
+		return false;
+	}
+	if ( document.frm.MJ5[0].checked==false && document.frm.MJ5[1].checked==false ){
+		alert("5.번 문항을 선택하셔야 합니다.");
+		document.frm.MJ5[0].focus();
+		return false;
+	}
+	if ( document.frm.MJ6[0].checked==false && document.frm.MJ6[1].checked==false ){
+		alert("6.번 문항을 선택하셔야 합니다.");
+		document.frm.MJ6[0].focus();
+		return false;
+	}
+
+	document.frm.submit();
+}
+
+function hisBack(){
+	document.frm.action="n_g2.html";
+	document.frm.md.value = "view";
+	document.frm.submit();
+}
+
+function mmkk( val ){
+	if (val == 0){
+		c5="";  c41 = "none";	
+		document.frm.MJ41Y1.value="";	document.frm.MJ41D1.value=""; 
+		document.frm.MJ42Y1.value="";	document.frm.MJ42D1.value=""; document.frm.MJ42Y2.value="";
+	}else if( val == 1 ){
+		c41 = "";  c5 = "";
+		//document.frm.MNON43YER.value="";	document.frm.MNON43GAB.value=""; 	
+	}else if( val == 3 ){
+		document.getElementById("C51").style.display="none";
+		document.getElementById("C511").style.display="none";		
+		document.getElementById("C512").style.display="none";
+	}else if( val == 4 ){
+		document.getElementById("C51").style.display="";
+		document.getElementById("C511").style.display="";		
+		document.getElementById("C512").style.display="";		
+	}else if( val == 5 ){
+		document.getElementById("C61").style.display="";
+		document.getElementById("C611").style.display="";
+	}else if( val == 6 ){
+		document.frm.MJ61[0].checked = false;
+		document.frm.MJ61[1].checked = false;
+		document.frm.MJ61[2].checked = false;
+		document.frm.MJ61[3].checked = false;
+		document.frm.MJ61[4].checked = false;
+		document.getElementById("C61").style.display="none";
+		document.getElementById("C611").style.display="none";
+	}
+
+	document.getElementById("C5").style.display=c5;
+	document.getElementById("C41").style.display=c41;
+	document.getElementById("C411").style.display=c41;
+	document.getElementById("C412").style.display=c41;
+	
+}
+
+</script>

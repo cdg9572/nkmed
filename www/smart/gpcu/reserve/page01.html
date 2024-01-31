@@ -1,0 +1,205 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+
+	<form name='form' method='post' action='./reserve_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='<?=$tbl?>'>
+		<input type='hidden' name='mode' value='<?=$mode?>'>
+		<input type='hidden' name='seq' value='<?=$seq?>'>
+
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>건강검진 예약</h2>
+	
+	<section style="padding:0px 10px;">
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i> 공단 검진 항목을 체크해주시기 바랍니다.</p>
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th width="70%">국가검진</th>
+					<th width="30%">항목체크</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>일반검진</td>
+					<td><input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>5대 암<br>(위암/대장암/간암/유방암/자궁경부암)</td>
+					<td><input type="checkbox" name=""/></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i> 공단검진 대상자는 패키지 진행시 공단청구금액을 차감해 드립니다.</p>
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i> 종합검진 항목을 체크하시면 검진 항목에 대해 설명해 드립니다.</p>
+		
+		
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">종합검진</th>
+				</tr>
+				<tr>
+					<th width="25%">상품명</th>
+					<th width="25%">항목</th>
+					<th width="25%">금액</th>
+					<th width="25%">성별</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>실속형</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>Basic</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>Best</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>Special</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>Premium</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>VIP</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+				<tr>
+					<td>VVIP</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>남<input type="checkbox" name=""/> | 여<input type="checkbox" name=""/></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important;">일정 및 개인정보 입력</th>
+			</tr>
+			<tr>
+				<th width="35%">검진 희망일</th>
+				<td width="65%"></td>
+			</tr>
+			<tr>
+				<th>검진시간</th>
+				<td>
+					<select>
+						<option>07시</option>
+						<option>08시</option>
+						<option>09시</option>
+						<option>10시</option>
+						<option>11시</option>
+						<option>12시</option>
+						<option>13시</option>
+						<option>14시</option>
+						<option>15시</option>
+						<option>16시</option>
+						<option>17시</option>
+						<option>18시</option>
+					</select>
+					<select>
+						<option>00분</option>
+						<option>15분</option>
+						<option>30분</option>
+						<option>45분</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name=""></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" class="intextst01" name="" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+		</table>
+		
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">모바일 검진 결과 통보 문자 알림 서비스(무료)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>예 <input type="checkbox" name=""/> | 아니요 <input type="checkbox" name=""/></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div style="padding:20px 0px;">
+			<a href="#" class="btnst01" onclick="form.submit();">검진 예약하기</a>
+			
+		</div>
+	</section>
+
+	</form>
+	
+<iframe name="company_proc" width=900 height=600></iframe>
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

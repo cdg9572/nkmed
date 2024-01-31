@@ -1,0 +1,60 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+	#추가문진/암문진
+	if( $_POST[ty2] == "Y"){ $h="cmm_1.html"; $hm="추가 문진표 작성"; }else{ $h = "a_1.html"; $hm="암문진표(대상자만)"; }
+
+	include "mj_function.php";	
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET 
+					 MNONA10AA= '".$_POST["MNONA10AA"]."' ,	MNONA20AA= '".$_POST["MNONA20AA"]."' 
+					,MNONA31AA= '".$_POST["MNONA31AA"]."' ,	MNONA32AA= '".$_POST["MNONA32AA"]."' 
+					,MNONA33AA= '".$_POST["MNONA33AA"]."' ,	MNONA34AA= '".$_POST["MNONA34AA"]."' 
+					,MNONA35AA= '".$_POST["MNONA35AA"]."',MNONA36AA= '".$_POST["MNONA36AA"]."'
+					,MNONA40AA= '".$_POST["MNONA40AA"]."',MNONA50AA= '".$_POST["MNONA50AA"]."'
+					, mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."' , wend='E'
+					WHERE midx='".$_POST[mseq]."'  ";
+		mysql_query($sql);
+	}
+?>
+
+<center>
+<script> parent.document.frm.gtxt.value= "작성완료"; </script>
+ 공단 공통문진이 완료되었습니다. <br/>
+ 추가 문진이 있으시면 상단 해당 버튼을 눌러주세요.
+<form name="fm" method="post" action="<?=$h;?>"  >
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type="hidden" name="md" value="reg"/>
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<!-- <input type="button" value="이전설문" onclick="hisBack();"/>
+ &nbsp;
+<input type="button" value="창닫기" onclick="self.close();"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='100%' height='40' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+<!--	<td width='34%' height="40" bgcolor="#FFA7A7" onclick="location.href='http://nkhospital.net';" style="cursor:hand">종료</td>
+		<td width='33%' bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand"><?=$hm;?></td>--></tr>
+</table>
+</form>
+</center>
+
+<script>
+function hisBack(){
+	document.fm.action="n_g6.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+</script>

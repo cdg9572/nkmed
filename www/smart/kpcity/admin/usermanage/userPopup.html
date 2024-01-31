@@ -1,0 +1,256 @@
+<?
+header("Content-Type:text/html;charset=utf-8");
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCM Academy Online Training Management</title>
+<link href="../../boilerplate.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../../css/font.css">
+<link href="../css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="../../respond.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script>
+ WebFont.load({
+  custom: {
+   families: ['Nanum Barun Gothic'],
+   urls: ['/css/font.css']
+  }
+ });
+</script>
+<script>
+  $(function() {
+    $( "#userInfoTab" ).tabs();
+  });
+  </script>
+</head>
+
+<body>
+	<div id="userInfoTab">
+  <ul class="clearfix">
+    <li><a href="#tabs-1">사용자 정보</a></li>
+    <li><a href="#tabs-2">로그 정보</a></li>
+    <li><a href="#tabs-3">활동 정보 - My Page</a></li>
+  </ul>
+  <div id="tabs-1">
+    <table width="100%" class="tableSt02" style="margin-bottom:15px;">
+		<tr>
+			<th>이름</th>
+			<td><input class="inputDef" type="text" name="" style="width:400px;" value="OOOOOO"/></td>
+		</tr>
+		<tr>
+			<th>아이디</th>
+			<td><input class="inputDef" type="text" name="" style="width:400px;" value="OOOOOO" /></td>
+		</tr>
+		<tr>
+			<th>비빌번호</th>
+			<td><input class="inputDef" type="text" name="" style="width:400px;" value="OOOOOO"/></td>
+		</tr>
+		<tr>
+			<th style="padding:10px;">직급</th>
+			<td style="padding:10px 5px;">
+				<select style="width:416px;">
+					<option>선택</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th style="padding:10px;">지역</th>
+			<td style="padding:10px 5px;">
+				<select style="width:416px;">
+					<option>선택</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th style="padding:10px;">소속</th>
+			<td style="padding:10px 5px;">
+				<select style="width:416px;">
+					<option>선택</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th style="padding:10px;">타입</th>
+			<td style="padding:10px 5px;">
+				<select style="width:416px;">
+					<option>선택</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+					<option>OOOOOO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td><input class="inputDef" type="text" name="" style="width:400px;" value="OOOOOO@OOOO.OOO"/></td>
+		</tr>
+		<tr>
+			<th>휴대전화</th>
+			<td>
+				<select style="width:77px;">
+					<option>선택</option>
+					<option selected>010</option>
+					<option>011</option>
+					<option>016</option>
+					<option>017</option>
+					<option>019</option>
+				</select>
+				<input class="inputDef" type="text" name="" style="width:150px;" value="1234" />
+				<input class="inputDef" type="text" name="" style="width:150px;" value="5678" />
+			</td>
+		</tr>
+	</table>
+	
+	<div style="position:relative;">
+		<a href="#" class="resBtn02 poright">등록</a>
+	</div>
+  </div>
+  <div id="tabs-2">
+  	<div style="text-align:right; margin-bottom:10px;">
+		<select>
+			<option>정렬</option>
+			<option>10줄</option>
+			<option>20줄</option>
+			<option>30줄</option>
+			<option>50줄</option>
+			<option>100줄</option>
+		</select>
+	</div>
+    <table width="100%" class="tableSt01">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>IP</th>
+				<th>접속시간</th>
+				<th>접속정보</th>
+				<th>디바이스</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>4</td>
+				<td>000.000.000.000</td>
+				<td>0000-00-00 00:00:00</td>
+				<td>OOOOOOOO</td>
+				<td>OOOO</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>000.000.000.000</td>
+				<td>0000-00-00 00:00:00</td>
+				<td>OOOOOOOO</td>
+				<td>OOOO</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>000.000.000.000</td>
+				<td>0000-00-00 00:00:00</td>
+				<td>OOOOOOOO</td>
+				<td>OOOO</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>000.000.000.000</td>
+				<td>0000-00-00 00:00:00</td>
+				<td>OOOOOOOO</td>
+				<td>OOOO</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="pageList">
+		<a href="#">&lt;&lt;</a>
+		<a href="#" class="ativePagelist">1</a>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<a href="#">5</a>
+		<a href="#">6</a>
+		<a href="#">7</a>
+		<a href="#">8</a>
+		<a href="#">9</a>
+		<a href="#">10</a>
+		<a href="#">&gt;&gt;</a>
+		<a href="#">22</a>
+	</div>
+  </div>
+  <div id="tabs-3">
+    <h3>트레이닝 통계</h3>
+	<div class="train_T_Box">
+		<div class="clearfix">
+			<div class="dataPropBox">
+				<p>오프라인 평균점수</p>
+				<p class="scoST">00</p>
+			</div>
+			<div class="dataPropBox">
+				<p>오프라인 학습시간</p>
+				<p class="scoST">00</p>
+			</div>
+			<div class="dataPropBox">
+				<p>콜렉션 테스트 점수</p>
+				<p class="scoST">00</p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="train_T_Box">
+		<div class="clearfix">
+			<div class="dataPropBox">
+				<p>온라인 평균점수</p>
+				<p class="scoST">00</p>
+			</div>
+			<div class="dataPropBox">
+				<p>온라인 학습시간</p>
+				<p class="scoST">00</p>
+			</div>
+			<div class="dataPropBox">
+				<p>로그인 기록</p>
+				<p class="scoST">00</p>
+			</div>
+		</div>
+	</div>
+	
+	<div style="height:30px"><!--공백--></div>
+	
+	<h3>오프라인 교육</h3>
+	<div style="height:100px"><!--공백--></div>
+	
+	<h3>TEST 통계</h3>
+	<div style="height:100px"><!--공백--></div>
+	
+  </div>
+</div>
+</body>
+</html>

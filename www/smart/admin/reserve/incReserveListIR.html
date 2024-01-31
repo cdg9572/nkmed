@@ -1,0 +1,177 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?
+#페이징
+$sql = " SELECT COUNT(*) CNT FROM $tbl ";
+if( $r = mysql_query($sql) ){	$row = mysql_fetch_array($r);	}
+
+$page = $_GET[page];	if( $page=="" ){	$page=1; }
+$totalCount =$row[CNT];
+$listCount = 30;	
+$totalPage = ceil($totalCount / $listCount);
+ 
+#echo $page; 
+if($totalPage < $page){
+    $page = $totalPage;
+}
+if( $page == 1){ $startPage = 0;	}else{	$startPage = ($page - 1) * $listCount;	}
+// $endPage = $startPage + $pageCount - 1;
+
+#echo $startPage." ".$endPage;
+
+
+
+
+?>	
+	<div class="historyText">홈 &gt; 예약 관리 &gt; 예약 관리</div>
+
+	<div class="propBox2">
+		
+		<h2 class="pageTitle"><i class="fa fa-th-large"></i> <?=$_GET[cpname];?> 예약 관리</h2>
+
+
+		<form name='formSearch' method='get'>
+		<input type='hidden' name='tbl' value='<?=$tbl?>'>
+		<input type='hidden' name='dir' value='<?=$dir?>'>
+		<input type='hidden' name='menu' value='<?=$menu?>'>
+		<input type='hidden' name='cpname' value='<?=$_GET[cpname]?>'>
+		<table width='100%' class="table_style_1" style="margin-bottom:10px;">
+			<tr>
+                <td width="125">
+					<div class="select_box select_w120">
+						<label for="selecter1" id="lab_selecter1">이름/연락처</label>
+						
+					</div>
+				</td>
+				<td  width="258">
+					<div class="inputa_box input_w250">
+						<input type='text' name='keyword' class='inputer inputer_w250' value='<?=$keyword?>'>
+					</div>
+				</td>
+				<td><input type='submit' value='검 색' class='btn_g_s1' onFocus='this.blur();'></td>
+				<td width="110" align="right">
+				<input type='button' value='독감 현황' class='btn_g_s1' onclick="window.open('ir_s.html','width=400,height=600');">
+				<!--	<input type='button' value='전체보기' class='btn_w_s1' onClick="document.location.href='?dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&cpname=<?=$_GET[cpname]?>'" onfocus='this.blur();'>-->
+				</td>
+				
+			
+			</tr>
+		</table>
+		</form>
+
+<?
+$sql = " SELECT * FROM $tbl ORDER BY state_flag , idx limit $startPage, $listCount";
+#echo $sql;
+$r = mysql_query($sql);
+?>
+		
+
+		<table width="100%" class="tableSt01">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>담당</th>
+					<th>이름</th>
+					<th>연락처</th>
+					<th>접종희망일</th>
+					<th>종류</th>
+					<th>등록일시</th>
+					<th>메모</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?
+				if($r == false) {
+				?>
+				<tr>
+					<td colspan='11' align='center' style="height:250px; vertical-align:middle;">등록된 리스트가 없습니다.</td>
+				</tr>
+				<?
+				} else {
+				$no = 1;
+					while( $row = mysql_fetch_array($r)){
+				?>
+
+				<tr>
+					<td rowspan=2><?=$no++;?></td> 
+					<td><?=$row['cname']?></td>
+					<td><?=$row['sname']?></td>
+					<td><?=$row['tel']?></td>
+					<td><?=$row['idate']?></td>
+					<td> <?=$row['t']?>가</td>
+					<td><?=$row['wdt']?> </td>
+					<td><?=$row['memo']?> </td>
+<!--					<td><a href="#" class="delSmallBtn" data-featherlight="#fl1<?=$i?>" >삭제</a></td>-->
+					<td><a href="./reserve/procReserveIR.php?mode=del&seq=<?=$row[idx]?>&tbl=<?=$tbl?>" class="delSmallBtn"  >삭제</a></td>
+				</tr>
+
+				<tr  bgcolor='<?=$tableBg?>'>
+					<td colspan=8 style="padding-left:10px;">
+					
+					<form name="form" target="company_proc"  method="post" name="company_frm<?=$row[IDX]?>" enctype="multipart/form-data" action="./reserve/procReserveIR.php">
+
+						<input type='hidden' name='tbl' value='<?=$tbl?>'>
+						<input type='hidden' name='mode' value='update'>
+						<input type='hidden' name='seq' value='<?=$row[idx]?>'>
+					<?
+						$state_flag_temp = $row[state_flag] ;
+						if($state_flag_temp == "처리완료") $state_flag = "<font color=blue>$state_flag_temp</font>" ;	else $state_flag = "<font color=green>$state_flag_temp</font>" ;
+
+						echo "[ $state_flag]  &nbsp;" ;
+					?>
+						
+						<input type=text name=admin_comment value='<?=$row[admin_comment]?>' style='width:70%;height:30px;' placeholder="관리자 comment를 입력해주세요">
+						
+						<select name="state_flag" style="width: 80px; height: 22px;">
+							<option value="처리대기" <? if($state_flag_temp == "처리대기") echo "selected"; ?> > 처리대기</option>
+							<option value="진행중" <? if($state_flag_temp == "진행중") echo "selected"; ?> > 진행중</option>
+							<option value="처리완료" <? if($state_flag_temp == "처리완료") echo "selected"; ?> > 처리완료</option>
+						</select>
+
+
+						<input type=submit value='등록'>
+					</form>
+				</td>
+			</tr>
+
+	<div class="lightbox" id="fl1<?=$i?>">
+		<h3>정말 삭제 하시겠습니까?</h3>
+		<div>
+			<a href="#" onclick="javascript:location.href='reserve/procReserveIR.php?dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&mode=del&seq=<?=$row['idx']?>&cpname=독감사전예약관리'" class="boxYesBtn">예, 삭제합니다.</a>
+			<a href="./index.html?dir=manager&menu=Manager" class="boxNoBtn">아니오, 취소합니다.</a>
+			<img src="./images/logo.png" class="lightLogo" alt=""/ width=100>
+		</div>
+	</div>
+
+
+				<?
+					}
+				}
+				?>
+			</tbody>
+		</table>
+		
+		<div class="pageList">
+			<?
+			for( $p = 1; $p <= $totalCount; $p++){
+				if( $p == $page ){
+					echo "<a style='color:blue;font-size:11px;'><b>".$p."</b></a> ";
+				}else{
+					echo "<a href='index.html?dir=reserve&menu=ReserveListIR&tbl=smart_ir&page=$p' style='color:black'>".$p."</a> ";
+				}
+			}
+			?>
+		</div>
+
+	</div>
+				
+	<iframe name="company_proc" width=0 height=0></iframe>
+	
+	
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="../js/featherlight.min.js"></script>
+		
+		

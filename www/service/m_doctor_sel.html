@@ -1,0 +1,150 @@
+<?php
+	include_once  '../_init.php';
+	include_once($GP->CLS."class.doctor.php");
+
+	$C_Doctor = new Doctor();
+
+	$args = '';
+	$args['ct_type'] = $_POST['ct_type'];
+	$args['dr_name'] = $_POST['dr_name'];	   
+    
+	$data = $C_Doctor -> Doctor_Detail_List($args);    
+	
+	if($data) {
+		foreach($data as $val=>$key) { 
+            $dr_idx 		= $key['dr_idx'];
+            $dr_name		= $key['dr_name'];
+            $dr_position	= $key['dr_position'];
+            $dr_clinic2 	= $key['dr_clinic2'];
+            $dr_treat 		= $key['dr_treat'];
+            $dr_m_sd		= $key['dr_m_sd'];
+            $dr_a_sd		= $key['dr_a_sd'];
+            $dr_face_img	= $key['dr_face_img'];										
+			$dr_detail_img	= $key['dr_detail_img'];										
+			$dr_face_s_img	= $key['dr_face_s_img'];										
+			$dr_mobile_img	= $key['dr_mobile_img'];										
+            $dr_regdate 	= $key['dr_regdate'];
+            $dr_ps 			= $GP -> DOCTOR_POSITION[$dr_position];	
+            $dr_cn 			= $GP -> CLINIC_TYPE1[$dr_clinic1];	
+            $moning_arr 	= explode(',', $dr_m_sd);	
+            $after_arr 		= explode(',', $dr_a_sd);
+            $c_type			= $GP->NEW_MOBILE_CENTER_ALL[$_POST["ct_type"]];
+            $dr_mcode		= $key['dr_mcode'];
+            $dr_mtreat_no		= $key['dr_mtreat_no'];
+          
+            if($dr_name == '최지훈') continue;
+            if($dr_name == '이희영') continue;
+                
+            $dr_img = '';
+            if($dr_mobile_img !=  '') {
+                $dr_img = "<img src='" . $GP -> UP_DOCTOR_URL . $dr_mobile_img . "' alt='' class='block'/>";
+            }	
+            // //빠른진료
+            // $url = "http://1.214.232.188:8070/api/v1/";
+            // $path01 = "recent_reserve";  
+        
+            // $data01 = array(       
+            //     "is_dept" => $dr_mtreat_no, //진료과코드
+            //     "is_doct" =>  $dr_mcode,//의사코드      
+            //     "is_rownum" => 10 //년월
+            // );      
+           
+            // $json_data = json_encode($data01);
+            // $curl = curl_init();
+            // curl_setopt_array($curl, array(
+            // CURLOPT_URL => $url.$path01,
+            // CURLOPT_RETURNTRANSFER => true,
+            // CURLOPT_CUSTOMREQUEST => 'GET',
+            // CURLOPT_POSTFIELDS => $json_data,
+            // CURLOPT_HTTPHEADER => array(
+            //     'Content-Type: application/json'),
+            // ));
+            // $response = curl_exec($curl);                  
+            // $data02 = json_decode($response, true);
+
+            // if($data02["data"][0] ){
+            //     $res_day = substr($data02["data"][0]["reserv_ymd"],0,4)."/".substr($data02["data"][0]["reserv_ymd"],4,2)."/".substr($data02["data"][0]["reserv_ymd"],6,2)." ".substr($data02["data"][0]["reserv_time"],0,2)."시".substr($data02["data"][0]["reserv_time"],2,2)."분";
+            //     $res_day_text = "현재 가장 빠른 진료예약일자는 " . $res_day ." 입니다.";
+            // }
+            // else{
+            //     $res_day = "예약가능한 날짜가 없습니다." ;
+            //     $res_day_text = "예약가능한 날짜가 없습니다." ;
+            // }            
+
+        ?>               
+        <li value="<?=$dr_idx?>">
+        <!-- <input type="hidden" name="res_day_text" value="<?=$res_day_text?>"> -->
+        <input type="hidden" name="dr_mcode" value="<?=$dr_mcode?>">
+        <input type="hidden" name="dr_mtreat_no" value="<?=$dr_mtreat_no?>">
+        <input type="hidden" name="dr_idx" value="<?=$dr_idx?>">
+        <input type="hidden" name="dr_ps" value="<?=$dr_ps?>">
+        <input type="hidden" name="c_type" value="<?=$c_type?>">
+        <input type="hidden" name="dr_name" value="<?=$dr_name?>">
+            <div class="img"><?=$dr_img?></div>
+            <div class="text">
+                <div class="name">
+                    <?=$dr_name?> <?=$dr_ps?><a href="/doctor/doc-view.php?idx=<?=$dr_idx?>">자세히 보기</a>
+                </div>
+                <div class="if">
+                    <span>전문분야</span>
+                    <p><?=$dr_treat?></p>
+                </div>
+                <!-- <div class="if">
+                    <span>빠른진료</span>
+                    <p><?=$res_day?></p>
+                </div> -->
+            </div>
+        </li>         
+        <?
+        }   
+	}else{
+        echo "<div>검색하신 의료진이 존재하지 않습니다.</div>";
+    } 
+?>
+<script>
+    $(function(){		
+			
+			 $('.rsv-step-wrap .rsv-step-cont .doc li').on("click",function(){	
+				$(this).addClass("on").siblings().removeClass("on")   
+                $('.label-time').empty();             
+                $(".schedule-box").css("height","100%");
+
+                $("#dr_mtreat_no_next").val($(this).find('input[name="dr_mtreat_no"]').val());
+                $("#dr_mcode_next").val($(this).find('input[name="dr_mcode"]').val());
+                $("#dr_idx_next").val($(this).find('input[name="dr_idx"]').val());
+                $("#dr_ps").val($(this).find('input[name="dr_ps"]').val());
+                $("#c_type").val($(this).find('input[name="c_type"]').val());
+                $("#dr_name").val($(this).find('input[name="dr_name"]').val());
+                
+                var nameText = $(this).find('.name').contents().filter(function() {
+                    return this.nodeType === 3;
+                }).text().trim();				
+
+				$('#doctor_tit').text(nameText);
+
+                $('.ftColor1').text(nameText);     
+                // $('.c-black').text($(this).find('input[name="res_day_text"]').val());                   				
+          		 
+
+                var targetOffset = $('#data_box').offset().top;
+                $('html, body').animate({ scrollTop: targetOffset }, 500);			
+
+				var val =  $(this).attr('value');  						
+				
+				$('.rsv-step-box .rsv-step-cont').show();
+					$.ajax({
+						type: "POST",
+						url: "/service/doctor_cal.html",
+						data: "dr_idx=" + val,
+						dataType: "text",
+						success: function (data) {
+							$('.cal').empty();
+							$('.cal').append(data);
+						},
+						error: function (xhr, status, error) {
+							alert(error);
+						}
+				});
+			});
+		});
+</script>

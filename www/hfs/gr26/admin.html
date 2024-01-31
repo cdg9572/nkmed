@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래26통 의료지원사업 내용조회</title>
+  <link href="admin.css" rel="stylesheet" >
+ </head>
+ <style>
+ button{
+	margin-top:5px;
+	padding-right:10px;
+	padding-left:10px;
+	height:30px;
+	line-height:5px;
+}
+ </style>
+<? 
+include "../inc/dbConn.php"; 
+?>
+ <body>
+ 
+  <div id="mdiv">
+      구래 26통 예약자 조회 [관리자용]
+	  <form name="frm" action="" method="post" onsubmit=" return CSubmit(); ">
+	  <input type="hidden" name="ser" value="ser" >
+	  <select name="dong">
+	  	<option value="">동 선택</option>
+		<option value="401동" <? if( $_POST['dong']=="401동" ){	echo "selected";	} ?> >401</option>
+		<option value="402동" <? if( $_POST['dong']=="402동" ){	echo "selected";	} ?> >402</option>
+		<option value="403동" <? if( $_POST['dong']=="403동" ){	echo "selected";	} ?> >403</option>
+		<option value="404동" <? if( $_POST['dong']=="404동" ){	echo "selected";	} ?> >404</option>
+		<option value="405동" <? if( $_POST['dong']=="405동" ){	echo "selected";	} ?> >405</option>
+		<option value="406동" <? if( $_POST['dong']=="406동" ){	echo "selected";	} ?> >406</option>
+		<option value="407동" <? if( $_POST['dong']=="407동" ){	echo "selected";	} ?> >407</option>
+	  </select>동
+	  <input type="text" name="ho" value="<?=$_POST['ho'];?>" size="5" />호
+	  예약자<input type="text" name="pnm" value="<?=$_POST['pnm'];?>" size="5" />
+	  연락처<input type="text" name="ptel" value="<?=$_POST['ptel'];?>" size="10" />
+	  <button id="mbtn" >조회하기</button><br>
+	  미확정리스트전체<input type="checkbox" name="npall" value="1" <? if( $_POST['npall']=="1" ){ echo "checked"; }?> />
+	  확정리스트만<input type="checkbox" name="npall2" value="1" <? if( $_POST['npall2']=="1" ){ echo "checked"; }?> />
+	  추가세대 전체<input type="checkbox" name="npall3" value="1" <? if( $_POST['npall3']=="1" ){ echo "checked"; }?> />&nbsp;
+	  <select name="TT">
+	  	<option value="">==선택하세요==</option>
+	  	<option value="JG" <? if( $_POST['TT']=="JG" ){ echo "selected"; }?>>종검</option>
+	  	<option value="DP" <? if( $_POST['TT']=="DP" ){ echo "selected"; }?>>대상포진</option>
+	  	<option value="INP" <? if( $_POST['TT']=="INP" ){ echo "selected"; }?>>독감</option>
+	  </select>
+	  </form>
+  </div>
+  <br>
+  <div id="mdiv">
+  추가 신규등록 세대
+  <?
+  $sql = " SELECT * FROM gr26 WHERE WDT<>''  ";
+  if( $_POST['npall3']=="" ){
+	$sql .= " and HJ='' ";
+  }
+
+  if( $_POST['TT']<>"" ){
+	$sql .= " and ".$_POST['TT']."='v' ";
+  }
+
+  
+  echo "<table width='100%' border='1' cellspacing='0' cellpadding='3' style='font-size:15px;'>";
+echo "<tr><td>No</td><td>동</td>
+			<td>호</td>
+			<td>예약자</td>
+			<td>연락처</td>
+			<td>선택 내용</td>
+			<td width='150'>업무내용</td></tr>";	
+	if( $res = mysql_query($sql) ){
+		$no = 1;
+		while( $row = mysql_fetch_array($res) ){
+
+			$cont = Get_TXT( $row ); $cont2 ="";
+
+			$rnum = 1;
+			if( $row["ADD_JDI"]<>"" or $row["RDT"]<>"" or $row["ADD_JDI2"]<>"" or $row["RDT2"]<>"" or $row["RSNM2"]<>""  ){
+				$rnum = 2;
+				$cont2 = Get_TXT2( $row );
+			}
+
+			$hbtn = " <button type='button' onclick='hj_check(\"".$row["RIDX"]."\", \"".time()."\");'>확정</button> ";
+			#if( $row["RDT"]<> "" ){
+			#	$hbtn = "<button type='button' onclick='hj_check(\"".$row["RIDX"]."\", \"".time()."\");'>확정#</button>";
+			#}
+			if( $row["HJ"] <> "" ){
+				$hbtn = "<font color='red'>확정됨</font><br><button onclick='hj_check(\"".$row["RIDX"]."\", \"\");'>미확정</button>";
+			}
+
+			echo "<tr><td rowspan='$rnum' >$no<br>$hbtn
+						<!--<br><button type='button' onclick='mod( \"".$row["RIDX"]."\" );'>수정</button>--></td>
+						<td>".$row["DONG"]."</td>
+						<td>".$row["HO"]."</td>
+						<td>".$row["PNAME"]."</td>
+						<td>".$row["PTEL"]."</td>
+						<td>$cont</td>
+						<td rowspan='$rnum' ><form method='post' action='bigo.html' target='ifrm'>
+							<input type='hidden' name='RIDX' value='".$row["RIDX"]."' />
+							<textarea name='memo' rows='5'>".$row["MEMO"]."</textarea>
+							<input type='submit' value='메모저장'/>
+						</form></td></tr>";	
+			if( $rnum == 2  ){
+				if( $row["MDT"]<>"" ){	$mdt = date("Y-m-d H:i:s", $row["MDT"]); }else{	$mdt = "";	}
+				echo "<tr><td colspan='2'>추가 및 변경내용<br><font style='font-size:13px;'>".$mdt."</font></td>
+							<td colspan='3' align='left'>$cont2</td></tr>";
+			}
+			$no++;
+		}
+	}
+echo "</table>";
+  ?>
+  </div>
+  <br>
+  <div id="mdiv">
+
+  <?
+if( $_POST['ser'] == "ser" ){
+$sql = " SELECT * FROM gr26 WHERE 1=1 ";
+if( $_POST['dong']<>""  ){
+	$sql .= " AND DONG='".$_POST['dong']."' ";
+}
+if( $_POST['ho']<>""  ){
+	$sql .= " AND REPLACE( HO, '호', '' ) = '".$_POST['ho']."' ";
+}
+if( $_POST['pnm']<>""  ){
+	$sql .= " AND PNAME='".$_POST['pnm']."' ";
+}
+if( $_POST['ptel']<>""  ){
+	$sql .= " AND REPLACE( PTEL, '-', '' ) ='".$_POST['ptel']."' ";
+}
+if( $_POST['npall']<>""  ){
+	$sql .= " AND ( RDT='' or RDT2='' )  and HJ='' ";
+}
+if( $_POST['npall2']<>"" ){
+	$sql .= " and HJ<>'' ";
+}
+
+if( $_POST['TT']<>"" ){		$sql .= " and ".$_POST['TT']."='v' ";  }
+
+$sql .= " ORDER BY RDT ";
+
+#echo $sql;
+
+echo "<table width='100%' border='1' cellspacing='0' cellpadding='3' style='font-size:15px;'>";
+echo "<tr><td width='70'>No</td><td>동</td>
+			<td>호</td>
+			<td>예약자</td>
+			<td>연락처</td>
+			<td>선택 내용</td>
+			<td width='150'>업무내용</td></tr>";	
+	if( $res = mysql_query($sql) ){
+		$no = 1;
+		while( $row = mysql_fetch_array($res) ){
+
+			$cont = Get_TXT( $row ); $cont2 ="";
+
+			$rnum = 1;
+			if( $row["ADD_JDI"]<>"" or $row["RDT"]<>"" or $row["ADD_JDI2"]<>"" or $row["RDT2"]<>"" or $row["RSNM2"]<>""  ){
+				$rnum = 2;
+				$cont2 = Get_TXT2( $row );
+			}
+
+			$hbtn = " <button type='button' onclick='hj_check(\"".$row["RIDX"]."\", \"".time()."\");'>확정</button> ";
+			#if( $row["RDT"]<> "" ){
+			#	$hbtn = "<button type='button' onclick='hj_check(\"".$row["RIDX"]."\", \"".time()."\");'>확정#</button>";
+			#}
+			if( $row["HJ"] <> "" ){
+				$hbtn = "<font color='red'>확정됨</font><br><button onclick='hj_check(\"".$row["RIDX"]."\", \"\");'>미확정</button>";
+			}
+
+			echo "<tr><td rowspan='$rnum' >$no<br>$hbtn
+						<!--<br><button type='button' onclick='mod( \"".$row["RIDX"]."\" );'>수정</button>--></td>
+						<td>".$row["DONG"]."</td>
+						<td>".$row["HO"]."</td>
+						<td>".$row["PNAME"]."</td>
+						<td>".$row["PTEL"]."</td>
+						<td>$cont</td>
+						<td rowspan='$rnum' ><form method='post' action='bigo.html' target='ifrm'>
+							<input type='hidden' name='RIDX' value='".$row["RIDX"]."' />
+							<textarea name='memo' rows='5'>".$row["MEMO"]."</textarea>
+							<input type='submit' value='메모저장'/>
+						</form></td></tr>";	
+			if( $rnum == 2  ){
+				if( $row["MDT"]<> "" ){
+				echo "<tr><td colspan='2'>추가 및 변경내용<br><font style='font-size:13px;'>".date("Y-m-d H:i:s", $row["MDT"])."</font></td>
+							<td colspan='3' align='left'>$cont2</td></tr>";
+				}else{
+					echo "<tr><td colspan='2'>추가 및 변경내용</td>
+							<td colspan='3' align='left'>$cont2</td></tr>";
+				}
+			}
+			$no++;
+		}
+	}
+echo "</table>";
+}
+  ?>
+  </div><br>
+  <iframe id="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+ </body>
+</html>
+
+<script>
+function hj_check( n , t ){
+	document.all.ifrm.src="hj_post.html?n="+n+"&t="+t;
+}
+
+function CSubmit(){
+	if( document.frm.pnm.value == "" && document.frm.ptel.value == "" && document.frm.dong.value == "" && document.frm.ho.value == "" && document.frm.npall.checked == false && document.frm.npall2.checked == false ){
+		//alert( "동, 호, 예약자, 연락처 중 하나는 입력 하셔야 합니다." );
+		return true;
+	}
+
+	return true;
+}
+function mod( v ){
+	window.open( "mod.html?v="+v , "" , "width=500,height=400" );
+}
+</script>
+
+<?
+function Get_TXT2( $r ){
+	$tmp = "";
+	if( $r["RDT"]<>"" ){	
+		$tmp .= "<b>사전선택 예약일: ".$r["RDT"]."</font></b><br>";
+	}
+
+	if( $r["ADD_JDI"]<>"" ){
+		$jdi = str_replace("1","종합검진 ",$r["ADD_JDI"]);
+		$jdi = str_replace("2","대상포진 ", $jdi);
+		$jdi = str_replace("3","독감 ", $jdi);
+		$tmp .= "추가항목 : ".$jdi."<br> ";
+	}
+
+	if( $r["BIGO"]<>"" ){ 
+		$tmp .= "메모  - ".$r["BIGO"]."<br> ";
+	}
+
+	if( $r["RSNM"]<>"" ){ 
+		$tmp .= "<hr></hr>";
+		$tmp .= "별도예약 - 예약자:".$r["RSNM"]." | <b>예약일:".$r["RDT2"]."</b><br> ";
+	}
+
+	if( $r["ADD_JDI2"]<>"" ){
+		$jdi = str_replace("1","종합검진 ",$r["ADD_JDI2"]);
+		$jdi = str_replace("2","대상포진 ", $jdi);
+		$jdi = str_replace("3","독감 ", $jdi);
+		$tmp .= "선택항목 : ".$jdi."<br> ";
+	}
+
+	if( $r["BIGO2"]<>"" ){ 
+		$tmp .= "메모  - ".$r["BIGO2"]."<br> ";
+	}
+
+	return $tmp;
+}
+
+function Get_TXT( $r ){
+	$tmp = "";
+	$jg = $r['JG'];		$dp = $r['DP'];	$inp = $r['INP'];
+	$inm1 = $r['INM1'];	$inm2 = $r['INM2'];
+	$inm3 = $r['INM3'];	$inm4 = $r['INM4'];
+	if( strpos($jg,"V") > -1 ){ $tmp .= "종합검진<br>"; } 
+	if( strpos($dp,"V") > -1 ){ $tmp .= "대상포진<br>"; }
+	if( strpos($inp,"V") > -1 ){
+		$tmp .= "독감-".$inp." ";
+		if( $inm1<>"" ){ $tmp .= $inm1.", ";}
+		if( $inm2<>"" ){ $tmp .= $inm2.", ";}
+		if( $inm3<>"" ){ $tmp .= $inm3.", ";}
+		if( $inm4<>"" ){ $tmp .= $inm4." ";}
+	}
+	return $tmp;
+}
+?>

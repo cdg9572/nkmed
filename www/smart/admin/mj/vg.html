@@ -1,0 +1,106 @@
+<?	#음주
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = "SELECT A.* FROM smart_mj_mnsmoketbl A
+			LEFT OUTER JOIN smart_mj_il B ON A.MNSMJUBNO=B.MIDX
+			WHERE MNSMJUBNO='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+	#합계요청
+	$tm = 0;
+
+	if( $row[MNSMQST04]=="1" ){ $tm += 3 ; }else if($row[MNSMQST04]=="2"){ $tm += 2 ;  }else if($row[MNSMQST04]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNSMQST07]=="4" ){ $tm += 3 ; }else if($row[MNSMQST07]=="3"){ $tm += 2 ;  }else if($row[MNSMQST07]=="2"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNSMQST05]=="1" ){ $tm += 1 ; }else{ $tm +=0; }
+	if( $row[MNSMQST06]=="1" ){ $tm += 1 ; }else{ $tm +=0; }
+	if( $row[MNSMQST08]=="1" ){ $tm += 1 ; }else{ $tm +=0; }
+	if( $row[MNSMQST09]=="1" ){ $tm += 1 ; }else{ $tm +=0; }
+
+
+	
+?>
+<center>
+<form name="frm" method="post" action="vg_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<!--공통문진표-->
+<tr><td width='100%'>
+	<table border='1'  width='100%' cellspacing='0' style="font-size:10pt;">
+	<tr><td width='20%'>수검자성명</td>
+		<td width='80%'>&nbsp;</td></tr>
+	<tr><td colspan='2'>
+1.다음 중 어디에 해당하십니까?<br/>
+<input type="radio" name="MNSMQST01" value="1" <? if($row[MNSMQST01]=="1"){ echo "checked"; }?> /> 평생 비흡연자 ☞ 종료          
+<input type="radio" name="MNSMQST01" value="2" <? if($row[MNSMQST01]=="2"){ echo "checked"; }?> /> 과거 흡연자 ☞ 종료    <br/>      
+<input type="radio" name="MNSMQST01" value="3" <? if($row[MNSMQST01]=="3"){ echo "checked"; }?> /> 현재 흡연자 ☞ 2번 문항으로
+<input type="radio" name="MNSMQST01" value="4" <? if($row[MNSMQST01]=="4"){ echo "checked"; }?> /> 전자담배 단독 사용자 ☞ 종료<br/>
+<br/>
+2.앞으로 1개월 이내에 담배를 끊을 계획이 있으십니까?<br/>
+<input type="radio" name="MNSMQST02" value="1" <? if($row[MNSMQST02]=="1"){ echo "checked"; }?> /> 1개월 안에 금연할 계획이 있다.<br/>
+<input type="radio" name="MNSMQST02" value="2" <? if($row[MNSMQST02]=="2"){ echo "checked"; }?> /> 6개월 안에 금연할 계획이 있다.<br/>
+<input type="radio" name="MNSMQST02" value="3" <? if($row[MNSMQST02]=="3"){ echo "checked"; }?> /> 6개월 이내는 아니지만 언젠가는 금연할 생각이 있다.<br/>
+<input type="radio" name="MNSMQST02" value="4" <? if($row[MNSMQST02]=="4"){ echo "checked"; }?> /> 현재로서는 전혀 금연할 생각이 없다.<br/>
+ <br/>
+3.만약 오늘 당장 금연을 하신다면 금연성공을 얼마나 확신하십니까? <br/>
+(전혀 아님) <input type="radio" name="MNSMQST03" value="1" <? if($row[MNSMQST03]=="1"){ echo "checked"; }?> /> 0  
+<input type="radio" name="MNSMQST03" value="2" <? if($row[MNSMQST03]=="2"){ echo "checked"; }?> /> 1  
+<input type="radio" name="MNSMQST03" value="3" <? if($row[MNSMQST03]=="3"){ echo "checked"; }?> /> 2  
+<input type="radio" name="MNSMQST03" value="4" <? if($row[MNSMQST03]=="4"){ echo "checked"; }?> /> 3  
+<input type="radio" name="MNSMQST03" value="5" <? if($row[MNSMQST03]=="5"){ echo "checked"; }?> /> 4  
+<input type="radio" name="MNSMQST03" value="6" <? if($row[MNSMQST03]=="6"){ echo "checked"; }?> /> 5  
+<input type="radio" name="MNSMQST03" value="7" <? if($row[MNSMQST03]=="7"){ echo "checked"; }?> /> 6  
+<input type="radio" name="MNSMQST03" value="8" <? if($row[MNSMQST03]=="8"){ echo "checked"; }?> /> 7 (매우 확신)<br/>
+	                   
+ <br/>
+4.아침에 일어나서 얼마 만에 첫 번째 담배를 피우십니까? <br/>
+<input type="radio" name="MNSMQST04" value="1" <? if($row[MNSMQST04]=="1"){ echo "checked"; }?> /> 5분 이내(3점)	
+<input type="radio" name="MNSMQST04" value="2" <? if($row[MNSMQST04]=="2"){ echo "checked"; }?> /> 6-30분 사이(2점)<br/>
+<input type="radio" name="MNSMQST04" value="3" <? if($row[MNSMQST04]=="3"){ echo "checked"; }?> /> 31-60분 사이(1점) 	
+<input type="radio" name="MNSMQST04" value="4" <? if($row[MNSMQST04]=="4"){ echo "checked"; }?> /> 60분 이후(0점)	<br/>
+  <br/>
+5.당신은 금연구역, 예를 들면 교회, 극장, 도서관 등에서 흡연을 참기가 어렵습니까? <br/>
+<input type="radio" name="MNSMQST05" value="1" <? if($row[MNSMQST05]=="1"){ echo "checked"; }?> /> 예(1점)
+<input type="radio" name="MNSMQST05" value="2" <? if($row[MNSMQST05]=="2"){ echo "checked"; }?> /> 아니오(0점)<br/>
+  <br/>
+6.어떤 경우의 담배가 가장 포기하기 싫으시겠습니까? <br/>
+<input type="radio" name="MNSMQST06" value="1" <? if($row[MNSMQST06]=="1"){ echo "checked"; }?> /> 아침 첫 담배(1점)	
+<input type="radio" name="MNSMQST06" value="2" <? if($row[MNSMQST06]=="2"){ echo "checked"; }?> /> 다른 나머지(0점)<br/>
+  <br/>
+7.하루에 담배를 몇 개비나 피우십니까? <br/>
+<input type="radio" name="MNSMQST07" value="1" <? if($row[MNSMQST07]=="1"){ echo "checked"; }?> /> 10개비 이하(0점)	
+<input type="radio" name="MNSMQST07" value="2" <? if($row[MNSMQST07]=="2"){ echo "checked"; }?> /> 11-20개비(1점)	<br/>
+<input type="radio" name="MNSMQST07" value="3" <? if($row[MNSMQST07]=="3"){ echo "checked"; }?> /> 21-30개비(2점)	
+<input type="radio" name="MNSMQST07" value="4" <? if($row[MNSMQST07]=="4"){ echo "checked"; }?> /> 31개비 이상(3점) <br/>
+  <br/>
+8.아침에 일어나서 첫 몇 시간 동안에, 하루 중 다른 시간보다 더 자주 담배를 피우십니까? <br/>
+<input type="radio" name="MNSMQST08" value="1" <? if($row[MNSMQST08]=="1"){ echo "checked"; }?> /> 예(1점)	
+<input type="radio" name="MNSMQST08" value="2" <? if($row[MNSMQST08]=="2"){ echo "checked"; }?> /> 아니오(0점)<br/>
+  <br/>
+9.하루 중 대부분을 누워 지낼 만큼 몹시 아프다면 담배를 피우시겠습니까?<br/>
+<input type="radio" name="MNSMQST09" value="1" <? if($row[MNSMQST09]=="1"){ echo "checked"; }?> /> 예(1점)	
+<input type="radio" name="MNSMQST09" value="2" <? if($row[MNSMQST09]=="2"){ echo "checked"; }?> /> 아니오(0점)<br/>
+<table width='100%' border='0' cellspacing='0'>
+<tr><td align='right' width="100%"><table border='1' cellspacing='0'>
+														<tr><td>&nbsp;합계&nbsp;</td>
+														<td><input type="text" name="tl" value="<?=$tm;?>" size="10" readonly /></td></tr>
+														</table></td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

@@ -1,0 +1,72 @@
+<?
+
+if($_SESSION['in_data_check'] != "Y")
+{
+	testing_dsp( "Data In Session || $_SESSION[data_in_check] ****^^"  );
+
+	$sql = "select * from `hana_category_item_data` where seq = '$sess_USEQ' order by reg_date desc" ;
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$d_row = mysql_fetch_array($res) ;
+
+	$item_seq = $d_row[exam_seq] ; //== category_item 의 seq 번호 획득
+
+
+
+	$sql = "select * from `hana_category_item` where seq = '$item_seq' order by reg_date desc" ;
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$i_row = mysql_fetch_array($res) ;
+
+
+	//============= 사용자 기본정보
+
+	$birth_date  = substr($d_row[ssn], 0, 6) ;
+
+	$_SESSION["data_birth_date"] = $birth_date ;
+
+	$_SESSION["data_category"] = $d_row[category] ;
+	$_SESSION["data_serial_no"] = $d_row[serial_no] ;
+	$_SESSION["data_name"] = $d_row[name] ;
+	$_SESSION["data_ssn"] = $d_row[ssn] ;
+
+	$_SESSION["data_exam_date"] = $d_row[exam_date] ;
+	$_SESSION["data_sex"] = $d_row[sex] ;
+	$_SESSION["data_mobile"] = $d_row[mobile] ;
+
+	$_SESSION["in_data_check"] = "Y" ;  // 데이터 입력 여부 확인
+
+
+
+
+	$docview = $d_row[docview] ;
+
+	$i_arr = explode("&&", $d_row[item_str]) ;
+	$d_arr = explode("&&", $d_row[data_str]) ;
+
+	for($i=0 ; $i <= count($i_arr) ; $i ++)
+	{
+		$i_item =  $i_arr[$i] ;
+		$d_item =  $d_arr[$i] ;
+
+		//if($c_item == "전체소견") continue ;
+
+		$_SESSION["data_".$i_item] = $d_item ;
+
+		//echo "<br> data_".$i_item." = $d_item" ;
+
+		
+
+	}
+
+	
+
+	
+	//echo "<script language=\"javascript\"> self.location='/info.html'</script>" ;
+	//exit;
+
+	//testing_dsp("session") ;
+}
+
+
+
+
+?>

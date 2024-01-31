@@ -1,0 +1,203 @@
+p span {
+	font-family: 고딕;
+}
+
+.wrap {
+	width: 1100px;
+	min-height: 207px;
+	background-image: url(/images/uterus/uterus01_1.jpg);
+}
+
+.wrap2 {
+	width: 1100px;
+	min-height: 207px;
+	background-image: url(/images/uterus/uterus02_1.jpg);
+}
+
+.middot {
+	padding-left: 15px;
+	background-image: url(/images/about/e_dot.JPG);
+    background-repeat: no-repeat;
+    background-position: left 3px;
+}
+
+div.doc_cont1 {
+	padding-left: 278px;
+    padding-top: 20px;
+}
+
+.title {
+	font-family: 바탕;
+    margin: 15px 0px 16px 0px;
+    font-size: 32pt;
+    letter-spacing: -6px;
+}
+
+.cont1 {
+    font-size: 11pt;
+	font-weight: bold;
+    padding-left: 3px;
+    line-height: 24px;
+	letter-spacing: -0.5px;
+    margin-bottom: 12px;
+	color: #525252;
+}
+
+.subject {
+    font-size: 18pt;
+    font-family: 고딕;
+    line-height: 45px;
+    letter-spacing: -2px;
+    background-image: url(/images/about/upline.JPG);
+    background-repeat: no-repeat;
+    background-position: -2px -4px;
+}
+
+.numbox{
+	margin-top: 15px;
+	width: 1100px;
+	height: 272px;
+	background-image: url(/images/uterus/numbox.jpg);
+}
+
+.numbox2{
+	margin-top: 15px;
+	width: 1100px;
+	height: 338px;
+	background-image: url(/images/uterus/numbox2.jpg);
+}
+
+.inner_block {
+	height: 85px;
+}
+
+.inner_block75 {
+	height: 75px;
+}
+
+.mid_title {
+    font-size: 13pt;
+	font-family: 고딕;
+	font-weight: bold;
+	color: #525252;
+}
+
+.pad-l75 {
+    padding-left: 75px;
+}
+
+.pad-l85 {
+    padding-left: 85px;
+}
+
+.pad-t23 {
+    padding-top: 23px;
+}
+
+.pad-t30 {
+    padding-top: 30px;
+}
+
+.pad-t40 {
+    padding-top: 40px;
+}
+
+div.cont_list {
+	width: 1100px;
+}
+
+.cont_title {
+	margin-top: 13px;
+	margin-bottom: 5px;
+    font-size: 14pt;
+    font-weight: bold;
+    letter-spacing: 0px;
+    word-spacing: -2.5px;
+}
+
+div.cont_list table {
+	border: 0px;
+	margin-left: -3px;
+}
+
+div.cont_list td.desc {
+	vertical-align: top;
+	padding-left: 20px;
+	padding-top: 2px;
+}
+
+div.cont_list td.desc span {
+	font-size: 11pt;
+	font-weight: bold;
+    letter-spacing: -0.45px;
+    line-height: 28px;
+	color: #5a5a5a;
+#    color: #848484;
+}
+
+div.cont_list td.desc div.point {
+    font-weight: bold;
+    color: #f06e1a;
+    margin-top: 6px;
+    font-size: 10pt;
+    letter-spacing: -1px;
+    word-spacing: -1px;
+}
+
+div.cont_list td.desc span ul {
+	list-style-type: circle;
+}
+
+div.cont_list p.content {
+	font-weight: bold;
+    line-height: 22px;
+    letter-spacing: -0.21px;
+    font-size: 11pt;
+    color: #5a5a5a;
+	margin-top: 10px;
+}
+
+div.cont_list td.line {
+	height: 37px;
+}
+
+.uterus2_cont2{
+	margin-top: 30px;
+	width: 1100px;
+	height: 240px;
+}
+
+.img_cont2_2{
+	position: absolute;
+}
+
+.uterus2_cont2 table {
+    width: 63%;
+    margin-left: 410px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.uterus2_cont2 table th {
+    font-family: 바탕;
+	font-weight: bold;
+	font-size: 18pt;
+	width: 76px;
+	height: 75px;
+	text-align: center;
+	color: #5a5a5a;
+}
+
+.uterus2_cont2 table td {
+	font-family: Gothic;
+	font-weight: bold;
+	font-size: 11pt;
+	line-height: 25px;
+	color: #5a5a5a;
+	letter-spacing: -1.2px;
+}
+
+.ud_line {
+	border-top: 1px solid #d1d1d1;
+    border-bottom: 1px solid #d1d1d1;
+}

@@ -1,0 +1,62 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 흡연 및 전자담배
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					5. 전자담배를 사용한 경험이 있습니까?
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<td><input type="radio" name="no5" value="1"  > 예 (☞ 5-1번 문항으로 가세요). </td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no5" value="2" > 아니오 </td>
+			</tr>
+
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th style="!important; text-align:left;">5-1. 최근 한 달 동안 전자담배를 사용한 경험이 있습니까?</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no5_1" value="1"  > 아니오
+				<input type="radio" name="no5_1" value="2"  > 월 1-2일
+				<input type="radio" name="no5_1" value="3"  > 월 3-9일<br/>
+				<input type="radio" name="no5_1" value="4"  > 월 10-25일
+				<input type="radio" name="no5_1" value="5"  > 매일
+				</td>
+			</tr>
+
+		</table>

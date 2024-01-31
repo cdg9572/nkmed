@@ -1,0 +1,290 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include  "../inc/func.php";
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+//$secret = "Y";
+$subject = addslashes($subject);
+$content = addslashes($content);
+$comment = addslashes($comment);
+
+//echo $sess_userid;
+//exit;
+
+
+unset($_SESSION["exam_category_il"]);
+unset($_SESSION["exam_category_am"]);
+unset($_SESSION["item_category"]);
+unset($_SESSION["item_sex"]);
+unset($_SESSION["mobile_no"]);
+unset($_SESSION["name"]);
+unset($_SESSION["reserve_seq"]);
+
+testing_dsp("test post") ;
+testing_dsp("post") ;
+testing_dsp("$_POST[exam_category_am] => 5대암 ") ;
+
+
+
+testing_dsp($exam_category_am) ;
+
+//if($_SERVER['REMOTE_ADDR'] == '122.45.143.21')
+//{
+	$password = trim($password);
+	$mobile_no = trim($mobile_no);
+	$birth = trim($birth);
+
+	$content = str_replace("upload/","/SE2/upload/",$content);
+	$content = htmlspecialchars_decode($content);
+	$content = stripslashes($content);
+
+testing_dsp($exam_category_am) ;
+
+
+	$_SESSION[exam_category_il] = $exam_category_il ;
+	$_SESSION[exam_category_am] = $_POST[exam_category_am] ;
+	$_SESSION[item_category] = $item_category ;
+	$_SESSION[name] = $name ;
+	$_SESSION[mobile_no] = $mobile_no ;
+	
+
+	if(strpos($item_category, "여") )
+	{
+		$_SESSION[item_sex] = "여" ;
+	}
+	else if(strpos($item_category, "남") )
+	{
+		$_SESSION[item_sex] = "남" ;
+	}
+
+	testing_dsp("session") ;
+
+	//exit;
+//}
+
+
+
+
+//$content = str_replace("/SE2//SE2/","/SE2/",$content);
+
+
+if($sess_userid == "" || $sess_username == ""){
+	//echo "<script language='JavaScript'>alert('죄송합니다. 세션이 종료되어서 다시 로그인 후 이용하시기 바랍니다.'); history.go(-1);</script>";
+	//exit;
+}
+
+if($mode == "new" || $mode == "write") {
+
+	$state_flag = "예약대기" ;
+	
+	$state_flag = "예약대기" ;
+
+	$cp1 = $_POST[sc01]."/".$_POST[sc02]."/".$_POST[sc03]."/".$_POST[sc04]."/".$_POST[sc05]."/".$_POST[sc06]."/".$_POST[sc07]."/".$_POST[sc08]."/".$_POST[sc09];
+	$cp2 = $_POST[sc10]."/".$_POST[sc11]."/".$_POST[sc12]."/".$_POST[sc13]."/".$_POST[sc14]."/".$_POST[sc15];
+	$cp3 = $_POST[sc16]."/".$_POST[sc17]."/".$_POST[sc18]."/".$_POST[sc19]."/".$_POST[sc20]."/".$_POST[sc21];
+
+	$sql = " SELECT * FROM $tbl 
+				WHERE RNAME='$_POST[name]' AND RDATE='$reserve_date'
+					AND RHOUR='$reserve_hour' AND RMIN='$reserve_min'
+					AND RTEL='$_POST[mobile_no]'	";
+	if( $r = mysql_query($sql) ){
+		$trow = mysql_fetch_array($r);
+		$ridx = $trow["RIDX"];
+	}
+
+	if ( $ridx <> "" ){
+		$sql = " UPDATE $tbl SET 
+						CPNAME='$cpname', YY= '".substr($reserve_date,0,4)."', CTYPE= '$_POST[ctype]'
+						, CSTYPE1='$cp1', CSTYPE2='$cp2', CSTYPE3='$cp3',  CSTYPE4='$cp4'
+						, RDATE='$reserve_date', RHOUR='$reserve_hour', RMIN='$reserve_min'
+						, RNAME='$_POST[name]', RTEL='$_POST[mobile_no]'
+						, WDT='".DATE("Y-m-d H:i:s")."', IPADDR='".$_SERVER['REMOTE_ADDR']."' , STATEFLAG='$state_flag'
+						, PNAME='$_POST[pname]' , MEMO='$_POST[memo]', CPNAME2='$_POST[mobile_no2]'
+					WHERE RIDX='$ridx'
+			";
+		$_SESSION[reserve_seq] = $ridx ;
+		MYSQL_CLOSE();
+		//예약자에게 문자
+		if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트"   ){
+				$smsf_phone = $_POST[mobile_no];
+				$smsf_msg = "$_POST[name]님  $cpname $_POST[ctype] $reserve_date $reserve_hour : $reserve_min 에 검진예약되었습니다. 전문상담원이 연락 드릴예정입니다." ;
+				$smsf_opt1 = "seq=".$newSeq ;
+				$frm="from1"; $ifrm="ifrm1"; $reyn = "N"; //리턴여부
+				include "../inc/nksms.html" ;
+		}
+
+		echo "<script>alert('등록 되었습니다.'); parent.location.href=\"reserveResult.html?seq=$ridx\";</script>";
+		exit;
+	}else{
+		$sql = " INSERT INTO $tbl ( 
+					RIDX, CPNAME, YY, CTYPE, CSTYPE1, CSTYPE2, CSTYPE3,  CSTYPE4, 
+					RDATE, RHOUR, RMIN, RNAME, RTEL, WDT, IPADDR, STATEFLAG,
+					PNAME, MEMO, CPNAME2
+				) VALUES ( 0, '$cpname', '".substr($reserve_date,0,4)."', '$_POST[ctype]', '$cp1', '$cp2', '$cp3', '$_POST[cstype4]',
+					'$reserve_date', '$reserve_hour', '$reserve_min', '$_POST[name]', '$_POST[mobile_no]',
+					'".DATE("Y-m-d H:i:s")."' , '".$_SERVER['REMOTE_ADDR']."' , '$state_flag', '$_POST[pname]', '$_POST[memo]', '$_POST[mobile_no2]'
+				) ";
+
+		#echo $sql;
+		mysql_query($sql) ;
+
+		$newSeq = mysql_insert_id();
+
+		$_SESSION[reserve_seq] = $newSeq ;
+
+		
+	//exit;
+
+		if(!$newSeq) {
+			MYSQL_CLOSE();
+			echo "<script language='JavaScript'>alert('알 수 없는 오류로 정상적으로 처리되지 못했습니다.'); history.go(-1);</script>";
+			exit;
+		}
+		else {
+
+				//문자발송내용
+				//예약자에게 문자
+				if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트"   ){
+					$smsf_phone = $_POST[mobile_no];
+					$smsf_msg = "$_POST[name]님  $cpname $_POST[ctype] $reserve_date $reserve_hour : $reserve_min 에 검진예약되었습니다. 전문상담원이 연락 드릴예정입니다." ;
+					$smsf_opt1 = "seq=".$newSeq ;
+					$frm="from1"; $ifrm="ifrm1"; $reyn = "N"; //리턴여부
+					include "../inc/nksms.html" ;
+				}
+
+				//추천인관련
+
+				//검진담당자에게 문자 발송
+				if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트"  && $_POST[mobile_no]<>"01088373441" ){
+					$smsf_phone = "01032944009";
+					$smsf_msg = "$cpname $_POST[name] 님 $_POST[mobile_no] $_POST[ctype]  예약일시: $reserve_date $reserve_hour : $reserve_min 에 예약등록되었습니다. " ;
+
+					$smsf_opt1 = "seq=".$newSeq ;
+					$frm="from2"; $ifrm="ifrm2"; $reyn = "N"; //리턴여부
+					include "../inc/nksms.html" ;
+				}
+
+			// 담당자
+				if( $_POST[mobile_no] <> "" && $_POST[name]<>"테스트" && $_POST[mobile_no] <> "010-8837-3441"   ){
+					$smsf_phone = "010-9255-5219";
+					$smsf_msg = "$cpname $_POST[name] 님 $_POST[mobile_no] $_POST[ctype] 검진 $reserve_date $reserve_hour : $reserve_min 에 예약등록되었습니다. " ;
+
+					$smsf_opt1 = "seq=".$newSeq ;
+					$frm="from3"; $ifrm="ifrm3"; $reyn = "N"; //리턴여부
+					include "../inc/nksms.html" ;
+				}	
+
+				MYSQL_CLOSE();	
+				#echo "일단 완료";
+				echo "<script>alert('등록 되었습니다.'); parent.location.href=\"reserveResult.html?seq=$newSeq\";</script>";
+				$_SESSION[newSeq] = $newSeq;
+				exit;
+			}
+		}
+	
+}
+else if($mode == "modify" && $seq) {
+
+
+	if($tbl == "t_free"){
+		$que = MYSQL_QUERY("SELECT reg_id FROM ".$tbl." WHERE seq='".$seq."' AND reg_id='".$sess_userid."'");
+	}
+	else{
+		$que = MYSQL_QUERY("SELECT user_id FROM ".$tbl." WHERE seq='".$seq."' AND user_id='".$sess_userid."'");
+	}
+
+	if(!$row = MYSQL_FETCH_ARRAY($que)) {
+		echo "<script language='JavaScript'>alert('수정 권한이 없습니다.'); history.go(-1);</script>";
+		exit;
+	}
+
+	if(!$subject) {
+		echo "<script language='JavaScript'>alert('제목을 입력해 주세요.'); history.go(-1);</script>";
+		exit;
+	}
+
+	if(!$content) {
+		echo "<script language='JavaScript'>alert('내용을 입력해 주세요.'); history.go(-1);</script>";
+		exit;
+	}
+
+	if($tbl == "t_qna"){
+		MYSQL_QUERY("UPDATE ".$tbl." SET category='".$category."', course_code='".$course_code."', course_name='".$course_name."', subject='".$subject."', content='".$content."', secret='".$secret."',reserve_date='".$STUDY_SDATE_A."',reserve_time='".$stime."' WHERE seq='".$seq."' AND user_id='".$sess_userid."'");
+	}
+	else if($tbl == "t_review"){
+		MYSQL_QUERY("UPDATE ".$tbl." SET subject='".$subject."', content='".$content."' WHERE seq='".$seq."' AND reg_id='".$sess_userid."'");
+	}
+	else{
+
+		MYSQL_QUERY("UPDATE ".$tbl." SET category='".$category."', course_code='".$course_code."', course_name='".$course_name."', subject='".$subject."', content='".$content."', secret='".$secret."' WHERE seq='".$seq."' AND user_id='".$sess_userid."'");
+	}
+	MYSQL_CLOSE();
+	echo "<script language='JavaScript'>alert('수정 되었습니다.');</script>";
+	echo "<script language='JavaScript'>document.location.href='".$return_pages."?mode=list&tbl=".$tbl."&course_code=".$course_code."&field=".$field."&keyword=".$keyword."&pageNum=".$pageNum."'</script>";
+	exit;
+}
+else if($mode == "answer" && $seq && $user_class == "PROF") {
+	
+
+	if(!$answer) {
+		echo "<script language='JavaScript'>alert('답변을 입력해 주세요.'); history.go(-1);</script>";
+		exit;
+	}
+
+	MYSQL_QUERY("UPDATE ".$tbl." SET answer='".$answer."', answer_date=now(), user_id='".$sess_userid."' WHERE seq='".$seq."'");
+	MYSQL_CLOSE();
+
+	echo "<script language='JavaScript'>document.location.href='".$return_pages."?mode=list&tbl=".$tbl."&course_code=".$course_code."&field=".$field."&keyword=".$keyword."&pageNum=".$pageNum."'</script>";
+	exit;
+}
+else if($mode == "del" && $seq) {
+	$que = MYSQL_QUERY("SELECT user_id FROM ".$tbl." WHERE seq='".$seq."' AND user_id='".$sess_userid."'");
+
+	if(!$row = MYSQL_FETCH_ARRAY($que)) {
+		echo "<script language='JavaScript'>alert('삭제 권한이 없습니다.'); history.go(-1);</script>";
+		exit;
+	}
+
+	MYSQL_QUERY("UPDATE ".$tbl." SET view_state='N' WHERE seq='".$seq."' AND user_id='".$sess_userid."'");
+	MYSQL_CLOSE();
+
+	echo "<script language='JavaScript'>document.location.href='".$return_pages."?mode=list&tbl=".$tbl."&course_code=".$course_code."&field=".$field."&keyword=".$keyword."&pageNum=".$pageNum."'</script>";
+	exit;
+}
+else if($mode == "comment" && $seq) {
+	if(!$comment) {
+		echo "<script language='JavaScript'>alert('코멘트를 작성해 주세요.'); history.go(-1);</script>";
+		exit;
+	}
+
+	MYSQL_QUERY("INSERT INTO community_free_comment(org_seq, content, reg_date, user_id, user_name) VALUES('".$seq."', '".$comment."', NOW(), '".$sess_userid."', '".$sess_username."')");
+
+	echo "<script language='JavaScript'>document.location.href='".$return_pages."?mode=list&tbl=".$tbl."&seq=".$seq."&course_code=".$course_code."'</script>";
+	exit;
+}
+else if($mode == "commDel" && $commSeq){
+	$que = MYSQL_QUERY("SELECT * FROM community_free_comment WHERE seq='".$commSeq."' AND user_id='".$sess_userid."'");
+	if(!$row = MYSQL_FETCH_ARRAY($que)) {
+		echo "<script language='JavaScript'>alert('삭제권한이 없습니다.'); history.go(-1);</script>";
+		exit;
+	}
+
+	MYSQL_QUERY("UPDATE community_free_comment SET view_state='N' WHERE seq='".$commSeq."' AND user_id='".$sess_userid."'");
+
+	echo "<script language='JavaScript'>document.location.href='".$return_pages."?mode=list&tbl=".$tbl."&seq=".$seq."&course_code=".$course_code."'</script>";
+	exit;
+}
+?>

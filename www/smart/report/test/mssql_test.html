@@ -1,0 +1,23 @@
+<?
+include $DOCUMENT_ROOT."/inc/func.html";
+include $DOCUMENT_ROOT."/inc/ini.html";
+
+error_reporting(E_ALL & ~E_NOTICE); 
+ini_set("display_errors", 1);
+
+
+putenv("FREETDSCONF=/usr/local/freetds/etc/freetds.conf");
+putenv("TDSVER=80");
+header("Content-type: text/html; charset=utf-8");
+
+
+$hostname = "114.30.181.13";
+$username = "sa";
+$password = "korea";
+$dbname = "ONIT";
+$connection = mssql_connect($hostname,$username,$password);
+mssql_select_db($dbname);
+
+
+
+?>

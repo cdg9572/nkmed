@@ -1,0 +1,27 @@
+<?
+include "../inc/dbConn.php";
+
+
+$sql = " UPDATE gr26 SET		
+				ADD_JDI2='".$_POST['ADD_GJ2'].$_POST['ADD_DJ2'].$_POST['ADD_INM2']."'
+				, BIGO2='".$_POST['bigo2']."'
+				, MDT='".time()."'
+				, RDT2 ='".$_POST['RDT2']."'
+				, RSNM = '".$_POST['RSNM']."'
+			WHERE RIDX='".$_POST['RIDX']."' ";
+
+if( $res = mysql_query($sql) ){
+
+	echo "<script>
+				alert( ' 추가 신청등록이되었습니다. ' );
+			</script>
+			<form name='frm' method='post' action='view.html' target='_parent'>
+			<input type='hidden' name='RIDX' value='".$_POST['RIDX']."' />
+			</form>
+			<script>document.frm.submit();</script>";
+
+}
+
+?>
+
+<!-- 4650  3600 -->

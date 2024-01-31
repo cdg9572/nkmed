@@ -1,0 +1,202 @@
+<?
+session_start();
+
+//header("Content-Type:text/html;charset=utf-8") ;
+mysql_query("set names utf8;");
+
+?>
+
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+	frm.target = "main";
+	frm.submit();
+}
+
+
+function chkDel(){
+	document.form.mode.value="del";
+	document.form.submit();
+	
+}
+
+
+//-->
+</script>
+<script> 
+var xmlHttp; 
+
+function createXMLHttpRequest() { 
+if (window.ActiveXObject) 
+{ 
+xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+} 
+else if (window.XMLHttpRequest) 
+{ 
+xmlHttp = new XMLHttpRequest(); 
+} 
+} 
+
+function startRequest() { 
+createXMLHttpRequest(); 
+xmlHttp.onreadystatechange = handleStateChange; 
+xmlHttp.open("GET","/admin/member/popId.html?id="+document.form.id.value, true); 
+xmlHttp.send(null); 
+} 
+
+function handleStateChange() { 
+if(xmlHttp.readyState == 4) {
+if (xmlHttp.status == 200) 
+{ 
+
+document.getElementById("idView").innerHTML = xmlHttp.responseText; 
+} 
+} 
+} 
+</script> 
+<script src="/admin/inc/calendar.js" language=javascript></script>
+
+
+
+<?
+
+//testing_dsp("session") ;
+testing_dsp("get") ;
+
+$sql = "SELECT * FROM smart_r_m WHERE rnum='$rnum'  " ;
+$res = mysql_query($sql) ;
+$row = mysql_fetch_array($res) ;
+
+
+?>
+
+
+<div class="historyText">홈 &gt; 검진 관리 &gt; 종합검진 ListUp </div>
+
+<div class="propBox2">
+	<h3>검진이미지 결과등록</h3>
+
+	<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+
+	<form name='form' method='post' action='examnk/procTotalExam_NK.php' enctype='multipart/form-data'>
+	<input type='hidden' name='uploadDir' value='<?=$uploadDir?>'>
+	<input type='hidden' name='tbl' value='<?=$tbl?>'>
+	<input type='hidden' name='dir' value='<?=$dir?>'>
+	<input type='hidden' name='menu' value='<?=$menu?>'>
+
+	<input type='hidden' name='item_data_seq' value='<?=$item_data_seq ?>'>
+
+	
+
+	<input type='hidden' name='mode' value='img'>
+	<input type='hidden' name='category' value='종합검진'>
+
+		<tr bgcolor='#EEEEEE'>
+			<td width='120' style='padding : 5 0 5 5'>검진번호</td> 
+			
+			<td bgcolor='#FFFFFF' style='padding : 5 5 5 5'>
+				<input type="text" name="rnum" size="50" value="<?=$row[rnum]?>" readonly>  
+			</td>
+		</tr>
+
+		<tr bgcolor='#EEEEEE'>
+			<td width='120' style='padding : 5 0 5 5'>이름</td> 
+			
+			<td bgcolor='#FFFFFF' style='padding : 5 5 5 5'>
+				<input type="text" name="name" size="50" value="<?=$row[rname]?>" readonly>  
+			</td>
+		</tr>
+	</table>
+
+
+
+
+	<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+		<tr>
+			<td width=50%>
+
+				<table width=100%>
+			
+					<?
+					for($i = 1; $i <= 10; $i++) {
+						$upFile = "";
+
+						$fileNo = "file".$i;
+						$fileOrgName = "file_name".$i;
+						$fileDelNo = "fileDel".$i;
+
+						$url = "url".$i;
+						$target = "target".$i;
+					?>
+					<tr>
+						<td width='15%'>Image<?=$i?></td>
+						<td>
+							<?if(is_file($uploadDir.$row[$fileNo])) {?>
+							<table width='100%' style="border:none;">
+							<tr>
+								<td width='315' style='border:none;'><input type='file' name='upFile[]' style='width:99%' class='textfield'></td>
+								<td width='315' style='border:none;'><a href="./inc/procDownload.php?dir=<?=$uploadDir?>&file=<?=$row[$fileNo]?>&orgName=<?=$row[$fileOrgName]?>"><img src='./imgs/iconDownload.gif' border='0' align='absmiddle'>&nbsp;<?=$row[$fileOrgName]?></a></td>
+								<td style='border:none; color:red;' align='right'><input type='checkbox' name='<?=$fileDelNo?>' value='Y' onfocus='this.blur();'>삭제</td>
+							</tr>
+							</table>
+							<?} else {?>
+							<input type='file' name='upFile[]' style='width:99%' class='textfield'>
+							<?}?>
+						</td>
+					</tr>
+					
+					<?}?>
+				</table>
+
+			</td>
+
+			<td>
+
+					<table width=100%>
+					<tr bgcolor='#EEEEEE'>
+						<td width='120' style='padding : 5 0 5 5'>등록이미지</td> 
+					</tr>
+			
+					<?
+						$sql = "select * from smart_r_image where rnum = '$rnum'  " ;
+						#echo $sql;
+						$res = @mysql_query($sql) ;
+
+						//echo $sql ;
+
+						while($row_i = @mysql_fetch_array($res))
+						{
+					?>
+					<tr>
+						
+						<td>
+								
+							<?
+							echo "<img src='examnk/upImage/$row_i[file]' height=50> &nbsp;";
+							echo " $row_i[file]" ;
+							echo "&nbsp;&nbsp;&nbsp; <a href='examnk/procTotalExam_NK.php?dir=$dir&menu=$menu&mode=del&seq=$row_i[seq]&file=$row_i[file]&rnum=$row[rnum]' target=main class='resBtn01'>삭제</a> " ;
+							?>
+
+
+						</td>
+					</tr>
+					
+					<?}?>
+				</table>
+			
+			
+			
+			
+			</t>
+
+	</table>
+
+	</form>
+	
+	<div style="position:relative;">
+		<a href="#" onClick="chkForm(document.form)" class="resBtn02 pocenter510">등록</a>
+		<a href="#" onClick="history.go(-1);" class="cancelBtn02 poright">취소</a>
+	</div>
+</div>
+
+<iframe name='main' width=600 height=500 style=''></iframe>

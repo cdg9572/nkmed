@@ -1,0 +1,166 @@
+<?php
+
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 안내";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-4";$dep3 = "0-4-0";
+
+?>
+<style>
+	.group-list {display: flex;justify-content: space-between;}
+	.tableType-01 table th {background-color: #f8f8f8;}
+	@media screen and (max-width:720px) {
+		.tableType-01 table {
+			table-layout: auto;
+		}
+	}
+</style>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li><a href="page15-1.html">종합 건강검진</a></li>
+						<li><a href="page15-2.html">국가 암 검진</a></li>
+						<li class="active"><a href="page15-3.html">건강보험공단 검진</a></li>
+						<li><a href="page15-4.html">채용 건강검진</a></li>
+						<li><a href="page15-5.html">청소년 종합검진</a></li>
+						<li><a href="page15-6.html">영유아 건강검진</a></li>
+						<li><a href="page15-7.html">특수 건강검진</a></li>
+						<li><a href="page15-8.html">기업체&단체검진</a></li>
+					</ul>
+				</div>
+				<img src="/resource-pc/images/service-153-1.png" alt="">
+				<div class="sub-middle-tit">
+					<h2>건강보험공단 검진</h2>
+					<span class="bar"></span>
+					<p>
+						건강에 대한 중요성은 모두가 인식하고 있지만 바쁜 일상을 보내는 현대인들의 경우 건강 관리에 소홀해 질병에 취약해질 가능성이 높아졌습니다. <br>
+						건강보험공단 검진을 통해 기본적인 검사들을 비용 부담 없이 받아 볼 수 있고 질환을 조기에 발견하고 예방적인 관리가 가능합니다.
+					</p>
+				</div>
+				<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col style="width: 20%;">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>주의사항</th>
+								<td>검사 전날 밤 9시 이후 금식</td>
+							</tr>
+							
+
+							<tr>
+								<th>준비물</th>
+								<td>신분증, 수검표, 문진표</td>
+							</tr>
+							<tr>
+								<th>대상자</th>
+								<td>
+									건강보험 가입자(지역가입자, 피부양자, 직장가입자)<br>
+									의료급여수급자 매 2년마다 1회 검진(비사무직은 매년 실시)
+								</td>
+							</tr>
+							<tr>
+								<th>공통검사항목</th>
+								<td>
+									진찰 및 상담<br>
+									신체 계측(신장, 체중, 허리둘레, 비만도)<br>
+									시력, 청력, 혈압, 흉부방사선 검사<br>
+									혈액검사(혈색소, 공복혈당, AST, ALT, 감마GTP, 혈청크레아티닌, e-GFR)<br>
+									요검사, 구강검사
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tableType-01 text-center">
+					<table>
+						<colgroup>
+							<col style="width: 20%;">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th rowspan="11">성별/연령별 검사 항목</th>
+								<th colspan="2">구분</th>
+								<th>대상시기</th>
+							</tr>
+							<tr>
+								<td>총콜레스트롤</td>
+								<td rowspan="3">이상지질혈증</td>
+								<td rowspan="3">
+									남성 만 24세 이상<br>
+									여성 만 40세 이상<br>
+									(4년마다)
+								</td>
+							</tr>
+							<tr>
+								<td style="border-right: 1px solid #ddd;">HDL 콜레스트롤</td>
+							</tr>
+							<tr>
+								<td style="border-right: 1px solid #ddd;">트리글리세라이드</td>
+							</tr>
+							<tr>
+								<td colspan="2">B형간염 검사</td>
+								<td>만 40세</td>
+							</tr>
+							<tr>
+								<td colspan="2">골밀도 검사</td>
+								<td>만 54세, 66세 여성</td>
+							</tr>
+							<tr>
+								<td colspan="2">인지기능장애 검사</td>
+								<td>만 66세 이상(2년마다)</td>
+							</tr>
+							<tr>
+								<td colspan="2">정신건강 검사</td>
+								<td>만 20, 30, 40, 50, 60, 70세</td>
+							</tr>
+							<tr>
+								<td colspan="2">생활습관 평가</td>
+								<td>만 40, 50, 60, 70세</td>
+							</tr>
+							<tr>
+								<td colspan="2">노인신체기능 검사</td>
+								<td>만 66, 70, 80세</td>
+							</tr>
+							<tr>
+								<td colspan="2">치면세균막 검사</td>
+								<td>만 40세</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+
+<?
+include "../inc/dbConn.php";
+
+$sql = " UPDATE smart_r_student SET 
+				SNAME='".iconv("euc-kr", "utf-8", $_GET[SNAME])."' , HNAME='".iconv("euc-kr", "utf-8", str_replace(' ','',$_GET[HNAME]) )."'  , HY='".$_GET["HY"]."'
+				 , BAN='".$_GET["BAN"]."'  , BNUM='".$_GET["BNUM"]."' , RDATE='".$_GET["RDATE"]."' , RTIME='".$_GET["RTIME"]."'
+			WHERE SIDX=".$_GET["n"];
+if ( $result = mysql_query($sql) ){
+	echo "<script>location.href='sm_d.html?d=".$_GET[d]."&t=".$_GET[t]."';</script>";
+}
+?>

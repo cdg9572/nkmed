@@ -1,0 +1,912 @@
+<?
+
+session_start();
+include "../../inc/dbConn.php";
+include  "../../inc/func.php";
+
+mysql_query("set names utf8;");
+
+header("Content-Type:text/html;charset=utf-8"); //"
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Print</title>
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<style>
+body { position:relative; width: 100%; height: 100%; margin: 0; padding: 0; background-color: #ddd; }
+img {width:16px !important; height:16px; vertical-align:middle; }
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: middle; }
+* { box-sizing: border-box; -moz-box-sizing: border-box; }
+.paper { width: 210mm; min-height: 297mm; padding: 15mm; /* set contents area */ margin: 10mm auto; border-radius: 5px; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); }
+.content { padding: 0; height: 257mm; }
+@page { size: A4; margin: 0; }
+.content img { width:100%; }
+.printBtn, .printBtn:visited { display:block; width:100px; padding:35px 0px; background:#999; font-size:16px; color:#FFF; text-decoration: none; text-align:center; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position:fixed; top: 2mm; right:4mm;}
+.printBtn:hover { background-color:#333; }
+
+h1 { text-align:center; font-size:16pt; }
+h2 { font-size:12pt; text-align: center; margin-bottom:5mm; }
+h3 {border:1px solid #333; background:#ccc; font-size:10pt; margin:0; padding:1mm 2mm; }
+h4 {font-size:10pt; padding:0; margin:0; margin-bottom:1mm; font-weight: normal; font-family: serif;}
+.box {border:1px solid #333; border-top: none; padding:1mm 3mm; margin-bottom:1mm; }
+p { font-size:9pt; font-family:serif; margin:0; padding:0; margin-bottom:1mm; }
+.tts1 { margin-bottom:2mm; }
+.tts1 th, .tts1 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts1 th { font-size:10pt; font-weight:bold;}
+.tts1 td { font-size:9pt; }
+.tts2 { margin-bottom:2mm; }
+.tts2 th, .tts2 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts2 th { font-size:10pt; font-weight:bold; text-align:left;}
+.tts2 td { font-size:9pt; text-align:center; }
+@media print {
+	html, body {width: 210mm; height: 297mm; background: #fff; }
+	.paper {margin: 0; padding:15mm; border: initial; border-radius: initial; width: initial; min-height: initial; box-shadow: initial; background: initial; page-break-after: always; }
+	.printBtn { display:none; }
+}
+</style>
+</head>
+
+
+<?
+
+$sql = "select * from smart_munjin where seq = $seq" ;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+testing_dsp("$sql") ;
+
+$reserve_seq = $row[reserve_seq] ;
+$name = $row[name] ;
+$mobile_no = $row[mobile_no] ;
+//testing_dsp($row) ;
+
+testing_dsp("post") ;
+testing_dsp("get") ;
+//testing_dsp("session") ;
+
+
+?>
+
+<body>
+	<a href="javascript:window.print()" class="printBtn">출력하기</a>
+	<div class="paper">
+        <div class="content">
+			<h1>암검진 문진표 문진표</h1>
+			<h2><img src="square.jpg" style="width:20px !important; height:20px !important;" /> 일반건강검진<span style="margin-left:15mm;">
+				<img src="square.jpg" style="width:20px !important; height:20px !important;" /> 생애전환기 건강진단</span></h2>
+			<p>※ 검진대상자는 문진문항을 빠짐없이 표시하여야만 정확한 건강위험평가 결과를 통보 받으실 수 있습니다.</p>
+			<table width="100%" class="tts1">
+				<tr>
+					<th rowspan="2" width="13%">수검자성명</th>
+					<td rowspan="2" width="17%"><?=$row[name]?></td>
+					<th rowspan="2" width="13%">주민등록번호</th>
+					<td rowspan="2" width="17%">&nbsp;</td>
+					<th rowspan="2" width="11%">전화번호</th>
+					<th width="12%">자택</th>
+					<td width="17%">&nbsp;</td>
+				</tr>
+				<tr>
+					<th>핸드폰</th>
+					<td><?=$row[mobile_no]?>;</td>
+				</tr>
+				<tr>
+					<td colspan="4" align="center">
+						<img src="square.jpg" />건강보험가입자
+						<span style="margin-left:5mm;"><img src="square.jpg" /> 의료급여수급권자</span>
+					</td>
+					<th>e-Mail</th>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<th rowspan="2">주소</th>
+					<td rowspan="2" colspan="5">&nbsp;</td>
+					<th>우편번호</th>
+				</tr>
+				<tr>
+					<td align="center">&nbsp;</td>
+				</tr>
+			</table>
+			
+			<p>※ 귀하께서는 국민건강보험공단, 질병관리본부, 국립암센터 또는 보건소에서 제공하는 건강 관련 정보 및 사업 안내를 메일 또는 우편 등으로 받아 보는 것에 동의하십니까? <strong style="font-family:sans-serif;"><span style="margin-left:5mm;"><img src="square.jpg" /> 예</span> <span style="margin-left:5mm;"><img src="square.jpg" /> 아니요</span></strong></p>
+			
+			<h3>※ 암 검진(공통) 관련 문항</h3>
+			<div class="box">
+				<p>※ 아래 문항을 읽고 현재 상태에 해당하는 내용에 ‘○'표시해 주십시오.</p>
+
+			<?
+				$page_no = 1 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+
+				<h4>1. 현재 신체 어느 부위에든  <strong>불편한 증상</strong>이 있습니까? <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "예") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 예
+							 (증상 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?=$v_add?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) 
+							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? if($v  == "아니요") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니요
+						</span>
+						
+					</strong>
+				</h4>
+
+
+			<?
+				$page_no = 2 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>2. 최근 <strong>6</strong>개월 간 특별한 이유 없이 <strong>5Kg</strong> 이상의 체중감소<strong>가 있었습니까?</strong> <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							<? if($v  == "아니요") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니요&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						    <? if($v  == "체중감소") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 체중감소
+							 ( &nbsp;&nbsp;&nbsp;&nbsp; <?=$v_add?> kg) 
+							 
+						</span>
+						
+					</strong>
+				</h4>
+
+<?
+$page_no = 3 ;
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+
+$d1_arr = explode("&", $v) ;
+
+//print_r($d1_arr) ;
+
+
+?>
+				<br>
+				<h4>3. 본인, 부모, 형제, 자매, 자녀 중에 <strong>현재 암에 걸리신 분이나 과거에 걸리셨던</strong> 분이 계십니까?</h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th rowspan=2>암의 종류</th>
+						<th rowspan=2>없다</th>
+						<th rowspan=2>모르겠다</th>
+						<th colspan=5>있 다 (복수선택 가능)</th>
+					</tr>
+					<tr>
+						<th>본인</th>
+						<th>부모</th>
+						<th>형제</th>
+						<th>자매</th>
+						<th>자녀</th>
+					<tr>
+					<tr>
+						<th>위암</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[0],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<th>유방암</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[1],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<th>대장암</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[2],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<th>간암</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[3],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<th>자궁경부암</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[4],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<th>기타 ( &nbsp;&nbsp; <?=$v_add?> &nbsp;&nbsp;암)</th>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "없다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "모르겠다")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "본인")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "부모")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "형제")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "자매")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if(getChecked($d1_arr[5],  "자녀")) echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+					
+				</table>
+				
+
+
+			<?
+				$page_no = 4 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+
+
+
+				<h4>4. 귀하는 <strong>다음의 검사를</strong> 받은 적이 있습니까? </h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th colspan=2 rowspan=2>검사명</th>
+						<th colspan=4>검사시기 </th>
+					</tr>
+					<tr>
+						<th>10년이상 또는<br> 한적없음</th>
+						<th>1년미만</th>
+						<th>1년이상~2년미만</th>
+						<th>2년이상~10년미만</th>
+					</tr>
+					<tr>
+						<th rowspan=2>위암</th>
+						<th>위장조영검사<br>(위장 X선 촬영)</th>
+
+						<td align="center">
+							<? if($d1_arr[0] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[0] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[0] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[0] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+					<tr>
+						<th>위내시경</th>
+
+						<td align="center">
+							<? if($d1_arr[1] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+
+					<tr>
+						<th rowspan=1>유방암</th>
+						<th>유방촬영</th>
+
+						<td align="center">
+							<? if($d1_arr[2] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+
+
+					<tr>
+						<th rowspan=3>대장암</th>
+						<th>분변잠혈검사<br>(대변 검사)</th>
+
+						<td align="center">
+							<? if($d1_arr[3] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+					<tr>
+						<th>대장이중조영검사<br>(대장 X선 촬영)</th>
+
+						<td align="center">
+							<? if($d1_arr[4] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+					<tr>
+						<th>대장내시경</th>
+
+						<td align="center">
+							<? if($d1_arr[5] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[5] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[5] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[5] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+
+
+					<tr>
+						<th rowspan=1>자궁경부암</th>
+						<th>자궁경부세포검사</th>
+
+						<td align="center">
+							<? if($d1_arr[6] == "10~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[6] == "~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[6] == "1~2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[6] == "2~10") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+
+
+					<tr>
+						<th rowspan=2>간암</th>
+						<th rowspan=2>간초음파</th>
+
+						<th align="center">
+							한적 없음
+						</th>
+						<th align="center">
+							6개월 이내
+						</th>
+						<th align="center">
+							6개월에서 1년 사이
+						</th>
+						<th align="center">
+							1년보다 오래전에
+						</th>
+					
+					</tr>
+					<tr>
+
+						<td align="center">
+							<? if($d1_arr[7] == "x") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[7] == "~6") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[7] == "6~1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[7] == "1~") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					
+					</tr>
+
+				</table>
+
+			</div>  
+		</div>    
+    </div>
+	<div class="paper">
+        <div class="content">
+			<h3>※ 위암, 대장암, 간암 관련 문항</h3>
+			<div class="box">
+			
+			<h4>5. 현재 또는 과거에 진단받은 <strong>위장질환</strong>이 있으십니까? </h4>
+
+
+			<?
+			$page_no = 5 ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+
+				<table width="100%" class="tts1">
+				
+					<tr>
+						<th>질환명</th>
+						<th>위궤양</th>
+						<th>위축성 위염</th>
+						<th>장상피화생</th>
+						<th>위용종</th>
+						<th>기타</th>
+						<th>없음</th>
+					</tr>
+
+					<tr>
+						<th>질환유무</th>
+						
+						<td align="center">
+							<? if($v == "1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "3") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "4") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "5") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "6") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>						
+					</tr>
+				</table>
+
+
+<br>
+			<h4>6. 현재 또는 과거에 진단받은 <strong>대장 항문질환</strong>이 있으십니까?  </h4>
+
+
+			<?
+			$page_no = 6 ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+
+				<table width="100%" class="tts1">
+				
+					<tr>
+						<th>질환명</th>
+						<th>대장용종(폴립)</th>
+						<th>궤양성 대장염</th>
+						<th>크론병</th>
+						<th>치질(치핵, 치열)</th>
+						<th>기타</th>
+						<th>없음</th>
+					</tr>
+
+					<tr>
+						<th>질환유무</th>
+						
+						<td align="center">
+							<? if($v == "1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "3") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "4") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "5") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "6") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>						
+					</tr>
+				</table>
+
+
+				<br>
+				<h4>7. <strong>간(肝)질환</strong>이 있으십니까?   </h4>
+
+
+			<?
+			$page_no = 7 ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+
+				<table width="100%" class="tts1">
+				
+					<tr>
+						<th>질환명</th>
+						<th>B형간염바이러스보유자</th>
+						<th>만성 B형간염</th>
+						<th>만성 C형간염</th>
+						<th>간경변</th>
+						<th>기타</th>
+						<th>없음</th>
+					</tr>
+
+					<tr>
+						<th>질환유무</th>
+						
+						<td align="center">
+							<? if($v == "1") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "2") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "3") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "4") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "5") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($v == "6") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>						
+					</tr>
+				</table>
+
+
+				
+			<br><br>
+			<h3>※ <strong>유방암 및 자궁경부암</strong> 관련 문항<strong>(여성분들만 응답해주세요.)</strong></h3>
+			<div class="box">
+
+
+			<?
+				$page_no = 8 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>8. 월경을 언제 시작하셨습니까? <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "예") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 예
+							 (만 : &nbsp; <?=$v_add?> 세) 
+							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? if($v  == "없음") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 초경이 없었음
+						</span>
+						
+					</strong>
+				</h4>
+
+
+			<?
+				$page_no = 9 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+					<br>
+				<h4>9. 현재 월경의 상태는 어떠십니까? <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아직 월경이 있음.&nbsp;&nbsp;
+							 <? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자궁적출술을 하였음.&nbsp;&nbsp;
+							 <? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  폐경 되었음.
+							 (폐경연령: : &nbsp; <?=$v_add?> 세) 
+							
+						</span>
+					</strong>
+				</h4>
+
+
+			<?
+				$page_no = 10 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>10. 폐경 후 증상을 완화하기 위해서 호르몬 제제를 복용하고 계시거나 과거에 복용하신 적이 있습니까? <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "없음") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 호르몬 제제를 복용한 적 없음.&nbsp;&nbsp;
+							 <? if($v  == "~2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  2년 미만 복용.&nbsp;&nbsp;
+							 <? if($v  == "2~5") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   2년 이상~5년 미만 복용.&nbsp;&nbsp;<br>&nbsp;&nbsp;
+							 <? if($v  == "5~") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  5년 이상 복용.&nbsp;&nbsp;
+							 <? if($v  == "모름") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  모르겠음.
+						</span>
+					</strong>
+
+					
+				</h4>
+
+
+			<?
+				$page_no = 11 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+					<br>
+				<h4>11. 자녀를 몇 명 출산하셨습니까?<br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 1명      &nbsp;&nbsp;
+							 <? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 2명이상      &nbsp;&nbsp;
+							 <? if($v  == "없음") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   출산한 적 없음&nbsp;&nbsp;
+						</span>
+					</strong>
+
+					
+				</h4>
+
+
+			<?
+				$page_no = 12 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>12. 모유 수유 여부 및 총 수유기간은? <br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "~6") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   6개월 미만    &nbsp;&nbsp;
+							 <? if($v  == "6~1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  6개월~1년 미만     &nbsp;&nbsp;
+							 <? if($v  == "1~") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   1년 이상    &nbsp;&nbsp;
+							 <? if($v  == "없음") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  수유한적 없음.     &nbsp;&nbsp;
+						</span>
+					</strong>
+
+					
+				</h4>
+
+
+			<?
+				$page_no = 13 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>13. 과거에 유방에 양성 종양으로 진단받은 적이 있습니까? <br>&nbsp;&nbsp;&nbsp;
+				양성 종양이란 악성종양인 암이 아닌 기타 물혹, 덩어리 등을 말합니다)<br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "예") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   예  &nbsp;&nbsp;
+							 <? if($v  == "아니요") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  아니요    &nbsp;&nbsp;
+							 <? if($v  == "모름") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   모르겠음  &nbsp;&nbsp;
+						</span>
+					</strong>
+
+					
+				</h4>
+
+
+				<?
+				$page_no = 14 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+				<br>
+				<h4>14. 피임약을 복용하고 계시거나 과거에 복용하신 적이 있습니까?<br>
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "없음") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>   피임약을 복용한 적 없음.  &nbsp;&nbsp;
+							 <? if($v  == "~1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  1년 미만 복용   &nbsp;&nbsp;
+							 <? if($v  == "1~") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  1년 이상 복용   &nbsp;&nbsp;
+							 <? if($v  == "모름") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?>  모르겠음   &nbsp;&nbsp;
+
+						</span>
+					</strong>
+
+					
+				</h4>
+
+			</div>
+			
+			
+			
+		</div>    
+    </div>
+</body>
+</html>

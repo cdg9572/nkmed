@@ -1,0 +1,62 @@
+<?php
+
+$title = "MEMBER";
+$page_title = "환자권리장전";
+$page_sub_title = "환자권리장전";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+
+$dep1 = "3";$dep2 = "3-6";
+
+?>
+<style>
+	.agreeSection .agreeTxtWrap {height: auto;}
+
+	pre {width:100%;padding:20px;box-sizing: border-box;font-weight: 400;white-space: pre-line;font-family: 'Noto Sans KR';}
+
+	caption {display: none;}
+
+	table {width: 100%;margin-top: 15px;}
+
+	th,
+	td {border: 1px solid #ddd;padding: 6px 10px;}
+</style>
+<script>
+	$(function () {
+		$("h2.title").text('환자권리장전');
+	});
+</script>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr07.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<h2 class="pageTitle privacy">환자권리장전</h2>
+				<div class="section">
+					<?php
+						include_once "agree5.php";
+					?>
+				</div>
+				<!-- //Content -->
+			</div>
+			<!-- //end #innerCont -->
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

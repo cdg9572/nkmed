@@ -1,0 +1,22 @@
+<?
+include $DOCUMENT_ROOT."/admin/inc/dbConn.php";
+include $DOCUMENT_ROOT."/admin/inc/func.php";
+include $DOCUMENT_ROOT."/admin/inc/conf.php";
+
+mysql_select_db("mediroad_liss", $dbconn);
+
+$sql = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+	//echo $sql;
+	$result = mysql_query($sql); 
+	$rows = mysql_fetch_array($result);
+
+$codes = explode(",",$rows[PRO_CODE]);
+
+for($i=0;$i<sizeof($codes);$i++){
+	echo $codes[$i]."<br>";
+}
+
+?> 
+
+
+

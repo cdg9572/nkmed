@@ -1,0 +1,128 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 예약/결과";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+?>
+<style>
+	.tableType-01 thead th {color:#fff;background-color: #1795d0;}
+</style>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li class="active"><a href="page16-1.html">건강검진 예약</a></li>
+						<li><a href="page16-2.html">예약 확인</a></li>
+						<li><a href="https://eo-m.com/2023/HSP/HSP_Controller.asp?part=nfc&mehId=GV2984&mtype=1" target="_blank">문진표 작성</a></li>
+						<li><a href="page16-4.html">검진순서</a></li>
+						<li><a href="page16-5.html">검진 주의사항</a></li>
+					</ul>
+				</div>
+				<div class="sub-middle-tit">
+					<h2>건강검진 예약</h2>
+					<span class="bar"></span>
+				</div>
+				<h3 class="cont-tit"><small>개인 건강검진 예약</small></h3>
+				<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col>
+							<col style="width: 60%;">
+							<col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>검진프로그램</th>
+								<th>검진 설명</th>
+								<th>예약하기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>공단검진</th>
+								<td>일반검진/6대암검진</td>
+								<td align="center">
+									<a href="page16-1-1.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+							<tr>
+								<th>건강형</th>
+								<td>기본종합검진 + A선택검사 2종류</td>
+								<td align="center">
+									<a href="page16-1-2.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+							<tr>
+								<th>소망형</th>
+								<td>기본종합검진 + A선택검사 4종류</td>
+								<td align="center">
+									<a href="page16-1-3.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+							<tr>
+								<th>믿음형</th>
+								<td>기본종합검진 + A선택검사 4종류 + 대장내시경</td>
+								<td align="center">
+									<a href="page16-1-4.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+							<tr>
+								<th>행복형</th>
+								<td>기본종합검진 + A선택검사 4종류 + C선택검사 1종류</td>
+								<td align="center">
+									<a href="page16-1-5.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+							<tr>
+								<th>사랑해</th>
+								<td>기본종합검진 + A선택검사 6종류 + C선택검사 1종류 + 대장내시경 + 심장초음파 + 선천적 유전자검사</td>
+								<td align="center">
+									<a href="page16-1-6.html" class="btn bg-deepblue">예약 하기</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="l-pad-box gray text-left">
+					<ul class="c-middot-list">
+						<li>소망형/믿음형/행복형 - A그룹 2개 미선택시 B그룹 1개로 대체 가능</li>
+						<li>믿음형/행복형 - A그룹 4개 미선택시 C그룹 1개로 대체 가능</li>
+						<li>내시경 시 용종 및 조직검사비용은 별도</li>
+						<li>금액과 항목은 변동될 수 있음</li>
+						<li>선택하신 예약 희망일에 따라 담당 직원이 유선상으로 예약 확정을 도와드립니다.</li>
+					</ul>
+				</div>
+				
+				<!-- <div id="btn-box" class="center">
+					<a href="page14-2.html" class="btn bg-black" style="width: 270px;">예약 조회 바로가기</a>
+				</div> -->
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

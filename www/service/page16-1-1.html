@@ -1,0 +1,156 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 예약/결과";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+
+$sel_email = $C_Func->makeSelect('tm_content10_3', $GP -> EMAIL , $tm_content10, "class='form-control'",'직접입력'); 
+?>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+	.agreeSection .title,
+	.label_wrap {display: none;}
+	.tableType-01 > table > thead > tr > th {color:#fff;background-color: #1795d0;}
+	.tableType-01 .calBody tr,
+	.tableType-01 .calBody th,
+	.tableType-01 .calBody td {padding:0;border:none !important;background-color: transparent;}
+	.cal {overflow: hidden;width: 80%;margin:30px auto;}
+    .form .form-control {border:1px solid #ccc;background-color: #fff;}
+	.calInfo .today:before {border:none;background-color: #fffa90;}
+	.calInfo .possible:before {background-color: #eee;}
+</style>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li class="active"><a href="page16-1.html">건강검진 예약</a></li>
+						<li><a href="page16-2.html">예약 확인</a></li>
+						<li><a href="page16-3.html">문진표작성</a></li>
+						<li><a href="page16-4.html">검진순서</a></li>
+						<li><a href="page16-5.html">검진 주의사항</a></li>
+					</ul>
+				</div>
+				<div class="sub-middle-tit">
+					<h2>건강검진 예약</h2>
+					<span class="bar"></span>
+				</div>
+				<h3 class="cont-tit"><small>공단검진</small></h3>
+                <form name="base_form" id="base_form" method="POST" action="?" enctype="multipart/form-data">
+                <input type="hidden" name="mode" id="mode" value="MULTI_REG" />
+                <input type="hidden" name="tm_menu" id="tm_menu" value="medicalcheckup" />   
+                <input type="hidden" name="tm_type" id="tm_type" value="A"  />                             
+                <input type="hidden" name="tm_content12" id="tm_content12" />                
+                <input type="hidden" name="page_link" id="page_link" value="/service/page16-1-1.html" />
+				<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col>
+							<col style="width: 50%;">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>국가검진</th>
+								<th>항목체크</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>일반검진</th>
+								<td align="center">
+									<div class="radio-box">
+										<label for=""><input type="radio" id="tm_content1" name="tm_content1" value="일반검진" checked></label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>6대 암 검진</th>
+								<td align="center">
+									<div class="radio-box">
+										<label for=""><input type="radio" id="tm_content1" name="tm_content1" value="6대 암 검진"></label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br>
+                <?php include_once "page16-info.html" ?>			                          
+				<h3 class="cont-tit"><small>개인정보 수집/이용 동의<span class="c-red">(필수)</span></small></h3>
+				<?php include "../member/agree2.php"; ?>
+
+				<div id="btn-box" class="center">
+					<a href="#" class="btn bg-blue" style="width: 270px;" id="service_submit">검진 예약하기</a>
+				</div>
+			</div>
+		</div>
+		</form>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->    
+	<script type="text/javascript">	
+     
+        $("#service_submit").click(function(){		           
+
+            if ($('input:radio[name="tm_content1"]:checked').val() == undefined) {
+                alert("검진 종류를 정확히 선택하세요.");
+                return false;
+            }       
+           
+            if($('#tm_content5').val() == '')	{
+                alert('성함을 정확히 입력하세요');
+                $('#tm_content5').focus();
+			return false;
+	    	}	
+
+            if($('#tm_content6').val() == '')	{
+                alert('연락처를 정확히 입력하세요');
+                $('#tm_content6').focus();
+			return false;
+	    	}	
+            //이메일 검사
+            if($('#tm_content10_1').val() == '')	{
+                alert('이메일을 정확히 입력하세요');
+                $('#tm_content10_1').focus();
+                return false;
+	    	}	
+
+            if($('#tm_content12').val() == '')	{
+                alert('검진 희망일 선택 하세요');
+	            return false;
+            }	
+         
+            if ($('input[name="info"]').is(':checked') == false) {
+                alert("개인정보 취급 방침에 동의해 주세요.");
+                return false;
+            }       
+            
+            $("#base_form").attr("action","./proc/multi_proc.php");
+            $("#base_form").submit();                 
+            
+            return false;
+        });			
+	</script>
+</body>
+
+</html>

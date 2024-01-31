@@ -1,0 +1,35 @@
+<?
+	include "../../inc/dbConn.php";
+$sql = "SELECT * FROM smart_mj_am WHERE midx='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+?>
+<center>
+<form name="frm" method="post" action="va_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<!--공통문진표-->
+<tr><td width='100%'><table border='1'  width='100%' cellspacing='0'>
+<tr><td valign='top' width='50%'><? include "va_2.html"; ?></td>
+	<td valign='top' width='50%'><? include "va_3.html"; ?></td></tr>
+</table><td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

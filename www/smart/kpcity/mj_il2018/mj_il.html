@@ -1,0 +1,129 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+
+$sql = "select * from smart_munjin_cmp2018 where seq = $seq" ;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+
+$reserve_seq = $row[reserve_seq] ;
+$name = $row[name] ;
+$mobile_no = $row[mobile_no] ;
+//testing_dsp($row) ;
+
+testing_dsp("post") ;
+testing_dsp("session") ;
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>일반검진 관련 문항</h2>
+
+
+	<?
+		$next_no = $page_no +1 ;
+		$prev_no = $page_no - 1;
+	?>
+
+	<form name='form' method='post' action='./munjin_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_reserve'>
+		<input type='hidden' name='mode' value='update'>
+		<input type='hidden' name='page_no' value='<?=$page_no?>'>
+		<input type='hidden' name='next_no' value='<?=$next_no?>'>
+		<input type='hidden' name='prev_no' value='<?=$prev_no?>'>
+
+		<input type='hidden' name='munjin_category' value='<?=$munjin_category?>'>
+		<input type='hidden' name='seq' value='<?=$seq?>'>
+		<input type='hidden' name='reserve_seq' value='<?=$reserve_seq?>'>
+		
+
+
+	
+	<section style="padding:0px 10px; min-height:450px; position:relative;">
+		
+		
+		
+		<?
+			$src = "add_page".$page_no.".html"  ;
+			include "$src" ;
+
+		?>
+	
+		
+		<div style="padding:20px 0px; margin-bottom:15px;">
+			<ul class="pageCtr">
+
+			<?
+				if($page_no == "1")
+				{
+					echo "<li><a href='#' class='btnst02' onclick=\"alert('첫페이지 입니다.')\">이전</a></li>" ;
+				}
+				else 
+				{
+					echo "<li><a href='?page_no=$prev_no&seq=$seq' class='btnst02'>이전</a></li>" ;
+				}
+
+			?>
+				
+				<li><a href="#" class="btnst01"  onClick="chkForm(document.form)">다음</a></li>
+			</ul>
+		</div>
+	</section>
+
+	</form>
+
+
+<script language="JavaScript">
+<!--	
+function chkForm(frm) {
+	//alert( "등록하기" );
+	frm.submit();
+}
+//-->
+</script>
+
+
+
+	<iframe name="company_proc" width=600 height=600 style="display:none;"></iframe>
+	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

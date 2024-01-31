@@ -1,0 +1,38 @@
+<?
+include "../inc/dbConn.php";
+
+#기존 동 호수 여부
+if( $_POST['DONG'] <> "" ){
+	$wsql = " and DONG = '".$_POST['DONG']."' ";
+}
+
+if( $_POST['HO'] <> "" ){
+	$wsql .= " and HO like '%".$_POST['HO']."%' ";
+}
+
+$sql = " SELECT COUNT(*) CNT FROM gr26
+			WHERE 1=1 ". $wsql ;
+#echo $sql;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+if( $row['CNT'] > 0 ){
+	echo "<script>alert('사전 예약 등록 세대입니다. \\n조회후 진행바랍니다.');</script>";
+}else{
+	$sql = " INSERT INTO gr26 (
+					DONG, HO, PNAME, PTEL, JG, DP, INP
+					, INM1, INM2, INM3, INM4, BIGO, RDT, WDT 
+				) VALUES (
+					'".$_POST[DONG]."' , '".$_POST[HO]."' , '".$_POST[PNAME]."' , '".$_POST[PTEL]."' 
+					, '".$_POST[JG]."' , '".$_POST[DP]."' , '".$_POST[INP]."' , '".$_POST[INM1]."' 
+					, '".$_POST[INM2]."' , '".$_POST[INM3]."' , '".$_POST[INM4]."' , '".$_POST[BIGO]."' 
+					, '".$_POST[RDT]."' , '".time()."' 
+				)";
+	if( mysql_query($sql) ){
+		echo "<script>alert('추가신규 간편예약 등록되었습니다. \\n병원에서 확정진행 연락이 갈 예정입니다.');parent.location.href='index.html';</script>";
+	}else{
+		echo "<script>alert('오류가 발생되었습니다.');</script>";
+	}
+}
+
+?>

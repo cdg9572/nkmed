@@ -1,0 +1,109 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+	
+	$sql = " UPDATE smart_mj_am SET 
+					MNCAGT8EM='".$_POST[MNCAGT8EM]."' , MNCAGT8RS='".$_POST[MNCAGT8RS]."'
+					, MNCAGT9EM='".$_POST[MNCAGT9EM]."' , MNCAGT9RS='".$_POST[MNCAGT9RS]."'
+					, MNCAGT10E='".$_POST[MNCAGT10E]."' 
+				WHERE midx='".$_POST[mseq]."'  ";
+
+	#echo $sql;
+	mysql_query( $sql );
+}
+
+$sql = "SELECT * FROM smart_mj_am A WHERE A.midx='".$_POST[mseq]."' ";
+if( $r = mysql_query($sql) ){
+		$row = mysql_fetch_array($r);
+		$MNCAGT11E = $row[MNCAGT11E];	
+		$MNCAGT12E = $row[MNCAGT12E];	
+		$MNCAGT13E = $row[MNCAGT13E];	
+		$MNCAGT14E = $row[MNCAGT14E];	
+	?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="euc-kr" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+ <body>
+ <form name="fm" method="post" action="a_7.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+	<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+	<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+	<input type="hidden" name="md" value="reg"/>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">11. 자녀를 몇 명 출산하셨습니까? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT11E" value="1" <? if( $MNCAGT11E == "1" ){ echo "checked"; } ?>  />1명  &nbsp;&nbsp; &nbsp; &nbsp;
+						<input type="radio" name="MNCAGT11E" value="2" <? if( $MNCAGT11E == "2" ){ echo "checked"; } ?> /> 2명이상 &nbsp;&nbsp;
+						<input type="radio" name="MNCAGT11E" value="3" <? if( $MNCAGT11E == "3" ){ echo "checked"; } ?> /> 출산한 적 없음
+						</td></tr>
+					</table>
+					</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">12. 모유 수유 여부 및 총 수유기간은? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT12E" value="1" <? if( $MNCAGT12E == "1" ){ echo "checked"; } ?>> 6개월 미만&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT12E" value="2" <? if( $MNCAGT12E == "2" ){ echo "checked"; } ?>> 6개월~1년 미만<br/>
+						<input type="radio" name="MNCAGT12E" value="3" <? if( $MNCAGT12E == "3" ){ echo "checked"; } ?> > 1년 이상
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT12E" value="4" <? if( $MNCAGT12E == "4" ){ echo "checked"; } ?> > 수유한 적 없음</td></tr>
+					</table>
+					</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">13. 과거에 유방에 양성 종양으로 진단받은 적이 있습니까?<br/>
+		( 양성 종양이란 악성종양인 암이 아닌 기타 물혹, 덩어리 등을 말합니다. )</th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT13E" value="1" <? if( $MNCAGT13E == "1" ){ echo "checked"; } ?>  />예  &nbsp;&nbsp; &nbsp; &nbsp;
+						<input type="radio" name="MNCAGT13E" value="2" <? if( $MNCAGT13E == "2" ){ echo "checked"; } ?> /> 아니오 &nbsp;&nbsp;
+						<input type="radio" name="MNCAGT13E" value="3" <? if( $MNCAGT13E == "3" ){ echo "checked"; } ?> /> 모르겠음
+						</td></tr>
+					</table>
+					</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">14. 피임약을 복용하고 계시거나 과거에 복용하신 적이 있습니까? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT14E" value="1" <? if( $MNCAGT14E == "1" ){ echo "checked"; } ?>> 피임약을 복용한 적 없음&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT14E" value="2" <? if( $MNCAGT14E == "2" ){ echo "checked"; } ?>> 1년 미만 복용<br/>
+						<input type="radio" name="MNCAGT14E" value="3" <? if( $MNCAGT14E == "3" ){ echo "checked"; } ?>> 1년 이상 복용 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT14E" value="4" <? if( $MNCAGT14E == "4" ){ echo "checked"; } ?>> 모르겠음</td></tr>
+					</table>
+					</td></tr>
+	</table>
+	<table width='100%' cellspacing='10'>
+	<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+			<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+	</table>
+	<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+</form>
+<?	
+}
+?>
+
+<script>
+
+function hisBack(){
+	document.fm.action="a_5.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+</script>

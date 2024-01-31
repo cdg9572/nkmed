@@ -1,0 +1,42 @@
+<?
+	include "../../inc/dbConn.php";
+	$sql = "SELECT * FROM smart_mj_il WHERE midx='".$_GET[i]."' ";	
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+?>
+<style>
+input { font-size:8pt;}
+</style>
+<form name="frm" method="post" action="v1_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<center>
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<tr><td width='100%'><table border='1'  width='100%' cellspacing='0'>
+	<tr align='center'><td width='25%'>성명</td><td width='25%'><?=iconv('utf-8','euc-kr',$row[mname]);?></td><td width='25%'>이메일</td><td width='25%'>&nbsp;<?=iconv('utf-8','euc-kr',$row[em]);?></td></tr>
+	<tr align='center'><td>주소</td><td colspan='3' align='left'>&nbsp;<?=iconv('utf-8','euc-kr',$row[addr]);?></td></tr>
+	</table></td></tr>
+<!--공통문진표-->
+<tr><td width='100%'><table border='1'  width='100%' cellspacing='0'>
+<tr><td valign='top'  width='50%'><? include "v1_2.html"; ?></td>
+	<td valign='top'  width='50%'><? include "v1_3.html"; ?></td></tr>
+</table><td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

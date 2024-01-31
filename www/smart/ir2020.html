@@ -1,0 +1,295 @@
+<? session_start(); 
+$l = $_GET[l];
+return false;
+
+$irg = "ir.png";
+if( $l == "" ){	
+	if( $c <> 1){	$name2 = "미지정"; 	}
+}elseif( $l == "G0" ){	
+	$name2 = "윤재성";
+}elseif( $l == "G1" ){	
+	$name2 = "강경복";
+}elseif( $l == "G2" ){	
+	$name2 = "유효녀";
+}elseif( $l == "G3" ){	
+	$name2 = "윤예찬";
+}elseif( $l == "G4" ){	
+	$name2 = "권형준";
+}elseif( $l == "G5" ){	
+	$name2 = "조규만";
+}elseif( $l == "G6" ){	
+	$name2 = "최종연";
+}elseif( $l == "G7" ){	
+	$name2 = "정훈";
+}elseif( $l == "G8" ){	
+	$name2 = "양병태";
+#}elseif( $l == "sp8" ){	
+#	$name2 = "CRM";
+#	$irg = "ir_crm.jpg";
+}
+$_SESSION['name2'] = $name2;
+
+?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">	
+ </head>
+<script src="js/jquery.js" type="text/javascript"></script>
+<title>뉴고려병원검진센터 예방접종간편예약</title>
+<link type="text/css" href="js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+
+
+$(function() {
+	$('#datepicker1').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '2016:2020'
+	});	
+});
+	//		$("#datepicker").datepicker($.datepicker.regional['ko']);
+
+alert( "현재 백신공급이 원활하지 않아 예약이 불가 합니다."  );
+</script>
+
+<style>
+.tbl2	{	border:1px solid #d7d7d7; border-radius:1px; padding:8px;	}
+.tbl2 td{	border-bottom:1px solid #d7d7d7; }
+.tbl2 td input{	border-bottom:1px solid #d7d7d7; padding:5px;}
+textarea { border:1px solid #d7d7d7; border-radius:5px; padding:10px; }
+input { border:1px solid #d7d7d7; border-radius:5px; padding:10px; }
+</style>
+<center>
+<div style="width:100%;text-align:center;position: relative;">
+<div id="rtime_div" style="position: absolute;display:none;top:45%;left:50%;transform:translate(-50%, -50%);z-index:2;">
+<iframe id="ifrm1" name="ifm1"  height="200" src="" frameborder="0"></iframe>
+</div>
+<div id="f_div" style="z-index:1;">
+<table border='0' cellspacing='0' cellpadding='0'>
+<tr><td><img src="../images/<?=$irg;?>" width='400'/></td></tr>
+<tr><td>
+<form name="frm"  method="post" action="ir_p.html">
+<input type="hidden" name="nm2" value="<?=$_SESSION['name2'];?>"/>
+
+<table width='400'  style="font-size:12px;">
+<tr align='center'><td colspan='2'>
+<textarea cols='40' rows='10' readonly style="">
+개인정보 수집 및 이용 동의 안내
+- 수집항목 : 이름, 휴대폰번호 
+- 이용목적 : 전화를  통한 예약 최종 확인/진행
+- 개인정보 보유 및 이용기간 : 개인정보는 수집 및 이용목적 달성 시 까지 보유하며,
+개인정보의 수집 및 이용 목적을 달성하게 되면 지체없이 파기하는 것을 원칙으로 함
+
+고객은 개인정보 수집 및 이용에 동의하지 않을 수 있으며, 동의하지 않을 경우 예약이 불가함
+</textarea></td></tr>
+<tr align="center">
+	<td align='center' colspan='2'><input type="radio" name="yn" value="Y"/>동의
+	&nbsp;&nbsp; <input type="radio" name="yn" value="N"/>미동의</td></tr>
+<tr><td align="right">접종장소</td>
+	<td><input type="radio" name="hosp" value="N" checked>뉴고려병원	&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="hosp" value="Y" style='display:none;' ><!--영등포병원--></td></tr>
+<tr><td align="right">신청자</td>
+	<td><input type="text" name="sname" value="" size='15'/>[조회시 필수]</td></tr>
+<tr><td align="right">연락처</td>
+	<td><input type="text" name="tel" value=""  size='15'/>[조회시 필수]</td></tr>
+<tr><td align="right">출생년도</td>
+	<td><input type="text" name="ym" value=""  size='15'/>[무료접종확인]</td></tr>
+<tr><td align="right">종류</td>
+	<td><!--<input type="radio" name="t" value="3"/>3가 -->
+		<input type="radio" name="t" value="4" checked/>4가</td></tr>
+<tr><td align="right" >예정일자</td>
+	<td><input type="text" name="tdate" id="datepicker1" value="" size='10' onfocus="blur();"  onchange="check();" readonly/>
+		시간:<input type="text" name="rtime" id="rtime" value="" readonly size='5'/>
+		<div id='nt' style="display:none;">&nbsp;</div>
+		<div id='st' style="display:none;">&nbsp;</div></td></tr>
+<tr><td colspan='2'  align='center'>
+	<font style="font-size:10pt;">함께 접종을 원하시는 분들은 추가 버튼을 눌러주세요<br>
+	<font color='blue'><b>1959년생부터2001년생</b></font>까지만 예약가능하십니다.</font>
+	<table width='350' id="mlist" class="tbl2" style="" border="0" cellpadding="0" cellspacing="0"  >
+	<tr align='center' id="test" ><td>이름</td><td>출생년도</td><td>종류</td></tr>
+	</table>
+    <input type="button" name="" value="추가" onclick="addRow();" />
+	</td></tr>
+<tr><td align="right">메모<br><br>거래처명</td>
+	<td><textarea name="memo" cols='30' rows='3'></textarea></td></tr>
+</table>
+<table width='400' cellspacing='20'  >
+<tr align='center'><td width='100%' colspan='2' height="40"   >
+<table border='0' width='100%'>
+<tr align='center'><td width='30%'><div style="background:#EC4E29  98% 50% no-repeat !important; color:#fff; padding-top:10px; padding-bottom:10px; width:120px;border-radius:20px;" onclick="ck()">사 전 예 약</div></td>
+	<td width='40%'><div style="background:#6799FF  98% 50% no-repeat !important; color:#fff; padding-top:10px; padding-bottom:10px; width:120px;border-radius:20px;" onclick="self.close();">닫기</div></td>
+	<td width='30%'><div style="background:#EC4E29  98% 50% no-repeat !important; color:#fff; padding-top:10px; padding-bottom:10px; width:120px;border-radius:20px;" onclick="SearR();">조 회 하 기</div></td></tr>
+</table></td></tr>
+</table>
+<table width='400'>
+<tr><td align='center'><!--<img src="images/ydp.png" width='150' />&nbsp;&nbsp;&nbsp;--><img src="images/nklog.png" width='150' /></td></tr>
+</table>
+<input type=hidden name=irow value="0">
+</form>
+</td></tr>
+</div>
+</div>
+<iframe id="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+</center>
+
+</html>
+
+<script>
+function SearR(){
+	v1 = document.all.sname.value;
+	v2 = document.all.tel.value;
+	if( v1=="" ){
+		alert( "이름을 입력해주세요" );
+		document.all.sname.focus();
+		return false;
+	}
+
+	if( v2=="" ){
+		alert( "연락처를 입력해주세요" );
+		document.all.tel.focus();
+		return false;
+	}
+
+
+	
+	//alert( document.getElementById("ifrm").src );
+	document.getElementById("ifrm").src= "ir_v.html?v1="+v1+"&v2="+v2;
+	//window.open("ir_v.html?v1="+v1+"&v2="+v2,'','');
+//	document.frm.submit();
+	
+}
+
+function check(){
+	
+	if(	document.all.hosp[0].checked==false && document.all.hosp[1].checked==false ){
+		alert( "접종장소를 선택해주세요." );
+		document.all.hosp[0].focus;
+		return false;
+	}else{
+		if( document.all.hosp[0].checked ){	ny="&ny=N"; }
+		if( document.all.hosp[1].checked ){	ny="&ny=Y"; }
+	}
+
+	if ( document.all.datepicker1.value=="2020-09-30" || document.all.datepicker1.value=="2020-10-01" || document.all.datepicker1.value=="2020-10-02" || document.all.datepicker1.value=="2020-10-03" || document.all.datepicker1.value=="2020-10-09" ){
+		alert( "해당 일은 예약이 진행되지 않습니다.\n다른 날짜를 선택해주세요." );
+		document.all.datepicker1.value = "";
+		return false;
+	}else if ( document.all.datepicker1.value>="2020-11-01"){
+		alert( "11월 1일 이후는 접종이 종료되어 예약이 불가합니다." );
+		document.all.datepicker1.value = "";
+		return false;
+	}else{
+		var val =  new Date(document.all.datepicker1.value).getDay();
+
+		if(val == 0){
+			alert('일요일은 예약이 안됩니다.\n월~토요일을 선택해 주세요.');
+			frm.datepicker1.focus();
+			document.all.st.style.display="none";
+			document.all.nt.style.display="none";
+			document.all.datepicker1.value = "";
+			return false;
+		}else{
+			if( val == 6 ){
+				document.all.st.style.display="";
+				document.all.nt.style.display="none";
+			}else{
+				document.all.st.style.display="none";
+				document.all.nt.style.display="";
+			}
+			document.getElementById("f_div").style.opacity ="0.2";
+			document.getElementById("rtime_div").style.display="";
+			document.getElementById("rtime_div").style.backgroundColor ="#ffffff";
+			document.getElementById("ifrm1").src="ir_rt.html?RDT="+document.all.datepicker1.value+ny;
+		}
+	}	
+}
+
+function addRow(){ 
+	 
+      var irow = Number(document.all.irow.value); 
+
+      var k = irow+1; 
+      var inxt = irow+2; 
+      var ipre  = irow; 
+      document.all.irow.value = k;
+
+      otr = document.all.mlist.insertRow(); 
+      otr.id ="mantr"+k;       
+      otr.align='center';  
+        
+      otd = otr.insertCell(); 
+      otd.innerHTML="<input type=\"text\" name=\"sname2[]\" size='8' value=\"\"   >";
+
+      otd = otr.insertCell(); 
+      otd.innerHTML="<input type=\"text\" name=\"tel2[]\" value=\"\" " 
+				+"class=txt0 style=\"width:65;text-align:left;font-size:11px;\" >";
+        
+	  otd = otr.insertCell(); 
+      otd.innerHTML="<select name=\"t2[]\">"
+				+ "<option value=\"4\"  selected>4가</option></select> ";
+}
+
+
+function ck(){
+	if ( document.frm.yn[0].checked ==  false ){
+		alert("동의를 하셔야 신청이 진행됩니다.");
+		document.frm.yn[0].focus();
+		return false;
+	}
+
+	if ( document.frm.sname.value == "" ){
+		alert("신청인 이름을 입력해 주세요.");
+		document.frm.sname.focus();
+		return false;
+	}
+
+	if ( document.frm.tel.value == "" ){
+		alert("연락처를 입력해 주세요.");
+		document.frm.tel.focus();
+		return false;
+	}
+
+	if ( document.frm.tdate.value == "" ){
+		alert("예정일을 선택해 주세요.");
+		document.frm.tdate.focus();
+		return false;
+	}
+
+	if ( document.frm.rtime.value == "" ){
+		alert("예정시간이 필요 합니다.");
+		document.frm.tdate.focus();
+		//document.frm.rtime.focus();
+		return false;
+	}
+
+	v3 = document.frm.ym.value;
+	if( v3=="" ){
+		alert( "무료접종 대상확인을 위해 출생년도를 입력해주세요" );
+		document.all.ym.focus();
+		return false;
+	}else{
+		if( v3 < 1959 || v3 >2001 ){
+			alert( "무료접종 대상자입니다. 검진 예약진행은 불가 합니다." );
+			document.all.ym.focus();
+			return false;
+		}else{
+			
+		}
+	}
+	
+
+	if(	document.all.hosp[0].checked==false && document.all.hosp[1].checked==false ){
+		alert( "접종장소를 선택해주세요." );
+		document.all.hosp[0].focus;
+		return false;
+	}
+
+	document.frm.submit();
+}
+</script>

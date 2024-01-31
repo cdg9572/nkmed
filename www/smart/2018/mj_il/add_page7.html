@@ -1,0 +1,154 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 인지기능관련 문항(만 66세, 70세와 74세 건강검진 대상자만 답하시오)
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					7. 1년 전과 비교하여, 현재 상태에 해당하는 곳에 ‘O'표시해 주십시오.
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>7-1. 자신의 기억력이 친구나 동료들에 비해 못하다고 생각하십니까? </th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="아니다"  <?=getChecked($v, "아니다")?> > 아니다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="가끔(조금)그렇다"  <?=getChecked($v, "가끔(조금)그렇다")?> > 가끔(조금)그렇다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="자주(많이)그렇다"  <?=getChecked($v, "자주(많이)그렇다")?> > 자주(많이)그렇다		
+				</td>
+			</tr>
+
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+$page_no = $page_no."_2" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>  7-2. 자신의 기억력이 1년 전에 비해 더 나빠졌다고 생각하십니까?</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="아니다"  <?=getChecked($v, "아니다")?> > 아니다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="가끔(조금)그렇다"  <?=getChecked($v, "가끔(조금)그렇다")?> > 가끔(조금)그렇다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="자주(많이)그렇다"  <?=getChecked($v, "자주(많이)그렇다")?> > 자주(많이)그렇다		
+				</td>
+			</tr>
+			
+		
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_3" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left>  7-3. 중요한 일을 하는데 있어서도 기억력이 문제가 되는 경우가 있습니까? </th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="아니다"  <?=getChecked($v, "아니다")?> > 아니다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="가끔(조금)그렇다"  <?=getChecked($v, "가끔(조금)그렇다")?> > 가끔(조금)그렇다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="자주(많이)그렇다"  <?=getChecked($v, "자주(많이)그렇다")?> > 자주(많이)그렇다		
+				</td>
+			</tr>
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_4" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left> 7-4. 자신의 기억력이 떨어진 것을 남들도 알고 있습니까? </th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="아니다"  <?=getChecked($v, "아니다")?> > 아니다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="가끔(조금)그렇다"  <?=getChecked($v, "가끔(조금)그렇다")?> > 가끔(조금)그렇다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="자주(많이)그렇다"  <?=getChecked($v, "자주(많이)그렇다")?> > 자주(많이)그렇다		
+				</td>
+			</tr>
+
+
+<?
+unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+$page_no = $ori_page_no ;
+
+
+$page_no = $page_no."_5" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			<tr>
+				<th align=left> 7-5. 잘해오던 일상적인 일을 하는데 예전보다 서툴러졌다고 생각하십니까? </th>
+			</tr>
+			<tr>
+				<td>
+					<input type="radio" name="no<?=$page_no?>" value="아니다"  <?=getChecked($v, "아니다")?> > 아니다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="가끔(조금)그렇다"  <?=getChecked($v, "가끔(조금)그렇다")?> > 가끔(조금)그렇다 &nbsp;
+					<input type="radio" name="no<?=$page_no?>" value="자주(많이)그렇다"  <?=getChecked($v, "자주(많이)그렇다")?> > 자주(많이)그렇다		
+				</td>
+			</tr>
+
+
+
+
+		</table>

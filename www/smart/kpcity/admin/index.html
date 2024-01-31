@@ -1,0 +1,282 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+include $DOCUMENT_ROOT."/admin/inc/chkLogin.php";
+
+//include $DOCUMENT_ROOT."/admin/_inc/test_func.php";  //=== 테스트용 함수 
+//include "./inc/dbConn.php";
+//include  $DOCUMENT_ROOT."/inc/func.php";
+//include $DOCUMENT_ROOT."/admin/inc/func.php";
+//include "./inc/stnoble_func.php";
+
+
+include "./inc/conf.php";
+
+mysql_query("set names utf8;");
+
+
+if($sess_AID != ""){
+	$mtime = filemtime($HTTP_SERVER_VARS["SCRIPT_FILENAME"]); 
+	$gmt_mtime = gmdate("D, d M Y H:i:s", $mtime).' GMT'; 
+	if ($HTTP_IF_MODIFIED_SINCE == $gmt_mtime) { 
+			header("HTTP/1.1 304 Not Modified"); 
+			exit; 
+	} 
+	header("Last-Modified: ".$gmt_mtime); 
+
+	$dir = $dir ? $dir : "reserve";
+	$menu = $menu ? $menu : "ReserveList";
+	$tbl = $tbl ? $tbl : "smart_reserve";
+
+
+
+
+	if($_SESSION['sess_ASP'] && $_SESSION['sess_ALV'] == "5")	// == 업체관리자일 경우 
+	{
+		$dirName = $dirName ? $dirName : "관리자전용";
+		$dir = $dir ? $dir : "manager";
+		$menu = $menu ? $menu : "DashBoard";
+	}
+	else 
+	{
+		$dirName = $dirName ? $dirName : "관리자전용";
+		$dir = $dir ? $dir : "manager";
+		$menu = $menu ? $menu : "Manager";
+
+	}
+
+
+
+$linkPage = $menu.$form;
+$subject_code = $subjectCode ? $subjectCode : $subject_code;
+$course_code = $courseCode ? $courseCode : $course_code;
+$state = $stateCode ? $stateCode : $state;
+
+
+//testing_dsp ( "test : $dir || $menu" );
+//testing_dsp ( $dir."/inc".$linkPage.".html" );
+
+//읽기/쓰기/수정모드
+if($seq) {
+	$que_data = MYSQL_QUERY("select * from ".$tbl." where seq='".$seq."'");
+	//echo "select * from ".$tbl." where seq='".$seq."' and view_state='Y'";
+	//exit;
+	@$row_data = MYSQL_FETCH_ARRAY($que_data);
+}
+//echo $form;
+if($form == "View" && $seq) {
+	//echo "update ".$tbl." set hit=hit+1 where seq='".$seq."'";
+	MYSQL_QUERY("update ".$tbl." set hit=hit+1 where seq='".$seq."'");
+}
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원 Administaration</title>
+
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/font.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+
+<link href="/admin/ecss/reset.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/admin/ecss/sidenav_acc.css">
+
+
+<link href="/admin/ecss/page_style.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/defult.css" rel="stylesheet" type="text/css">
+
+
+
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="../respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script>
+ WebFont.load({
+  custom: {
+   families: ['Nanum Barun Gothic'],
+   urls: ['http://cleanb04.cafe24.com/mcmacademy/css/font.css']
+  }
+ });
+</script>
+<link rel="stylesheet" type="text/css" href="http://cleanb04.cafe24.com/mcmacademy/css/featherlight.min.css">
+</head>
+<body>
+	<div class="gridContainer02 clearfix ">
+	
+		<div class="container clearfix">
+		
+			<div class="navBox">
+				<div class="logo"><img src="./images/logo.png" width="200" alt=""/></div>
+				<div style="position:relative; height:50px;" class="clearfix">
+					<span class="userName"><?= $_SESSION[sess_ANM] ?> 님</span>
+					<a href="#" onclick="top.location.href='./procLogout.php';" class="logOutBtn" onfocus="blur()">LOGOUT</a>
+				</div>
+				
+				<nav class="menuBar">
+					<ul>
+						
+						<li>
+							<a href="./index.html?dir=manager&menu=Manager" <? if($dir == 'manager' || $dir == 'code' ) echo "class='actived'"; ?>>사이트 관리</a>
+							<?
+							if($dir == 'manager' || $dir == 'code' ){
+							?>
+							<ul class="subMenu">
+								<li><a href="./index.html?dir=manager&menu=Manager" <? if($dir == 'manager' && $menu =='Manager') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Manager') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>운영자 관리</a></li>
+
+								<li><a href="./index.html?dir=manager&menu=Op"  <? if($dir == 'manager' && $menu =='Op') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Op') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>영업자 ASP 관리</a></li>
+
+
+								<li><a href="#" onclick="alert('단체검진을 위해 사용됩니다 \n업데이트중입니다')" <? if($dir == 'manager' && $menu =='Company') echo "class='subActived'"; ?>><? if($dir == 'manager' && $menu =='Company') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>사업장 관리</a></li>
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+
+						<li>
+							<a href="./index.html?dir=reserve&menu=ReserveList" <? if($dir == 'reserve'  ) echo "class='actived'"; ?>>예약 관리</a>
+							<?
+							if($dir == 'reserve'){
+							?>
+							<ul class="subMenu">
+								<li><a href="./index.html?dir=reserve&menu=ReserveList" <? if($dir == 'reserve' && $menu =='ReserveList') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='ReserveList') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 관리</a></li>
+
+								<li><a href="#" onclick="alert('문진표 프로세스 확정 후 필요시 사용됩니다')" <? if($dir == 'reserve' && $menu =='MunjinList') echo "class='subActived'"; ?>><? if($dir == 'reserve' && $menu =='MunjinList') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>문진표 관리</a></li>
+
+							</ul>
+							<?
+							}
+							?>
+						</li>
+						
+						<li>
+							<a href="./index.html?dir=reservation&menu=Calendar" <? if($dir == 'reservation'  || $dir == 'slotset') echo "class='actived'"; ?>>관리자 예약관리</a>
+							<?
+							if($dir == 'reservation'  || $dir == 'slotset'){
+							?>
+							<ul class="subMenu">
+								<!--<li><a href="./index.html?dir=reservation&menu=ReserveList" <? if($dir == 'reservation' && $menu =='ReserveList') echo "class='subActived'"; ?>><? if($dir == 'reservation' && $menu =='ReserveList') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 List</a></li>-->
+
+								<li><a href="./index.html?dir=reservation&menu=Calendar"  <? if($dir == 'reservation' && $menu =='Calendar') echo "class='subActived'"; ?>><? if($dir == 'reservation' && $menu =='Calendar') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 관리</a></li>
+
+								<li><a href="./index.html?dir=slotset&menu=Reserve2"  <? if($dir == 'slotset' && $menu =='Reserve2') echo "class='subActived'"; ?>><? if($dir == 'slotset' && $menu =='Reserve2') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약 조회</a></li>
+
+
+								<li><a href="./index.html?dir=slotset&menu=Situation" <? if($dir == 'slotset' && ($menu =='Situation' || $menu == "Ban" || $menu == "Target" || $menu == "Holiday")) echo "class='subActived'"; ?>><? if($dir == 'slotset' && ($menu =='Situation' || $menu == "Ban" || $menu == "Target" || $menu == "Holiday")) echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약슬롯 설정</a></li>
+
+								<li><a href="./index.html?dir=slotset&menu=Scope"  <? if($dir == 'slotset' && $menu =='Scope') echo "class='subActived'"; ?>><? if($dir == 'slotset' && $menu =='Scope') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>예약범위 설정</a></li>
+
+
+
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+						
+
+
+
+
+
+
+<!--
+						<li>
+							<a href="./index.html?dir=exam&menu=TotalExamReg" <? if($dir == 'exam'  ) echo "class='actived'"; ?>>검진 관리</a>
+							<?
+							if($dir == 'exam'){
+							?>
+							<ul class="subMenu">
+								<li><a href="./index.html?dir=exam&menu=Desc" <? if($dir == 'exam' && $menu =='Desc') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='Desc') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>Desc. 관리</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=TotalExamReg" <? if($dir == 'exam' && $menu =='TotalExamReg') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='TotalExamReg') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>종합검진 결과등록</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=TotalExam" <? if($dir == 'exam' && $menu =='TotalExam') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='TotalExam') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>종합검진 ListUp</a></li>
+
+								<li><a href="./index.html?dir=exam&menu=GenExamReg" <? if($dir == 'exam' && $menu =='GenExamReg') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='GenExamReg') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>일반검진 결과등록</a></li>
+								<li><a href="./index.html?dir=exam&menu=GenExam" <? if($dir == 'exam' && $menu =='GenExam') echo "class='subActived'"; ?>><? if($dir == 'exam' && $menu =='GenExam') echo "<i class='fa fa-angle-right' aria-hidden='true'></i>";?>일반검진 Listup</a></li>
+							</ul>
+							<?
+							}
+							?>
+						</li>
+
+
+						<li><a href="#">CRM 관리</a></li>
+						<li><a href="#">맞춤형 서비스 관리</a></li>
+						<li><a href="#">통계 관리</a></li>
+						<li><a href="#">게시판 관리</a></li>
+-->
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >맞춤형 서비스 관리</a></li>
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >통계 관리</a></li>
+						<li><a href="#"  onclick="alert('업데이트 중입니다')" >게시판 관리</a></li>
+					</ul>
+				</nav>
+			</div>
+			
+			
+			<div class="mainContent">
+			
+				<?include $dir."/inc".$linkPage.".html";?>
+				
+			</div>
+
+			</div>
+			
+		
+		
+		<div class="footer">
+			<p>MCM ACADEMY. All Rights Reserved.</p>
+		</div>
+		
+
+</body>
+</html>
+<?
+}
+
+?>

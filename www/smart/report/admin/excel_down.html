@@ -1,0 +1,149 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<?
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+include "../inc/dbConn.php";
+include "../inc/func.php";
+include "./inc/conf.php";
+
+
+
+
+if($model == "search")
+{
+
+	if($sdate) $w_sdate = "and reg_date >= '$sdate'" ;
+	if($edate) $w_edate = "and reg_date <= '$edate'" ;
+	$sql = "SELECT * FROM hana_category_item_data WHERE view_state='Y' 
+			$w_sdate $w_edate
+
+		ORDER BY reg_date desc" ;
+}
+else 
+{
+	$sql = "SELECT * FROM hana_category_item_data WHERE view_state='Y' 
+		ORDER BY reg_date desc " ;
+}
+$res = mysql_query($sql) ;
+
+$nowData = mysql_num_rows($res ) ;
+
+//while($row = mysql_fetch_array($res))
+{
+	echo "<br> $row[name]";
+
+}
+
+
+echo $sql ;
+
+
+if($excel == 'Y')
+{
+	$Today = Date("Ymdhis");
+	$xls_filename = $xls_name."SeranHospital".$Today.".xls";
+	
+	header("Content-type: application/vnd.ms-excel; charset=euc-kr");
+	header("Content-type: application/x-msexcel");
+	header("Content-Disposition: attachment; filename=$xls_filename");
+	Header("Content-Transfer-Encoding: binary");
+	Header("Pragma: no-cache");
+	Header("Expires: 0");
+
+	echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=euc-kr\"></head><body>";
+}
+
+if(!$sdate) $sdate = "2016-06-01" ;
+if(!$edate) $sdate = "2016-06-31" ;
+?>
+
+
+
+<form method="post">
+<input type=hidden name=model value="search">
+
+<input type=text name=sdate value="<?=$sdate?>"> ~ <input type=text name=edate value="<?=$edate?>">
+<br><br>
+<input type=checkbox name=excel value="Y"> 엑셀 다운로드
+
+<input type=submit value="검색">
+
+</form>
+
+
+<table width='95%' height='' border='0' cellpadding='0' cellspacing='2' bgcolor='#d7d7ff'>
+			<tr>
+				<td height='2' colspan='11' bgcolor='#CCCCCC'></td>
+			</tr>
+			<tr style='padding : 5 5 5 5'  class="tb_c">
+				<td width='50'><b>번호</b></td>
+				<td ><b>등록번호</b></td>
+				<td ><b>성명</b></td>
+				<td ><b>검진일</b></td>
+				<td ><b>핸드폰번호</b></td>
+					
+				<td width='50'><b>성별</b></td>
+
+				<td ><b>등록일</b></td>
+
+			</tr>
+			<?
+			if($nowData == 0) {
+			?>
+			<tr height="25" bgcolor='#FFFFFF'>
+				<td class="font_small" colspan='11' align='center'>등록된 게시물이 없습니다.</td>
+			</tr>
+			<?}
+			else {
+				for($i = 0; $i < $nowData; $i++) {
+					$no =  $i +1 ;
+					$row = MYSQL_FETCH_ARRAY($res);
+
+
+			?>
+			<tr height="30" align='center' bgcolor='<? if($row['notice']==1) echo "#CFFFFF"; else echo "#FFFFFF";?>'>
+				<td  class="font_small"><a href="?dir=<?=$dir?>&menu=<?=$menu?>&form=View&seq=<?=$row['seq']?>"><?=$no?></a></td>
+				<td  class="font_small"><?=$row[serial_no]?> </td>
+				<td  class="font_small"><?=$row['name']?></td>
+				<td  class="font_small"><?=$row['exam_date']?></td>
+
+				<?
+				//substr($row['birth_date'],0,6)
+				?>
+
+				<td  class="font_small"><?=$row['mobile']?></td>
+
+				<td  class="font_small"><?=substr($row['sex'],0,6)?></td>
+
+				<td  class="font_small"><?=substr($row['reg_date'], 0, 10)?>				
+					
+				</td>
+
+				
+				
+			</tr>
+
+			<?
+				}
+			}
+			?>
+			<tr>
+				<td height='25' colspan='11' bgcolor='#EEEEEE' align='center'><?=funcPaging($totalCount, $numPerPage, $pagePerList, $pageNum, $searchQuery);?></td>
+			</tr>
+			<tr>
+				<td height='2' colspan='11' bgcolor='#CCCCCC'></td>
+			</tr>
+
+		
+			</table>
+
+
+
+<?
+exit;
+?>
+
+

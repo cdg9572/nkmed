@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래28통예미지 의료사업 예약</title>
+  <link href="default2.css" rel="stylesheet" >
+ </head>
+ <script src="../js/jquery.js" type="text/javascript"></script>
+<script src="../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#RDT').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		minDate: new Date('2022-07-08'),
+		maxDate: new Date('2022-09-30'),
+		yearRange: '2022:2022'
+	});	
+});
+
+</script>
+<style>
+td{	font-size:0.95em;padding:5px;border:1px solid #cdcdcd;	}
+</style>
+<body>
+<? 
+include "../inc/dbConn.php";
+$dong = $_POST["dong"];	$ho = $_POST["ho"];
+$pnm = $_POST["pnm"];
+$wdt = $_POST["wdt"];
+#$wdt 값이 없으면 수정 / 또는 중복
+$ridx = $wdt<>"" ? getRIDX($dong, $ho, $wdt) : $_POST['RIDX'];
+
+if($ridx==""){
+	echo "<script>
+				alert('정보가 부족하거나 오류로 인해서 처음화면으로 넘어갑니다.');
+				location.href='index2.html';
+			</script>";
+}
+
+?>
+<div id="mdiv2" style='text-align:center;'>
+  	<form id="frm3" name="frm3" method="post" action="reg2.html"  onsubmit=" return CSubmit2(); ">
+	<input type="hidden" name="RIDX" value="<?=$ridx;?>" />
+	<input type="hidden" name="ho" value="<?=$ho;?>" />
+	<input type="hidden" name="dong" value="<?=$dong;?>" />
+	  <div id="mdiv3">
+<?
+	echo "<div>";
+	echo "<span style='font-size:20px;'>예약 정보</span>";
+	$sql = " SELECT * FROM gr28 WHERE RIDX='$ridx' ";
+	#echo $sql;
+	if($r = mysql_query($sql)){
+		$row = mysql_fetch_array($r);
+		$tel = str_replace("-","",$row['PTEL']);
+		$HJ = $row[HJ]<>"" ? "확정" : "미확정";
+		$HJ_TXT = $row[HJ]<>"" ? "<br>변경이 필요한경우 1833-9988번으로 연락 바랍니다." : "";
+		echo "<table border='0' cellspacing='0'>";
+		echo "<tr>
+					<td width='100'>신청자 : ".substr($row['PNAME'],0,6)."*</td>
+					<td width='150'>연락처 : ".substr($row['PTEL'],0,3)."-****-".substr($row['PTEL'],(strlen($tel)-3))."</td>
+					<td width='100'>".$row['DONG']."동 ".$row['HO']."호</td>
+				</tr>
+				<tr>
+					<td>진행희망일<br>".$row['RDT']."</td>
+					<td colspan='2' align='left'>신청 항목 : ".GetInfo($row)."</td>
+				</tr>
+				<tr>
+					<td align='left'>메모 : </td>
+					<td colspan='2' align='left'>".nl2br($row['BIGO'])."</td>
+				</tr>
+				<tr>
+					<td align='left'>진행 사항 : </td>
+					<td colspan='2' align='left'>".$HJ." ".$HJ_TXT."</td>
+				</tr>";
+		echo "</table>";
+	}
+	echo "</div><br>";
+?>
+<? if($HJ=="미확정"){ ?>
+<div id="reg_btn3" onclick="del('<?=$ridx;?>')">삭제하기</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div id="reg_btn2" onclick="document.frm3.submit();">수정하기</div>
+<? } ?>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div id="mbtn" onclick="location.href='index.html';">첫화면으로</div><br>
+  <iframe name="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+</body>
+<script>
+function del(v){
+	location.href="del2_post.html?v="+v;
+}
+
+function CSubmit2(){
+	if( document.frm3.JG.checked==false && document.frm3.DP.checked==false && document.frm3.INP.checked==false && document.frm3.ENR.checked==false  ){
+		alert( "상품 한가지는 선택하셔야 합니다. " );
+		return false;
+	}
+
+	if( document.frm3.PNAME.value == "" ){
+		alert( "신청자는 필수 사항입니다." );
+		document.frm3.PNAME.focus();
+		return false;
+	}
+
+	if( document.frm3.PTEL.value == "" ){
+		alert( "연락처는 필수 사항입니다." );
+		document.frm3.PTEL.focus();
+		return false;
+	}
+	return document.frm3.submit();
+}
+
+function SelectCB( nm ){
+	//alert( nm );
+	if( nm=="JG" ){
+		document.frm3.DP.checked = false;
+		document.frm3.INP.checked = false;
+		document.frm3.ENR.checked = false;
+	}
+	if( nm=="DP" ){
+		document.frm3.JG.checked = false;
+		document.frm3.INP.checked = false;
+		document.frm3.ENR.checked = false;
+	}
+	if( nm=="INP" ){
+		document.frm3.DP.checked = false;
+		document.frm3.JG.checked = false;
+		document.frm3.ENR.checked = false;
+	}
+	if( nm=="ENR" ){
+		document.frm3.DP.checked = false;
+		document.frm3.JG.checked = false;
+		document.frm3.INP.checked = false;
+	}
+}
+</script>
+<?
+function GetInfo($arr){
+	$tmp = "";
+	if($arr['JG']=="V"){	$tmp = "종합검진";	}
+	if($arr['DP']=="V"){	$tmp = "대상포진+독감접종";	}
+	if($arr['INP']=="V"){	$tmp = "독감접종";	}
+	if($arr['ENR']=="V"){	$tmp = "영양제접종";	}
+
+	if($arr[INP]=="V" or $arr[ENR]=="V")	$tmp .= "<br>".$arr[INM1].", ".$arr[INM2].", ".$arr[INM3].", ".$arr[INM4].", ".$arr[INM5];
+
+	return $tmp;
+}
+
+function getRIDX($dong, $ho, $wdt){
+	$tmp_sql = " select ridx from gr28 where ho='$ho' and dong='$dong' and wdt='$wdt' ";
+	$res = mysql_query($tmp_sql);
+	$row = mysql_fetch_array($res) ;
+	return $row['ridx'];
+}
+?>

@@ -1,0 +1,2416 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="euc-kr">
+<title>Untitled Document</title>
+<link href="../_css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="/admin/_js/manage_layer.js"></script>
+</head>
+
+<body>
+<div class="contants_box_1440">
+	<div class="contants_01_1440">
+            
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="calendar_table_wrap">
+
+
+    <tr>
+        <td>
+        	<table border="0" cellspacing="0" cellpadding="5" class="calendar_table_01">
+                <tr>
+                    <td align="left"><a href="#" onclick="location.href='<?=$_SERVER['PHP_SELF']?>?dir=<?=$dir?>&menu=<?=$menu?>&toYear=<?=$prevYear?>&toMonth=<?=$prevMonth?>'" class="arrow">◀</a></td>
+                    <td><select>
+                        <option value="2013">2013</option>
+                    </select></td>
+                    <td><select>
+                        <option value="06">06</option>
+                    </select></td>
+                    <td align="right"><a href="#" onclick="location.href='<?=$_SERVER['PHP_SELF']?>?dir=<?=$dir?>&menu=<?=$menu?>&toYear=<?=$nextYear?>&toMonth=<?=$nextMonth?>'" class="arrow">▶</a></td>
+                </tr>
+            </table>
+		</td>
+    </tr>
+    
+    
+    
+    <tr>
+        <td>
+        
+<table width="100%" border="1" cellspacing="0" cellpadding="0" class="calendar_table_02">
+    <tr>
+        <th width="104" height="35"><span class="redText">SUN</span></th>
+        <th width="160">MON</th>
+        <th width="160">TUE</th>
+        <th width="160">WED</th>
+        <th width="160">THU</th>
+        <th width="160">FRI</th>
+        <th width="160"><span class="blueText">SAT</span></th>
+    </tr>
+    <tr>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="offday">31</td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">1</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="Next_dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">2</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">02</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">40</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center"><span class="reser_number_03">예약마감</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">01</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">20</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">11</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">30</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_03">예약마감</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">21</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">30</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">3</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">4</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">5</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">6</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    <table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">7</td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">8</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">9</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">10</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">11</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">12</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">13</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    <table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">14</td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">15</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">16</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">17</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">18</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">19</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">20</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    <table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">21</td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">22</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">23</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">24</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">25</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">26</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">27</td>
+                </tr>
+                <tr>
+                	<td align="center">
+                    
+                    <table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+    </tr>
+    
+    <tr>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">28</td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">29</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="dayBox"><a href="javascript:void(0)" onclick="javascript:OpenManageFrame('/admin/reservation/pop_res_write.html?input_date=<?=$chk_date?>',1110,550);">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="day">30</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                    
+                    	<table width="156" border="0" cellspacing="0" cellpadding="0" class="calendar_table_02_sub">
+                            <tr>
+                                <th width="80" height="20">수면대장</th>
+                                <td>
+                                    <table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">MR 검사</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">뇌 MRI</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">PET-CT</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">심장초음파</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th height="20">VIP</th>
+                                <td>
+                                	<table width="70" border="0" cellspacing="0" cellpadding="0" align="right" style="padding-right:5px;">
+                                        <tr>
+                                            <td align="center" width="45%"><span class="reser_number_01">00</span></td>
+                                            <td align="center" width="10%">|</td>
+                                            <td align="center" width="45%"><span class="reser_number_02">00</span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="nodayBox"><a href="#">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="offday">1</td>
+                </tr>
+                <tr>
+                	<td align="center">&nbsp;</td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="nodayBox"><a href="#">
+
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="offday">2</td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="nodayBox"><a href="#">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="offday">3</td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+        	</table></a>
+        </td>
+        <td valign="top" class="nodayBox">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="left" class="offday">4</td>
+                </tr>
+                <tr>
+                	<td align="center">&nbsp;</td>
+                </tr>
+        	</table>
+        </td>
+    </tr>
+    
+</table>
+
+
+
+		</td>
+	</tr>
+    
+    
+    
+</table>
+
+    </div>
+</div>
+<div class="contants_footer_1440"><p>Copyright ⓒ <strong>메디로드</strong> All Rights Reserved. Contact <strong>mediroad@mediroad.net</strong> for more Information.</p></div>
+</body>
+</html>

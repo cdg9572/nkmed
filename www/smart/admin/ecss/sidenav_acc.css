@@ -1,0 +1,117 @@
+#side_nav .fork {
+  border:0;
+  position:absolute;
+  top:0;
+  right:0;
+}
+
+#side_nav .col {
+  width: 320px;
+  float: left;
+  margin-right:32px;
+  margin-bottom: 16px;
+}
+#side_nav .c3 {
+  margin-right:0;
+}
+
+#side_nav h1 {
+  border-bottom: 1px solid #333;
+  font-size: 32px;
+  color: #fff;
+  padding-bottom: 12px;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.6);
+}
+
+#side_nav h2 {
+  margin: 10px 0;
+  color: #000;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px #fff;
+}
+
+#side_nav h3 {
+  margin: 0;
+  background-color: #333;
+}
+
+#side_nav h3 a {
+	font-size: 14px;
+	background: url("sprite.png") 15px 13px no-repeat;
+	display: block;
+	padding: 10px;
+	padding-left: 32px;
+	margin: 0;
+	color: #fff;
+	text-decoration: none;
+	font-weight: normal;
+	border-bottom: 1px solid #666;
+}
+#side_nav h3:hover { background: rgb(228,10,85); }
+#side_nav h3.open  { background: #FFF; }
+#side_nav h3.open a { background-position: 13px -25px; color: #333; }
+#side_nav h3 + div { padding: 10px; background: #ccc; }
+
+#side_nav ul {}
+#side_nav ul li { margin-bottom: 3px;}
+#side_nav ul li a {
+	-webkit-border-radius: 5px; border-radius: 5px;
+	display: block;
+	font-size:12px; 
+	padding: 5px;
+	padding-left: 20px;
+	text-decoration: none;
+	color: #333;
+}
+#side_nav ul li a:hover, #side_nav ul li a.open {
+	background-color:#333; color: #fff;
+}
+
+#side_nav h2 + div,
+#side_nav .example {
+  background: #fff;
+  overflow: hidden;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+/* Pre hide sections with JavaScript on
+--- */
+#side_nav h3+div {
+  display: none;
+}
+
+/* CSS3 Animation example
+--- */
+#css3-animated-example h3 + div {
+  height: 0px;
+  padding: 0px;
+  overflow: hidden;
+  background: #000;
+  display: block!important;
+  -webkit-transform: translateZ(0);
+  -webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition:all 0.3s ease;
+	transition: all 0.3s ease;
+}
+#css3-animated-example .content {
+  padding: 10px;
+}
+
+#css3-animated-example h3.open + div {
+  height: auto;
+  background: #aaffff;
+}
+
+/* Event example
+--- */
+pre#event-log {
+  background: #fafacc;
+  padding: 10px;
+  display: block;
+}
+

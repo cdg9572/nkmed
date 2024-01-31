@@ -1,0 +1,193 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+	$usql = "";
+	if($_POST[MNCAGT5EM]=="1"){
+		$usql .= " MNCAGT5EM=1, MNCAGT51C='', MNCAGT52C='', MNCAGT53C='', MNCAGT54C='', MNCAGT55C='' ";
+	}else{ 
+		$usql .= " MNCAGT5EM=2, MNCAGT51C='".$_POST[MNCAGT51C]."', MNCAGT52C='".$_POST[MNCAGT52C]."', MNCAGT53C='".$_POST[MNCAGT53C]."', MNCAGT54C='".$_POST[MNCAGT54C]."', MNCAGT55C='".$_POST[MNCAGT55C]."' ";
+	}
+
+	if($usql<>""){ $usql .=" , "; }
+
+	if($_POST[MNCAGT6EM]=="1"){
+		$usql .= " MNCAGT6EM=1, MNCAGT61C='', MNCAGT62C='', MNCAGT63C='', MNCAGT64C='', MNCAGT65C='' ";
+	}else{ 
+		$usql .= " MNCAGT6EM=2, MNCAGT61C='".$_POST[MNCAGT61C]."', MNCAGT62C='".$_POST[MNCAGT62C]."', MNCAGT63C='".$_POST[MNCAGT63C]."', MNCAGT64C='".$_POST[MNCAGT64C]."', MNCAGT65C='".$_POST[MNCAGT65C]."' ";
+	}
+
+	if($usql<>""){ $usql .=" , "; }
+
+	if($_POST[MNCAGT7EM]=="1"){
+		$usql .= " MNCAGT7EM=1, MNCAGT71C='', MNCAGT72C='', MNCAGT73C='', MNCAGT74C='', MNCAGT75C='' ";
+	}else{ 
+		$usql .= " MNCAGT7EM=2, MNCAGT71C='".$_POST[MNCAGT71C]."', MNCAGT72C='".$_POST[MNCAGT72C]."', MNCAGT73C='".$_POST[MNCAGT73C]."', MNCAGT74C='".$_POST[MNCAGT74C]."', MNCAGT75C='".$_POST[MNCAGT75C]."' ";
+	}
+
+	$sql = " UPDATE smart_mj_am SET 
+					$usql
+				WHERE midx='".$_POST[mseq]."'  ";
+
+	#echo $sql;
+	mysql_query( $sql );
+}
+
+$sql = "SELECT B.ms, A.* FROM smart_mj_am A LEFT OUTER JOIN smart_mj_il B ON A.midx=B.midx WHERE A.midx='".$_POST[mseq]."' ";
+if( $r = mysql_query($sql) ){
+	$row = mysql_fetch_array($r);
+	$MNCAGT8EM = $row[MNCAGT8EM];
+	$MNCAGT8RS = $row[MNCAGT8RS];
+	$MNCAGT9EM = $row[MNCAGT9EM];
+	$MNCAGT9RS = $row[MNCAGT9RS];
+	$MNCAGT10E = $row[MNCAGT10E];
+	if($row[ms]=="F" || $_GET[t]=="test"){
+	?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="euc-kr" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+ <body topmargin=0>
+ <form name="fm" method="post" action="a_6.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+	<input type="hidden" name="md" value="reg"/>
+	<p style="font-size:12px; color:red;">※ 여성분들만 응답해주세요.</p>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">8. 월경을 언제 시작하셨습니까? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT8EM" value="1" <? if( $MNCAGT8EM == "1" ){ echo "checked"; } ?>  />만 
+						 <input type="text"  name="MNCAGT8RS"  value="<?=$MNCAGT8RS;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'/> 세&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT8EM" value="2" <? if( $MNCAGT8EM != "1" ){ echo "checked"; } ?> />초경이 없었음</td></tr>
+					</table>
+					</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">9. 현재 월경의 상태는 어떠십니까? </th></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT9EM" value="1"  onclick="ts( 'none' );"  <? if( $MNCAGT9EM == "1" ){ echo "checked"; } ?>> 아직 월경이 있음 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT9EM" value="2"  onclick="ts( 'none' );"  <? if( $MNCAGT9EM == "2" ){ echo "checked"; } ?>> 자궁적출술을 하였음<br/>
+						<input type="radio" name="MNCAGT9EM" value="3"  onclick="ts( '' );" <? if( $MNCAGT9EM == "3" ){ echo "checked"; } ?>> 폐경되었음 
+						( 폐경연령 : 만 <input type="text"  name="MNCAGT9RS" value="<?=$MNCAGT9RS;?>" size='5' onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2' />세 )</td></tr>
+					</table>
+					</td></tr>
+	<tr id="t9"><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">10. 폐경 후 증상을 완화하기 위해서 호르몬 제제를 복용하고 계시거나 과거에 복용하신 적이 있습니까? </th></tr>
+	<tr id="t92"><td  >
+					<table width='100%' border='0' cellspacing='0'>
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT10E" value="1" <? if( $MNCAGT10E == "1" ){ echo "checked"; } ?>> 호르몬 제제를 복용한 적 없음&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT10E" value="2" <? if( $MNCAGT10E == "2" ){ echo "checked"; } ?>> 2년 미만 복용<br/>
+						<input type="radio" name="MNCAGT10E" value="3" <? if( $MNCAGT10E == "3" ){ echo "checked"; } ?>> 아직 월경이 있음 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT10E" value="4" <? if( $MNCAGT10E == "4" ){ echo "checked"; } ?>> 5년 이상 복용<br/>
+						<input type="radio" name="MNCAGT10E" value="5" <? if( $MNCAGT10E == "5" ){ echo "checked"; } ?> > 모르겠음</td></tr>
+					</table>
+					</td></tr>
+	</table>
+	<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="CheckREG();" style="cursor:hand">다음설문</td></tr>
+</table>
+<!--	<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+</form>
+	<?
+	}else{
+?>
+<script> 
+	
+	parent.document.frm.gatxt.value= "작성완료";
+	parent.document.frm.gatxt.style.color = "red"; 
+	alert("암 공통문진이 완료되었습니다.");
+</script>
+<center>
+<br>
+
+<form name="fm" method="post" action="../lf/cmm_1.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type="hidden" name="md" value="reg"/>
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="parent.location.href='../munjin.html?seq=<?=$_POST[rseq];?>';" style="cursor:hand">처음화면</td></tr>
+</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+<input type="button" value="창닫기" onclick="self.close();"/> &nbsp; &nbsp;-->
+<!--<input type="submit" value="암문진표(대상자만)" /> -->
+</form>
+</br>
+</center>
+<?
+	if( $_POST[ty1]=="t"){		echo "<script>document.fm.submit();</script>";	}
+?>
+<?
+	}
+
+}
+
+?>
+
+<script>
+
+function CheckREG(){
+	if( document.fm.MNCAGT8EM[0].checked ){
+		if ( document.fm.MNCAGT8RS.value == ""){
+			document.fm.MNCAGT8RS.focus();
+			 alert( "내용을 입력하셔야 합니다." );
+			 return false;
+		}
+	}
+	if( document.fm.MNCAGT9EM[2].checked ){
+		if ( document.fm.MNCAGT9RS.value == ""){
+			document.fm.MNCAGT9RS.focus();
+			 alert( "내용을 입력하셔야 합니다." );
+			 return false;
+		}
+	}
+	document.fm.submit();
+	return true;
+}
+
+function ts( val ){
+	if (val == "none")	{
+		document.fm.MNCAGT9RS.value = "";
+		document.fm.MNCAGT10E[0].checked = false;
+		document.fm.MNCAGT10E[1].checked = false;
+		document.fm.MNCAGT10E[2].checked = false;
+		document.fm.MNCAGT10E[3].checked = false;
+		document.fm.MNCAGT10E[4].checked = false;
+		
+	}
+	document.getElementById("t9").style.display = val;
+	document.getElementById("t92").style.display = val;
+}
+
+function hisBack(){
+	document.fm.action="a_4.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+</script>

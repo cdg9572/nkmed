@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>뉴고려병원&구래27통 간편예약</title>
+    <link rel="stylesheet" href="http://smart.nkhospital.net/css/bulma.min.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.nkhospital.net/favicon/favicon-32x32.png">
+  </head>
+
+<body>
+<!--div class="tabs">
+  <ul>
+    <li class="is-active"><a href="#" onclick="activateTab(this)">종합검진</a></li>
+    <li><a href="#" onclick="activateTab(this)">융합상품</a></li>
+    <li><a href="#" onclick="activateTab(this)">유전자</a></li>
+    <li><a href="#" onclick="activateTab(this)">예방접종</a></li>
+  </ul>
+</div-->
+  
+<div id="cont"><img src="img/m.jpg" alt="종합검진 Image"></div>
+</body>
+</html>
+<script>
+  const images = {
+    "종합검진": "img/jh.jpg",
+    "융합상품": "img/mix.jpg",
+    "유전자": "img/jb.jpg",
+    "예방접종": "img/ir.jpg"
+  };
+
+  function activateTab(element) {
+    const liTags = document.querySelectorAll('.tabs ul li');
+
+    // 이전에 활성화되었던 li 태그의 클래스를 제거합니다.
+    liTags.forEach(liTag => {
+      liTag.classList.remove('is-active');
+    });
+
+    // 클릭한 a 태그의 부모 li 태그에 클래스를 추가합니다.
+    const clickedLi = element.parentElement;
+    clickedLi.classList.add('is-active');
+
+    // 해당 이미지를 가져와서 <div>에 추가합니다.
+    const tabName = element.innerText;
+    const imageSrc = images[tabName];
+
+    const contDiv = document.getElementById('cont');
+    contDiv.innerHTML = `<img src="${imageSrc}" alt="${tabName} Image">`;
+  }
+</script>

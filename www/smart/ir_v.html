@@ -1,0 +1,31 @@
+<meta charset="utf-8" />
+<?
+
+include "inc/dbConn.php";
+include  "inc/func.php";
+
+
+if( $_GET[md]==""){
+	$sql = " SELECT * FROM smart_ir WHERE sname='$_GET[v1]' AND tel='$_GET[v2]' ";
+
+	if( $r = mysql_query($sql) ){
+		$row = mysql_fetch_array($r);
+		if( $row[idx]<>""){
+			echo "<script>
+					a = confirm('$row[idate] $row[rtime] 에 예약을 하셨습니다.\\n예정일자 변경은 새로 등록 하시면 됩니다.\\n기존 예약정보를 취소 하시겠습니까?\\n\\n확인->정보삭제, 아니오(취소)->정보미삭제');
+					if( a ){
+						location.href='ir_v.html?md=d&v='+$row[idx];
+					}
+				</script>";
+		}else{
+			echo "<script>alert('예약정보가 없습니다.');</script>";
+		}
+	}
+}else{
+	if( $_GET[md]=="d"){
+		$sql = " delete FROM smart_ir WHERE idx='$_GET[v]' ";
+		mysql_query($sql);
+		echo "<script>alert('예약이 취소 되었습니다.');parent.document.location.href='ir2022.html';</script>";
+	}
+}
+?>

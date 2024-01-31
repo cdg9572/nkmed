@@ -1,0 +1,55 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include $DOCUMENT_ROOT."/inc/func.php";
+include $DOCUMENT_ROOT."/inc/dbConn.php";
+
+
+
+include $DOCUMENT_ROOT."/admin/inc/conf.php";
+
+mysql_query("set names utf8;");
+
+
+
+$dir = get_dirname() ;
+//echo "$dir";
+
+
+//================== 관리자 정보 
+$sql = "select * from smart_opASP where url_dir = '$dir'";
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+$asp_name = $row[name] ;
+
+$_SESSION['sess_ASP'] = "$dir" ;
+$_SESSION['sess_ASP_name'] = "$asp_name" ;
+
+testing_dsp("session");
+//exit ;
+
+echo "<script language='JavaScript'>location.href='/index.html'</script>";
+exit;
+
+
+
+
+?>
+
+

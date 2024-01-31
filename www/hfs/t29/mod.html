@@ -1,0 +1,27 @@
+<?
+
+include "../inc/dbConn.php";
+
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+$sql = " update t29 set
+				cho='".$_POST['cho']."'
+				, pcnt='".$_POST['pcnt']."'
+				, dong='".$_POST['dong']."'
+				, ho='".$_POST['ho']."'
+				, sname='".$_POST['sname']."'
+				, tel='".$_POST['tel']."'
+				, wdt='".date("Y-m-d H:i:s")."'
+			WHERE tidx='".$_POST['tidx']."' ";
+
+if( $r = mysql_query($sql) ){
+	echo " <script>
+					alert( '변경되었습니다.' );
+					parent.document.frm.reset();
+				</script> ";
+}
+
+?>

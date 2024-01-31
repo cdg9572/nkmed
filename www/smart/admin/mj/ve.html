@@ -1,0 +1,113 @@
+<?
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = "SELECT A.* FROM smart_mj_mnnutritbl A
+			LEFT OUTER JOIN smart_mj_il B ON A.MNNUJUBNO=B.MIDX
+			WHERE MNNUJUBNO='".$_GET[i]."' ";	
+#echo $sql;
+	$r=mysql_query($sql);
+	$row = mysql_fetch_array($r);
+
+	#합계요청
+	$tm = 0;
+	if( $row[MNNUQST01]=="1" ){ $tm += 5 ; }else if($row[MNNUQST01]=="2"){ $tm += 3 ;  }else if($row[MNNUQST01]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNNUQST02]=="1" ){ $tm += 5 ; }else if($row[MNNUQST02]=="2"){ $tm += 3 ;  }else if($row[MNNUQST02]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNNUQST03]=="1" ){ $tm += 5 ; }else if($row[MNNUQST03]=="2"){ $tm += 3 ;  }else if($row[MNNUQST03]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNNUQST04]=="1" ){ $tm += 5 ; }else if($row[MNNUQST04]=="2"){ $tm += 3 ;  }else if($row[MNNUQST04]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNNUQST05]=="1" ){ $tm += 1 ; }else if($row[MNNUQST05]=="2"){ $tm += 3 ;  }else if($row[MNNUQST05]=="3"){ $tm += 5; }else{ $tm +=0; }
+	if( $row[MNNUQST06]=="1" ){ $tm += 1 ; }else if($row[MNNUQST06]=="2"){ $tm += 3 ;  }else if($row[MNNUQST06]=="3"){ $tm += 5; }else{ $tm +=0; }
+	if( $row[MNNUQST07]=="1" ){ $tm += 1 ; }else if($row[MNNUQST07]=="2"){ $tm += 3 ;  }else if($row[MNNUQST07]=="3"){ $tm += 5; }else{ $tm +=0; }
+	if( $row[MNNUQST08]=="1" ){ $tm += 1 ; }else if($row[MNNUQST08]=="2"){ $tm += 3 ;  }else if($row[MNNUQST08]=="3"){ $tm += 5; }else{ $tm +=0; }
+	if( $row[MNNUQST09]=="1" ){ $tm += 5 ; }else if($row[MNNUQST09]=="2"){ $tm += 3 ;  }else if($row[MNNUQST09]=="3"){ $tm += 1; }else{ $tm +=0; }
+	if( $row[MNNUQST10]=="1" ){ $tm += 1 ; }else if($row[MNNUQST10]=="2"){ $tm += 3 ;  }else if($row[MNNUQST10]=="3"){ $tm += 5; }else{ $tm +=0; }
+	if( $row[MNNUQST11]=="1" ){ $tm += 1 ; }else if($row[MNNUQST11]=="2"){ $tm += 3 ;  }else if($row[MNNUQST11]=="3"){ $tm += 5; }else{ $tm +=0; }
+
+?>
+<center>
+<form name="frm" method="post" action="ve_p.html">
+<input type="hidden" name="midx" value="<?=$_GET[i];?>" />
+<table width="100%" cellspacing="5" id="ptbl1">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+<table width='100%'>
+<!--수검자정보-->
+<!--공통문진표-->
+<tr><td width='100%'>
+	<table border='1'  width='100%' cellspacing='0' style="font-size:10pt;">
+	<tr><td width='20%'>수검자성명</td>
+		<td width='80%'>&nbsp;</td></tr>
+	<tr><td colspan='2'>
+1.우유나 칼슘강화두유, 기타 유제품(요구르트 등)을 매일 1컵(200㎖) 이상 마신다. <br/>
+<input type="radio" name="MNNUQST01" value="1" <? if($row[MNNUQST01]=="1"){ echo "checked";}?> /> 항상 그런 편이다(5점)	
+<input type="radio" name="MNNUQST01" value="2" <? if($row[MNNUQST01]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST01" value="3" <? if($row[MNNUQST01]=="3"){ echo "checked";}?> /> 아닌 편이다(1점)<br/>
+  <br/>
+2.육류, 생선, 달걀, 콩, 두부 등으로 된 음식을 매일 3회 이상 먹는다.<br/>
+<input type="radio" name="MNNUQST02" value="1" <? if($row[MNNUQST02]=="1"){ echo "checked";}?> /> 항상 그런 편이다(5점)	
+<input type="radio" name="MNNUQST02" value="2" <? if($row[MNNUQST02]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST02" value="3" <? if($row[MNNUQST02]=="3"){ echo "checked";}?> /> 아닌 편이다(1점)<br/>
+  <br/>
+3.김치 이외의 채소를 식사할 때마다 먹는다. <br/>
+<input type="radio" name="MNNUQST03" value="1" <? if($row[MNNUQST03]=="1"){ echo "checked";}?> /> 항상 그런 편이다(5점)	
+<input type="radio" name="MNNUQST03" value="2" <? if($row[MNNUQST03]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST03" value="3" <? if($row[MNNUQST03]=="3"){ echo "checked";}?> /> 아닌 편이다(1점)<br/>
+  <br/>
+4.과일(1개)을 매일 먹는다. (갈아먹는 형태 포함)<br/>
+<input type="radio" name="MNNUQST04" value="1" <? if($row[MNNUQST04]=="1"){ echo "checked";}?> /> 항상 그런 편이다(5점)	
+<input type="radio" name="MNNUQST04" value="2" <? if($row[MNNUQST04]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST04" value="3" <? if($row[MNNUQST04]=="3"){ echo "checked";}?> /> 아닌 편이다(1점)<br/>
+  <br/>
+5.튀김이나 볶음 요리를 얼마나 자주 먹습니까? <br/>
+<input type="radio" name="MNNUQST05" value="1" <? if($row[MNNUQST05]=="1"){ echo "checked";}?> /> 주 4회 이상(1점)	
+<input type="radio" name="MNNUQST05" value="2" <? if($row[MNNUQST05]=="2"){ echo "checked";}?> /> 주 2-3회 (3점)	
+<input type="radio" name="MNNUQST05" value="3" <? if($row[MNNUQST05]=="3"){ echo "checked";}?> /> 주 1회 이하(5점)<br/>
+  <br/>
+6.콜레스테롤이 많은 식품(삼겹살, 달걀노른자, 오징어 등)을 얼마나 자주 먹습니까?<br/>
+<input type="radio" name="MNNUQST06" value="1" <? if($row[MNNUQST06]=="1"){ echo "checked";}?> /> 주 4회 이상(1점)	
+<input type="radio" name="MNNUQST06" value="2" <? if($row[MNNUQST06]=="2"){ echo "checked";}?> /> 주 2-3회 (3점)	
+<input type="radio" name="MNNUQST06" value="3" <? if($row[MNNUQST06]=="3"){ echo "checked";}?> /> 주 1회 이하(5점)<br/>
+  <br/>
+7.아이스크림, 케이크, 과자, 음료수(믹스커피, 콜라, 식혜 등)중 1가지를 매일 먹는다.<br/>
+<input type="radio" name="MNNUQST07" value="1" <? if($row[MNNUQST07]=="1"){ echo "checked";}?> /> 항상 그런 편이다(1점)	
+<input type="radio" name="MNNUQST07" value="2" <? if($row[MNNUQST07]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST07" value="3" <? if($row[MNNUQST07]=="3"){ echo "checked";}?> /> 아닌 편이다(5점)<br/>
+  <br/>
+8.젓갈, 장아찌, 자반 등을 매일 먹는다. <br/>
+<input type="radio" name="MNNUQST08" value="1" <? if($row[MNNUQST08]=="1"){ echo "checked";}?> /> 항상 그런 편이다(1점)	
+<input type="radio" name="MNNUQST08" value="2" <? if($row[MNNUQST08]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST08" value="3" <? if($row[MNNUQST08]=="3"){ echo "checked";}?> /> 아닌 편이다(5점)<br/>
+  <br/>
+9.식사를 매일 정해진 시간에 한다. <br/>
+<input type="radio" name="MNNUQST09" value="1" <? if($row[MNNUQST09]=="1"){ echo "checked";}?> /> 항상 그런 편이다(5점)
+<input type="radio" name="MNNUQST09" value="2" <? if($row[MNNUQST09]=="2"){ echo "checked";}?> /> 보통이다(3점)	
+<input type="radio" name="MNNUQST09" value="3" <? if($row[MNNUQST09]=="3"){ echo "checked";}?> /> 아닌 편이다(1점)<br/>
+  <br/>
+10.곡류(밥, 빵류), 고기?생선?달걀?콩류, 채소류, 과일류, 우유류 등 총 5종류 식품 중에서 하루에 보통 몇 종류의 식품을 드십니까?<br/>
+<input type="radio" name="MNNUQST10" value="1" <? if($row[MNNUQST10]=="1"){ echo "checked";}?> /> 5종류 (5점)	
+<input type="radio" name="MNNUQST10" value="2" <? if($row[MNNUQST10]=="2"){ echo "checked";}?> /> 4종류 (3점)	
+<input type="radio" name="MNNUQST10" value="3" <? if($row[MNNUQST10]=="3"){ echo "checked";}?> /> 3종류 이하(1점) <br/>
+  <br/>
+11. 외식(직장에서 제공되는 식사 제외)을 얼마나 자주 하십니까? <br/>
+<input type="radio" name="MNNUQST11" value="1" <? if($row[MNNUQST11]=="1"){ echo "checked";}?> /> 주 5회 이상(1점)	
+<input type="radio" name="MNNUQST11" value="2" <? if($row[MNNUQST11]=="2"){ echo "checked";}?> /> 주 2-4회 (3점)	
+<input type="radio" name="MNNUQST11" value="3" <? if($row[MNNUQST11]=="3"){ echo "checked";}?> /> 주 1회 이하(5점)<br/>
+<table width='100%' border='0' cellspacing='0'>
+<tr><td align='right' width="100%"><table border='1' cellspacing='0'>
+														<tr><td>&nbsp;합계&nbsp;</td>
+														<td><input type="text" name="tl" value="<?=$tm;?>" size="10" readonly /></td></tr>
+														</table></td></tr>
+</table>
+<table width="100%" cellspacing="5" id="ptbl2">
+<tr align="center"><td bgcolor="#86E57F" height="40" onclick="document.frm.submit();" style="cursor:hand;">수정하기</td>
+	<td width='50%' bgcolor="#6799FF" onclick="p();" style="cursor:hand;">출력하기</td></tr>
+</table>
+</center>
+</form>
+<script>
+function p(){
+	document.getElementById("ptbl1").style.display="none";
+	document.getElementById("ptbl2").style.display="none";
+	print();
+}
+</script>

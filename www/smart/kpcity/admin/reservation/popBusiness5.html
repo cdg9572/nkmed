@@ -1,0 +1,26 @@
+<?
+session_start();
+include "../../inc/dbConn.php";
+include  "../inc/func.php";
+
+mysql_select_db("mediroad_liss", $dbconn);
+
+
+//echo "bu5!" ;
+
+$sql = "select a.PRO_NAME , a.PRO_CODE, a.PRO_RMARK, a.PRO_DTETC from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+	//echo $sql;
+	$result = mysql_query($sql); 
+	$rows = mysql_fetch_array($result);
+
+
+echo "[ $rows[PRO_DTETC] ] <br> [ $rows[PRO_RMARK] ]";
+
+
+
+?> 
+
+
+
+
+

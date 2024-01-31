@@ -1,0 +1,475 @@
+<?
+session_start();
+include $DOCUMENT_ROOT."/admin/inc/dbConn.php";
+//include $DOCUMENT_ROOT."/admin/inc/chkLogin.php";
+
+/*
+echo $PRO_NAME."<br>";
+echo $textfield1."<br>";
+echo $item1."<br>";
+echo $item2."<br>";
+echo $item3."<br>";
+echo $item4."<br>";
+echo $item5."<br>";
+echo $item6."<br>";
+
+echo $start_date."<br>";
+echo $end_date."<br>";
+*/
+function dateDiff($date1, $date2){ 
+ $_date1 = explode("-",$date1); 
+ $_date2 = explode("-",$date2); 
+
+ $tm1 = mktime(0,0,0,$_date1[1],$_date1[2],$_date1[0]); 
+ $tm2 = mktime(0,0,0,$_date2[1],$_date2[2],$_date2[0]);
+
+ return ($tm1 - $tm2) / 86400;
+}
+
+$interval = dateDiff($end_date,$start_date);
+
+
+				for($k=0;$k<=$interval;$k++){
+
+						
+						$reserve_item1=0;$reserve_item2=0;$reserve_item3=0;$reserve_item4=0;$reserve_item5=0;$reserve_item6=0;
+						
+						$sel_day = date("Y-m-d", strtotime("+$k day", strtotime($start_date))); //내일
+
+						
+						$holiday_query = "select * from reserve_holiday where day_start='".$sel_day."' and view_state='Y' and day_type='4'";
+					//	echo $holiday_query."<br>";
+						$holiday_result = mysql_query($holiday_query);
+						$holiday_cnt = mysql_num_rows($holiday_result);
+						
+						if($holiday_cnt > 0){
+						?>
+							<!--<img src="/admin/img/btn_unreserve.gif"><br><br>
+							<img src="/admin/img/btn_unreserve_detail_search.gif">-->
+						<?
+						}
+						else{#휴일이 아닐때
+							//echo $j;
+
+							#지정일인지 체크함
+							$target_query = "select * from reserve_setday where day_start='".$sel_day."' and view_state='Y' and day_type='3'";
+							$target_result = mysql_query($target_query);
+							$target_cnt = mysql_num_rows($target_result);
+							//echo $target_cnt;
+							if($target_cnt > 0){
+								$target_query2 = "select sum(item1) item1,sum(item2) item2,sum(item3) item3,sum(item4) item4,sum(item5) item5, sum(item6) item6 from reserve_setday where day_start='".$sel_day."' and view_state='Y' and day_type='3'";
+
+								//echo $target_query2;
+								$target_result2 = mysql_query($target_query2);
+								$rows2 = mysql_fetch_array($target_result2);
+							
+								#예약 체크
+								$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$sel_day."'  and state='Y' and view_state='Y'";
+								//echo $chk_query;
+								$chk_result = mysql_query($chk_query);
+								
+								while($chk_rows = mysql_fetch_array($chk_result)){
+									if($chk_rows[reserve_type0] == "Y"){
+										$reserve_item1++;
+									}
+									if($chk_rows[reserve_type5] == "Y"){
+										$reserve_item2++;
+									}
+									if($chk_rows[reserve_type16] == "Y" || $chk_rows[reserve_type17] == "Y" || $chk_rows[reserve_type18] == "Y" || $chk_rows[reserve_type19] == "Y" || $chk_rows[reserve_type20] == "Y" || $chk_rows[reserve_type21] == "Y"){
+										$reserve_item3++;
+									}
+									if($chk_rows[reserve_type22] == "Y" || $chk_rows[reserve_type23] == "Y" || $chk_rows[reserve_type24] == "Y"){
+										$reserve_item4++;
+									}
+									if($chk_rows[reserve_type25] == "Y"){
+										$reserve_item5++;
+									}
+									if($chk_rows[reserve_type26] == "Y"){
+										
+										$reserve_item6++;
+									}	
+								}
+								$chk_item1 = $rows2[item1] - $reserve_item1;
+								$chk_item2 = $rows2[item2] - $reserve_item2;
+								$chk_item3 = $rows2[item3] - $reserve_item3;
+								$chk_item4 = $rows2[item4] - $reserve_item4;
+								$chk_item5 = $rows2[item5] - $reserve_item5;
+								$chk_item6 = $rows2[item6] - $reserve_item6;
+							//	echo $reserve_item5;
+							}
+
+							else{#지정일도 아닐때
+								$sel_day2 = date("w",strtotime($sel_day));
+								//echo $sel_day2."<br>";
+								if($sel_day2 == "6"){#토요일 반일
+								//	echo "c";
+									$ban_query = "select sum(item1) item1,sum(item2) item2,sum(item3) item3,sum(item4) item4,sum(item5) item5,sum(item6) item6 from reserve_setday where  view_state='Y' and day_type='2' ";
+									//echo $ban_query;
+									
+									$ban_result = mysql_query($ban_query);
+									$rows2 = mysql_fetch_array($ban_result);
+
+									#예약 체크
+									$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$sel_day."' and state='Y'  and view_state='Y'";
+
+								//	echo $chk_query;
+									$chk_result = mysql_query($chk_query);
+									
+									while($chk_rows = mysql_fetch_array($chk_result)){
+										if($chk_rows[reserve_type0] == "Y"){
+											$reserve_item1++;
+										}
+										if($chk_rows[reserve_type5] == "Y"){
+											$reserve_item2++;
+										}
+										if($chk_rows[reserve_type16] == "Y" || $chk_rows[reserve_type17] == "Y" || $chk_rows[reserve_type18] == "Y" || $chk_rows[reserve_type19] == "Y" || $chk_rows[reserve_type20] == "Y" || $chk_rows[reserve_type21] == "Y"){
+											$reserve_item3++;
+										}
+										if($chk_rows[reserve_type22] == "Y" || $chk_rows[reserve_type23] == "Y" || $chk_rows[reserve_type24] == "Y"){
+											$reserve_item4++;
+										}
+										if($chk_rows[reserve_type25] == "Y"){
+											$reserve_item5++;
+										}
+										if($chk_rows[reserve_type26] == "Y"){
+											$reserve_item6++;
+										}
+										
+
+									}
+									$chk_item1 = $rows2[item1] - $reserve_item1;
+									$chk_item2 = $rows2[item2] - $reserve_item2;
+									$chk_item3 = $rows2[item3] - $reserve_item3;
+									$chk_item4 = $rows2[item4] - $reserve_item4;
+									$chk_item5 = $rows2[item5] - $reserve_item5;
+									$chk_item6 = $rows2[item6] - $reserve_item6;
+								}
+								else if($sel_day2 == "0"){#일요일 휴무
+									$chk_item1 = "0";
+									$chk_item2 = "0";
+									$chk_item3 = "0";
+									$chk_item4 = "0";
+									$chk_item5 = "0";
+									$chk_item6 = "0";
+								}
+								else{#전일
+									//echo "a";
+									$situation_query = "select sum(item1) item1,sum(item2) item2,sum(item3) item3,sum(item4) item4,sum(item5) item5,sum(item6) item6 from reserve_setday where  view_state='Y' and day_type='1' ";
+									//echo $situation_query;
+									$situation_result = mysql_query($situation_query);
+									$rows2 = mysql_fetch_array($situation_result);
+
+									#예약 체크
+									$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$sel_day."' and state='Y' and view_state='Y'";
+									//echo $chk_query;
+									$chk_result = mysql_query($chk_query);
+									
+									while($chk_rows = mysql_fetch_array($chk_result)){
+										if($chk_rows[reserve_type0] == "Y"){
+											$reserve_item1++;
+										}
+										if($chk_rows[reserve_type5] == "Y"){
+											$reserve_item2++;
+										}
+										if($chk_rows[reserve_type16] == "Y" || $chk_rows[reserve_type17] == "Y" || $chk_rows[reserve_type18] == "Y" || $chk_rows[reserve_type19] == "Y" || $chk_rows[reserve_type20] == "Y" || $chk_rows[reserve_type21] == "Y"){
+											$reserve_item3++;
+										}
+										if($chk_rows[reserve_type22] == "Y" || $chk_rows[reserve_type23] == "Y" || $chk_rows[reserve_type24] == "Y"){
+											$reserve_item4++;
+										}
+										if($chk_rows[reserve_type25] == "Y"){
+											$reserve_item5++;
+										}
+										if($chk_rows[reserve_type26] == "Y"){
+											$reserve_item6++;
+										}
+										
+									}
+									$chk_item1 = $rows2[item1] - $reserve_item1;
+									$chk_item2 = $rows2[item2] - $reserve_item2;
+									$chk_item3 = $rows2[item3] - $reserve_item3;
+									$chk_item4 = $rows2[item4] - $reserve_item4;
+									$chk_item5 = $rows2[item5] - $reserve_item5;
+									$chk_item6 = $rows2[item6] - $reserve_item6;
+								}
+							}
+
+						}
+						//echo $rows2[item1];
+
+						
+
+						if($chk_item1 >= $num && $chk_item2 >= $num && $chk_item3 >= $num && $chk_item4 >= $num && $chk_item5 >= $num && $chk_item6 >= $num){
+							$select_chk_day .= $sel_day."|";
+						}
+						/*echo "기본".$chk_item1."<br>";
+						echo "수면대장".$chk_item2."<br>";
+						echo "MR 검사".$chk_item3."<br>";
+						echo "PET-CT".$chk_item4."<br>";
+						echo "심장초음파".$chk_item5."<br>";
+						echo "유방초음파".$chk_item6."<br><br>";*/
+
+						
+				}
+
+				//echo $select_chk_days;
+						
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="euc-kr">
+<title>Untitled Document</title>
+<link href="../_css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/admin/_js/topmenu_titlebox.js"></script>
+
+<script type="text/javascript">
+			function closeiFrame() {
+			window.parent.location.reload();
+			window.parent.CloseManageFrame();
+			}
+			function send(){
+				document.form.submit();
+			}
+			function add_item(item,start_date){
+				window.open("/admin/slotset/add_item.html?item="+item+"&start_date="+start_date,"additem","width=540,height=600");
+			}
+			function clear_item(sel_item){
+				
+
+				eval('document.form.'+sel_item).value = "";
+				
+				
+			}
+
+			function openWin(page, bar) {
+				if(!bar) bar = "no";
+
+				var win = window.open(page, 'POP', 'left=100, top=100, toolbar=no, location=no, directories=no, status=yes, menuBar=no, scrollBars='+bar+', resizable=no');
+				win.focus();
+			}
+
+			function item_cnt(time){
+
+				alert(time);
+			}
+
+	</script>
+
+
+
+	<script> 
+	var xmlHttp; 
+
+	function createXMLHttpRequest() { 
+	if (window.ActiveXObject) 
+	{ 
+	xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+	} 
+	else if (window.XMLHttpRequest) 
+	{ 
+	xmlHttp = new XMLHttpRequest(); 
+	} 
+	} 
+
+	function startRequest() { 
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange; 
+	xmlHttp.open("GET","/admin/reservation/business.html?business_name="+document.form.textfield1.value, true); 
+	xmlHttp.send(null); 
+	} 
+
+	function handleStateChange() { 
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView").innerHTML = xmlHttp.responseText; 
+	} 
+	} 
+	} 
+
+
+	function startRequest2(PRO_NAME) {
+		
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange2; 
+	xmlHttp.open("GET","/admin/reservation/business2.html?PRO_NAME="+PRO_NAME, true); 
+	xmlHttp.send(null); 
+
+		
+
+	} 
+
+	function handleStateChange2() { 
+
+	
+	
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView2").innerHTML = xmlHttp.responseText; 
+	
+	} 
+	}
+	
+	} 
+
+	function startRequest3(PRO_NAME) { 
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange3; 
+	xmlHttp.open("GET","/admin/reservation/business3.html?PRO_NAME="+PRO_NAME, true); 
+	xmlHttp.send(null); 
+	} 
+
+	function handleStateChange3() { 
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView3").innerHTML = xmlHttp.responseText; 
+	} 
+	} 
+	} 
+	</script> 
+
+		<script type="text/javascript" src="/admin/ui/ui.datepicker-ko.js"></script>
+
+	</head>
+ <?
+ mysql_select_db("new_mediroad", $dbconn);
+ ?>
+<div id="contant_box_01"><span class="hiddenText">-팝업표시레이어-</span></div>
+<body style="background-color:transparent;">
+<div class="wrap_order_layer_901">
+<div class="top_order_layer_901">
+        <div style="position:absolute; right:15px; top:12px;"><a onclick="closeiFrame();" style="cursor:pointer;"><img src="../_img/button/IMG905219.png"></a></div>
+</div>
+<div class="contants_order_layer_901">
+<form name="form" autocomplete="off"  method="post" name="FRM" enctype="multipart/form-data" action="/admin/reservation/pop_date_write2.html">
+<input type="hidden" name="PRO_NAME" value="<?=$PRO_NAME?>">
+<input type="hidden" name="seq" value="<?=$seq?>">
+
+<input type="hidden" name="textfield1" value="<?=$textfield1?>">
+<input type="hidden" name="item1" value="<?=$item1?>">
+<input type="hidden" name="item2" value="<?=$item2?>">
+<input type="hidden" name="item3" value="<?=$item3?>">
+<input type="hidden" name="item4" value="<?=$item4?>">
+<input type="hidden" name="item5" value="<?=$item5?>">
+<input type="hidden" name="item6" value="<?=$item6?>">
+<input type="hidden" name="num" value="<?=$num?>">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td width="33%" valign="top">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="5" class="write_table_02">
+            	<tr>
+                    <th colspan="2" height="30">사업장 정보</th>
+                </tr>
+				
+                <tr>
+                	<th style="font-size:12px;" width="100">사업장선택</th>
+                    <td width="250">
+                    	
+                                   <?=$textfield1?>
+                              
+                    </td>
+                </tr>
+               <tr>
+                    <th height="25" colspan="2" style="font-size:12px;">예약검진항목선택</th>
+                </tr>
+				<tr>
+                	<td  colspan="2" style="padding:0;">
+                    	
+						<div class="res_menu_result03">
+                            
+							<div style="padding:5px;">
+                                <span id="idView"><?=$PRO_NAME?></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        
+       
+		<td valign="top" width="33%">
+        	<table width="100%" border="0" height="410" cellspacing="0" cellpadding="5" class="write_table_02" align="center">
+            	<tr>
+                    <th height="30" style="font-size:12px;">예약검진항목선택</th>
+				</tr>
+				<tr>
+					<td valign="top" height="352">
+              
+					 기본 검사 (필수사항)<br>			
+					<?
+					if($item2 != ""){
+					?>
+					 수면대장<br>	
+					<?
+					 }
+					if($item3 != ""){
+					?>
+					
+					 MR 검사<br>			
+					<?
+					 }
+					if($item4 != ""){
+					?>
+					 PET-CT 검사<br>		
+					<?
+					 }
+					if($item5 != ""){
+					?>
+					 심장초음파<br>			
+					<?
+					 }
+					if($item6 != ""){
+					?>
+					유방초음파<br>	
+					 <?
+					 }
+					?>
+					</td>
+				</tr>
+			</table>
+		</td>
+        
+        
+        <td valign="top" width="33%">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="5" class="write_table_02" align="center">
+        		<tr height="25">
+                    <th height="25" colspan="2" style="font-size:12px;">예약 가능일</th>
+				</tr>
+				<tr>
+					<td valign="top" colspan="2" style="padding:0;">
+						<div class="res_menu_result05">
+                            
+							<?
+							$select_chk_days = explode("|",$select_chk_day);
+							for($j=0;$j<sizeof($select_chk_days)-1;$j++){
+								?>
+								<input type="radio" name="sel_date" value="<?=$select_chk_days[$j]?>"><?=$select_chk_days[$j]?><br> 
+								<?
+							}
+							?>
+                        </div>
+						
+					</td>
+				</tr>
+
+				<tr align="center">
+
+					<td colspan="2"><input type="button" class="btn03" value="예약하기" onclick="javascript:send();"> <input type="button" class="btn03" value="다시선택" onclick="javascript:history.back();"></td>
+				</tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</form> 
+</div>
+</div>
+</body>
+</html>

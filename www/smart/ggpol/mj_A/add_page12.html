@@ -1,0 +1,33 @@
+<?
+$page_no = 12 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					12. 모유 수유 여부 및 총 수유기간은?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="~6" <?=getChecked($v, "~6")?> > 6개월 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="6~1" <?=getChecked($v, "6~1")?> > 6개월~1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1~" <?=getChecked($v, "1~")?> > 1년 이상</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="없음" <?=getChecked($v, "없음")?> > 수유한적 없음.</td>
+			</tr>
+		</table>
+	
+		
+	

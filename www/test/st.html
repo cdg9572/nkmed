@@ -1,0 +1,70 @@
+<?
+include_once  '../_init.php';
+global $C_DB;
+
+echo "<style>
+		table, td {	border:0px; font-size:0.8em;	}
+		table{	margin-right:10px;	}
+		td {	border-bottom:1px solid #ccc;border-right:1px solid #ccc; font-size:0.8em; text-align:center;	}
+	</style>";
+
+//if($_GET[s_date]=="" or $_GET[s_date]=="" ){
+	//
+//	return false;
+//}
+
+//$s_date = $_GET[s_date];
+//$e_date = $_GET[e_date];
+// 서버 응답 예제 (PHP 사용)
+$callback = $_GET['callback']; // 클라이언트에서 지정한 콜백 함수 이름 가져오기
+
+$tty = ($_GET[tty]=="r") ? "tor_rs_date" : "substr(tor_regdate,1,10)";
+
+$sql = " SELECT substring(tor_regdate,1,10) tor_regdate, count(*) CNT
+		FROM tblOnlineReserve
+		WHERE tor_rs_date>'2023-06-30' and TRIM( tor_rs_name ) <> '최도규'
+		GROUP BY substring(tor_regdate,1,10)
+		ORDER BY 1 ";
+
+
+$rst =  $C_DB -> execSqlList(iconv("EUC-KR", "UTF-8", $sql) );
+
+
+$sql = " SELECT substring(tfc_regdate,1,10) tor_regdate
+			, sum(case when tfc_type='' then 1 else 0 end ) NaN 
+			, sum(case when tfc_type='A' then 1 else 0 end ) NA
+			, sum(case when tfc_type='B' then 1 else 0 end ) NB
+		FROM `tblFastCounsel`
+		WHERE substring(tfc_regdate,1,10) between '2023-07-01' and '".date("Y-m-d")."'
+		GROUP BY substring(tfc_regdate,1,10)
+		ORDER BY 1 ";
+
+
+$rst2 =  $C_DB -> execSqlList(iconv("EUC-KR", "UTF-8", $sql) );
+
+echo "<div style='display:flex;'>";
+
+echo iconv("EUC-KR", "UTF-8", "<table border='1'><tr><td>등록일자</td><td>건수</td></tr>");
+if($rst) {
+	for	($i=0; $i<count($rst); $i++) {
+		echo "<tr><td>".$rst[$i]['tor_regdate']."</td><td>".$rst[$i]['CNT']."</td></tr>";
+		//$arr_tmp[$i] = array( ($i+1) , $rst[$i]['tor_rs_clinic'] , $rst[$i]['tor_rs_doc']  , $rst[$i]['tor_rs_phone'] , $rst[$i]['tor_rs_name'], $rst[$i]['tor_rs_date'], $rst[$i]['tor_regdate'] );
+	}
+}
+echo "</table>";
+
+
+echo iconv("EUC-KR", "UTF-8", "<table border='1'><tr><td>등록일자</td><td>미지정</td><td>일반문의</td><td>예약문의</td></tr>");
+if($rst2) {
+	for	($i=0; $i<count($rst2); $i++) {
+		echo "<tr><td>".$rst2[$i]['tor_regdate']."</td><td>".$rst2[$i]['NaN']."</td><td>".$rst2[$i]['NA']."</td><td>".$rst2[$i]['NB']."</td></tr>";
+	}
+}
+echo "</table>";
+
+echo "</div>";
+// JSONP 응답 반환
+//header('Content-Type: application/javascript');
+//echo $callback . '(' . json_encode($arr_tmp) . ');';
+
+?>

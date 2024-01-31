@@ -1,0 +1,180 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+	$md = "reg";
+	$sql = " UPDATE smart_mj_am SET 
+					MNCAGT41E='".$_POST[MNCAGT41E]."' , MNCAGT42E='".$_POST[MNCAGT42E]."'
+					, MNCAGT43E='".$_POST[MNCAGT43E]."' , MNCAGT44E='".$_POST[MNCAGT44E]."'
+					, MNCAGT45E='".$_POST[MNCAGT45E]."' , MNCAGT46E='".$_POST[MNCAGT46E]."'
+					, MNCAGT47E='".$_POST[MNCAGT47E]."' , MNCAGT48E='".$_POST[MNCAGT48E]."'
+
+				WHERE midx='".$_POST[mseq]."'  ";
+
+	#echo $sql;
+	mysql_query( $sql );
+}else{
+	$md = "view";
+}
+
+$sql = "SELECT * FROM smart_mj_am WHERE midx='".$_POST[mseq]."' ";
+if( $r = mysql_query($sql) ){
+	$row = mysql_fetch_array($r);
+	$MNCAGT5EM = $row[MNCAGT5EM];
+	$MNCAGT51C = $row[MNCAGT51C];
+	$MNCAGT52C = $row[MNCAGT52C];
+	$MNCAGT53C = $row[MNCAGT53C];
+	$MNCAGT54C = $row[MNCAGT54C];
+	$MNCAGT55C = $row[MNCAGT55C];
+
+	$MNCAGT6EM = $row[MNCAGT6EM];
+	$MNCAGT61C = $row[MNCAGT61C];
+	$MNCAGT62C = $row[MNCAGT62C];
+	$MNCAGT63C = $row[MNCAGT63C];
+	$MNCAGT64C = $row[MNCAGT64C];
+	$MNCAGT65C = $row[MNCAGT65C];
+
+	$MNCAGT7EM = $row[MNCAGT7EM];
+	$MNCAGT71C = $row[MNCAGT71C];
+	$MNCAGT72C = $row[MNCAGT72C];
+	$MNCAGT73C = $row[MNCAGT73C];
+	$MNCAGT74C = $row[MNCAGT74C];
+	$MNCAGT75C = $row[MNCAGT75C];
+
+?>
+ <body topmargin=0>
+ <form name="frm" method="post" action="a_5.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+	<input type="hidden" name="md" value="<?=$md;?>"/>
+	<font style="font-size:12px; color:red;">※ 해당되는 곳에 체크 해주십시오. </font>
+	<!--<font style="font-size:10pt; " >진행 : 4/<?=$tp;?></font>-->
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">5. 현재 또는 과거에 진단받은 <b>위장질환</b>이 있으십니까?</td></tr>
+	<tr><td  >
+					<table width='100%' border='1' cellspacing='0'  style="font-size:10pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td>위궤양</td><td width='14%'>위축성위염</td>
+						<td width='14%'>장상피화생</td><td width='14%'>위용종</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT51C" value="1" onclick="Check1( this.checked );" <? if( $MNCAGT51C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT52C"  value="1" onclick="Check1( this.checked );" <? if( $MNCAGT52C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT53C"  value="1" onclick="Check1( this.checked );" <? if( $MNCAGT53C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT54C"  value="1" onclick="Check1( this.checked );" <? if( $MNCAGT54C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT55C"  value="1" onclick="Check1( this.checked );" <? if( $MNCAGT55C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT5EM"  value="1" onclick="Check1( this.checked );" <? if( $MNCAGT5EM=="1" || $MNCAGT5EM=="" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+	</table>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">6. 현재 또는 과거에 진단받은 <b>대장 항문질환</b>이 있으십니까?</td></tr>
+	<tr><td  >
+					<table width='100%' border='1' cellspacing='0'  style="font-size:10pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td>대장용종(폴립)</td><td width='14%'  style="font-size:9pt;">궤양성 대장염</td><td width='14%'>크론병</td>
+						<td width='14%' style="font-size:8pt;">치질(치핵,치열)</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT61C" value="1" onclick="Check2( this.checked );" <? if( $MNCAGT61C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT62C"  value="1" onclick="Check2( this.checked );" <? if( $MNCAGT62C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT63C"  value="1" onclick="Check2( this.checked );" <? if( $MNCAGT63C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT64C"  value="1" onclick="Check2( this.checked );" <? if( $MNCAGT64C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT65C"  value="1" onclick="Check2( this.checked );" <? if( $MNCAGT65C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT6EM"  value="1" onclick="Check2( this.checked );" <? if( $MNCAGT6EM=="1" || $MNCAGT6EM=="" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+	</table>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">7. <b>간(肝) 질환</b>이 있으십니까?</td></tr>
+	<tr><td  >
+					<table width='100%' border='1' cellspacing='0' style="font-size:10pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td style="font-size:8pt;">B형간염바이러스<br>보유자</td><td style="font-size:9pt;" width='14%'>만성B형간염</td><td width='14%' style="font-size:9pt;">만성C형간염</td><td width='14%'>간경변</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT71C" value="1" onclick="Check3( this.checked );" <? if( $MNCAGT71C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT72C"  value="1" onclick="Check3( this.checked );" <? if( $MNCAGT72C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT73C"  value="1" onclick="Check3( this.checked );" <? if( $MNCAGT73C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT74C"  value="1" onclick="Check3( this.checked );" <? if( $MNCAGT74C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT75C"  value="1" onclick="Check3( this.checked );" <? if( $MNCAGT75C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT7EM"  value="1" onclick="Check3( this.checked );" <? if( $MNCAGT7EM=="1" || $MNCAGT7EM=="" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+	</table>
+<!--	<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.frm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+	</form>
+ </body>
+ </html>
+ <script>
+function Check1( val ){
+	if( val ){
+		document.frm.MNCAGT5EM.checked = false;
+	}else{   
+		if ( document.frm.MNCAGT51C.checked || document.frm.MNCAGT52C.checked || document.frm.MNCAGT53C.checked || document.frm.MNCAGT54C.checked || document.frm.MNCAGT55C.checked ){
+			document.frm.MNCAGT5EM.checked = false;
+		}else{
+			document.frm.MNCAGT5EM.checked = true;
+		}
+	}
+}
+
+function Check2( val ){
+	if( val ){
+		document.frm.MNCAGT6EM.checked = false;
+	}else{   
+		if ( document.frm.MNCAGT61C.checked || document.frm.MNCAGT62C.checked || document.frm.MNCAGT63C.checked || document.frm.MNCAGT64C.checked || document.frm.MNCAGT65C.checked ){
+			document.frm.MNCAGT6EM.checked = false;
+		}else{
+			document.frm.MNCAGT6EM.checked = true;
+		}
+	}
+}
+
+function Check3( val ){
+	if( val ){
+		document.frm.MNCAGT7EM.checked = false;
+	}else{   
+		if ( document.frm.MNCAGT71C.checked || document.frm.MNCAGT72C.checked || document.frm.MNCAGT73C.checked || document.frm.MNCAGT74C.checked || document.frm.MNCAGT75C.checked ){
+			document.frm.MNCAGT7EM.checked = false;
+		}else{
+			document.frm.MNCAGT7EM.checked = true;
+		}
+	}
+}
+
+function hisBack(){
+	document.frm.action="a_3.html";
+	document.frm.md.value = "view";
+	document.frm.submit();
+}
+
+</script>
+<?
+}else{
+	echo "<script>alert('오류가 발생되었습니다.');</script>";
+}
+
+
+?>

@@ -1,0 +1,27 @@
+<?
+$page_no = 11 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					11. 자녀를 몇 명 출산하셨습니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1" <?=getChecked($v, "1")?> > 1명</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="2" <?=getChecked($v, "2")?> > 2명 이상</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="없음" <?=getChecked($v, "없음")?> > 출산한 적 없음.</td>
+			</tr>
+		</table>
+	

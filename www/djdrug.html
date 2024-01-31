@@ -1,0 +1,26 @@
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.0">
+<title>대장약 복용안내 사이트</title>
+<style>
+.dbox{	/*margin-bottom:5px; height:100px; font-weight:bold; font-size:2em;padding: 30px 0px;background: #FFEB3B;  border-radius: 50px; */cursor:pointer; width:50%;	}
+.dbox img{ width:100%;	}
+.mgb20{	margin-bottom:20px;	}
+</style>
+<body style='text-align: center;'>
+<div class=' mgb20' style='max-width:1000px;display: inline-block;'><!--h3>예약시간마다 복용안내문이 다릅니다.<br>
+반드시 예약시간 확인하시길 바랍니다.</h3--><img src='images/djdrug/dj.jpg' width='100%'/>
+<h3>대장약 복용안내문 분실시 아래에 방문시간에 맞는 버튼을 선택하시길 바랍니다.</h3>
+<div style='width:100%;border:0px solid gold;display:flex;flex-wrap: wrap;justify-content: space-between;margin-top:20px;'>
+	<div class='dbox' onclick='vimg("g1")'><img src='images/djdrug/btn1.jpg' /></div>
+	<div class='dbox' onclick='vimg("y1")'><img src='images/djdrug/btn3.jpg' /></div>
+	<div class='dbox' onclick='vimg("g2")'><img src='images/djdrug/btn2.jpg' /></div>
+	<div class='dbox' onclick='vimg("y2")'><img src='images/djdrug/btn4.jpg' /></div>
+</div>
+
+</div>
+</body>
+<script>
+function vimg(v){
+	window.open("djdrugimg.html?v="+v,"","width=600,height=800");
+}
+</script>

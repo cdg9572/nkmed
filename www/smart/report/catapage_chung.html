@@ -1,0 +1,897 @@
+<?
+include "./inc/topConf.html";
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="cataPage13">
+<div data-role="header" data-position="fixed">
+		<h1><a href="index.html" class="head_title"><img src="images/logoFull.png" height="30" alt="21세기하나내과의원 로고"/></a></h1>
+		<a href="index.html" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		<a href="login.html?mode=D"  rel="external" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power">Logout</a>
+	</div>
+<div data-role="content" class="cataBG_09">
+		<div class="banner"></div>
+		<h2 class="h2_title">청력·뇌혈류·스트레스 검사·폐기능 검사</h2>
+
+		<!--horizontal navigation tab start-->
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a class="ui-btn-active" href="#cata01-01" data-ajax="false"> 정밀청력검사</a></li>
+                    <li><a href="#cata01-02" data-ajax="false"> 뇌혈류검사</a></li>
+					<li><a href="#cata01-03" data-ajax="false"> 폐기능검사</a></li>
+					<li><a href="#cata01-04" data-ajax="false"> 스트레스검사</a></li>
+
+					
+                </ul>
+            </div>
+            <div id="cata01-01" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<?
+					$src_item = "Lt05KHz" ;
+					$dsp_item = "기도청력(좌) 500Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Lt1KHz" ;
+					$dsp_item = "기도청력(좌) 1000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Lt2KHz" ;
+					$dsp_item = "기도청력(좌) 2000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력좌3KHz" ;
+					$dsp_item = "기도청력(좌) 3000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Lt4KHz" ;
+					$dsp_item = "기도청력(좌) 4000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력좌6KHz" ;
+					$dsp_item = "기도청력(좌) 6000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력좌8KHz" ;
+					$dsp_item = "기도청력(좌) 8000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Rt05KHz" ;
+					$dsp_item = "기도청력(우) 500Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Rt1KHz" ;
+					$dsp_item = "기도청력(우) 1000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Rt2KHz" ;
+					$dsp_item = "기도청력(우) 2000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력우3KHz" ;
+					$dsp_item = "기도청력(우) 3000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "Rt4KHz" ;
+					$dsp_item = "기도청력(우) 4000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력우6KHz" ;
+					$dsp_item = "기도청력(우) 6000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력우8KHz" ;
+					$dsp_item = "기도청력(우) 8000Hz" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "청력소견" ;
+					$dsp_item = "청력소견" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			 
+				?>
+
+
+				
+				</ul>
+
+				<?=get_category_desc("청력 검사", 1)?>
+
+
+            </div>
+
+			<div id="cata01-02" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<?
+						$src_item = "뇌혈류초음파소견" ;
+					$dsp_item = "뇌혈류검사" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+				?>
+				
+				</ul>
+
+				<?=get_category_desc("뇌혈류검사")?>
+
+            </div>
+
+
+			<div id="cata01-03" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+					$src_item = "FVC_" ;
+					$dsp_item = "FVC%" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "FEV1_1초량_" ;
+					$dsp_item = "FEV1" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "FEV1_SVC_" ;
+					$dsp_item = "FEV1/SVC%" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+					$src_item = "노력성폐활량_L_" ;
+					#$src_item = "FVC_" ;
+					$dsp_item = "FVC [노력성폐활량 L]" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+			  //=====================================================
+					$src_item = "노력성폐활량___" ;
+					#$src_item = "FVC_" ;
+					$dsp_item = "FEV1/FVC [노력성폐활량 %]" ;
+					
+					$data = ${"data_".$src_item}." %" ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "FEV1" ;
+					$dsp_item = "FEV1" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			    	$src_item = "FEV1_" ;
+					$dsp_item = "FEV1%" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+
+			    //=====================================================
+			    	$src_item = "VC" ;
+					$dsp_item = "VC" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   
+			    //=====================================================
+			    	$src_item = "VC_" ;
+					$dsp_item = "VC%" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+
+
+
+			    //=====================================================
+			    	$src_item = "폐기능판정" ;
+					$dsp_item = "폐기능판정" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<!--<th width='80'>검사결과 </th>-->
+										<td>". str_replace("다.","다.<br>&nbsp;",str_replace("정 ==","정 ==<br>",$data)) ."</td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+					
+				?>
+				</ul>
+
+            </div>
+
+
+
+			<div id="cata01-04" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+					$src_item = "동맥경화도" ;
+					$dsp_item = "동맥경화도" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "심박변이도" ;
+					$dsp_item = "심박변이도" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+			   	$src_item = "스트레스검사" ;
+					$dsp_item = "스트레스검사" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+					
+					
+				?>
+				</ul>
+
+				<?=get_category_desc("스트레스 검사")?>
+            </div>
+
+			
+
+            
+            <!--horizontal navigation tab end-->
+	</div>
+	<?
+		include "./inc/bottom.html";
+	?>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function(){
+
+function changeNavTab(left) {
+    var $tabs = $("div[data-role=navbar] li a");
+    var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+    var nextidx = 0;
+    if (left) {
+        nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+    } else {
+        nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+    }
+    $tabs.eq(nextidx).click();
+}
+
+$("#tabs").on("swipeleft", function (event) {
+    changeNavTab(true);
+});
+$("#tabs").on("swiperight", function (event) {
+    changeNavTab(false);
+});
+
+
+});//]]> 
+
+</script>
+</body>
+</html>

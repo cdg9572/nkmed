@@ -1,0 +1,180 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "예약/발급";
+$page_sub_title = "온라인 예약";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once($GP -> CLS."/class.member.php");
+include_once($GP -> CLS."/class.doctor.php");
+$C_Member 	= new Member;
+$C_Doctor 	= new Doctor;
+
+if($chkMobile) $C_Func -> go_url ("/v3/reserve.php?tab=info2_3&dr_idx=". $_GET['dr_idx'] ."&is_date=". $_GET['is_date'] ."&is_time=". $_GET['is_time'] ."");
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-1";
+
+$args = "";
+$args['mb_code'] = $_SESSION['susercode'];
+$data_member = $C_Member->Mem_Info($args);
+
+if($data_member) {extract($data_member);}
+
+$args["dr_idx"] = $_GET["dr_idx"];
+$dr_info = $C_Doctor->Doctor_Info($args);
+$cn_arr2 = explode(",", $dr_info["dr_clinic2"]);
+
+$url = "http://1.214.232.188:8070/api/v1/";
+$path01 = "check_reserve"; 
+
+$data01 = array(
+			"cust_no" =>  $_SESSION['suserpatientno']                
+			);
+
+$json_data = json_encode($data01);
+$curl = curl_init();
+curl_setopt_array($curl, array(
+CURLOPT_URL => $url.$path01,
+CURLOPT_RETURNTRANSFER => true,
+CURLOPT_CUSTOMREQUEST => 'GET',
+CURLOPT_POSTFIELDS => $json_data,
+CURLOPT_HTTPHEADER => array(
+	'Content-Type: application/json'),
+));
+$response = curl_exec($curl);                  
+$data02 = json_decode($response, true);
+     
+?>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr15.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+                <input type="hidden" name="recept_no" id="recept_no" value="<?=$data02['data'][0]["recept_no"]?>" />
+				<h3 class="cont-tit center" style="padding-bottom: 0;">예약 완료</h3>
+				<p class="help-text text-center">외래진료 예약 접수가 <span class="c-blue">정상적으로 완료되었습니다.</span></p>
+				<h3 class="cont-tit" style="padding-bottom: 20px;">환자 정보</h3>
+				<div class="tableType-01 text-center">
+					<table>
+						<tbody>
+							<tr>
+								<th>성함</th>
+								<td><?=$_SESSION['susername']?></td>
+								<th>환자 코드</th>
+								<td><?=$_SESSION['suserpatientno']?></td>
+							</tr>
+							<tr>
+								<th>전화</th>
+								<td colspan="3" style="text-align: left;"><?=$mb_mobile?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="cont-tit" style="padding-bottom: 20px;">예약 정보</h3>
+				<div class="tableType-01 text-center">
+					<table>
+						<tbody>
+							<tr>
+								<th>진료과</th>
+								<td>
+                                <?
+                                   $str = "";
+                                   if (!empty($cn_arr2)) {
+                                       foreach ($cn_arr2 as $key => $val) {
+                                           $clinic = $GP->NEW_MOBILE_CENTER_REAL[$val];
+                                           if (!empty($clinic)) {
+                                               $str .= $clinic . ",";
+                                           }
+                                       }
+                                   }
+                                   
+                                  echo rtrim($str, ",");
+                                  //$data02['data'][0]['reserv_dept_nm']
+                                ?>
+                                </td>
+								<th>예약일시</th>
+								<td>
+                                    <?
+                                   // echo substr($is_date, 0, 4) . "." . substr($is_date, 4, 2) . "." . substr($is_date, 6, 2). "." ;
+                                    echo $is_date ;
+                                    echo " " . substr($is_time, 0, 2) . ":" . substr($is_time, 2, 2);
+                                    ?>
+                                </td>
+							</tr>
+							<tr>
+								<th>의료진</th>
+								<td><?=$dr_info["dr_name"]?> <?=$GP -> DOCTOR_POSITION[$dr_info["dr_position"]]?></td>
+								<th></th>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="l-pad-box gray text-left" style="margin-top: 50px;">
+					<ul class="middot-list" style="margin-bottom: 0;">
+						<li>예약 일시를 꼭 확인 후 내원해 주시기 바랍니다.</li>
+						<li>자세한 확인을 원하시면 <span class="c-blue">진료예약센터(031-980-9114)</span>로 문의주시기 바랍니다.</li>
+					</ul>
+				</div>
+				
+				<div id="btn-box" class="center">
+					<a href="/service/page14-2.html" class="btn bg-blue" style="width: 180px;">예약현황</a>
+					<a href="#none" class="btn bg-black" style="width: 180px;" onclick="online_delete(<?=$data02['data'][0]["recept_no"]?>)">예약취소</a>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+    <script>	
+
+
+	function online_delete(recept_no)
+	{
+		if(!confirm("취소 하시겠습니까?")) return;
+
+		$.ajax({
+			type: "POST",
+			url: "./proc/online_proc.php",
+			data: "r_mode=ONLINE_DEL&recept_no=" + recept_no,
+			dataType: "text",
+			success: function(msg) {
+				
+				if($.trim(msg) == "true") {
+					alert("취소 되었습니다");
+					window.location.href = '/service/page02-1.html';
+					return false;
+                }else if($.trim(msg) == "204") {
+					alert("검사, 처방존재로 취소가 불가 합니다.");
+					window.location.reload();
+					return false;
+				}else{
+					alert('취소에 실패하였습니다.');
+					return;
+				}
+			},
+			error: function(xhr, status, error) { alert(error); }
+		});
+
+	}
+
+</script>
+</body>
+
+</html>

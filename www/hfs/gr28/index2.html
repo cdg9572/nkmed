@@ -1,0 +1,134 @@
+<? 
+ /* if($_SERVER['REMOTE_ADDR']<>"106.250.185.227" and $_SERVER['REMOTE_ADDR']<>"119.197.19.46"){?>
+<script>
+	alert("22년 사업이 준비중입니다.");
+	window.close();
+	location.href='http://nkhospital.net';
+</script>
+<? }  */?>
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래28통 의료지원사업 </title>
+  <link href="default2.css" rel="stylesheet" >
+ </head>
+<script src="../js/jquery.js" type="text/javascript"></script>
+<script src="../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#RDT').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		minDate: new Date('2022-07-01'),
+		maxDate: new Date('2022-09-30'),
+		yearRange: '2022:2022'
+	});	
+});
+
+</script>
+<style>
+#top_div{ max-width:700px;	}
+</style>
+<body>
+
+  <div id="top_div">
+	<img src="gr28_logo.png" width='100%' />
+   <!--뉴고려병원과 함께하는<br>
+	  구래28통 의료지원사업-->
+	  <div id="mtitle3"><b>대상자 조회인증</b></div><br>
+  
+	  <form id="frm" name="frm" action="ch2.html" method="post" target="ifrm" >
+		  <div>
+			  <select name="dong" required>
+				<option value="">선택하세요</option>
+							<option value='413'>413</option>
+							<option value='414'>414</option>
+							<option value='415'>415</option>
+							<option value='416'>416</option>
+							<option value='417'>417</option>
+			  </select>동
+			  <input type="number" name="ho" value="" style="width:100px;"  required/>호
+		  </div>
+		  <div>
+		<!-- 계약자<input type="text" name="pnm" value="" size="13"  required >-->
+		  </div>
+	  <button id="mbtn">조회하기</button>
+	  </form>
+  </div>
+  
+  <iframe name="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+ </body>
+</html>
+
+<script>
+document.getElementById("mdiv2").style.display = "none";
+
+function p2(){
+	document.frm.action = "ch2.html";
+	document.frm.onsubmit();
+}
+
+function Rev3(){
+	document.frm.action = "reg3.html";
+	document.frm.target = "";
+	document.frm.onsubmit();
+}
+
+
+function CSubmit2(){
+	if( document.frm3.JG.checked==false && document.frm3.DP.checked==false && document.frm3.INP.checked==false  ){
+		alert( "상품 한가지는 선택하셔야 합니다. " );
+		return false;
+	}
+	if( document.frm3.DONG.value == "" ){
+		alert( "동은 필수 사항입니다." );
+		document.frm3.DONG.focus();
+		return false;
+	}
+
+	if( document.frm3.HO.value == "" ){
+		alert( "호는 필수 사항입니다." );
+		document.frm3.HO.focus();
+		return false;
+	}
+
+	if( document.frm3.PNAME.value == "" ){
+		alert( "신청자는 필수 사항입니다." );
+		document.frm3.PNAME.focus();
+		return false;
+	}
+
+	if( document.frm3.PTEL.value == "" ){
+		alert( "연락처는 필수 사항입니다." );
+		document.frm3.PTEL.focus();
+		return false;
+	}
+	return document.frm3.submit();
+}
+
+function CSubmit(){
+	if( document.frm.pnm.value == "" ){
+		alert( "예약자명은 필수 사항입니다." );
+		document.frm.pnm.focus();
+		return false;
+	}
+
+	return document.frm.submit();
+}
+
+function refg_div(){
+	document.getElementById("mtitle3").style.display = "none";
+	document.getElementById("mdiv").style.display = "none";
+	document.getElementById("mbtn").style.display = "none";
+	document.getElementById("reg_btn").style.display = "none";
+	document.getElementById("mdiv2").style.display = "";
+}
+</script>

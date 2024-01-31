@@ -1,0 +1,88 @@
+<? session_start(); 
+// include "mj_function.php";
+	include "../../inc/dbConn.php";
+	if( $_POST["MNON60EUM"] == 1 ){
+		$MNON60NUM = $_POST["no6v1"]; 
+	}elseif( $_POST["MNON60EUM"] == 2 ){
+		$MNON60NUM = $_POST["no6v2"]; 
+	}elseif( $_POST["MNON60EUM"] == 3 ){
+		$MNON60NUM = $_POST["no6v3"]; 
+	}elseif( $_POST["MNON60EUM"] == 4 ){
+		$MNON60NUM = ""; 
+	}
+
+	$usql = "";
+	if($_POST[MNCAGT5EM]=="1"){
+		$usql .= " MNCAGT5EM=1, MNCAGT51C='', MNCAGT52C='', MNCAGT53C='', MNCAGT54C='', MNCAGT55C='' ";
+	}else{ 
+		$usql .= " MNCAGT5EM=2, MNCAGT51C='".$_POST[MNCAGT51C]."', MNCAGT52C='".$_POST[MNCAGT52C]."', MNCAGT53C='".$_POST[MNCAGT53C]."', MNCAGT54C='".$_POST[MNCAGT54C]."', MNCAGT55C='".$_POST[MNCAGT55C]."' ";
+	}
+
+	if($usql<>""){ $usql .=" , "; }
+
+	if($_POST[MNCAGT6EM]=="1"){
+		$usql .= " MNCAGT6EM=1, MNCAGT61C='', MNCAGT62C='', MNCAGT63C='', MNCAGT64C='', MNCAGT65C='' ";
+	}else{ 
+		$usql .= " MNCAGT6EM=2, MNCAGT61C='".$_POST[MNCAGT61C]."', MNCAGT62C='".$_POST[MNCAGT62C]."', MNCAGT63C='".$_POST[MNCAGT63C]."', MNCAGT64C='".$_POST[MNCAGT64C]."', MNCAGT65C='".$_POST[MNCAGT65C]."' ";
+	}
+
+	if($usql<>""){ $usql .=" , "; }
+
+	if($_POST[MNCAGT7EM]=="1"){
+		$usql .= " MNCAGT7EM=1, MNCAGT71C='', MNCAGT72C='', MNCAGT73C='', MNCAGT74C='', MNCAGT75C='' ";
+	}else{ 
+		$usql .= " MNCAGT7EM=2, MNCAGT71C='".$_POST[MNCAGT71C]."', MNCAGT72C='".$_POST[MNCAGT72C]."', MNCAGT73C='".$_POST[MNCAGT73C]."', MNCAGT74C='".$_POST[MNCAGT74C]."', MNCAGT75C='".$_POST[MNCAGT75C]."' ";
+	}
+
+$sql = " UPDATE smart_mj_am SET
+				MNCAGT1BM='".$_POST[MNCAGT1BM]."' , MNCAGT1RS='".$_POST[MNCAGT1RS]."'
+				, MNCAGT2BM='".$_POST[MNCAGT2BM]."' , MNCAGT2RS='".$_POST[MNCAGT2RS]."'
+				, MNCAGT3WY='".$_POST[MNCAGT3WY]."' , MNCAGT3WA='".$_POST[MNCAGT3WA]."'
+				, MNCAGT3WB='".$_POST[MNCAGT3WB]."' , MNCAGT3WC='".$_POST[MNCAGT3WC]."'
+				, MNCAGT3WD='".$_POST[MNCAGT3WD]."' , MNCAGT3WE='".$_POST[MNCAGT3WE]."'
+
+				, MNCAGT3UY='".$_POST[MNCAGT3UY]."' , MNCAGT3UA='".$_POST[MNCAGT3UA]."'
+				, MNCAGT3UB='".$_POST[MNCAGT3UB]."' , MNCAGT3UC='".$_POST[MNCAGT3UC]."'
+				, MNCAGT3UD='".$_POST[MNCAGT3UD]."' , MNCAGT3UE='".$_POST[MNCAGT3UE]."'
+
+				, MNCAGT3DY='".$_POST[MNCAGT3DY]."' , MNCAGT3DA='".$_POST[MNCAGT3DA]."'
+				, MNCAGT3DB='".$_POST[MNCAGT3DB]."' , MNCAGT3DC='".$_POST[MNCAGT3DC]."'
+				, MNCAGT3DD='".$_POST[MNCAGT3DD]."' , MNCAGT3DE='".$_POST[MNCAGT3DE]."'
+
+				, MNCAGT3GY='".$_POST[MNCAGT3GY]."' , MNCAGT3GA='".$_POST[MNCAGT3GA]."'
+				, MNCAGT3GB='".$_POST[MNCAGT3GB]."' , MNCAGT3GC='".$_POST[MNCAGT3GC]."'
+				, MNCAGT3GD='".$_POST[MNCAGT3GD]."' , MNCAGT3GE='".$_POST[MNCAGT3GE]."'
+
+				, MNCAGT3JY='".$_POST[MNCAGT3JY]."' , MNCAGT3JA='".$_POST[MNCAGT3JA]."'
+				, MNCAGT3JB='".$_POST[MNCAGT3JB]."' , MNCAGT3JC='".$_POST[MNCAGT3JC]."'
+				, MNCAGT3JD='".$_POST[MNCAGT3JD]."' , MNCAGT3JE='".$_POST[MNCAGT3JE]."'
+
+				, MNCAGT3EN='".$_POST[MNCAGT3EN]."' 
+				, MNCAGT3EY='".$_POST[MNCAGT3EY]."' , MNCAGT3EA='".$_POST[MNCAGT3EA]."'
+				, MNCAGT3EB='".$_POST[MNCAGT3EB]."' , MNCAGT3EC='".$_POST[MNCAGT3EC]."'
+				, MNCAGT3ED='".$_POST[MNCAGT3ED]."' , MNCAGT3EE='".$_POST[MNCAGT3EE]."'
+
+				, MNCAGT41E='".$_POST[MNCAGT41E]."' , MNCAGT42E='".$_POST[MNCAGT42E]."'
+				, MNCAGT43E='".$_POST[MNCAGT43E]."' , MNCAGT44E='".$_POST[MNCAGT44E]."'
+				, MNCAGT45E='".$_POST[MNCAGT45E]."' , MNCAGT46E='".$_POST[MNCAGT46E]."'
+				, MNCAGT47E='".$_POST[MNCAGT47E]."' , MNCAGT48E='".$_POST[MNCAGT48E]."'
+
+				, $usql
+
+				, MNCAGT8EM='".$_POST[MNCAGT8EM]."' , MNCAGT8RS='".$_POST[MNCAGT8RS]."'
+				, MNCAGT9EM='".$_POST[MNCAGT9EM]."' , MNCAGT9RS='".$_POST[MNCAGT9RS]."'
+				, MNCAGT10E='".$_POST[MNCAGT10E]."' 
+
+				, MNCAGT11E='".$_POST[MNCAGT11E]."' , MNCAGT12E='".$_POST[MNCAGT12E]."'
+				, MNCAGT13E='".$_POST[MNCAGT13E]."' , MNCAGT14E='".$_POST[MNCAGT14E]."'
+
+			WHERE midx='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("수정되었습니다.");
+location.href="va.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/><br/>". mysql_error();
+}?>

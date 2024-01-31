@@ -1,0 +1,443 @@
+<?php
+$page_title = "main";
+include_once  './_init.php';
+if($chkMobile) $C_Func -> go_url ("/v3/");
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once $GP -> INC_WWW . '/head.php';
+include_once 'member/login.html';
+include_once($GP->CLS."class.doctor.php");
+include_once($GP->CLS."class.video.php");
+$C_Doctor 		= new Doctor;
+$C_Video 	= new Video;
+
+?>
+<body>
+	<div id="wrap">
+		<?php
+		include_once  $GP -> INC_WWW . "/header.php";
+
+			$Main_all = Main_Notice("news");//모아보기
+			$Main_notice = Main_Notice("10");//병원소식
+			$Main_ch = Main_Notice("140");//CH NK
+            $Main_health = Main_Notice("50"); //건강정보
+
+            $Main_Slide = Main_Slide("main");//슬라이드
+
+		?>
+		<div id="container">
+			<div id="main-bnnr" class="swiper-container">
+				<ul class="swiper-wrapper">
+                   <?=$Main_Slide?>
+				   <!-- <li class='swiper-slide'>  
+						<a href='/center01/page.php?depart=F&gubun=A'>        
+							<img src='http://www.nkhospital.net/common/slide/210408main.jpg' alt=''>                        
+							<div class='swiper-cont' style="text-align:right;;">
+							<p class='tit'>                            
+								김포 지역 최초 대한심혈관중재학회<br />
+								심혈관중재시술 인증을 획득한 심혈관센터
+								</p>
+								<span class='text'>
+								고혈압, 부정맥으로 시작하여 심근경색이나 심정지 등<br />
+								골든타임이 중요한 심장혈관질환자들을 위해 24시간 365일 언제나 멈추지 않습니다.
+								</span>
+							</div>
+						</a>
+					</li> -->
+				</ul>
+				<!-- Add Pagination -->
+				<div class="swiper-pagination"></div>
+				<!-- Add Scroll Icon -->
+				<div class="move-scroll">
+					<span>↓</span>
+				</div>
+				<div id="rsv-list">
+					<div class="inner">
+						<div class="list">
+							<p class="list-title">첫 방문 간편예약</p>
+							<div class="list-btn">
+								<button type="button" onclick="$(this).parents('.list').find('.rsv-submit').fadeIn(100)">예약신청</button>
+							</div>
+                            <form action="?" id="frm_ps" name="frm_ps" method="post" >
+				                <input type="hidden" value="PS_REG" id="mode" name="mode">
+							<div class="rsv-submit">
+								<div class="rsv-submit-box small">
+									<div class="rsv-submit-head">
+										<img src="/resource-pc/images/logo.png" alt="인봉의료재단 뉴고려병원">
+										<button type="button" onclick="$(this).parents('.rsv-submit').fadeOut(100)">닫기</button>
+									</div>
+									<div class="rsv-submit-body">
+										<p class="rsv-box-tit">첫방문 간편예약<span class="c-green scale"> ●</span></p>
+										<div class="agreeSection">
+											<div class="agreeTxtWrap">
+												<p>
+													간편예약은 병원에 처음 오시는 분들을 위한 진료 예약서비스로 전문 상담원이 전화를 통해 진료 예약을 도와드리고 있습니다.
+												</p>
+											</div>
+										</div>
+										<p class="rsv-box-tit">개인정보 수집/이용 동의<span class="c-green">(필수)</span></p>
+										<?php
+											include_once "./member/agree2.php";
+										?>
+										<div class="radio-box">
+											<label for="agree-done">
+												<input type="radio" id="agree-done" name="agree"> 동의합니다.
+											</label>
+											<label for="agree-non">
+												<input type="radio" id="agree-non" name="agree"> 동의하지 않습니다.
+											</label>
+										</div>
+										<div class="form">
+											<label for="">이름</label>
+											<input type="text" class="form-control" name="mb_name" id="mb_name">
+										</div>
+										<div class="form">
+											<label for="">전화번호</label>
+											<input type="text" class="form-control" name="mb_mobile1" id="mb_mobile1">
+											&nbsp;-&nbsp;
+											<input type="text" class="form-control" name="mb_mobile2" id="mb_mobile2">
+											&nbsp;-&nbsp;
+											<input type="text" class="form-control" name="mb_mobile3" id="mb_mobile3">
+										</div>
+									</div>
+									<div class="rsv-submit-foot">
+										<button type="button">취소</button>
+										<button type="submit" id="img_submit">간편예약 신청</button>
+									</div>
+								</div>
+							</div>
+                            </form>
+						</div>
+						<div class="list">
+							<p class="list-title">온라인 예약</p>
+							<div class="list-btn">
+								<a href="/m/main.html" target="_blank">온라인 예약 바로가기</a>
+							</div>
+						</div>
+						<div class="list">
+							<p class="list-title">건강검진 예약</p>
+							<div class="list-btn">
+								<a href="" onclick="alert('준비중입니다.')">검진 예약 바로가기</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //end #main-bnnr -->
+
+
+			<div id="center-list">
+				<div class="inner">
+					<ul class="tab">
+						<li><a href="#none">의료진</a></li>
+						<li class="on"><a href="#none">전문센터</a></li>
+						<li><a href="#none">진료과</a></li>
+						<li><a href="#none">특수클리닉</a></li>
+					</ul>
+					<p>의료진, 전문센터, 진료과 등 검색을 통해 찾으시는 내용을 편리하게 확인하실 수 있습니다.</p>
+					<!-- <ul id="filter" class="tab-1">
+						<li class="on"><a href="#none" data-target="all">ALL</a></li>
+						<li><a href="#none" data-target="ㄱ">ㄱ</a></li>
+						<li><a href="#none" data-target="ㄴ">ㄴ</a></li>
+						<li><a href="#none" data-target="ㄷ">ㄷ</a></li>
+						<li><a href="#none" data-target="ㄹ">ㄹ</a></li>
+						<li><a href="#none" data-target="ㅁ">ㅁ</a></li>
+						<li><a href="#none" data-target="ㅂ">ㅂ</a></li>
+						<li><a href="#none" data-target="ㅅ">ㅅ</a></li>
+						<li><a href="#none" data-target="ㅇ">ㅇ</a></li>
+						<li><a href="#none" data-target="ㅈ">ㅈ</a></li>
+						<li><a href="#none" data-target="ㅊ">ㅊ</a></li>
+						<li><a href="#none" data-target="ㅋ">ㅋ</a></li>
+						<li><a href="#none" data-target="ㅌ">ㅌ</a></li>
+						<li><a href="#none" data-target="ㅍ">ㅍ</a></li>
+						<li><a href="#none" data-target="ㅎ">ㅎ</a></li>
+					</ul> -->
+					<form id="search_all2" name="search_all2" method="post">
+					<div class="search-filter">
+						<input type="text" id="schtxt2" placeholder="통합검색어를 입력하세요.">
+						<button id="schbtn"><img src="/resource-pc/images/search-gray.png" alt="검색" ></button>
+					</div>
+					</form>
+					<div id="tab1-1" class="tab-cont">
+						<div class="doc">
+							<div class="swiper-container">
+								<ul class="swiper-wrapper">
+									<?
+									//print_r($args);
+									$args["order"] = "order by FIELD(dr_position, 'E',  'I', 'G', 'H', 'F', 'C') desc, dr_position asc, dr_name asc";
+									$data = $C_Doctor->Doctor_Detail_List($args);
+									$data_list 		= $data['data'];
+									$data_list_cnt 	= count($data_list);
+
+									foreach($data as $key=>$val){
+									$dr_idx = $val["dr_idx"];
+									$dr_name = $val["dr_name"];
+									$dr_position = $val["dr_position"][0];
+									$val["dr_clinic2"] = explode(',',$val["dr_clinic2"]);					                       
+									$dr_clinic2 = $val["dr_clinic2"];
+								
+									$treat2 = ($GP->NEW_MOBILE_CENTER[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]] : $GP->NEW_MOBILE_CENTER[$dr_clinic2[0]];
+									$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[1]];		
+									if(!$treat3){
+										$treat3 = ($GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]]) ? $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]] : $GP->NEW_MOBILE_CLINIC[$dr_clinic2[0]];		
+									}
+
+									$dr_img = "<img src='" . $GP -> UP_DOCTOR_URL . $val["dr_face_img"] . "' class='block' alt='" .  $dr_name ."' />";
+
+									$gubun = "";
+									if($treat2 && $treat3 ){
+										$gubun = "/";
+									}
+
+									?>
+									<li class="swiper-slide" data-idx="" data-name="<?=$dr_name?>">
+										<a href="/doctor/doc-view.php?idx=<?=$dr_idx?>&gubun=<?=$gubun?>">
+											<span class="pic">
+											<?=$dr_img?>
+											</span>
+											<span class="center"><?=$treat2 ?><?=$gubun?><?=$treat3 ?></span>
+											<span class="name">
+											<b><?=$dr_name?></b> <?=$GP -> DOCTOR_POSITION[$dr_position]?>
+											</span>
+										</a>
+									</li>
+									<? } ?>
+								</ul>
+							</div>
+							
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+						</div>
+					</div>
+					<div id="tab1-2" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㄱ"><a href="/center01/page.php?depart=A&gubun=A"><img src="/resource-pc/images/main-center-01.png" alt="">관절센터</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=C&gubun=A"><img src="/resource-pc/images/main-center-19.png" alt="">외상센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=F&gubun=A"><img src="/resource-pc/images/main-center-03.png" alt="">심혈관센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=S&gubun=A"><img src="/resource-pc/images/main-center-12.png" alt="">신장센터</a></li>
+							<li data-group="ㅌ"><a href="/center01/page.php?depart=H&gubun=A"><img src="/resource-pc/images/main-center-20.png" alt="">통증센터</a></li>
+							<li data-group="ㅍ"><a href="/center01/page.php?depart=J&gubun=A"><img src="/resource-pc/images/main-center-21.png" alt="">평생건강증진센터</a></li>
+							<li data-group="ㅊ"><a href="/center01/page.php?depart=B&gubun=A"><img src="/resource-pc/images/main-center-22.png" alt="">척추센터</a></li>
+							<li data-group="ㄴ"><a href="/center01/page.php?depart=D&gubun=A"><img src="/resource-pc/images/main-center-05.png" alt="">뇌신경센터</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=E&gubun=A"><img src="/resource-pc/images/main-center-11.png" alt="">소화기센터</a></li>
+							<!-- <li data-group="ㅅ"><a href="/center01/page.php?depart=G&gubun=A"><img src="/resource-pc/images/main-center-14.png" alt="">소아청소년센터</a></li> -->
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=I&gubun=A"><img src="/resource-pc/images/main-center-18.png" alt="">응급의료센터</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AJ&gubun=A"><img src="/resource-pc/images/main-center-07.png" alt="">재활치료센터</a></li>
+						</ul>
+					</div>
+					<div id="tab1-3" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AB&gubun=B"><img src="/resource-pc/images/main-center-01.png" alt="">정형외과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=K&gubun=B"><img src="/resource-pc/images/main-center-02.png" alt="">일반외과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AE&gubun=B"><img src="/resource-pc/images/main-center-03.png" alt="">순환기내과</a></li>
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=T&gubun=B"><img src="/resource-pc/images/main-center-04.png" alt="">호흡기내과</a></li>
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=AK&gubun=B"><img src="/resource-pc/images/main-center-31.jpg" alt="">흉부외과</a></li>
+							<li data-group="ㅊ"><a href="/center01/page.php?depart=O&gubun=B"><img src="/resource-pc/images/main-center-30.png" alt="">치과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=M&gubun=B"><img src="/resource-pc/images/main-center-05.png" alt="">신경과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=N&gubun=B"><img src="/resource-pc/images/main-center-06.png" alt="">산부인과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=W&gubun=B"><img src="/resource-pc/images/main-center-07.png" alt="">재활의학과</a></li>
+							<li data-group="ㅁ"><a href="/center01/page.php?depart=AH&gubun=B"><img src="/resource-pc/images/main-center-08.png" alt="">마취통증의학과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=AA&gubun=B"><img src="/resource-pc/images/main-center-09.png" alt="">직업환경의학과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AC&gubun=B"><img src="/resource-pc/images/main-center-10.png" alt="">신경외과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AD&gubun=B"><img src="/resource-pc/images/main-center-11.png" alt="">소화기내과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AF&gubun=B"><img src="/resource-pc/images/main-center-12.png" alt="">신장내과</a></li>
+							<li data-group="ㄴ"><a href="/center01/page.php?depart=R&gubun=B"><img src="/resource-pc/images/main-center-13.png" alt="">내분비내과</a></li>
+							<li data-group="ㅅ"><a href="/center01/page.php?depart=AG&gubun=B"><img src="/resource-pc/images/main-center-14.png" alt="">소아청소년과</a></li>
+							<li data-group="ㅍ"><a href="/center01/page.php?depart=V&gubun=B"><img src="/resource-pc/images/main-center-15.png" alt="">피부비뇨의학과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=P&gubun=B"><img src="/resource-pc/images/main-center-16.png" alt="">영상의학과</a></li>
+							<li data-group="ㅈ"><a href="/center01/page.php?depart=Q&gubun=B"><img src="/resource-pc/images/main-center-17.png" alt="">진단검사의학과</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=AI&gubun=B"><img src="/resource-pc/images/main-center-18.png" alt="">응급의학과</a></li>
+						</ul>
+					</div>
+					<div id="tab1-4" class="tab-cont">
+						<ul class="list">
+							<li data-group="ㅎ"><a href="/center01/page.php?depart=A&gubun=C"><img src="/resource-pc/images/main-center-23.png" alt="">하지정맥류 클리닉</a></li>
+							<li data-group="ㅇ"><a href="/center01/page.php?depart=C&gubun=C"><img src="/resource-pc/images/main-center-24.png" alt="">요실금클리닉</a></li>
+							<li data-group="ㅂ"><a href="/center01/page.php?depart=G&gubun=C"><img src="/resource-pc/images/main-center-25.png" alt="">비만클리닉</a></li>
+							<li data-group="ㄱ"><a href="/center01/page.php?depart=I&gubun=C"><img src="/resource-pc/images/main-center-26.png" alt="">갑상선클리닉</a></li>
+							<li data-group="ㅂ"><a href="/center01/page.php?depart=J&gubun=C"><img src="/resource-pc/images/main-center-27.png" alt="">복강경클리닉</a></li>
+							<li data-group="ㄷ"><a href="/center01/page.php?depart=H&gubun=C"><img src="/resource-pc/images/main-center-28.png" alt="">당뇨클리닉</a></li>
+							<li data-group="ㅁ"><a href="/center01/page.php?depart=E&gubun=C"><img src="/resource-pc/images/main-center-29.png" alt="">맘모톰클리닉</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- //end center-list  -->
+			<div id="main-notice">
+				<div class="main-list-menu">
+					<ul class="tab">
+						<li class="on"><a href="#none">모아보기</a></li>
+						<li><a href="#none">병원소식</a></li>
+						<li><a href="#none">CH NK</a></li>
+						<li><a href="#none">건강정보</a></li>
+					</ul>
+					<div class="inner">
+						<div id="tab2-1" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_all?>
+							</ul>
+						</div>
+						<div id="tab2-2" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_notice?>
+							</ul>
+						</div>
+						<div id="tab2-3" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_ch?>
+							</ul>
+						</div>
+						<div id="tab2-4" class="main-clinic tab-cont">
+							<ul>
+								<?=$Main_health?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //end #main-notice -->
+			<div id="main-info">
+				<div class="inner">
+					<h3>뉴고려병원 진료 센터 안내 <small>nkhospital</small></h3>
+					<img usemap="#map1" src="/resource-pc/images/1f.png" alt="">
+					<map name="map1">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map2" src="/resource-pc/images/2f.png" alt="">
+					<map name="map2">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map3" src="/resource-pc/images/4f.png?v=0.1" alt="">
+					<map name="map3">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map4" src="/resource-pc/images/8f.png" alt="">
+					<map name="map4">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<img usemap="#map5" src="/resource-pc/images/10f.png" alt="">
+					<map name="map5">
+						<area class="f1" shape="poly" coords="27,433,276,444,280,426,353,430,353,412,527,423,528,456,920,407,946,518,2,520" href="#none">
+						<area class="f2" shape="poly" coords="49,366,287,384,293,337,548,367,551,380,895,293,922,405,526,458,526,428,356,411,353,430,280,428,276,445,30,436" href="#none">
+						<area class="f4" shape="poly" coords="79,240,300,280,310,238,543,294,546,286,883,145,895,196,543,329,300,291,294,332,64,302" href="#none">
+						<area class="f8" shape="poly" coords="361,102,575,180,548,194,357,133" href="#none">
+						<area class="f10" shape="poly" coords="371,32,567,106,573,148,364,75" href="#none">
+					</map>
+					<ul class="floor-list">
+						<li class="map5">
+							<a href="/service/page09-2.html#location10">
+								<label>10F</label>
+								<span>재활치료센터</span>
+							</a>
+						</li>
+						<li class="map4">
+							<a href="/service/page09-2.html#location8">
+								<label>8F</label>
+								<span>중증환자집중치료 음압병동</span>
+							</a>
+						</li>
+						<li class="map3">
+							<a href="/service/page09-2.html#location4">
+								<label>4F</label>
+								<span>
+									평생건강증진센터 | 소화기센터<br>
+									내분비내과 | 피부비뇨기과<br>
+									산부인과 | 치과
+								</span>
+							</a>
+						</li>
+						<li class="map2">
+							<a href="/service/page09-2.html#location2">
+								<label>2F</label>
+								<span>
+									관절센터 | 외상센터 | 척추센터<br>
+									뇌신경센터 | 심혈관센터 | 신장센터<br>
+									흉부외과
+								</span>
+							</a>
+						</li>
+						<li class="map1 active">
+							<a href="/service/page09-2.html#location1">
+								<label>1F</label>
+								<span>
+									응급의학센터<br>
+									영상의학과
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+		<?php include_once $GP -> INC_WWW . "/fnb.php" ?>
+		<?php include_once $GP -> INC_WWW . "/footer.php" ?>
+        <?
+            $mobile_agent = '/(iPod|iPhone|Android|BlackBerry|SymbianOS|SCH-M\d+|Opera Mini|Windows CE|Nokia|SonyEricsson|webOS|PalmOS)/';
+
+            // preg_match() 함수를 이용해 모바일 기기로 접속하였는지 확인
+            if(preg_match($mobile_agent, $_SERVER['HTTP_USER_AGENT'])) {
+                include "./popup/popup_layer.php";
+            }else{
+                include "./popup/popup_script.php";
+            }
+        ?>
+
+	</div>
+	<!-- //end #wrap -->
+	<script>
+		$(function(){
+			$("#rsv-list .list").on("mouseenter",function(){
+				$(this).find('.list-btn').slideDown(200)
+			});
+			$("#rsv-list .list").on("mouseleave", function () {
+				$(this).find('.list-btn').slideUp(200)
+			});
+		});
+
+        $(document).ready(function(){
+            
+            $('#img_submit').click(function(){                
+                if($('#mb_name').val() == '')	{
+                    alert('이름을 입력해주세요');
+                    $('#mb_name').focus();
+                    return false;
+                }
+                if($('#mb_mobile1').val() == '' || $('#mb_mobile2').val() == '' || $('#mb_mobile3').val() == '')	{
+                    alert('연락처를 입력해주세요');
+                    $('#mb_mobile1').focus();
+                    return false;
+                }     
+                if($('#agree-done').prop("checked") == false){
+                    alert('개인정보 수집 및 이용에 동의해주세요');
+                    $('#agree-done').focus();
+                    return false;
+                }          
+                
+                $('#frm_ps').attr('action','/admin/phone/proc/phone_proc.php');
+                $('#frm_ps').submit();
+                return false;
+            });
+
+            
+        });
+
+</script>
+    
+</body>
+</html>

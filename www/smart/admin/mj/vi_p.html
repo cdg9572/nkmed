@@ -1,0 +1,19 @@
+<? session_start(); 
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = " UPDATE smart_mj_mntinjintb SET 
+			MNTIIJ1EM='".$_POST[MNTIIJ1EM]."' , MNTIIJ2EM='".$_POST[MNTIIJ2EM]."' , MNTIIJ3EM='".$_POST[MNTIIJ3EM]."'
+			, MNTIIJ4EM='".$_POST[MNTIIJ4EM]."' , MNTIIJ5EM='".$_POST[MNTIIJ5EM]."' , MNTIIJ6EM='".$_POST[MNTIIJ6EM]."'
+			, MNTIIJ7EM='".$_POST[MNTIIJ7EM]."' , MNTIIJ8EM='".$_POST[MNTIIJ8EM]."' , MNTIIJ9EM='".$_POST[MNTIIJ9EM]."'
+			, MNTIIJ10EM='".$_POST[MNTIIJ10EM]."' , MNTIIJ11EM='".$_POST[MNTIIJ11EM]."' , MNTIIJ12EM='".$_POST[MNTIIJ12EM]."'
+			, MNTIIJ13EM='".$_POST[MNTIIJ13EM]."' , MNTIIJ14EM='".$_POST[MNTIIJ14EM]."' , MNTIIJ15EM='".$_POST[MNTIIJ15EM]."'
+			WHERE MNTIJUBNO='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("수정되었습니다.");
+location.href="vi.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/>$sql;<br/>". mysql_error();
+}?>

@@ -1,0 +1,184 @@
+<?php 
+	include_once($GP -> CLS."/class.duty.php");
+	include_once($GP->CLS."class.list.php");
+	$C_Duty 	= new Duty;
+	$C_ListClass 	= new ListClass;
+
+    $args = array();	
+	$args['tsd_clinic']		= "N";
+	
+	$data = "";
+	$data = $C_Duty->Duty_List_New($args);
+
+    $data_list 		= $data['data'];
+	$page_link 		= $data['page_info']['link'];
+	$page_search 	= $data['page_info']['search'];
+	$totalcount 	= $data['page_info']['total'];
+	
+	$totalpages 	= $data['page_info']['totalpages'];
+	$nowPage 		= $data['page_info']['page'];
+	$totalcount_l 	= number_format($totalcount,0);
+	
+    $data_list_cnt 	= count($data_list);  
+
+    $date_total = "";
+    
+    for ($i = 0 ; $i < $data_list_cnt ; $i++) {
+        $tsd_date 				= $data_list[$i]['tsd_date'];        
+        //tsd_date값이 2023-09-22일 경우  "new Date(2023, 08, 22)," 형식으로 만들어야 함
+        $date_total .= "new Date(".substr($tsd_date,0,4).", ".(substr($tsd_date,5,2)-1).", ".substr($tsd_date,8,2)."), ";       
+              
+    }    
+    
+?>
+<div class="tableType-01">
+					<table>
+						<colgroup>
+							<col style="width: 50%;">
+							<col>
+						</colgroup>
+						<tbody>
+						<tr>
+								<th>성함</th>
+								<td align="center">
+                                    <div class="form no-margin">
+										<input type="text" class="form-control" id="tm_content5" name="tm_content5">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>연락처</th>
+								<td align="center">
+                                    <div class="form no-margin">
+										<input type="text" class="form-control" id="tm_content6" name="tm_content6">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td>
+									<div class="form no-margin" style="justify-content: flex-start;">
+										<input type="text" class="form-control" id="tm_content10_1" name="tm_content10_1">
+										&nbsp;@&nbsp;
+										<input type="text" class="form-control" id="tm_content10_2" name="tm_content10_2">
+										&nbsp;
+										<?=$sel_email?>										
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>수술력/복용약/특이사항</th>
+								<td>
+									<div class="form no-margin">
+										<input type="text" class="form-control" placeholder="예) 간암수술(2020), 관절약 복용중" name="tm_content11" id="tm_content11">
+									</div>
+								</td>
+							</tr>
+							<tr>
+                                <th>
+									검진 희망일
+									<p style="color:#ea6929;"><small>선택하신 예약 희망일에 따라 담당 직원이 유선상으로 예약 확정을 도와드립니다.</small></p>
+								</th>
+								<td align="center">
+                                    <div id="datepicker-container" class="cal"></div>									
+									<div class="calInfo" style="width: 100%;">
+										<div class="label-box" style="justify-content: flex-end;">
+                                            <span class="today">오늘</span>
+											&nbsp;&nbsp;
+											<span class="possible">예약가능</span>
+											&nbsp;&nbsp;
+											<span class="choice">선택</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script type="text/javascript">	
+                    $(function () {
+                        $("#datepicker-container").datepicker({
+                            dateFormat: "yy-mm-dd", // 날짜 형식 지정
+                            minDate: "+1W", // 오늘 이후 날짜만 선택 가능하도록 설정
+                            showOn: "both", // 달력 아이콘을 input 상자와 함께 표시
+                            buttonText: "달력 표시", // 달력 아이콘 텍스트 지정
+                            prevText: '이전 달',
+                            nextText: '다음 달',
+                            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                            showMonthAfterYear: true,
+                            yearSuffix: '년',
+                            onSelect: function (dateText, inst) {
+                                $("#tm_content12").val(dateText);
+                            },
+                            beforeShowDay: function (date) {
+                                // 오늘부터 3개월 후까지의 범위 안에 있는 날짜인지 확인
+                                var currentDate = new Date();
+                                var threeMonthsLater = new Date(currentDate.getFullYear(), currentDate.getMonth() + 3, currentDate.getDate());
+                                
+                                // 비활성화할 날짜 목록 설정
+                                var disabledDates = [
+                                    <?=$date_total?>				
+                                ];
+                                
+                                // 선택 가능한 날짜인지 확인
+                                if (date >= currentDate && date <= threeMonthsLater) {
+                                    // 비활성화할 날짜 목록에 있는 경우 disabled 클래스 추가
+                                    for (var i = 0; i < disabledDates.length; i++) {
+                                        if (date.getTime() === disabledDates[i].getTime()) {
+                                            return [false, 'disabled', '비활성화된 날짜'];
+                                        }
+                                    }
+                                    
+                                    return [true, '']; // 선택 가능한 날짜
+                                } else {
+                                    return [false, '']; // 나머지 날짜는 비활성화
+                                }
+                            },
+                            // 나머지 옵션들...
+                        }); 
+
+                    // 초기에 달력을 보이게 하려면 아래의 코드를 추가합니다.
+                    $("#datepicker-container").datepicker("show");
+                });
+                    var scrollX = 0;
+                    var scrollY = 0;
+
+                    function goPopup() {
+                        // 현재 스크롤 위치 저장
+                        scrollX = window.scrollX || window.pageXOffset;
+                        scrollY = window.scrollY || window.pageYOffset;
+
+                        new daum.Postcode({
+                            oncomplete: function (data) {
+                                document.getElementById('tm_content7').value = data.zonecode;
+                                document.getElementById('tm_content8').value = data.address;
+                                document.getElementById('tm_content9').focus();
+                            },
+                            onclose: function () {
+                                // 팝업이 닫힐 때 저장한 스크롤 위치로 스크롤 이동
+                                window.scrollTo(scrollX, scrollY);
+                            }
+                        }).open();
+
+                        return false;
+                    }	     
+
+                    $('#tm_content10_3').change(function () {
+                        var val = $(this).val();
+
+                        if (val == "") {
+                            $('#tm_content10_1').val('');
+                        } else {
+                            $('#tm_content10_2').val(val);
+                        }
+
+                    });
+                  
+                </script>

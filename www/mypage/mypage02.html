@@ -1,0 +1,121 @@
+<?php
+
+$title = "MyPage";
+$page_title = "MyPage";
+$page_sub_title = "비밀번호변경";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once $GP -> INC_WWW . '/head.php';
+include_once $GP -> INC_WWW . '/inc.login_check.php';
+
+include_once($GP -> CLS."/class.member.php");
+$C_Member 	= new Member;
+
+$args = "";
+$args['mb_code'] = $_SESSION['susercode'];
+$data = $C_Member->Mem_Info($args);
+
+$dep1 = "4";$dep2 = "0-2";$dep3 = "0-2-0";
+
+extract($data);
+?>
+<style>
+	@media screen and (max-width:720px) {
+		.tableType-01 table,
+		.tableType-01 tbody,
+		.tableType-01 tr,
+		.tableType-01 tr th,
+		.tableType-01 tr td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		input {width: 100%;box-sizing: border-box;}
+	}
+</style>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<!-- <?php include_once "../inc/location.php" ?> -->
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr09.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu">
+					<ul>
+						<li><a href="/mypage/mypage01.html">내정보</a></li>
+						<li class="active"><a href="/mypage/mypage02.html">비밀번호변경</a></li>
+						<li><a href="/mypage/mypage03.html">회원탈퇴</a></li>
+						<li><a href="/mypage/mypage04.html">내진료상담</a></li>
+					</ul>
+				</div>
+				<fieldset>
+					<legend>비밀번호변경</legend>
+					<p class="help-text">(<span class="c-red">*</span>)표 항목은 필수입력 사항입니다.</p>
+					<div class="tableType-01 green">
+						<!-- Input 위에 있는 label 클릭시 사라짐 현상 필요 -->
+                        <form action="?" id="frmPass" name="frmPass" method="post">
+                        <input type="hidden" name="mode" id="mode" value="MEM_PASS_CH" />
+                        <input type="hidden" name="mb_code" id="mb_code" value="<?=$mb_code?>" />
+						<table width="100%" class="writeType">
+							<colgroup>
+								<col width="220">
+								<col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row"><span class="c-red">*</span> 현재 비밀번호</th>
+									<td>
+										<input type="text" id="mb_pwd" name="mb_pwd" class="txtInput" placeholder="현재 비밀번호 입력">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span class="c-red">*</span> 변경할 비밀번호</th>
+									<td>
+										<input type="text" id="mb_pwd_ch" name="mb_pwd_ch" class="txtInput" placeholder="변경할 비밀번호 입력">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span class="c-red">*</span> 변경할 비밀번호 확인</th>
+									<td>
+										<input type="text" id="mb_pwd_ok" name="mb_pwd_ok" class="txtInput" placeholder="변경할 비밀번호 확인">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+
+					<div id="btn-box" class="center">
+						<a class="btn bg-deepblue" href="javascript:;" id="btn_pass_submit">정보수정</a>
+						<a class="btn bg-red" href="javascript:history.back();" id="btn_pass_cancel">취소</a>
+					</div>
+				</fieldset>
+			</div>
+            </form>
+			<!-- //end #innerCont -->
+            <script type='text/javascript' src='/js/jquery.alphanumeric.js'></script>
+            <script type='text/javascript' src='/js/jquery.validate.js'></script>
+            <script type='text/javascript' src='/js/admin/common.js'></script>
+            <script type='text/javascript' src='/js/mem_page.js'></script>
+		</div>
+		<!-- //end #container -->
+		<script type="text/javascript">
+			$('.cont-step li').each(function (index, item) {
+				console.log(item);
+			});
+		</script>
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

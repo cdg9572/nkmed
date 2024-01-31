@@ -1,0 +1,161 @@
+<?
+session_start();
+
+header("Content-Type:text/html;charset=utf-8") ;
+mysql_query("set names utf8;");
+
+?>
+
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+	if(!frm.exam_title.value) {
+		alert('종합검진명을 입력해 주세요.');
+		frm.exam_title.focus();
+		return false;
+	}
+	else{
+		frm.target = "main";
+		frm.submit();
+	}
+}
+
+
+function chkDel(){
+	document.form.mode.value="del";
+	document.form.submit();
+	
+}
+
+
+//-->
+</script>
+<script> 
+var xmlHttp; 
+
+function createXMLHttpRequest() { 
+if (window.ActiveXObject) 
+{ 
+xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+} 
+else if (window.XMLHttpRequest) 
+{ 
+xmlHttp = new XMLHttpRequest(); 
+} 
+} 
+
+function startRequest() { 
+createXMLHttpRequest(); 
+xmlHttp.onreadystatechange = handleStateChange; 
+xmlHttp.open("GET","/admin/member/popId.html?id="+document.form.id.value, true); 
+xmlHttp.send(null); 
+} 
+
+function handleStateChange() { 
+if(xmlHttp.readyState == 4) {
+if (xmlHttp.status == 200) 
+{ 
+
+document.getElementById("idView").innerHTML = xmlHttp.responseText; 
+} 
+} 
+} 
+</script> 
+<script src="/admin/inc/calendar.js" language=javascript></script>
+
+
+
+
+
+<div class="historyText">홈 &gt; 검진 관리 &gt; 종합검진 결과등록 </div>
+
+<div class="propBox2">
+	<h3>종합검진 결과등록</h3>
+
+	<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+
+	<form name='form' method='post' action='<?=$actionPage?>' enctype='multipart/form-data'>
+	<input type='hidden' name='uploadDir' value='<?=$uploadDir?>'>
+	<input type='hidden' name='tbl' value='<?=$tbl?>'>
+	<input type='hidden' name='dir' value='<?=$dir?>'>
+	<input type='hidden' name='menu' value='<?=$menu?>'>
+
+	<input type='hidden' name='mode' value='totalExam'>
+	<input type='hidden' name='category' value='종합검진'>
+
+		
+		
+		<tr bgcolor='#EEEEEE'>
+			<td width='120' style='padding : 5 0 5 5'>종합검진명</td> 
+			
+			<td bgcolor='#FFFFFF' style='padding : 5 5 5 5'>
+				<input type="text" name="exam_title" size="50" value="<?=$row_data[$exam_title]?>"> 
+			</td>
+		</tr>
+		
+		<?
+		for($i = 1; $i <= 1; $i++) {
+			$upFile = "";
+
+			$fileNo = "file".$i;
+			$fileOrgName = "file_name".$i;
+			$fileDelNo = "fileDel".$i;
+
+			$url = "url".$i;
+			$target = "target".$i;
+		?>
+		<tr>
+			<td width='15%'>Excel 등록</td>
+			<td>
+				<?if(is_file($uploadDir.$row_data[$fileNo])) {?>
+				<table width='100%' style="border:none;">
+				<tr>
+					<td width='315' style='border:none;'><input type='file' name='upFile[]' style='width:99%' class='textfield'></td>
+					<td width='315' style='border:none;'><a href="./inc/procDownload.php?dir=<?=$uploadDir?>&file=<?=$row_data[$fileNo]?>&orgName=<?=$row_data[$fileOrgName]?>"><img src='./imgs/iconDownload.gif' border='0' align='absmiddle'>&nbsp;<?=$row_data[$fileOrgName]?></a></td>
+					<td style='border:none; color:red;' align='right'><input type='checkbox' name='<?=$fileDelNo?>' value='Y' onfocus='this.blur();'>삭제</td>
+				</tr>
+				</table>
+				<?} else {?>
+				<input type='file' name='upFile[]' style='width:99%' class='textfield'>
+				<?}?>
+			</td>
+		</tr>
+		
+		<?}?> 
+
+
+		<tr>
+			<td colspan="2">
+				<div class="sample clearfix">
+					<div style="float:left; margin-right:10px; width: 350px; overflow:hidden;">
+						
+					</div>
+					<div style="padding:5px; width:530px; height:165px; float:left;">
+						<p style="color:#666; margin-bottom:10px; font-size:11pt;">Excel 등록 방법
+							
+							<a href="./exam/21cHana_Total_sample.xls">[샘플 다운로드] </a>
+						
+						</p>
+						<p style="color:#666; margin-bottom:5px;">※ Sample.xls 파일을 참고하시어 작성하시면 됩니다. </p>
+						<p style="color:#666;">※ Excel 파일의 버전 충돌 등의 문제를 해결하기 위해 sample 파일에 추가하시는 것을 추천합니다.</p>
+					</div>
+
+			</td>
+		</tr>
+
+
+
+
+	</table>
+
+	</form>
+	
+	<div style="position:relative;">
+		<a href="#" onClick="chkForm(document.form)" class="resBtn02 pocenter510">등록</a>
+		<a href="#" onClick="history.go(-1);" class="cancelBtn02 poright">취소</a>
+	</div>
+</div>
+				
+
+
+<iframe name="main" width=800 height=600></iframe>

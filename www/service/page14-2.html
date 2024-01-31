@@ -1,0 +1,274 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "예약/발급";
+$page_sub_title = "예약 조회";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once($GP -> CLS."/class.member.php");
+include_once($GP -> CLS."/class.doctor.php");
+$C_Member 	= new Member;
+$C_Doctor 	= new Doctor;
+
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+
+$args = "";
+$args['mb_code'] = $_SESSION['susercode'];
+$data_member = $C_Member->Mem_Info($args);
+
+if($data_member) {extract($data_member);}
+
+?>
+<style>
+	.tabMenu ul li.active {
+		border-color: #1795d0;
+		background-color: #1795d0;
+	}
+</style>
+<body>
+	<div id="wrap">
+    <?php 
+		include_once  $GP -> INC_WWW . "/header.php";
+		if (!$C_Func -> is_login()) {    
+                echo "<script>$('.modal-box').fadeIn();$('.close').hide();</script>";
+         }else{
+            //고객번호 조회하기
+            $url = "http://1.214.232.188:8070/api/v1/";
+            $path01 = "exp_patient";              
+
+
+            $data01 = array(
+                "cust_name" =>  $mb_name,
+                "cust_phone" => str_replace("-", "",$mb_mobile)
+            );
+
+            $json_data = json_encode($data01);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path01,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_POSTFIELDS => $json_data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'),
+            ));
+            $response = curl_exec($curl);                  
+            $data = json_decode($response, true);
+
+            $_SESSION['suserbirth'] 	= $data['data'][0]['cust_birth'];
+            $_SESSION['suserpatientno'] 	= $data['data'][0]['cust_no'];
+            $_SESSION['susercount'] 	= $data['data_cnt'];            
+
+            if($mb_name == "최도규" || $mb_name == "서준범" || $mb_name == "김마리아" || $mb_name == "채승병" || $mb_name == "여나래"){
+                $_SESSION['suserpatientno'] 	= "782844"; 
+               
+            }  
+
+            // if( $data['data_cnt'] < 1){     
+            if($_SESSION['suserpatientno'] == ""){                   
+                if($mb_name == "" || $mb_mobile == ""){
+                    $C_Func->put_msg_and_go("개인 정보가 정확하지 않습니다..", "/mypage/mypage01.html");	
+                }else{
+                    $C_Func->put_msg_and_go("신환 환자이시거나 예약 이력이 조회되지 않습니다.", "/");			     
+                }                   
+            }  
+         }     
+         
+        //예약내역조회
+        $url = "http://1.214.232.188:8070/api/v1/";
+        $path01 = "check_reserve"; 
+
+        $data01 = array(
+                    "cust_no" =>  $_SESSION['suserpatientno']                
+                    );
+
+        $json_data = json_encode($data01);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url.$path01,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => $json_data,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'),
+        ));
+        $response = curl_exec($curl);                  
+        $data02 = json_decode($response, true);
+
+        if($_GET["recept_no"]){
+            $mode = "ONLINE_RESERVE_MODIFY";
+        }
+        else{
+            $mode = "ONLINE_RESERVE_REG";
+        }
+
+		?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr15.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<h3 class="cont-tit center" style="padding-bottom: 0;">예약 조회</h3>
+				<div class="tabMenu">
+					<ul>
+						<li class="active"><a href="page14-2.html">외래 예약</a></li>
+						<li><a href="page14-1.html" onclick="alert('준비중입니다.');return false">건강검진 예약</a></li>
+					</ul>
+				</div>
+				<div class="rsv-card-wrap">
+					<ul class="rsv-card-list">
+                    <? if(count($data02['data']) > 0) { ?>                                   
+                            <? 
+                            for($i=0;$i<count($data02['data']);$i++){ 
+                                $args["dr_mcode"] = $data02['data'][$i]["reserv_doct"];                                
+                                $dr_info = $C_Doctor->Doctor_Info_Code($args);     
+                                $dr_img = '';
+                                
+                                if($dr_info["dr_face_img"] !=  '') {
+                                    $dr_img = "<img src='" . $GP -> UP_DOCTOR_URL . $dr_info["dr_face_img"] . "' alt='' class='block'/>";
+                                }	
+
+
+                                     //취소가능여부확인
+                                    $url = "http://1.214.232.188:8070/api/v1/";
+                                    $path02 = "cancel_confirm";    
+
+                                    $data_cc = array(
+                                                "recept_no" =>  $recept_no
+                                                );
+
+                                    $json_data = json_encode($data_cc);
+                                    $curl = curl_init();
+                                    curl_setopt_array($curl, array(
+                                    CURLOPT_URL => $url.$path02,
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_CUSTOMREQUEST => 'GET',
+                                    CURLOPT_POSTFIELDS => $json_data,
+                                    CURLOPT_HTTPHEADER => array(
+                                        'Content-Type: application/json'),
+                                    ));
+                                    $response = curl_exec($curl);                  
+                                    $data_ccd = json_decode($response, true);                                    
+                                    
+                            ?>   
+                            <input type="hidden" name="recept_no" id="recept_no" value="<?=$data02['data'][$i]["recept_no"]?>" />                                 
+                            <li class="rsv-card">
+                                <div class="left">
+                                    <div class="img">
+                                        <?=$dr_img?>
+                                    </div>
+                                    <div class="text">
+                                        <div class="name">
+                                           <?=$dr_info["dr_name"]?> <?=$GP -> DOCTOR_POSITION[$dr_info["dr_position"]];?><a href="/doctor/doc-view.php?idx=<?=$dr_info["dr_idx"]?>" target="_blank">자세히 보기</a>
+                                        </div>
+                                        <div class="if">
+                                            <span>전문분야</span>
+                                            <p>
+                                                 <?=$dr_info["dr_treat"]?>
+                                            </p>
+                                        </div>
+                                        <!-- <div class="if">
+                                            <span>빠른진료</span>
+                                            <p><?=$res_day?></p>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p>예약 내역</p>
+									<div class="mb-show">
+                                        <label for="">의료진</label>
+                                        <span><?=$dr_info["dr_name"]?> <?=$GP -> DOCTOR_POSITION[$dr_info["dr_position"]];?></span>
+                                    </div>
+                                    <div>
+                                        <label for="">예약일시</label>
+                                        <span><?=substr($data02['data'][$i]['reserv_ymd'],0,4)."-".substr($data02['data'][$i]['reserv_ymd'],4,2)."-".substr($data02['data'][$i]['reserv_ymd'],6,2)?></span>
+                                    </div>
+                                    <div>
+                                        <label for="">예약시간</label>
+                                        <span><?=substr($data02['data'][$i]['reserv_time'],0,2).":".substr($data02['data'][$i]['reserv_time'],2,2);?></span>
+                                    </div>
+                                <?  if($data_ccd['data'] > 0) {?>
+                                    <a href="#">예약취소불가</a>
+                                <? }else{?>                                   	   					
+                                        <a href="/service/page02-4.html?recept_no=<?=$data02['data'][$i]['recept_no']?>&dr_idx=<?=$dr_info["dr_idx"]?>" style="float: left; background: #ffbe6b; color: #000;margin-left: 50px;">예약 날짜 변경</a>
+                                      <a href="#" onclick="online_delete(<?=$data02['data'][$i]['recept_no']?>)" style="float: right;margin-right: 50px; ">예약취소</a>	 
+                                        <!-- <a href="#" onclick="online_delete(<?=$data02['data'][$i]['recept_no']?>)">예약취소</a>	   -->
+                                                                                                   
+													
+                                <? }?>
+                                </div>
+                            </li>
+                            <? } ?>                                
+                            <? }else { ?>
+                                    <span class="help-text text-center">예약한 내역이 없습니다.</span>		
+                            <? } ?>		
+					</ul>
+				</div>
+				<!--
+				<div class="l-pad-box gray text-left">
+					&middot; 예약변경을 원하시면 취소 후 다시 예약 바랍니다. 
+					<a href="page02-1.html" class="btn bg-black" style="margin-left: 20px;">온라인 예약하기</a>
+				</div>
+				-->
+			</div>
+		</div>
+		<!-- //end #container -->
+		<div id="loadingOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999;">
+		  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 20px;">
+			처리중이니 잠시 기다려 주세요...
+		  </div>
+		</div>
+
+        <script>	
+
+
+    function online_delete(recept_no)
+	{
+		if(!confirm("취소 하시겠습니까?")) return;
+
+		$('#loadingOverlay').show();
+
+		$.ajax({
+			type: "POST",
+			url: "./proc/online_proc.php",
+			data: "r_mode=ONLINE_DEL&recept_no=" + recept_no,
+			dataType: "text",
+			success: function(msg) {
+				
+				if($.trim(msg) == "true") {
+					alert("취소 되었습니다");
+					window.location.reload();
+					return false;
+                }else if($.trim(msg) == "204") {
+					alert("검사, 처방존재로 취소가 불가 합니다.");
+					window.location.reload();
+					return false;
+				}else{
+					alert('취소에 실패하였습니다.');
+					return;
+				}
+			},
+			error: function(xhr, status, error) { alert(error); }
+		});
+
+	}
+
+
+</script>
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

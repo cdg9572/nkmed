@@ -1,0 +1,125 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8");
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+
+?>
+
+
+<?
+
+testing_dsp("post") ;
+testing_dsp("session") ;
+
+testing_dsp("post1") ;
+
+
+
+if($mode == "login") {
+	echo $admin_id."<br>";
+	echo $admin_pw."<br>";
+
+
+$sql = "select * from smart_manager where manager_id = '$admin_id'  and manager_passwd = '$admin_pw' ";
+testing_dsp("$sql") ;
+	$res = mysql_query($sql);
+	$row = MYSQL_FETCH_ARRAY($res);
+
+
+	if($row['manager_id'] =="" || $row['manager_passwd'] == "") {
+			echo "<script language='JavaScript'>alert('관리자 정보가 일치하지 않습니다.'); document.location.href='login.html'</script>";
+			exit;
+	}
+	else {
+		$_SESSION['sess_AID'] = $row['manager_id'];
+		//$_SESSION['sess_APW'] = $row['manager_passwd'];
+		$_SESSION['sess_ANM'] = $row['name'];
+		//$_SESSION['sess_MANM'] = $row['manager_name'];
+		$_SESSION['sess_ALV'] = $row['level'];
+		$_SESSION['sess_site'] = "admin";
+		$_SESSION['sess_MGP'] = $row['manager_group'];
+
+		echo "<script language='JavaScript'>document.location.href='./index.html'</script>";
+	}
+
+
+}
+
+
+?>
+
+
+
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴고려병원</title>
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/admin.css" rel="stylesheet" type="text/css">
+
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+	if(!frm.admin_id.value) {
+		alert('아이디를 입력해 주세요.');
+		frm.admin_id.focus();
+		return false;
+	}
+	else if(!frm.admin_pw.value) {
+		alert('비밀번호를 입력해 주세요.');
+		frm.admin_pw.focus();
+		return false;
+	}
+	else{
+		frm.submit();
+	}
+}
+function enterkey() {
+        if (window.event.keyCode == 13) {
+ 
+             // 엔터키가 눌렸을 때 실행할 내용
+             chkForm(document.LOGIN);
+        }
+}
+
+//-->
+</script>
+
+
+<script src="../respond.min.js"></script>
+</head>
+
+<form name='LOGIN' method='post' action='<?=$PHP_SELF?>'>
+<input type='hidden' name='mode' value='login'>
+
+<body id="loginPage">
+	<div class="gridContainer clearfix">
+		<div class="loginContainer">
+			<img src="../../admin/images/logo.png" width="200" alt="21C hana hospital"/>
+			<div class="loginBox">
+				<label class="idLabel">ID</label>
+				<input type="text" name="admin_id" class="userId" placeholder="ID"/>
+				<label class="pwLabel">PW</label>
+				<input type="password" name="admin_pw" class="userPw" placeholder="Password"/>
+
+				<a href="#" onClick='return chkForm(document.LOGIN)' onfocus='this.blur();' class="loginBtn">LOGIN</a>
+			</div>
+
+			<span style="font-size:12px; text-align:center; display:block; padding-top:20px;">본 사이트는 <strong>CHROME 브라우져</strong>에 최적화 되었습니다</span> <br>
+
+		</div>
+	</div>
+</body>
+</html>

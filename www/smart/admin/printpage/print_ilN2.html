@@ -1,0 +1,530 @@
+<?
+
+session_start();
+include "../../inc/dbConn.php";
+include  "../../inc/func.php";
+
+mysql_query("set names utf8;");
+
+header("Content-Type:text/html;charset=utf-8"); //"
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Print</title>
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<style>
+body { position:relative; width: 100%; height: 100%; margin: 0; padding: 0; background-color: #ddd; }
+img {width:16px !important; height:16px; vertical-align:middle; }
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: middle; }
+* { box-sizing: border-box; -moz-box-sizing: border-box; }
+.paper { width: 210mm; min-height: 297mm; padding: 15mm; /* set contents area */ margin: 10mm auto; border-radius: 5px; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); }
+.content { padding: 0; height: 257mm; }
+@page { size: A4; margin: 0; }
+.content img { width:100%; }
+.printBtn, .printBtn:visited { display:block; width:100px; padding:35px 0px; background:#999; font-size:16px; color:#FFF; text-decoration: none; text-align:center; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position:fixed; top: 2mm; right:4mm;}
+.printBtn:hover { background-color:#333; }
+
+h1 { text-align:center; font-size:16pt; }
+h2 { font-size:12pt; text-align: center; margin-bottom:5mm; }
+h3 {border:1px solid #333; background:#ccc; font-size:10pt; margin:0; padding:1mm 2mm; }
+h4 {font-size:10pt; padding:0; margin:0; margin-bottom:1mm; font-weight: normal; font-family: serif;}
+.box {border:1px solid #333; border-top: none; padding:1mm 3mm; margin-bottom:1mm; }
+p { font-size:9pt; font-family:serif; margin:0; padding:0; margin-bottom:1mm; }
+.tts1 { margin-bottom:2mm; }
+.tts1 th, .tts1 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts1 th { font-size:10pt; font-weight:bold;}
+.tts1 td { font-size:9pt; }
+.tts2 { margin-bottom:2mm; }
+.tts2 th, .tts2 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts2 th { font-size:10pt; font-weight:bold; text-align:left;}
+.tts2 td { font-size:9pt; text-align:center; }
+@media print {
+	html, body {width: 210mm; height: 297mm; background: #fff; }
+	.paper {margin: 0; padding:15mm; border: initial; border-radius: initial; width: initial; min-height: initial; box-shadow: initial; background: initial; page-break-after: always; }
+	.printBtn { display:none; }
+}
+</style>
+</head>
+
+
+<?
+
+$sql = "select * from smart_munjin_cmp2018 where seq = $seq" ;
+#echo $sql;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+testing_dsp("$sql") ;
+
+$reserve_seq = $row[reserve_seq] ;
+$name = $row[name] ;
+$mobile_no = $row[mobile_no] ;
+//testing_dsp($row) ;
+
+testing_dsp("post") ;
+testing_dsp("get") ;
+testing_dsp("session") ;
+
+
+?>
+
+<body>
+	<a href="javascript:window.print()" class="printBtn">출력하기</a>
+	<div class="paper">
+        <div class="content">
+			<h2>건강검진 공통 문진표</h2>
+			<p>※ 검진대상자는 문진문항을 빠짐없이 표시하여야만 정확한 건강위험평가 결과를 통보 받으실 수 있습니다.</p>
+			<table width="100%" class="tts1" >
+				<tr>
+					<td rowspan="2" width="12%" align='center'>수검자성명</td>
+					<td rowspan="2" width="17%"><?=$row[name]?></td>
+					<td rowspan="2" width="12%" align='center'>주민등록번호</td>
+					<td rowspan="2" width="17%">&nbsp;</td>
+					<td rowspan="2" width="12%" align='center'>전화번호</td>
+					<td width="12%" align='center'>자택</td>
+					<td width="18%">&nbsp;</td>
+				</tr>
+				<tr>
+					<td align='center'> 핸드폰</td>
+					<td><?=$row[mobile_no]?>;</td>
+				</tr>
+				<!--<tr>
+					<td colspan="4" align="center">
+						<img src="square.jpg" />건강보험가입자
+						<span style="margin-left:5mm;"><img src="square.jpg" /> 의료급여수급권자</span>
+					</td>
+					<th>e-Mail</th>
+					<td colspan="2">&nbsp;</td></tr>-->
+				<tr>
+					<td rowspan="2" align='center'>주소</td>
+					<td rowspan="2" colspan="3">&nbsp;</td>
+					<td align='center'>E-mail</td>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2"><font style='font-size:8pt;'>건강검진 결과통보서 수령방법</font></td>
+					<td align="center">
+					<input type="checkbox" name="st" value="U"/>우편&nbsp;
+					<input type="checkbox" name="st" value="E"/>E-mail
+					</td>
+				</tr>
+			</table>
+			
+			<p>※ 아래 문항을 읽고 자신의 현재 상태에 해당되는 내용을 작성하여 주십시오. <!--<strong style="font-family:sans-serif;"><span style="margin-left:5mm;"><img src="square.jpg" /> 예</span> <span style="margin-left:5mm;"><img src="square.jpg" /> 아니요</span></strong>--></p>
+
+			
+			<table width='100%'>
+			<tr><td width='50%' valign='top'>
+				<div style="font-size:11px;">
+				질환력(과거력, 가족력)</br>
+				1. 다음과 같은 질병으로 진단을 받았거나, 현재 약물 치료 중<br/>&nbsp;&nbsp;&nbsp;&nbsp;이십니까?
+				<table  border='1'>
+				<tr><td></td>
+					<td style=" !important; text-align:center;">진단</td>
+					<td style=" !important; text-align:center;">약물치료</td></tr>
+				<tr><td>뇌졸중(중풍)</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],0,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],0,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],0,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],0,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+
+				<tr><td>심근경색/협심증</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],1,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],1,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],1,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],1,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+
+				<tr><td>고혈압</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],2,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],2,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],2,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],2,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+				
+				<tr><td>당뇨병</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],3,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],3,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],3,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],3,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+				
+				<tr><td>이상지질혈증</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],4,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],4,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],4,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],4,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+				
+				<tr><td>폐결핵</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],5,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],5,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],5,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],5,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+				
+				<tr><td>기타(암포함)</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1],6,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1],6,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no1_add],6,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>
+					예 &nbsp;&nbsp;&nbsp;
+					<? if( n1($row[no1_add],6,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>
+					아니오</td></tr>
+				</table>
+				<br/>
+				2. 부모, 형제, 자매 중에 다음 질환을 앓았거나 해당 질환으로<br/>&nbsp;&nbsp;&nbsp;&nbsp;사망한 경우가 있으십니까?<br/>
+
+				<table border='1'>
+				<tr><td>뇌졸중(중풍)</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],0,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>예</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],0,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>아니오</td></tr>
+
+				<tr><td>심근경색/협심증</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],1,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>예</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],1,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>아니오</td></tr>
+
+				<tr><td>고혈압</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],2,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>예</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],2,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>아니오</td></tr>
+				
+				<tr><td>당뇨병</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],3,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>예</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],3,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>아니오</td></tr>
+				
+				<tr><td>기타(암포함)</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],4,'Y') ){   ?><input type="radio"  value="Y" checked /><? }else{?><input type="radio"  value="Y"/><? } ?>예</td>
+					<td style=" !important; text-align:center;">
+					<? if( n1($row[no2],4,'N') ){   ?><input type="radio"  value="N" checked /><? }else{?><input type="radio"  value="N"/><? } ?>아니오</td></tr>
+				</table><br/>
+				3. B형간염 바이러스 보유자입니까? <br/>
+				&nbsp;&nbsp;&nbsp<!--①②③④⑤-->
+				<? if( n2($row[no3], '1') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>① 예 &nbsp;&nbsp;&nbsp
+				<? if( n2($row[no3], '2') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>② 아니오 &nbsp;&nbsp;&nbsp
+				<? if( n2($row[no3], '3') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>③ 모름
+				</br></br>
+				흡염 및 전자담배</br>
+				4. 지금까지 평생 총 5갑(100개비) 이상의 담배를 피운 적이<br/>&nbsp;&nbsp;&nbsp;&nbsp;있습니까?
+				<br/>
+				<? if( n2($row[no4], '1') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  아니오 <br/>
+				<? if( n2($row[no4], '2') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>② 예  <br/>
+				<? if( n2($row[no4], '3') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>③ 예모름 <br/> <br/>
+				4-1. 과거에 흡연을 하였으나 현재는 끊으셨다면 <br/> 
+				<table width='90%' border='1'  style='font-size:8pt;'>
+				<tr><td width='75%' >금연 전까지 담배를 몇 년이나 피우셨습니까?</td><td width='15%'>&nbsp;총  <?=nr($row[no4_1], 0);?>년</td></tr>
+				<tr><td>금연하시기 전 평균 하루 흡연량은 몇 개비였습니까?</td><td align='right'>   <?=nr($row[no4_1], 1);?>개비</td></tr>
+				</table><br/>
+				4-2. 과거에 흡연을 하였으나 현재는 끊으셨다면 <br/>
+				<table width='90%' border='1'  style='font-size:8pt;'>
+				<tr><td width='75%'>몇 년째 담배를 피우시고 계십니까?</td><td width='15%'>&nbsp;총  <?=nr($row[no4_2], 0);?>년</td></tr>
+				<tr><td>평균 하루 몇 개비를 피우십니까?</td><td align='right'>   <?=nr($row[no4_2], 1);?>개비</td></tr>
+				</table><br/>
+				5. 전자담배를 사용한 경험이 있습니까?
+				<br/>
+				<? if( n2($row[no5], '1') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예<br/>
+				<? if( n2($row[no5], '2') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/>
+				<br/>
+				5-1. 지금까지 평생 총 5갑(100개비) 이상의 담배를 피운 적이<br/>&nbsp;&nbsp;&nbsp;&nbsp;있습니까?
+				<br/>
+				<? if( n2($row[no5_1], '1') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>① 아니오 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no5_1], '2') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>② 월 1-2일&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no5_1], '3') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>③ 월 3-9일  <br/>
+				<? if( n2($row[no5_1], '4') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>④ 월 10-29일
+				<? if( n2($row[no5_1], '5') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>⑤ 매일 
+				</div>
+				<br/><br/>
+				</td>
+
+				<td valign='top'>
+				<div style="font-size:11px;">음주<br/>
+				※ 지난 1년간<br>
+				6. 술을 마시는 회수는 어는 정도입니까? (1개만 응답)<!--①②③④⑤--><br/>
+				<? if( n1($row[no6], 0, '1') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? }?>① 일주일에 ( <?=nr($row[no6], 1);?>  )번
+				<? if( n1($row[no6], 0, '2') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? }?>② 한 달에 (  <?=nr($row[no6], 2);?> ) 번 <br/>
+				<? if( n1($row[no6], 0, '3') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? }?>③ 1년에 (  <?=nr($row[no6], 3);?> )번<br/>
+				<? if( n1($row[no6], 0, '4') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? }?>④ 술을 마시지 않는다 <br/>
+				<br/>
+				6-1. 술을 마시는 날은 보통 어느 정도 마십니까?<br/>
+				<table width='100%' border='1'>
+				<tr><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6111' value='<?=nr($row[no6_1], 0);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6112' value='<?=nr($row[no6_1], 1);?>' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6113' value='<?=nr($row[no6_1], 2);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6114' value='<?=nr($row[no6_1], 3);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6121' value='<?=nr($row[no6_1], 4);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6122' value='<?=nr($row[no6_1], 5);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6123' value='<?=nr($row[no6_1], 6);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6124' value='<?=nr($row[no6_1], 7);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6131' value='<?=nr($row[no6_1], 8);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6132' value='<?=nr($row[no6_1], 9);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6133' value='<?=nr($row[no6_1], 10);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6134' value='<?=nr($row[no6_1], 11);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6141' value='<?=nr($row[no6_1], 12);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6142' value='<?=nr($row[no6_1], 13);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6143' value='<?=nr($row[no6_1], 14);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6144' value='<?=nr($row[no6_1], 15);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">기타<input type="text" size='4' name='no6150' value='<?=nr($row[no6_1], 16);?>' /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6151' value='<?=nr($row[no6_1], 17);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6152' value='<?=nr($row[no6_1], 18);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6153' value='<?=nr($row[no6_1], 19);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6154' value='<?=nr($row[no6_1], 20);?>'/></td></tr>
+				</table>
+				<br/>
+				6-2. 가장 많이 마셨던 하루 음주량은 어느 정도입니까?
+				<table width='100%' border='1'>
+				<tr><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6211' value='<?=nr($row[no6_2], 0);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6212' value='<?=nr($row[no6_2], 1);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6213' value='<?=nr($row[no6_2], 2);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6214' value='<?=nr($row[no6_2], 3);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6221' value='<?=nr($row[no6_2], 4);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6222' value='<?=nr($row[no6_2], 5);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6223' value='<?=nr($row[no6_2], 6);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6224' value='<?=nr($row[no6_2], 7);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6231' value='<?=nr($row[no6_2], 8);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6232' value='<?=nr($row[no6_2], 9);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6233' value='<?=nr($row[no6_2], 10);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6234' value='<?=nr($row[no6_2], 11);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6241' value='<?=nr($row[no6_2], 12);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6242' value='<?=nr($row[no6_2], 13);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6243' value='<?=nr($row[no6_2], 14);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6244' value='<?=nr($row[no6_2], 15);?>'/></td></tr>
+				<tr><td style="important; text-align:center;">기타<input type="text" size='4' name='no6250' value='<?=nr($row[no6_2], 16);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6251' value='<?=nr($row[no6_2], 17);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6252' value='<?=nr($row[no6_2], 18);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6253' value='<?=nr($row[no6_2], 19);?>'/></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='no6254' value='<?=nr($row[no6_2], 20);?>'/></td></tr>
+				</table>
+				<br/>
+				신체활동 (운동)<br/>
+				7-1. 평소 1주일간, 숨이 많이 차게 만드는 고강도 신체활동을<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;며칠 하십니까? 주당 ( <?=nr($row[no7], 0);?>  ) 일
+				<br/><font style="font-size:7pt">*고강도 신체활동의 예> 달리기, 에어로빅, 빠른 속도로 자전거 타기, 건설 현장<br>
+				&nbsp;노동, 계단으로 물건 나르기 등</font>
+				<br/><br/>
+				7-2. 평소 하루에 숨이 많이 차게 만드는 고강도 신체활동을 몇<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;시간 하십니까? 하루에 ( <?=nr($row[no7], 1);?>  ) 시간 ( <?=nr($row[no7], 2);?>  ) 분
+				<br/><br/>
+				8-1. 평소 1주일간, 숨이 약간 차게 만드는 중강도 신체활동을<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;며칠 하십니까? 주당 ( <?=nr($row[no8], 0);?>  ) 일
+				<br/><font style="font-size:7pt">*7번 응답에 관련된 신체활동은 제외하고 답해주십시오.</font>
+				<br/><font style="font-size:7pt">*중강도 신체활동의 예> 빠르게 걷기, 복식 테니스, 보통 속도로 자전거 타기,<br>
+				&nbsp;가벼운 물건 나르기, 청소 등</font>
+				<br/><br/>
+				8-2. 평소 하루네 숨이 약간 차게 만드는 중강도 신체활동을 몇<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;시간 하십니까? 하루에 (  <?=nr($row[no8], 1);?> ) 시간 ( <?=nr($row[no7], 2);?>  ) 분
+				<br/><br/>
+				9. 최근 1주일 동안 팔굽혀펴기, 윗몸일으키기, 아령, 역기, 철봉<br/>&nbsp;&nbsp;&nbsp;
+				등 근력 운동을 한 날은 며칠입니까? 주당 ( <?=$row[no9];?>  ) 일
+				<br/><br/><br/><br/><br/><br/>
+				</div>
+				</td></tr>
+			</table>
+			
+		</div>    
+    </div>
+	<div class="paper">
+        <div class="content">
+			<h2>건강검진 추가 문진표 (66세_<? echo substr(date("Y")-66,2,2);?>년생, 70세_<? echo substr(date("Y")-70,2,2);?>년생, 80세_<? echo substr(date("Y")-80,2,2);?>년생 해당)</h2><br>
+
+			<table width="100%" class="tts1" >
+			<tr align='center'><td width='20%'>수검자성명</td><td width='30%'><?=$row[name]?>&nbsp;</td>
+				<td width='20%'>주민등록번호</td><td width='30%'>&nbsp;</td></tr>
+			</table>
+			<p>※ 추가 문진표는 해당 수검자만 작성해주십시오.</p>
+			<br/>
+			<font style="font-size:11pt;">노인기능평가 관련 문항(66세, 70세, 80세 해당)</font><br/><br/>
+			<table width='100%'>
+			<tr><td width='50%' valign='top'>
+				<div style="font-size:12px;">
+				1. 인플루엔자(독감) 예방접종을 매년 하십니까? 
+				<br/>
+				<? if( n2($row[no10], 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no10], 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+				2. 폐렴예방접종을 받으셨습니까? 
+				<br/>
+				<? if( n2($row[no11], 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no11], 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+
+				3. 다음은 일상생활 수행능력에 대한 질문입니다. <br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;아래 문항을 읽고 현재 상태에 해당하는 답에 O<br/> 
+				&nbsp;&nbsp;&nbsp;&nbsp;표시를 해주십시오.<br/><br/>
+
+				&nbsp;&nbsp;1). 음식을 차려주면 남의 도움 없이 혼자서 식사하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],0, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],0, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+
+				&nbsp;&nbsp;2) 옷을 챙겨 입을 때 남의 도움 없이 혼자서 하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],1, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],1, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+
+				&nbsp;&nbsp;3) 대소변을 보기위해 화장실 출입할 때 남의 도움 없이 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;혼자서 하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],2, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],2, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/>
+
+				</div>
+				</td>
+				<td width='50%' valign='top'>
+				<div style="font-size:12px;">
+				&nbsp;&nbsp;4) 목욕하실 때 남의 도움 없이 혼자서 하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],3, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],3, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+
+				&nbsp;&nbsp;5) 식사 준비를 다른 사람의 도움 없이 혼자서 하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],4, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],4, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+
+
+				&nbsp;&nbsp;6) 상점, 이웃, 병원, 관공서 등 걸어서 갔다 올 수 있는 <br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;곳의 외출을 다른 사람의 도움 없이 혼자서 하십니까?
+				<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],5, 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n1($row[no12],5, 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+				<br/><br/>
+	
+				4. 낙상에 관한 질문입니다. 지난 6개월 간 넘어진 적이 <br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp있습니까?
+				<br/>
+				<? if( n2($row[no13], 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no13], 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+				5. 배뇨장애에 관한 질문입니다. 소변을 보는데 장애가 <br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp있거나 소변을 지릴 경우가 있습니까?
+				<br/>
+				<? if( n2($row[no14], 'Y') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>①  예
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<? if( n2($row[no14], 'N') ){   ?><input type="radio"  checked /><? }else{?><input type="radio" /><? } ?>②  아니오  <br/><br/>
+				</div>
+				</td></tr>
+			</table>
+			
+		</div>    
+    </div>
+</body>
+</html>
+
+<?
+//1번 값 확인
+function n1( $val, $target, $cval ){
+	//$val 값 스플릿 해서 $target 확인후 점검 맞으면 checked;
+	$t_arr = explode( "=&=", $val);
+	for($i = 0 ; $i < count($t_arr); $i++){
+		//echo $t_arr[$i];
+		if($i == $target){
+			if($t_arr[$i]==$cval){
+				$tmp = true;
+			}else{
+				$tmp = false;
+			}
+			break;
+		}
+	}
+	return $tmp;
+}
+
+// 선택형
+function n2( $val, $cval ){
+	if($val==$cval){
+		$tmp = true;
+	}else{
+		$tmp = false;
+	}
+	return $tmp;
+}
+
+//값 리턴형
+function nr( $val,  $cval ){
+	//$val 값 스플릿 해서 $target 확인후 점검 맞으면 checked;
+	$t_arr = explode( "=&=", $val);
+	
+	return $t_arr[$cval];
+}
+
+?>

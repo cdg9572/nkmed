@@ -1,0 +1,26 @@
+<table width='100%'>
+<tr><td><a onclick="window.open('img/c07.jpg','','');" style="font-size:12pt;color:blue" >설명보기</a></td></tr></table>
+<style>
+tr{ text-align:center;font-size: .9em;	padding:5px;	border: 1px solid #CCCCCC; }
+</style>
+<!--갑상선 및 성병 검사-->
+<h2>갑상선 관련 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "C9" );?>
+</table><br/>
+
+<h2>전해질 및 신진대사 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 -->
+<?=GetArrIdx2n( $arr, "C5" );?>
+</table><br/>
+
+<h2>성병 검사</h2>
+<table width='100%'>
+<tr bgcolor='#F0F0F0'><th>검사항목</th><th>검사결과</th><th>판정</th><th>임상참고치</th></tr>
+<!-- 필요 내용 보여주기 추가해야함 10/10 -->
+<?=GetArrIdx2n( $arr, "C1" );?>
+</table><br/>

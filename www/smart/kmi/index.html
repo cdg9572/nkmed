@@ -1,0 +1,75 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "./../inc/func.php";
+include "./../inc/dbConn.php";
+
+testing_dsp("session") ;
+
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMI</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header><img width="100%" src="img/t.png" class="top_logo" alt=""/></header>
+	
+	<nav>
+		<ul class="menu_list">
+			<li bgcolor="#cdcdcd" ><a href="m1/index.html"><img src="img/1.png" alt="기관소개"/></a></li>
+			<li color="#5f92ea"><a href="m2/index.html"><img src="img/2.png" alt="문진표 & 동의서 & 주의사항"/></a></li>
+			<li><a href="mj.html" target="_blank"><img src="img/3.png" alt="문진표 & 동의서 & 주의사항"/></a></li>
+			<li><a href="../report2/index.html?l=false" target="_blank"><img src="img/4.png" alt="검진 결과 보기"/></a></li>
+			<li><a href="m5/index.html"><img src="img/5.png" alt="검진 문의"/></a></li>
+		</ul>
+	</nav>
+	
+	<section><br/>
+		<B><font size="4">&nbsp;&nbsp;&nbsp;검진 예약을 하시면 평일기준 <font color="red">24시간 이내에</font> <br/>
+		&nbsp;&nbsp;&nbsp;담당자가 연락드려 <font color="red">최종일정 확인</font>을 도와드립니다. </B></font>
+	</section>
+	
+	<footer>
+		<p>Copyright(c) </p>
+	</footer>
+
+<!--
+<?
+
+
+//include $_SERVER["DOCUMENT_ROOT"]."/goSMSHeader.html";  //== 전송해야할 것이 있는 경우 발송
+// <iframe name="company_proc" width=500 height=300 src="<?=$_SERVER["DOCUMENT_ROOT"]?>/goSMSHeader.html"></iframe>
+
+?>
+-->
+
+</body>
+</html>

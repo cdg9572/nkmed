@@ -1,0 +1,104 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+
+$sql = "select * from smart_reserve where seq = $seq" ;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+//testing_dsp($row) ;
+?>
+
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="../index.html"><img src="../img/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>문진표 작성</h2>
+
+
+	<form name='form' method='post' action='./munjin_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_reserve'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='munjin_category' value='5대암'>
+		<input type='hidden' name='reserve_seq' value='<?=$seq?>'>
+
+	
+	<section style="padding:0px 10px; min-height:450px;">
+	
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important; text-align:left;">예약정보</th>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name="name" value="<?=$row[name]?>"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" class="intextst01" name="mobile_no" value="<?=$row[mobile_no]?>" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+		</table>
+	
+		
+		<div style="padding:20px 0px; margin-bottom:15px;">
+		
+			<a href="#" class="btnst01" onClick="chkForm(document.form)">문진표 작성하기</a>
+			<!--<a href="mj_A.html?step=1&reserve_seq=$seq" class="btnst01">문진표 작성하기</a>-->
+		</div>
+	</section>
+
+	</form>
+	
+<script language="JavaScript">
+<!--	
+function chkForm(frm) {
+
+	frm.submit();
+}
+//-->
+</script>
+
+
+	<iframe name="company_proc" width=600 height=600></iframe>
+
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

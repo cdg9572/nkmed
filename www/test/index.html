@@ -1,0 +1,38 @@
+<?
+include_once  '../_init.php';
+global $C_DB;
+
+if($_GET[s_date]=="" or $_GET[s_date]=="" ){
+	//
+	return false;
+}
+
+$s_date = $_GET[s_date];
+$e_date = $_GET[e_date];
+// 서버 응답 예제 (PHP 사용)
+$callback = $_GET['callback']; // 클라이언트에서 지정한 콜백 함수 이름 가져오기
+
+$tty = ($_GET[tty]=="r") ? "tor_rs_date" : "substr(tor_regdate,1,10)";
+
+$sql = " SELECT *
+		FROM tblOnlineReserve
+		WHERE $tty between '".$s_date."' and '".$e_date."'
+			AND tor_rs_date>'2023-06-30' 
+			AND tor_rs_name<>'최도규'
+		ORDER BY tor_rs_date ";
+
+
+$rst =  $C_DB -> execSqlList($sql);
+		
+$arr_tmp = array();
+if($rst) {
+	for	($i=0; $i<count($rst); $i++) {
+		$arr_tmp[$i] = array( ($i+1) , $rst[$i]['tor_rs_clinic'] , $rst[$i]['tor_rs_doc']  , $rst[$i]['tor_rs_phone'] , $rst[$i]['tor_rs_name'], $rst[$i]['tor_rs_date'], $rst[$i]['tor_regdate'] );
+	}
+}
+
+// JSONP 응답 반환
+header('Content-Type: application/javascript');
+echo $callback . '(' . json_encode($arr_tmp) . ');';
+
+?>

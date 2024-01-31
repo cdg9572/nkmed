@@ -1,0 +1,43 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMI</title>
+</head>
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<style>
+img { margin-bottom:10px; }
+</style>
+<body>
+<a href="../"><img width="100%" src="../img/5.png" /></a>
+<h2>검진 문의</h2>
+<img width="100%" src="../img/s.png"  alt="이미지1"/>
+<a href="tel:1599-7070"> <img width="100%" src="../img/tel.png"  alt="전화"/></a>
+<a onclick="alert('준비중입니다.');" style="cursor:hand;"><img width="100%" src="../img/kakao.png"  alt="1:1 카카오톡"/></a>
+<a href="mailto:webmaster@kmi.or.kr"><img width="100%" src="../img/email.png"  alt="E-mail"/></a>
+<h2></h2>
+<section><font style="color:blue;font-size:10pt;">검진 성수기에는 전화 연결이 어려울 수 있습니다. </font></section>
+</body>
+</html>

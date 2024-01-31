@@ -1,0 +1,138 @@
+<? $MNCAGT41E = $row[MNCAGT41E];
+	$MNCAGT42E = $row[MNCAGT42E];
+	$MNCAGT43E = $row[MNCAGT43E];
+	$MNCAGT44E = $row[MNCAGT44E];
+	$MNCAGT45E = $row[MNCAGT45E];
+	$MNCAGT46E = $row[MNCAGT46E];
+	$MNCAGT47E = $row[MNCAGT47E];
+	$MNCAGT48E = $row[MNCAGT48E]; ?>
+암 검진(공통 관련 문항)<br/>
+<p style="font-size:12px; color:red;">※ 아래 문항을 읽고 자신의 현재 상태에 해당하는 답에 체크해 주십시오.</p>
+<table width="100%" style='font-size:8pt;'>
+<tr><td>1. 현재 신체 어느 부위에든 <B>불편한 증상</B>이 있습니까?</td></tr>
+<tr><td><table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+				<tr><td style=" !important; text-align:left;"><?=$row[MNCAGT1BM];?>
+						<input type="radio" name="MNCAGT1BM" value="1" <? if( $row[MNCAGT1BM] == "1" ){ echo "checked"; } ?>  />예 
+						(증상 : <input type="text"  name="MNCAGT1RS"  value="<?=iconv("UTF-8","EUC-KR",$row[MNCAGT1RS]);?>" /> )&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT1BM" value="2" <? if( $row[MNCAGT1BM] == "2" ){ echo "checked"; } ?> />아니오</td></tr>
+					</table>
+					</td>
+				</tr>
+	<tr><td>2. <b>최근6개월 간</b> 특별한 이유 없이 <b>5Kg 이상의 체중감소</b>가 있었습니까? </td></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT2BM" value="1" <? if( $row[MNCAGT2BM] == "1" ){ echo "checked"; } ?>> 아니오 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT2BM" value="2" <? if( $row[MNCAGT2BM] == "2" ){ echo "checked"; } ?> >체중감소  ( <input type="text"  name="MNCAGT2RS" size='5' value="<?=$row[MNCAGT2RS]; ?>" />kg )</td></tr>
+					</table>
+					</td>
+				</tr>
+	<tr><td>3. 본인, 부모, 형제, 자매, 자녀 중에 현재 암에 걸리신 분이나 과거에 걸리셨던 분이 계십니까? ( 미입력 해당사항 없음 )</td></tr>
+	<tr><td><table width='100%' border='1' cellspacing='0' style="font-size:9pt;" >
+					<tr style=" !important; text-align:center;"><td rowspan='2'>암의종류</td>
+						<td rowspan='2'>없다</td><td rowspan='2'>모르<br/>겠다</td><td rowspan='2'>있다</td>
+						<td colspan='5'>있다(복수선택 가능)</td></tr>
+					<tr style=" !important; text-align:center;"><td>본인</td><td>부모</td><td>형제</td><td>자매</td><td>자녀</td></tr>
+					<? 
+					alist( "위&nbsp;&nbsp;&nbsp;&nbsp;암", "MNCAGT3W", $row[MNCAGT3WY], $row[MNCAGT3WA], $row[MNCAGT3WB], $row[MNCAGT3WC], $row[MNCAGT3WD], $row[MNCAGT3WE]  ); 
+					alist( "유&nbsp;방&nbsp;암", "MNCAGT3U", $row[MNCAGT3UY], $row[MNCAGT3UA], $row[MNCAGT3UB], $row[MNCAGT3UC], $row[MNCAGT3UD], $row[MNCAGT3UE]  ); 
+					alist( "대&nbsp;장&nbsp;암", "MNCAGT3D", $row[MNCAGT3DY], $row[MNCAGT3DA], $row[MNCAGT3DB], $row[MNCAGT3DC], $row[MNCAGT3DD], $row[MNCAGT3DE]  ); 
+					alist( "간&nbsp;&nbsp;&nbsp;&nbsp;암", "MNCAGT3G", $row[MNCAGT3GY], $row[MNCAGT3GA], $row[MNCAGT3GB], $row[MNCAGT3GC], $row[MNCAGT3GD], $row[MNCAGT3GE]  ); 
+					alist( "자궁경부암", "MNCAGT3J", $row[MNCAGT3JY], $row[MNCAGT3JA], $row[MNCAGT3JB], $row[MNCAGT3JC], $row[MNCAGT3JD], $row[MNCAGT3JE]  ); 
+					alist( "기타 (<input type='text' name='MNCAGT3EN' value='$row[MNCAGT3EN]' size='8'/>암) ", "MNCAGT3E", $row[MNCAGT3EY], $row[MNCAGT3EA], $row[MNCAGT3EB], $row[MNCAGT3EC], $row[MNCAGT3ED], $row[MNCAGT3EE]  ); 
+
+					?>
+					</table>
+					</td>
+				</tr>
+	<tr><td>4 귀하는 다음의 검사를 받은 적이 있습니까?(미입력 해당사항 없음)</td></tr>
+	<tr><td><table width='100%' border='1' cellspacing='0' style="font-size:9pt;" >
+					<tr style=" !important; text-align:center;"><td rowspan='2' colspan='2'>검 &nbsp; 사 &nbsp; 명</td>
+						<td colspan='4'>검사시기</td></tr>
+					<tr style=" !important; text-align:center;"><td>10년 이상<br>또는<br/>한적 없음</td><td>1년 미만</td>
+						<td>1년이상~<br>2년미만</td><td>2년이상~<br>10년미만</td></tr>
+					<tr style=" !important; text-align:center;"><td rowspan='2'>위&nbsp;&nbsp;암</td><td>위장조영검사<br>(위장 X선 촬영)</td>
+						<td><input type="radio" name="MNCAGT41E" value="1" <? if( $MNCAGT41E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="2" <? if( $MNCAGT41E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="3" <? if( $MNCAGT41E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT41E" value="4" <? if( $MNCAGT41E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>위내시경</td>
+						<td><input type="radio" name="MNCAGT42E" value="1" <? if( $MNCAGT42E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="2" <? if( $MNCAGT42E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="3" <? if( $MNCAGT42E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT42E" value="4" <? if( $MNCAGT42E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>유방암</td><td>유방촬영</td>
+						<td><input type="radio" name="MNCAGT43E" value="1" <? if( $MNCAGT43E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="2" <? if( $MNCAGT43E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="3" <? if( $MNCAGT43E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT43E" value="4" <? if( $MNCAGT43E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td rowspan='3'>대장암</td><td>분변잠혈검사<br>(대변 검사)</td>
+						<td><input type="radio" name="MNCAGT44E" value="1" <? if( $MNCAGT44E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="2" <? if( $MNCAGT44E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="3" <? if( $MNCAGT44E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT44E" value="4" <? if( $MNCAGT44E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>대장이중조영검사<br>(대장 X선 촬영)</td>
+						<td><input type="radio" name="MNCAGT45E" value="1" <? if( $MNCAGT45E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="2" <? if( $MNCAGT45E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="3" <? if( $MNCAGT45E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT45E" value="4" <? if( $MNCAGT45E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>대장내시경</td>
+						<td><input type="radio" name="MNCAGT46E" value="1" <? if( $MNCAGT46E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="2" <? if( $MNCAGT46E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="3" <? if( $MNCAGT46E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT46E" value="4" <? if( $MNCAGT46E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td>자궁경부암</td><td>자궁경부세포검사</td>
+						<td><input type="radio" name="MNCAGT47E" value="1" <? if( $MNCAGT47E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="2" <? if( $MNCAGT47E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="3" <? if( $MNCAGT47E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT47E" value="4" <? if( $MNCAGT47E=="4" ){ echo "checked"; }?> /></td></tr>
+					<tr style=" !important; text-align:center;"><td rowspan='2'>간&nbsp;&nbsp;암</td><td rowspan='2'>간초음파</td>
+						<td>한적<br>없음</td><td>6개월<br>이내</td>
+						<td>6개월에서<br>1년 사이</td><td>1년보다<br>오래전에</td></tr>
+					<tr style=" !important; text-align:center;">
+						<td><input type="radio" name="MNCAGT48E" value="1" <? if( $MNCAGT48E=="1" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="2" <? if( $MNCAGT48E=="2" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="3" <? if( $MNCAGT48E=="3" ){ echo "checked"; }?> /></td>
+						<td><input type="radio" name="MNCAGT48E" value="4" <? if( $MNCAGT48E=="4" ){ echo "checked"; }?> /></td></tr>
+					</table>
+					</td></tr>
+	</table>
+
+	<?
+	function alist( $tname, $rname, $y, $a, $b, $c, $d, $e ){
+
+	if($y=="1"){ $ytf1 = "checked"; }elseif($y=="2"){ $ytf2 = "checked"; }elseif($y=="3"){ $ytf3 = "checked"; }
+	if($a==""){ $atf = "selected"; }elseif( $a=="1"){ $atf1 = "selected"; }elseif( $a=="2"){ $atf2 = "selected"; }
+	if($b==""){ $btf = "selected"; }elseif( $b=="1"){ $btf1 = "selected"; }elseif( $b=="2"){ $btf2 = "selected"; }
+	if($c==""){ $ctf = "selected"; }elseif( $c=="1"){ $ctf1 = "selected"; }elseif( $c=="2"){ $ctf2 = "selected"; }
+	if($d==""){ $dtf = "selected"; }elseif( $d=="1"){ $dtf1 = "selected"; }elseif( $d=="2"){ $dtf2 = "selected"; }
+	if($e==""){ $etf = "selected"; }elseif( $e=="1"){ $etf1 = "selected"; }elseif( $e=="2"){ $etf2 = "selected"; }
+
+	$alist = " <tr style=\" !important; text-align:center;\"><td>$tname</td>
+						<td><input type=\"radio\" name='".$rname."Y' value='1' $ytf1/></td>
+						<td><input type=\"radio\" name='".$rname."Y' value='3' $ytf3/></td>
+						<td><input type=\"radio\" name='".$rname."Y' value='2' $ytf2/></td>
+						<td><select name='".$rname."A'>
+							<option value='' $atf></option>
+							<option value='1' $atf1>무</option>
+							<option value='2' $atf2>유</option></select></td>
+						<td><select name='".$rname."B'>
+							<option value='' $btf></option>
+							<option value='1' $btf1>무</option>
+							<option value='2' $btf2>유</option></select></td>
+						<td><select name='".$rname."C'>
+							<option value='' $ctf></option>
+							<option value='1' $ctf1>무</option>
+							<option value='2' $ctf2>유</option></select></td>
+						<td><select name='".$rname."D'>
+							<option value='' $dtf></option>
+							<option value='1' $dtf1>무</option>
+							<option value='2' $dtf2>유</option></select></td>
+						<td><select name='".$rname."E'>
+							<option value='' $etf></option>
+							<option value='1' $etf1>무</option>
+							<option value='2' $etf2>유</option></select></td></tr> ";
+	 echo $alist;
+}
+
+?>

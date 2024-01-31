@@ -1,0 +1,97 @@
+<?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once $GP -> INC_WWW . '/count_inc.php';
+
+$title = "뉴고려커뮤니티";
+$page_title = "뉴고려소개";
+$page_sub_title = "칭찬합니다";
+
+include_once "../inc/head.php";
+
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr06.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+
+			<div id="innerCont">
+				<!-- 게시판 검색 -->
+				<div class="search">
+					<input type="text" placeholder="검색어를 입력하세요.">
+					<button><img src="/resource-pc/images/search-gray.png" alt="검색"></button>
+				</div>
+				<!-- 게시판 목록 -->
+				<ul class="cardList">
+					<li>
+						<a href="#">
+							<span class="subject">[기타] 응급의료센타 김보경선생님~</span>
+							<span class="txt">11/6 남편이 사고로 급하게 응급센타를 찾게되었을때 세브란스병원으로의 이송을 원했던 저에게 단호하...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="subject">[뇌신경센터] 백민우 원장님 감사합니다</span>
+							<span class="txt">안녕하세요 !저는 오늘퇴원한 백정애환자분의 가족입니다김포에서 백민우선생님을 만나서 마음까지 치유...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="subject">[외상센터] 과장님 진심 고맙습니다.</span>
+							<span class="txt">1925년생 저희 모친께서 골절로 고관절 수술을 받게 되었습니다.외상센터 최우석과장님께서 수술을 아주...</span>
+							<span class="opt">
+								<span class="date">2020.10.12</span>
+							</span>
+						</a>
+					</li>
+				</ul>
+				<!-- 글스기 수정 삭제 등등.. 버튼 -->
+				<div id="btn-box" class="right">
+					<a href="#" class="btn bg-red">글쓰기</a>
+					<a href="#" class="btn bg-deepblue">수정</a>
+				</div>
+				<!-- 페이지네이션 -->
+				<div class="pagination">
+					<a href="#none" title="처음으로 이동하기" class="btn prev">
+						<img src="/resource-pc/images/page-all-left.png" width="100%" alt="">
+					</a>
+					<a href="#none" title="이전으로 이동하기" class="btn prev">
+						<img src="/resource-pc/images/page-left.png" width="100%" alt="">
+					</a>
+
+					<strong class="btn current" title="현재 페이지">1</strong>
+					<a href="#none" class="btn">2</a>
+
+					<a href="#none" title="다음 페이지 이동하기" class="btn next">
+						<img src="/resource-pc/images/page-right.png" width="100%" alt="">
+					</a>
+					<a href="#none" title="마지막 페이지 이동하기" class="btn next">
+						<img src="/resource-pc/images/page-all-right.png" width="100%" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

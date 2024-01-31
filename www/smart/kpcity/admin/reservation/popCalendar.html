@@ -1,0 +1,671 @@
+<?
+session_start();
+include "../../inc/dbConn.php";
+include  "../../inc/func.php";
+$tbl = "smart_reserve";
+//header("Content-Type:text/html;charset=utf-8") ;
+header("Content-Type:text/html;charset=utf-8");
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+
+
+
+$today = date("Y-m-d");
+if($chk_date == ""){
+	$today = date("Y-m-d");
+}
+else{
+	$today = $chk_date;
+}
+if($start_date == ""){
+	$start_date = $start_date;
+}
+if($reset == "" ){
+	$view_item1 = "Y";
+	$view_item2 = "Y";
+	$view_item3 = "Y";
+	$view_item4 = "Y";
+
+	$view_item5 = "N";
+	$view_item6 = "N";
+	$view_item7 = "N";
+
+	$view_item8 = "N";
+	$view_item9 = "N";
+
+}
+$sel_day  = ( $_GET['chk_date'])? date("Y-m-d", strtotime($_GET['chk_date'])) : date( "Y-m-d" );
+$ye_date = date("Y-m-d", strtotime("-1 day", strtotime($sel_day))); //어제
+$to_date = date("Y-m-d", strtotime("+1 day", strtotime($sel_day))); //내일
+
+$to_date2 = date("Y-m-d", strtotime("+1 day", strtotime(date( "Y-m-d" )))); //내일
+
+	
+	$time_set = 1349388000;
+	$time_plus = 1800;
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>시간별 현황</title>
+<link href="/admin/_css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<div style="background-color:#153549;">
+		<table border="0" cellspacing="0" cellpadding="0" align="center" width="50%">
+			<tr>
+				<td width="30" align="center" height="40"><a href="<?=$_SERVER['PHP_SELF']?>?chk_date=<?=$ye_date?>&seq=<?=$seq?>&re_seq=<?=$re_seq?>" class="small_arrow_style">◀</a></td>
+                 <td width="180" align="center"><input type="text" name="date" value='<?=$chk_date?>' id="date" onClick="javascript:calendar(event, 'date')"  class="small_date_style"></td>
+                 <td width="80" align="center"><span class="small_day_style"><?=$doms[$week]?></span></td>
+                 <td width="30" align="center"><a href="<?=$_SERVER['PHP_SELF']?>?chk_date=<?=$to_date?>&seq=<?=$seq?>&re_seq=<?=$re_seq?>" class="small_arrow_style">▶</a></td>
+
+				
+             </tr>
+		</table>
+    	</div>
+
+
+<div class="tged" style="position:fixed; top:30px; width:100%;">
+<table width="100%" border=0 cellpadding="0" cellspacing="1" bgcolor="#d4d4d4">
+	<tr height="40" align="center" bgcolor="#153549">
+		<th style="font-size:16px; color:#fff;" width="150">시간</th>
+		<th style="font-size:16px; color:#fff;">예약 현황</th>
+    </tr>
+</table>
+</div>
+<table width="100%" border=0 cellpadding="0" cellspacing="1" bgcolor="#d4d4d4" style="margin-top:42px;">
+
+
+<?
+	for($k=0;$k<21;$k++){
+				
+			?>
+			<tr align="center" bgcolor="#ffffff" height="80">
+			<?
+				for($j=0;$j<2;$j++){
+					if($j==0){
+						$now_date1 = date("H:i",$time_set);
+						$now_date2 = date("H:i",$time_set+$time_plus);
+						$time_set += $time_plus;
+						//echo $now_date;
+			?>
+						 <td width="150" bgcolor="#f7f7f7" align="center" ><strong style="color:#000;"><?=$now_date1?> ~ <?=$now_date2?></strong></td>
+			<?
+					}
+					else{
+						//echo $j;
+						//echo $rows['item'.$j];
+						//echo $this_week_end1;
+			?>
+				 <td  align="center" bgcolor="#f7f7f7">
+				<?
+						$sel_week_end = date("Y-m-d",strtotime($this_week_start." +$j day"));
+			//echo $sel_week_end;
+						#휴일인지 체크함
+
+						$holiday_query = "select * from reserve_holiday where day_start='".$chk_date."' and view_state='Y' and day_type='4'";
+						$holiday_result = mysql_query($holiday_query);
+						$holiday_cnt = mysql_num_rows($holiday_result);
+						
+						if($holiday_cnt > 0){
+						?>
+							<!--<img src="/admin/img/btn_unreserve.gif"><br><br>
+							<img src="/admin/img/btn_unreserve_detail_search.gif">-->
+						<?
+						}
+						else{#휴일이 아닐때
+							//echo $j;
+
+							#지정일인지 체크함
+							$target_query = "select * from reserve_setday where day_start='".$chk_date."' and view_state='Y' and day_type='3'";
+							$target_result = mysql_query($target_query);
+							$target_cnt = mysql_num_rows($target_result);
+							//echo $target_cnt;
+							if($target_cnt > 0){
+								$target_query2 = "select * from reserve_setday where day_start='".$chk_date."' and view_state='Y' and day_type='3' and timezone='".$k."'";
+								$target_result2 = mysql_query($target_query2);
+								$target_rows2 = mysql_fetch_array($target_result2);
+							
+								#예약 체크
+								$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$chk_date."' and  view_state='Y'";
+								$chk_result = mysql_query($chk_query);
+								$reserve_item1=0;$reserve_item2=0;$reserve_item3=0;$reserve_item4=0;$reserve_item5=0;$reserve_item6=0;$reserve_item7=0;$reserve_item8=0;$reserve_item9=0;
+								while($chk_rows = mysql_fetch_array($chk_result)){
+									if($chk_rows[reserve_time0] == $k && $chk_rows[reserve_type0] =="Y"){
+										$reserve_item1++;
+									}
+									if($chk_rows[reserve_time5] == $k && $chk_rows[reserve_type5] =="Y"){
+										$reserve_item2++;
+									}
+									if($chk_rows[reserve_time16] == $k && $chk_rows[reserve_type16] =="Y" || $chk_rows[reserve_time17] == $k && $chk_rows[reserve_type17] =="Y" || $chk_rows[reserve_time18] == $k && $chk_rows[reserve_type18] =="Y" || $chk_rows[reserve_time19] == $k && $chk_rows[reserve_type0] =="19" || $chk_rows[reserve_time20] == $k && $chk_rows[reserve_type0] =="20" || $chk_rows[reserve_time21] == $k && $chk_rows[reserve_type21] =="Y"){
+										$reserve_item3++;
+									}
+									if($chk_rows[reserve_time23] == $k && $chk_rows[reserve_type23] =="Y" || $chk_rows[reserve_time24] == $k && $chk_rows[reserve_type24] =="Y"){
+										$reserve_item4++;
+									}
+									if($chk_rows[reserve_time25] == $k && $chk_rows[reserve_type25] =="Y"){
+										$reserve_item5++;
+									}
+									if($chk_rows[reserve_time26] == $k && $chk_rows[reserve_type26] =="Y"){
+										
+										$reserve_item6++;
+									}
+									if($chk_rows[reserve_time13] == $k && $chk_rows[reserve_type13] =="Y"){
+										$reserve_item8++;
+									}
+									if($chk_rows[reserve_time15] == $k && $chk_rows[reserve_type15] =="Y"){
+										$reserve_item7++;
+									}
+									if($chk_rows[reserve_time27] == $k && $chk_rows[reserve_type27] =="Y"){
+										$reserve_item9++;
+									}
+								}
+								?>
+								<!--<table cellpadding="0" cellspacing="0" border="0" width="98%" >
+										<tr align="center">
+											<td bgcolor="#f7f7f7" width="50%"> 
+												<table cellpadding="0" cellspacing="0" width="100%" >
+													<tr align="center" height="40">
+														<td><a href="javascript:void(0)" onclick="javascript:popup('<?=$chk_date?>','<?=$k?>','new');"><img src="/admin/img/btn_reserve2.gif" border="0"></a></td>
+														<td><img src="/admin/img/btn_reserve2_detail_search.gif" width="42"></td>
+													</tr>
+												</table>
+												<br>
+												<table cellpadding="2" cellspacing="0" width="70%" >
+													<tr bgcolor="#ffffff"><td >종합 : </td><td align="right"> <?=$reserve_item1?> / <?=$target_rows2[item1]?></td></tr>
+													<tr bgcolor="#ffffff"><td>일반 : </td><td align="right"> <?=$reserve_item2?> / <?=$target_rows2[item2]?></td></tr>
+													<tr bgcolor="#ffffff"><td>VIP : </td><td align="right">  <?=$reserve_item3?> / <?=$target_rows2[item3]?></td></tr>
+													<tr bgcolor="#ffffff"><td>MRI : </td><td align="right">  <?=$reserve_item4?> / <?=$target_rows2[item4]?></td></tr>
+													<tr bgcolor="#ffffff"><td>대내 : </td><td align="right"> <?=$reserve_item5?> / <?=$target_rows2[item5]?></td></tr>
+													<tr bgcolor="#ffffff"><td>유초 : </td><td align="right"> <?=$reserve_item6?> / <?=$target_rows2[item6]?></td></tr>
+													<tr bgcolor="#ffffff"><td>심초 : </td><td align="right"> <?=$reserve_item7?> / <?=$target_rows2[item7]?></td></tr>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>-->
+									<?
+										
+									?>
+									<table cellpadding="5" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
+													
+													<tr align="center"  <?if($reserve_item1 >= $target_rows2[item1]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td ><b>기본</b> </td>
+														<td> <?=$reserve_item1?> / <?=$target_rows2[item1]?></td>
+													<?
+														$plus_slot = $target_rows2[item1] - $reserve_item1;
+
+												
+														
+													?>
+														<td><?if($reserve_item1 >= $target_rows2[item1]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr  align="center" <?if($reserve_item2 >= $target_rows2[item2]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>수면대장</b> </td>
+														<td > <?=$reserve_item2?> / <?=$target_rows2[item2]?></td>
+													<?
+														$plus_slot = $target_rows2[item2] - $reserve_item3;
+
+														//echo $plus_slot;
+														
+													?>
+														<td><?if($reserve_item2 >= $target_rows2[item2]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center" <?if($reserve_item3 >= $target_rows2[item3]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>MR 검사</b> </td>
+														<td >  <?=$reserve_item3?> / <?=$target_rows2[item3]?></td>
+														<?
+														$plus_slot = $target_rows2[item3] - $reserve_item3;
+														
+													?>
+														<td><?if($reserve_item3 >= $target_rows2[item3]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item4 >= $target_rows2[item4]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>PET-CT</b> </td>
+														<td >  <?=$reserve_item4?> / <?=$target_rows2[item4]?></td>
+														<?
+														$plus_slot = $target_rows2[item4] - $reserve_item4;
+														
+													?>
+														<td><?if($reserve_item4 >= $target_rows2[item4]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center" <?if($reserve_item5 >= $target_rows2[item5]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>심장초음파</b> </td>
+														<td > <?=$reserve_item5?> / <?=$target_rows2[item5]?></td>
+														<?
+														$plus_slot = $target_rows2[item5] - $reserve_item5;
+														
+													?>
+														<td><?if($reserve_item5 >= $target_rows2[item5]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item6 >= $target_rows2[item6]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>유방초음파</b> </td>
+														<td > <?=$reserve_item6?> / <?=$target_rows2[item6]?></td>
+														<?
+														$plus_slot = $target_rows2[item6] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item6 >= $target_rows2[item6]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+
+
+													<tr align="center"  <?if($reserve_item7 >= $target_rows2[item7]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>스케일링</b> </td>
+														<td > <?=$reserve_item7?> / <?=$target_rows2[item7]?></td>
+														<?
+														$plus_slot = $target_rows2[item7] - $reserve_item7;
+														
+													?>
+														<td><?if($reserve_item7 >= $target_rows2[item7]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<tr align="center"  <?if($reserve_item8 >= $target_rows2[item8]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>VIP</b> </td>
+														<td > <?=$reserve_item8?> / <?=$target_rows2[item8]?></td>
+														<?
+														$plus_slot = $target_rows2[item8] - $reserve_item8;
+														
+													?>
+														<td><?if($reserve_item8 >= $target_rows2[item8]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<!--<tr align="center"  <?if($reserve_item9 >= $target_rows2[item9]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>일반</b> </td>
+														<td > <?=$reserve_item9?> / <?=$target_rows2[item9]?></td>
+														<?
+														$plus_slot = $target_rows2[item9] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item9 >= $target_rows2[item9]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>-->
+												</table>
+								<?
+					
+			
+
+							}
+							else{#지정일도 아닐때
+								$sel_day = date("w",strtotime($chk_date));
+								//echo $chk_date;
+								if($sel_day == "6"){#토요일 반일
+									//echo "aa";
+									$ban_query = "select * from reserve_setday where  view_state='Y' and day_type='2' and timezone='".$k."'";
+									//echo $ban_query;
+									
+									$ban_result = mysql_query($ban_query);
+									$ban_rows = mysql_fetch_array($ban_result);
+
+									#예약 체크
+									$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$chk_date."'  and view_state='Y'";
+//echo $k;
+
+									$chk_result = mysql_query($chk_query);
+									$reserve_item1=0;$reserve_item2=0;$reserve_item3=0;$reserve_item4=0;$reserve_item5=0;$reserve_item6=0;$reserve_item7=0;$reserve_item8=0;$reserve_item9=0;
+									while($chk_rows = mysql_fetch_array($chk_result)){
+										if($chk_rows[reserve_time0] == $k && $chk_rows[reserve_type0] =="Y"){
+											$reserve_item1++;
+										}
+										if($chk_rows[reserve_time5] == $k && $chk_rows[reserve_type5] =="Y"){
+											$reserve_item2++;
+										}
+										if($chk_rows[reserve_time16] == $k && $chk_rows[reserve_type16] =="Y" || $chk_rows[reserve_time17] == $k && $chk_rows[reserve_type17] =="Y" || $chk_rows[reserve_time18] == $k && $chk_rows[reserve_type18] =="Y" || $chk_rows[reserve_time19] == $k && $chk_rows[reserve_type19] =="Y" || $chk_rows[reserve_time20] == $k && $chk_rows[reserve_type20] =="Y" || $chk_rows[reserve_time21] == $k && $chk_rows[reserve_type21] =="Y"){
+											$reserve_item3++;
+										}
+										if($chk_rows[reserve_time23] == $k && $chk_rows[reserve_type23] =="Y" || $chk_rows[reserve_time24] == $k && $chk_rows[reserve_type24] =="Y"){
+											$reserve_item4++;
+										}
+										if($chk_rows[reserve_time25] == $k && $chk_rows[reserve_type25] =="Y"){
+											$reserve_item5++;
+										}
+										if($chk_rows[reserve_time26] == $k && $chk_rows[reserve_type26] =="Y"){
+											$reserve_item6++;
+										}
+										if($chk_rows[reserve_time13] == $k && $chk_rows[reserve_type13] =="Y"){
+											$reserve_item8++;
+										}
+										if($chk_rows[reserve_time15] == $k && $chk_rows[reserve_type15] =="Y"){
+											$reserve_item7++;
+										}
+										if($chk_rows[reserve_time27] == $k && $chk_rows[reserve_type27] =="Y"){
+											$reserve_item9++;
+										}
+										//echo $reserve_item1."<br>";
+									}
+									
+									?>
+									<table cellpadding="5" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
+													
+													<tr align="center"  <?if($reserve_item1 >= $ban_rows[item1]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td ><b>기본</b> </td>
+														<td> <?=$reserve_item1?> / <?=$ban_rows[item1]?></td>
+													<?
+														$plus_slot = $ban_rows[item1] - $reserve_item1;
+
+												
+														
+													?>
+														<td><?if($reserve_item1 >= $ban_rows[item1]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr  align="center" <?if($reserve_item2 >= $ban_rows[item2]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>수면대장</b> </td>
+														<td > <?=$reserve_item2?> / <?=$ban_rows[item2]?></td>
+													<?
+														$plus_slot = $ban_rows[item2] - $reserve_item3;
+
+														//echo $plus_slot;
+														
+													?>
+														<td><?if($reserve_item2 >= $ban_rows[item2]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item3 >= $ban_rows[item3]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>MR 검사</b> </td>
+														<td>  <?=$reserve_item3?> / <?=$ban_rows[item3]?></td>
+														<?
+														$plus_slot = $ban_rows[item3] - $reserve_item3;
+														
+													?>
+														<td><?if($reserve_item3 >= $ban_rows[item3]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item4 >= $ban_rows[item4]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>PET-CT</b> </td>
+														<td >  <?=$reserve_item4?> / <?=$ban_rows[item4]?></td>
+														<?
+														$plus_slot = $ban_rows[item4] - $reserve_item4;
+														
+													?>
+														<td><?if($reserve_item4 >= $ban_rows[item4]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item5 >= $ban_rows[item5]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>심장초음파</b> </td>
+														<td > <?=$reserve_item5?> / <?=$ban_rows[item5]?></td>
+														<?
+														$plus_slot = $ban_rows[item5] - $reserve_item5;
+														
+													?>
+														<td><?if($reserve_item5 >= $ban_rows[item5]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item6 >= $ban_rows[item6]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>유방초음파</b> </td>
+														<td > <?=$reserve_item6?> / <?=$ban_rows[item6]?></td>
+														<?
+														$plus_slot = $ban_rows[item6] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item6 >= $ban_rows[item6]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													<tr align="center"  <?if($reserve_item7 >= $ban_rows[item7]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>스케일링</b> </td>
+														<td > <?=$reserve_item7?> / <?=$ban_rows[item7]?></td>
+														<?
+														$plus_slot = $ban_rows[item7] - $reserve_item7;
+														
+													?>
+														<td><?if($reserve_item7 >= $ban_rows[item7]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<tr align="center"  <?if($reserve_item8 >= $ban_rows[item8]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>VIP</b> </td>
+														<td > <?=$reserve_item8?> / <?=$ban_rows[item8]?></td>
+														<?
+														$plus_slot = $ban_rows[item8] - $reserve_item8;
+														
+													?>
+														<td><?if($reserve_item8 >= $ban_rows[item8]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<!--<tr align="center"  <?if($reserve_item9 >= $ban_rows[item9]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>일반</b> </td>
+														<td > <?=$reserve_item9?> / <?=$ban_rows[item9]?></td>
+														<?
+														$plus_slot = $ban_rows[item9] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item9 >= $ban_rows[item9]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>-->
+												</table>
+									<?
+								}
+								else if($sel_day == "0"){#일요일 휴무
+									?>
+									<table cellpadding="5" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
+												
+													<tr>
+														<td>휴무일</td>
+													</tr>
+												</table>
+									<?
+								}
+								else{#전일
+									
+									$situation_query = "select * from reserve_setday where  view_state='Y' and day_type='1' and timezone='".$k."'";
+									//echo $situation_query;
+									$situation_result = mysql_query($situation_query);
+									$situation_rows = mysql_fetch_array($situation_result);
+
+									#예약 체크
+									$chk_query = "select * from reserve_list_new where left(reserve_day,10)='".$chk_date."'  and view_state='Y'";
+									//echo $chk_query;
+									$chk_result = mysql_query($chk_query);
+									$reserve_item1=0;$reserve_item2=0;$reserve_item3=0;$reserve_item4=0;$reserve_item5=0;$reserve_item6=0;$reserve_item7=0;$reserve_item8=0;$reserve_item9=0;
+									while($chk_rows = mysql_fetch_array($chk_result)){
+										if($chk_rows[reserve_time0] == $k && $chk_rows[reserve_type0] =="Y"){
+											$reserve_item1++;
+										}
+										if($chk_rows[reserve_time5] == $k && $chk_rows[reserve_type5] =="Y"){
+											$reserve_item2++;
+										}
+										if($chk_rows[reserve_time16] == $k && $chk_rows[reserve_type16] =="Y" || $chk_rows[reserve_time17] == $k && $chk_rows[reserve_type17] =="Y" || $chk_rows[reserve_time18] == $k && $chk_rows[reserve_type18] =="Y" || $chk_rows[reserve_time19] == $k && $chk_rows[reserve_type19] =="Y" || $chk_rows[reserve_time20] == $k && $chk_rows[reserve_type20] =="Y" || $chk_rows[reserve_time21] == $k && $chk_rows[reserve_type22] =="Y"){
+											$reserve_item3++;
+										}
+										if($chk_rows[reserve_time23] == $k && $chk_rows[reserve_type23] =="Y" || $chk_rows[reserve_time24] == $k && $chk_rows[reserve_type24] =="Y"){
+											$reserve_item4++;
+										}
+										if($chk_rows[reserve_time25] == $k && $chk_rows[reserve_type25] =="Y"){
+											$reserve_item5++;
+										}
+										if($chk_rows[reserve_time26] == $k && $chk_rows[reserve_type26] =="Y"){
+											$reserve_item6++;
+										}
+
+										if($chk_rows[reserve_time13] == $k && $chk_rows[reserve_type13] =="Y"){
+											$reserve_item8++;
+										}
+										if($chk_rows[reserve_time15] == $k && $chk_rows[reserve_type15] =="Y"){
+											$reserve_item7++;
+										}
+										if($chk_rows[reserve_time27] == $k && $chk_rows[reserve_type27] =="Y"){
+											$reserve_item9++;
+										}
+									}
+									?>
+
+									<!--<table cellpadding="0" cellspacing="0" border="0" width="100%" >
+										<tr align="center">
+											<td bgcolor="#f7f7f7" width="50%"> 
+												<table cellpadding="0" cellspacing="0" width="100%" >
+													<tr align="center" height="40">
+														<td><a href="javascript:void(0)" onclick="javascript:popup('<?=$chk_date?>','<?=$k?>','new');"><img src="/admin/img/btn_reserve2.gif" border="0"></a></td>
+													
+														<td><img src="/admin/img/btn_reserve2_detail_search.gif" width="42"></td>
+													</tr>
+												</table>
+												<br>
+												<table cellpadding="2" cellspacing="0" width="70%" >
+													<tr bgcolor="#ffffff"><td >종합 : </td><td align="right"> <?=$reserve_item1?> / <?=$situation_rows[item1]?></td></tr>
+													<tr bgcolor="#ffffff"><td>일반 : </td><td align="right"> <?=$reserve_item2?> / <?=$situation_rows[item2]?></td></tr>
+													<tr bgcolor="#ffffff"><td>VIP : </td><td align="right">  <?=$reserve_item3?> / <?=$situation_rows[item3]?></td></tr>
+													<tr bgcolor="#ffffff"><td>MRI : </td><td align="right">  <?=$reserve_item4?> / <?=$situation_rows[item4]?></td></tr>
+													<tr bgcolor="#ffffff"><td>대내 : </td><td align="right"> <?=$reserve_item5?> / <?=$situation_rows[item5]?></td></tr>
+													<tr bgcolor="#ffffff"><td>유초 : </td><td align="right"> <?=$reserve_item6?> / <?=$situation_rows[item6]?></td></tr>
+													<tr bgcolor="#ffffff"><td>심초 : </td><td align="right"> <?=$reserve_item7?> / <?=$situation_rows[item7]?></td></tr>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>-->
+									
+									<table cellpadding="5" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
+													
+													<tr align="center"  <?if($reserve_item1 >= $situation_rows[item1]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td ><b>기본</b> </td>
+														<td> <?=$reserve_item1?> / <?=$situation_rows[item1]?></td>
+													<?
+														$plus_slot = $situation_rows[item1] - $reserve_item1;
+
+												
+														
+													?>
+														<td><?if($reserve_item1 >= $situation_rows[item1]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item2 >= $situation_rows[item2]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>수면대장</b> </td>
+														<td > <?=$reserve_item2?> / <?=$situation_rows[item2]?></td>
+													<?
+														$plus_slot = $situation_rows[item2] - $reserve_item3;
+
+														//echo $plus_slot;
+														
+													?>
+														<td><?if($reserve_item2 >= $situation_rows[item2]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item3 >= $situation_rows[item3]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>MR 검사</b> </td>
+														<td >  <?=$reserve_item3?> / <?=$situation_rows[item3]?></td>
+														<?
+														$plus_slot = $situation_rows[item3] - $reserve_item3;
+														
+													?>
+														<td><?if($reserve_item3 >= $situation_rows[item3]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item4 >= $situation_rows[item4]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>PET-CT</b> </td>
+														<td >  <?=$reserve_item4?> / <?=$situation_rows[item4]?></td>
+														<?
+														$plus_slot = $situation_rows[item4] - $reserve_item4;
+														
+													?>
+														<td><?if($reserve_item4 >= $situation_rows[item4]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?> </td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item5 >= $situation_rows[item5]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>심장초음파</b> </td>
+														<td > <?=$reserve_item5?> / <?=$situation_rows[item5]?></td>
+														<?
+														$plus_slot = $situation_rows[item5] - $reserve_item5;
+														
+													?>
+														<td><?if($reserve_item5 >= $situation_rows[item5]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													
+													<tr align="center"  <?if($reserve_item6 >= $situation_rows[item6]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>유방초음파</b> </td>
+														<td > <?=$reserve_item6?> / <?=$situation_rows[item6]?></td>
+														<?
+														$plus_slot = $situation_rows[item6] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item6 >= $situation_rows[item6]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+
+													<tr align="center"  <?if($reserve_item7 >= $situation_rows[item7]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>스케일링</b> </td>
+														<td > <?=$reserve_item7?> / <?=$situation_rows[item7]?></td>
+														<?
+														$plus_slot = $situation_rows[item7] - $reserve_item7;
+														
+													?>
+														<td><?if($reserve_item7 >= $situation_rows[item7]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<tr align="center"  <?if($reserve_item8 >= $situation_rows[item8]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>VIP</b> </td>
+														<td > <?=$reserve_item8?> / <?=$situation_rows[item8]?></td>
+														<?
+														$plus_slot = $situation_rows[item8] - $reserve_item8;
+														
+													?>
+														<td><?if($reserve_item8 >= $situation_rows[item8]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>
+													<!--<tr align="center"  <?if($reserve_item9 >= $situation_rows[item9]){echo "bgcolor='#FFF5DE'";}else{ echo "bgcolor='#ffffff'";}?>>
+														<td><b>일반</b> </td>
+														<td > <?=$reserve_item9?> / <?=$situation_rows[item9]?></td>
+														<?
+														$plus_slot = $situation_rows[item9] - $reserve_item6;
+														
+													?>
+														<td><?if($reserve_item9 >= $situation_rows[item9]){echo "<span style='color:red;'>예약불가</span>";}else{echo "<span style='color:#8CC63F;'>예약가능</span>";}?></td>
+													
+													</tr>-->
+												</table>
+
+									<?
+								}
+							}
+						}
+
+
+						//echo $chk_date.",".$k;
+				?>
+				</td>
+			<?
+					}
+				}
+			?>
+			</tr>
+			<?
+			}
+			?>
+			</table>
+</body>
+</html>

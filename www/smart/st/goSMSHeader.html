@@ -1,0 +1,122 @@
+<?
+
+header("Content-Type:text/html;charset=utf-8") ; //"
+//==== register_global 처리
+@extract($_SERVER);
+
+include $_SERVER["DOCUMENT_ROOT"]."/inc/dbConn.php";
+include $_SERVER["DOCUMENT_ROOT"]."/inc/func.php";
+
+
+mysql_query("set names utf8;");
+
+?>
+
+<?
+if($_SERVER['REMOTE_ADDR'] == "122.45.143.21")  //== 테스트 중일때 문자 발송 금지
+{
+?>
+	<iframe name="company_proc" width=500 height=300></iframe>
+<?
+}
+else
+{
+?>
+	<iframe name="company_proc" width=0 height=0></iframe>
+<?
+}
+?>
+
+
+<?
+//================= 시간이 6시를 넘었거나 주말인 경우 다음 가능일에 문자 발송
+
+$DBinCh = "N" ;
+
+$chDate = date("YmdHi");
+$chDay = date("w");
+$chHour = date("H");
+
+
+
+if($chDay == '0' || $chDay == '6') //== 일요일이면
+{
+	testing_dsp ( "<p>주말 $chDay</p>" );	
+	$DBinCh = "Y" ;
+}
+
+if($chHour >= "18")
+{
+	testing_dsp ("<p>밤 $chHour" );	
+	$DBinCh = "Y" ;
+}
+
+
+if($DBinCh == "N") // 업무 시간일 경우 
+{
+	
+	$check_idx = 1 ;
+
+	$sql = "select * from smart_time_reserve where go_check = 'N'" ;
+	$res = mysql_query($sql) ;
+
+	$num = mysql_num_rows($res) ;
+	echo "num = $num <p>" ;
+
+	if($num > 0)  // 보내야 할 것이 있을 경우
+	{
+
+		while($row = mysql_fetch_array($res))
+		{
+			sleep(1);	//초단위
+
+			$check_idx ++ ;
+			testing_dsp ("<br>$row[smsf_phone] | $row[reg_date] ");
+
+
+			$smsf_phone = $row[smsf_phone] ;
+			$smsf_rephone = $row[smsf_rephone] ;
+			$smsf_msg = $row[smsf_msg] ;
+			$smsf_mode = "imt" ;
+
+			$seq = $row[seq] ;
+
+
+		?>	
+			<form action="http://www.smsfly.co.kr/outside/asp_sms_send.php" method="post" name="sendSMS<?=$check_idx?>" target="company_proc" >
+				<input type="hidden" name="smsf_id" value="nk9190" /><br/>
+				<input type="hidden" name="smsf_pwd" value="nk9195" /><br/>
+				<input type="hidden" name="smsf_keycode" value="e90055399877b23dcc123728d6f41cbc" /><br/>
+				<input type="hidden" name="smsf_returl" value="" /><br/>
+				<input type="hidden" name="smsf_phone" value="<?=$smsf_phone?>" /> 전송번호<br/>
+				<input type="hidden" name="smsf_rephone" value="0319809190" /> 회신번호<br/>
+				<input type="hidden" name="smsf_msg" value="<?=$smsf_msg?>" />단문메시지<br/>
+				<input type="hidden" name="smsf_mode" value="imt" /> imt : 즉시 / tim : 예약<br/>
+				<input type="hidden" name="sms_tdate" value="" /> 예약시간 201609050808 (년월일시분)<br/>
+				<input type="hidden" name="smsf_opt1" value="<?=$smsf_opt1?>" /> 추가 파라미터 <br/>
+			</form>
+
+			<script>
+					document.sendSMS<?=$check_idx?>.submit() ;
+			</script>
+		
+		<?
+
+			$usql = "update smart_time_reserve set go_check = 'Y' , go_date = NOW()  where seq = $seq" ;
+			mysql_query($usql) ;
+			
+
+		//exit;
+			
+		}
+	}
+}
+
+//=============================================================================
+
+
+?>
+
+
+
+

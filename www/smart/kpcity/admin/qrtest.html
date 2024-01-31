@@ -1,0 +1,96 @@
+<?
+//session_start();
+//include "../inc/dbConn.php";
+//include  "../inc/func.php";
+//$tbl = "smart_reserve";
+//header("Content-Type:text/html;charset=utf-8") ;
+//mysql_query("set names utf8;");
+
+//echo $sess_userid;
+//exit;
+//testing_dsp("test post") ;
+//testing_dsp("post") ;
+//exit;
+
+
+
+//======= test
+//$url_dir = "jhu" ;
+//$asp_url = "http://smart.nkhospital.net/_asp/jhu" ;
+
+
+testing_dsp("test1-----2 : <br>$qrimg <br>$qrimg_url <br>$asp_url <br> $url_dir") ;
+
+
+include $DOCUMENT_ROOT."/admin/phpqrcode/qrlib.php" ; //==  phpqrcode lib include
+
+	//============== qrcode 생성
+	$qr_idx = $month = sprintf("%05d", $i-1);
+
+	$exl_upFile = $ori_fileName ;
+	$qr_list_seq = $qr_idx ;
+
+
+	
+
+	$qr_file_name = "qr_".$url_dir  ;
+
+		
+	$PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'qrcodeUP'.DIRECTORY_SEPARATOR;
+    $PNG_WEB_DIR = '/admin/qrcodeUP/';
+
+	
+
+    //==============================================================================
+	$qr_data="$asp_url" ;
+	$level=M ;
+	$size=3 ;
+
+	$_REQUEST['data'] = $qr_data ;
+	$_REQUEST['level'] = $level ;
+	$_REQUEST['size'] = $size ;
+
+
+    //include "qrlib.php";    
+
+    if (!file_exists($PNG_TEMP_DIR))
+        mkdir($PNG_TEMP_DIR);
+    
+    
+    $filename = $PNG_TEMP_DIR.'test.png';
+     
+    $errorCorrectionLevel = 'L';
+    if (isset($_REQUEST['level']) && in_array($_REQUEST['level'], array('L','M','Q','H')))
+        $errorCorrectionLevel = $_REQUEST['level'];    
+
+    $matrixPointSize = 4;
+    if (isset($_REQUEST['size']))
+        $matrixPointSize = min(max((int)$_REQUEST['size'], 1), 10);
+
+ 
+
+    if (isset($_REQUEST['data'])) { 
+    
+        if (trim($_REQUEST['data']) == '')
+            die('data cannot be empty! <a href="?">back</a>');
+            
+		$fdate = date("Y-m-d_His",time());
+
+		$filename = $PNG_TEMP_DIR.$qr_file_name.'.png' ;
+  
+		QRcode::png($_REQUEST['data'], $filename, $errorCorrectionLevel, $matrixPointSize, 1);    
+    } else {    
+        //default data
+        QRcode::png('PHP QR Code :)', $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
+    }    
+        
+
+	$qrimg = $qr_file_name.'.png' ;
+	$qrimg_url = "/admin/qrcodeUP/".$qrimg ;
+
+    //echo "<img src='/admin/qrcodeUP/qr_jhu.png' />$qrimg || $qrimg_url<hr/>";  
+
+
+	
+
+?>

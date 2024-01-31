@@ -1,0 +1,105 @@
+<?		
+global $arr;
+$sql = "select * from smart_r_c where rnum='".$_SESSION['jbno']."' " ;
+$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+$i_row = mysql_fetch_array($res) ;
+#결과
+$trrxt = $i_row[rtw];
+#검사
+$arra = explode("@br@", $i_row[rtd]) ;
+#echo sizeof($arra);
+for( $r = 0 ; $r< sizeof($arra) ; $r++){
+	#echo $arra[$r]."<br/>";
+	$arrb = explode("@t@", $arra[$r]) ;
+	#echo sizeof($arrb)."<br/>";
+	$arr[$r][0] = $arrb[0];
+	$arr[$r][1] = $arrb[1];
+	$arr[$r][2] = $arrb[2];
+	$arr[$r][3] = $arrb[3];
+	$arr[$r][4] = $arrb[4];
+	$arr[$r][5] = $arrb[5];
+	$arr[$r][6] = $arrb[6];
+	$arr[$r][7] = $arrb[7];
+	$arr[$r][8] = $arrb[8];
+}
+
+function GetArrIdx( $a, $b ){
+	$tmp = "";
+	for($c=0; $c<count($a); $c++){
+		if( $a[$c][0]==$b ){
+			$tmp = $a[$c][2]; break;
+		}
+	}	
+	
+	return $tmp;
+}
+
+function GetArrIdx3( $a, $b ){
+	$tmp = "";
+	for($c=0; $c<count($a); $c++){
+		if( $a[$c][0]==$b ){
+			$tmp = "<tr><td>".$a[$c][4]."</td><td>".$a[$c][2]." ".$a[$c][8]."</td><td>".$a[$c][3]." ".$a[$c][8]."</td></tr>";
+			break;
+		}
+	}	
+	
+	return $tmp;
+}
+
+#혈액관련검사 및 
+function GetArrIdx2( $a, $b ){
+	$tmp = ""; $tf = false; #처음 값이 있을때 true 변경 이후 예외사황은  false로 해서 break;
+	for($c=0; $c<count($a); $c++){
+		if( $a[$c][5]==$b ){
+			if( $tf == false ){ $tf = true; }
+			$tmp .= "<tr><td>".$a[$c][4]."</td><td>".$a[$c][2]." ".$a[$c][8]."</td><td>".$a[$c][1]."</td><td>&nbsp;</td><td>".$a[$c][3]." ".$a[$c][8]."</td></tr>";
+		}else{
+			if( $tf ){ break; }
+		}
+	}
+	return $tmp;
+}
+
+#혈액관련검사 및 
+function GetArrIdx2n( $a, $b ){
+	$tmp = ""; $tf = false; #처음 값이 있을때 true 변경 이후 예외사황은  false로 해서 break;
+	for($c=0; $c<count($a); $c++){
+		if( $a[$c][5]==$b ){
+			if( $tf == false ){ $tf = true; }
+			$tmp .= "<tr><td>".$a[$c][4]."</td><td>".$a[$c][2]." ".$a[$c][8]."</td><td>".$a[$c][1]."</td><td>".$a[$c][3]." ".$a[$c][8]."</td></tr>";
+		}else{
+			if( $tf ){ break; }
+		}
+	}
+	return $tmp;
+}
+
+function GetArrTXT( $a, $b ){
+	$tmp = ""; $tf = false; #처음 값이 있을때 true 변경 이후 예외사황은  false로 해서 break;
+	for($c=0; $c<count($a); $c++){
+		if( $a[$c][5]==$b ){
+			if( $tf == false ){ $tf = true; }
+			$tmp .= $a[$c][2]."<br/>";
+		}else{
+			if( $tf ){ break; }
+		}
+	}
+	$tmp = str_replace("======","", str_replace("=============","", $tmp));
+	return str_replace("\n","<br/>",$tmp);
+}
+
+
+$sql = "select * from smart_r_image where rnum='".$_SESSION['jbno']."' " ;
+$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+$tmp = "";
+while($e_row = mysql_fetch_array($res)){
+	$ra = explode(".", $e_row[file]);
+	$c = sizeof($ra)-1; 
+	if( $ra[$c] == "pdf" ){
+		$tmp .= "<a href='../report/admin/examnk/upImage/$e_row[file]' target='_blank'>PDF검사결과 내려받기</a><br/><br/>";
+	}else{
+		$tmp .= "<img width='100%' src=\"../report/admin/examnk/upImage/$e_row[file]\" /><br/><br/>";
+	}
+}
+
+?>

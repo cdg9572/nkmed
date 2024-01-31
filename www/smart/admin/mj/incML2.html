@@ -1,0 +1,201 @@
+<?
+include "../../inc/func.php";
+include "../../inc/dbConn.php";
+#include "./inc/conf.php";
+
+@extract($_GET);
+@extract($_POST);
+
+$linkPage = $menu.$form;
+$subject_code = $subjectCode ? $subjectCode : $subject_code;
+$course_code = $courseCode ? $courseCode : $course_code;
+$state = $stateCode ? $stateCode : $state;
+
+?>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="../css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="../css/admin.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/font.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+
+<link href="/admin/ecss/reset.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/main.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/admin/ecss/sidenav_acc.css">
+
+
+<link href="/admin/ecss/page_style.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="/admin/ecss/defult.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<div class="propBox2">
+		
+		<form name='formSearch' method='get'>
+		<input type='hidden' name='tbl' value='smart_mj_il'>
+		<input type='hidden' name='dir' value='<?=$dir?>'>
+		<input type='hidden' name='menu' value='<?=$menu?>'>
+		<input type='hidden' name='cpname' value='<?=$_GET[cpname]?>'>
+		<table width='100%' class="table_style_1" style="margin-bottom:10px;">
+			<tr>
+                <td width="125">
+					<div class="select_box select_w120"><label for="selecter1" id="lab_selecter1">이름/연락처</label></div>
+				</td>
+				<td  width="258">
+					<div class="inputa_box input_w250">
+						<input type='text' name='keyword' class='inputer inputer_w250' value='<?=$keyword?>'>
+					</div>
+				</td>
+				<td><input type='submit' value='검 색' class='btn_g_s1' onFocus='this.blur();'></td>
+				<td width="110" align="right">
+				<!--	<input type='button' value='전체보기' class='btn_w_s1' onClick="document.location.href='?dir=<?=$dir?>&menu=<?=$menu?>&tbl=<?=$tbl?>&cpname=<?=$_GET[cpname]?>'" onfocus='this.blur();'>-->
+				</td>
+				
+			
+			</tr>
+		</table>
+		</form>
+
+
+		<!--<a href="#" onClick="document.location='?dir=<?=$dir?>&menu=<?=$menu?>&form=Write&mode=new'" class="resBtn01 potopright">등록 &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>-->
+
+<?
+
+		if($keyword) {
+				$where .= " AND ( mname LIKE '%$keyword%' OR mtel LIKE '%$keyword%' )";
+
+				$field = "";
+				$keyword = "";
+			}
+
+			$orderBycolumn = $orderBycolumn."gdate ";
+			$orderBy = $orderBy."  desc";
+
+#$where .= " and use_yn = 'Y' and CPNAME='$_GET[cpname]' " ;
+
+
+list($que, $res, $nowData, $totalCount, $start, $numPerPage, $pagePerList, $pageNum, $searchQuery) = funcListMJ($dir, $menu, "smart_mj_il", $field, $keyword, $where, $searchQuery, $listNum, $pageNum, 'gdate', 'DESC');
+//echo $searchQuery;
+//testing_dsp($que);
+
+//exit;
+//echo $que;
+?>
+		
+
+		<table width="100%" class="tableSt01">
+			<thead>
+				<tr>
+					<th>번호</th>	
+					<th>이름</th>
+					<th>연락처</th>
+					<th>검진희망일</th>
+					<th>생년월일</th>					
+					<th>작성일</th>					
+					<th>예약정보</th>
+					<th>이메일</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?
+				if($nowData == 0) {
+				?>
+				<tr>
+					<td colspan='11' align='center' style="height:250px; vertical-align:middle;">등록된 리스트가 없습니다.</td>
+				</tr>
+				<?
+				} else {
+					for($i = 0; $i < $nowData; $i++) {
+						$no = $totalCount - $start - $i;
+						@$row = MYSQL_FETCH_ARRAY($res);
+
+						if($row['state'] == "Y") {
+							$btnValue = "사용";
+							$btnClass = "btn";
+							//$profState = "<span style='color:blue; cursor:hand' onClick=\"chgState('".$row['state']."')\">사용</span>";
+						}
+						else if($row['state'] == "N") {
+							$btnValue = "중지";
+							$btnClass = "btn";
+							//$profState = "<span style='color:red; cursor:hand' onClick=\"chgState('".$row['state']."')\">중지</span>";
+						}
+
+					/*	if( $row['rseq']=="C" ){ 
+							$mjbtn = "문진표만 등록";
+						}else if( $row['rseq']=="" ){
+							$mjbtn = "확인필요";
+						}else{
+							if( substr($row['rseq'],0,1)=="C"){
+								$mjbtn = "거래처버튼";
+							}else{
+								$mjbtn = "오리지널버튼";
+							}							
+						} */
+				?>
+				<tr>
+					<td rowspan=2><?=$no?></td> 
+					<td><?=$row['mname']?></td>
+					<td><?=$row['mtel']?></td>
+					<td><?=$row['gdate']?><!--<br/><?=$row['CPNAME2']?>--></td>
+					<td> <?=$row['mbate']?></td>
+					<td> <?=$row['wdt']." ".$row['wti'];?></td>
+					<td> <?=$mjbtn;?></td>
+					<td><?=$row['em']?> </td>
+					<td><?=$row['addr']?>  </td>
+
+					<!--<td><a href="#" class="delSmallBtn" data-featherlight="#fl1<?=$i?>" >삭제</a></td>-->
+				</tr>
+				<tr><td colspan=10 style="text-align:left;padding-left:10px;">문진표현황: <?#=$row['RIDX'];?>
+				<?		$sql = " SELECT A.MIDX AMIDX, A.* , B.MIDX BMIDX , C.MNDRJUBNO CMIDX , D.MNEXJUBNO DMIDX 
+						, E.MNNUJUBNO EMIDX , F.MNOBJUBNO FMIDX , G.MNSMJUBNO GMIDX 
+						, H.MNJPJUBNO HMIDX , I.MNTIJUBNO IMIDX300
+						FROM smart_mj_il A 
+						LEFT OUTER JOIN smart_mj_am B on A.MIDX=B.MIDX 
+						LEFT OUTER JOIN smart_mj_mndrinktbl C on A.MIDX=C.MNDRJUBNO 
+						LEFT OUTER JOIN smart_mj_mnexerctbl D on A.MIDX=D.MNEXJUBNO 
+						LEFT OUTER JOIN smart_mj_mnnutritbl E on A.MIDX=E.MNNUJUBNO 
+						LEFT OUTER JOIN smart_mj_mnobesytbl F on A.MIDX=F.MNOBJUBNO 
+						LEFT OUTER JOIN smart_mj_mnsmoketbl G on A.MIDX=G.MNSMJUBNO 
+						LEFT OUTER JOIN smart_mj_mnjphq9tbl H on A.MIDX=H.MNJPJUBNO 
+						LEFT OUTER JOIN smart_mj_mntinjintb I on A.MIDX=I.MNTIJUBNO
+					WHERE A.midx='".$row['midx']."' ";	
+					if( $r = mysql_query($sql) ){
+						$mrow = mysql_fetch_array($r);
+						#if( $mrow["AMIDX"] == "" ){ $im_btn = ""; }else{	$im_btn=" <input type='button' value='공통문진' onclick=\"window.open('v.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["AMIDX"] <> "" AND $mrow["MJ4"] <> "" ){  $im_btn2=" <input type='button' value='공통문진N' onclick=\"window.open('v1.html?i=".$mrow["midx"]."','','');\" />";	}else{ $im_btn2=""; }
+						if( $mrow["BMIDX"] == ""){ $am_btn = ""; }else{	$am_btn=" <input type='button' value=' 암 문진 ' onclick=\"window.open('va.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["GMIDX"] == ""){ $g_btn = ""; }else{ $g_btn=" <input type='button' value='흡연' onclick=\"window.open('vg.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["CMIDX"] == ""){ $c_btn = ""; }else{	$c_btn=" <input type='button' value='음주' onclick=\"window.open('vc.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["DMIDX"] == ""){ $d_btn = ""; }else{ $d_btn=" <input type='button' value='운동' onclick=\"window.open('vd.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["EMIDX"] == ""){ $e_btn = ""; }else{	$e_btn=" <input type='button' value='영양' onclick=\"window.open('ve.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["FMIDX"] == ""){ $f_btn = ""; }else{	$f_btn=" <input type='button' value='비만' onclick=\"window.open('vf.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["HMIDX"] == ""){ $h_btn = ""; }else{ $h_btn=" <input type='button' value='우울' onclick=\"window.open('vh.html?i=".$mrow["midx"]."','','');\" />";	}
+						if( $mrow["IMIDX"] == ""){ $i_btn = ""; }else{ $i_btn=" <input type='button' value='인지' onclick=\"window.open('vi.html?i=".$mrow["midx"]."','','');\" />";	}
+
+				echo "$im_btn&nbsp;$im_btn2&nbsp;$am_btn&nbsp;$c_btn&nbsp;$d_btn&nbsp;$e_btn&nbsp;$f_btn&nbsp;$g_btn&nbsp;$h_btn&nbsp;$i_btn";
+					} ?>
+				</td></tr>
+				<?
+					}
+				}
+				?>
+			</tbody>
+		</table>
+		
+		<div class="pageList">
+			<?=funcPaging($totalCount, $numPerPage, $pagePerList, $pageNum, $searchQuery );?>
+		</div>
+
+	</div>
+				
+	<iframe name="company_proc" width=0 height=0></iframe>
+	
+	
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="../js/featherlight.min.js"></script>
+		
+		

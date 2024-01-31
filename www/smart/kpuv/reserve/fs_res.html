@@ -1,0 +1,196 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+#echo $cpname;
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>외국인학생 간편 진료예약</title>
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+
+</head>
+
+<body>
+	<form name='form' method='post' action='reserve_proc2.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_resscomp'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='seq' value='<?=$seq?>'>
+		<input type='hidden' name='cpname' value='외국인학생진료'>
+
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>외국인학생 간편 진료예약</h2>
+		
+
+<script src="../../js/jquery.js" type="text/javascript"></script>
+<script src="../../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#datepicker1').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '2018:2022'
+	});	
+});
+	//		$("#datepicker").datepicker($.datepicker.regional['ko']);
+	</script>
+
+
+ </script>
+
+
+<?
+
+$datetemp =  date("Y-m-d", strtotime(date("Y-m-d")." + 0 day"));
+
+?>
+
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important;">일정 및 개인정보 입력</th>
+			</tr>
+			<tr>
+				<th width="35%">희망 진료일</th>
+				<td width="65%">
+					<input type="text" name = "reserve_date"  id="datepicker1" class="intextst01" placeholder="예약은 <?= $datetemp ?> 부터 가능합니다." onfocus="blur();">
+				</td>
+			</tr>
+			<tr>
+				<th>외국학생성명</th>
+				<td><input type="text" class="intextst01" name="name"  placeholder="성명을 입력해주세요"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="tel" class="intextst01" name="mobile_no" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+			<tr>
+				<th>학교 담당자 성명</th>
+				<td><input type="text" class="intextst01" name="name2"  placeholder="담당자 성명을 입력해주세요"></td></tr>
+			<tr>
+				<th>학교 담당자 연락처</th>
+				<td><input type="tel" class="intextst01" name="mobile_no2" placeholder="담당자 연락처를 &quot;-&quot; 없이 입력해주세요."></td></tr>
+			<tr>
+				<th>메모</th>
+				<td><input type="text" class="intextst01" name="memo" placeholder="증상 및 문의사항을 입력해주세요."></td>
+			</tr>
+		</table>
+<style>
+div.caluse-common {
+	color: #666;	padding: 10px;	height: 70px;	border: 1px solid #ccc;
+	overflow-x: hidden;		overflow-y: auto;	margin-bottom: 15px;	text-align:left;
+}
+</style>
+
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important;">개인정보 수집/이용 동의서</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					
+		<h3>개인정보 수집/이용 동의서</h3>
+		<div id="caluse-02" class="caluse-common">
+"개인정보 보호법"에 따라 본인의 동의를 받아 진료 예약 및 상담을 진행하고자 합니다.
+<br>
+<br>
+<br>1. 개인정보 수집/이용 목적 : 진료 예약 및 상담
+<br>
+<br>2. 개인정보 수집 항목 : 성명, 연락처, 담당자(보호자) 이름 , 담당자(보호자) 연락처
+<br>
+<br>3. 보유 및 이용기간 : 진료 완료시
+<br>
+<br></div>
+
+		<p class="calusep">개인정보 수집/이용에 동의합니다.(선택) <input type="checkbox" id="agree" name="agree" value="yes"> 동의 <input type="checkbox" id="agree2" name="agree2" value="no"> 동의하지 않음</p>
+		
+	</section>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div style="padding:20px 0px;">
+			<a href="#" class="btnst01" onClick="chkForm(document.form)">진료 예약하기</a>
+			
+		</div>
+	</section>
+	</form>
+<iframe name="company_proc" width=700 height=700 style="display:;"></iframe>
+<? include "../footer.html"; ?>
+</body>
+</html>
+<script>
+function chkForm(frm) {
+
+	if (!$("#agree").attr("checked")  || $("#agree2").attr("checked"))	 {
+	  alert('개인정보 수집/이용 동의서에 동의 하여야 진행이 가능합니다.');
+	  frm.agree.focus();
+	  return;
+	 }
+
+	if(!frm.reserve_date.value) {
+		alert('진료희망일을 선택해 주세요.');
+		frm.reserve_date.focus();
+		return false;
+	}
+
+	if(!frm.name.value) {
+		alert('외국인학생성명을 입력해 주세요.');
+		frm.name.focus();
+		return false;
+	}
+
+	if(!frm.mobile_no.value) {
+		alert('외국인학생연락처를 입력해 주세요.');
+		frm.mobile_no.focus();
+		return false;
+	}
+
+	if(!frm.name2.value) {
+		alert('담당자(보호자) 성명을 입력해 주세요.');
+		frm.name2.focus();
+		return false;
+	}
+
+	if(!frm.mobile_no2.value) {
+		alert('담당자(보호자) 연락처를 입력해 주세요.');
+		frm.mobile_no2.focus();
+		return false;
+	}
+
+	frm.submit();
+}
+</script>

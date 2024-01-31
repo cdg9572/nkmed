@@ -1,0 +1,148 @@
+<?
+
+if($_SESSION['in_data_check'] != "Y")
+{
+
+	//===== 힛트수 1개 증가
+	$u_sql = "update `smart_category_item_data` set hit = hit+1 where seq = '$sess_USEQ'" ;
+	MYSQL_QUERY($u_sql) or die(mysql_error()) ;
+//echo "$u_sql";
+//exit;
+
+
+	testing_dsp( "Data In Session || $_SESSION[data_in_check] ****^^"  );
+
+	$sql = "select * from `smart_category_item_data` where seq = '$sess_USEQ' order by reg_date desc" ;
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$d_row = mysql_fetch_array($res) ;
+
+//echo "$sql";
+//exit;
+
+	$item_seq = $d_row[exam_seq] ; //== category_item 의 seq 번호 획득
+
+
+
+	$sql = "select * from `smart_category_item` where seq = '$item_seq' order by reg_date desc" ;
+	$res = MYSQL_QUERY($sql) or die(mysql_error()) ;
+	$i_row = mysql_fetch_array($res) ;
+
+
+	//============= 사용자 기본정보
+
+	//$birth_date  = substr($d_row[ssn], 0, 6) ;
+
+
+
+	$_SESSION["data_birth_date"] = $d_row[birth_date] ;
+
+	$_SESSION["data_category"] = $d_row[category] ;
+	$_SESSION["data_serial_no"] = $d_row[serial_no] ;
+	$_SESSION["data_name"] = $d_row[name] ;
+	$_SESSION["data_ssn"] = $d_row[ssn] ;
+	$_SESSION["data_mobile"] = $d_row[mobile] ;
+	$_SESSION["damdang"] = $d_row[damdang] ;
+
+	$_SESSION["data_exam_date"] = $d_row[exam_date] ;
+	$_SESSION["data_sex"] = $d_row[sex] ;
+	
+
+	$_SESSION["in_data_check"] = "Y" ;  // 데이터 입력 여부 확인
+
+
+
+	$_SESSION["data_소견텍스트"] = $d_row[docview] ;
+	#$i_arr = explode("&& ", $i_row[item_str]) ;
+	$i_arr = explode("&& ", $d_row[item_str]) ;
+	$d_arr = explode("&&", $d_row[data_str]) ;
+
+	#echo count($i_arr) ."/test/". count($d_arr);
+
+//echo "<p>[ $i_row[seq] ]$i_row[item_str] <br>";
+
+	for($i=0 ; $i <= count($i_arr) ; $i ++)
+	{
+		$i_item =  $i_arr[$i] ; 
+		$d_item =  $d_arr[$i] ; 
+        //=== 20161118 () _로 변환
+		$i_item = str_replace("(","_",$i_item);
+		$i_item = str_replace(")","_",$i_item);
+		$i_item = str_replace(",","_",$i_item);
+		$i_item = str_replace(" ","",$i_item);
+		$i_item = str_replace("-","_",$i_item);
+		$i_item = str_replace(".","",$i_item);
+
+		
+		#echo $i_item.$d_item."<br>";
+
+		//if($c_item == "전체소견") continue ;
+		
+		if( $i_item=="소견텍스트"){		
+			$_SESSION["data_".$i_item] = $d_row[docview];		
+		}elseif( $i_item=="노력성폐활량_%_"){	
+			$_SESSION["data_노력성폐활량p"] = $d_item ;
+		}else{
+			$_SESSION["data_".$i_item] = $d_item ;
+		}
+		testing_dsp( "\$_SESSION[data_".$i_item."] = \"$d_item\";" ) ;
+
+#echo "<br>\$_SESSION[data_".$i_item."] = \"$d_item\";" ;
+
+	}
+
+	//exit;
+
+	//================== 임상참고치 등록
+	//$sql_esti = "select * from smart_esti where use_yn = 'Y' order by reg_date desc " ;
+
+	$sql_esti = "select * from smart_esti where use_yn = 'Y' 
+						group by dsp_item
+						order by seq , reg_date " ;
+
+	$sql_esti = "select * from (select * from smart_esti where use_yn = 'Y' 
+						order by seq desc, reg_date desc ) as gtable group by dsp_item " ;
+
+	$res_esti = mysql_query($sql_esti) ;
+	
+	$i = 0 ;
+	while($row_esti = mysql_fetch_array($res_esti))
+	{
+		unset($val);
+		if($d_row[sex] == "M") $val = $row_esti[esti_M]  ;
+		else if($d_row[sex] == "F") $val = $row_esti[esti_F]  ;
+		
+		if($val) // 임상참고치가 있는 경우
+		{
+			$src_item = $row_esti[src_item] ;
+			$_SESSION["esti_".$src_item] = $val ;
+
+			#echo "<br>esti $src_item = $val";
+		}
+
+		
+
+	}
+	//exit;
+
+/*	$sql = "select * from smart_image where item_data_seq = '$sess_USEQ' and view_state='Y' and use_yn = 'Y' " ;
+	echo $sql;
+	$res = MYSQL_QUERY($sql) ;
+	$r = 0;
+	while($row_i = mysql_fetch_array($res))
+	{
+		$_SESSION["upload_".$r] = $row_i[file] ;	
+		$r++;
+	}
+	$_SESSION["upload_cnt"] = $r;
+*/
+	
+	//echo "<script language=\"javascript\"> self.location='/info.html'</script>" ;
+	//exit;
+
+	//testing_dsp("session") ;
+}
+
+
+
+
+?>

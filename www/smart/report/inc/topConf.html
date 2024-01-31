@@ -1,0 +1,47 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8");
+header("Cache-Control: No-Cache, Must-Revalidate"); 
+header("Pragma: No-Cache"); 
+header("Expires: 0"); 
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+include "./inc/func.php";
+include "./inc/dbConn.php";
+include "./inc/login_chk.html";
+
+
+include "inc/getData.html";  //==== str item과 data를 비교하여 세션에 저장
+#include "./inc/getEsti.html";  //==== 임상참고치
+
+#include "./inc/DataFix.html";
+
+
+#testing_dsp("topConf.html");
+#testing_dsp("post");
+#testing_dsp("session");
+
+
+$tr_check = 1 ;  //=== 한국어 출력
+
+if(!$display_check) $display_check = false ;  //=== 모두출력
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>New Korea Hospital</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>

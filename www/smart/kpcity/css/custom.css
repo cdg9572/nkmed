@@ -1,0 +1,221 @@
+/* CSS Document */
+@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
+@import url("http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css");
+
+body {
+	font-family: "Nanum Gothic", sans-serif;
+	background:#FFFFFF !important;
+}
+
+div, h1 { padding:0; margin:0; }
+#loginPage { background: #ffc200; }
+#home { background:#FFFFFF !important; }
+.container { }
+.hidden { position: absolute; left: -99999px; }
+.login_title { text-align: center; }
+.loginBox { text-align: center; }
+.loginBox #userNum { line-height: 1.7em;}
+.loginBox button { background: #730A6C !important; color: #FFF !important; border: none; text-shadow: none !important; -webkit-border-radius: 0 !important; -moz-border-radius: 0 !important; border-radius: 0 !important;}
+.ps_ment { font-size: 0.8em; color: #333; text-align:center; border: 1px solid #730A6C; padding:10px; background: rgba(255,255,255,.40); margin-top:15px; }
+
+
+.ui-header {
+	background:#FFF !important;
+	border-width: 1px 0;
+	border-style: solid;
+}
+.ui-page {
+	background:#FFFFFF !important;
+}
+.ui-footer {
+	border-width: 0px;
+	background: #FFF !important;
+}
+.head_title {
+	color: #333333 !important;
+	text-decoration: none;
+	line-height:30px;
+}
+.head_title img {
+	vertical-align:middle;
+}
+.homeBG {
+	background:#FFFFFF url(../images/homeBg.jpg) no-repeat right top;
+	background-size:  100%;
+}
+.homeBG p.ment_z {
+	display:inline-block;
+	width: 100%;
+	padding:30px 0px;
+}
+.user_info {
+	margin-bottom:30px;
+}
+.user_info h2 {
+	border-left: 3px solid #5B8DE7;
+	padding-left:5px;
+	font-size: 1em;
+	margin-bottom:15px;
+}
+.h2_title {
+	border-left: 3px solid #999999;
+	padding-left:5px;
+	font-size: 1em;
+	margin-bottom:5px;
+}
+.user_info table {
+	border:10px solid rgba(0,107,253,0.42);
+	border-collapse: collapse;
+}
+.user_info table th, .user_info table td {
+	font-size: .9em;
+	text-align: left;
+	padding:5px;
+	border: 1px solid #CCCCCC;
+}
+.user_info table th {
+	background:#F0F0F0;
+}
+.user_info table td {
+	background:#FFFFFF;
+}
+#nav-panel {
+	background: #6382BB;
+	border-right: 1px solid #0B568B;
+}
+.menu_panel {
+	list-style: none;
+	padding:0px !important; margin:0px !important;
+}
+.menu_panel li {
+	margin-bottom: 0px !important;
+	border-bottom: 1px solid #6B8BC7;
+}
+.menu_panel li a {
+	display: block;
+	padding:0; margin:0;
+	text-decoration: none;
+	color:#FFFFFF;
+	text-shadow: none;
+	padding: 8px 5px;
+}
+
+.menuBtn {
+	padding:0; margin:10px 3px !important;
+	border: none;
+	background:#FFF !important;
+	box-shadow:none;
+	border-radius:0  !important;
+}
+
+.ui-page-theme-a .ui-btn:focus,html .ui-bar-a .ui-btn:focus,html .ui-body-a .ui-btn:focus,html body .ui-group-theme-a .ui-btn:focus,html head+body .ui-btn.ui-btn-a:focus,.ui-page-theme-a .ui-focus,html .ui-bar-a .ui-focus,html .ui-body-a .ui-focus,html body .ui-group-theme-a .ui-focus,html head+body .ui-btn-a.ui-focus,html head+body .ui-body-a.ui-focus{-webkit-box-shadow:0 0 0px #730A6C;-moz-box-shadow:0 0 0px #730A6C;box-shadow:0 0 0px #730A6C; }
+
+.ui-footer p {
+	font-size:.7em;
+	color:#999;
+	font-weight: normal;
+	padding:15px;
+	text-align:center;
+}
+
+.cataBox li a {
+	background:#FFFFFF !important;
+}
+.cataBox li a:hover {
+	text-shadow: none !important;
+	color:#000000 !important;
+	background:#f0f0f0 !important;
+}
+.cataBox li a:active {
+	color:#000000 !important;
+}
+.comentBox {
+	border:1px solid #ccc;
+	background:#F9F9F9;
+	font-size:0.8em;
+	padding:10px;
+	line-height: 1.5em;
+}
+.banner {
+	height:120px;
+}
+.cataBG_01 {
+	background:url(../images/cataBg_01.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_02, .cataBG_29 {
+	background:url(../images/cataBg_02.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_03 {
+	background:url(../images/cataBg_03.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_05, .cataBG_23 {
+	background:url(../images/cataBg_05.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_06, .cataBG_17 {
+	background:url(../images/cataBg_06.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_07, .cataBG_18 {
+	background:url(../images/cataBg_07.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_08, .cataBG_19 {
+	background:url(../images/cataBg_08.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_09 {
+	background:url(../images/cataBg_09.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_10, .cataBG_20 {
+	background:url(../images/cataBg_10.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_11, .cataBG_21, .cataBG_22 {
+	background:url(../images/cataBg_11.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_12, .cataBG_24 {
+	background:url(../images/cataBg_12.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_13 {
+	background:url(../images/cataBg_13.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_14 {
+	background:url(../images/cataBg_14.jpg) no-repeat center top;
+	background-size: 100%;
+}
+.cataBG_15, .cataBG_16 {
+	background:url(../images/cataBg_15.jpg) no-repeat center top;
+	background-size: 100%;
+}
+
+
+.tricon { display:inline; color:#FFF; background: #49AA23; border-radius:5px; padding:3px 5px; text-shadow: none; }
+.flicon { display:inline; color:#FFF; background: #EA138E; border-radius:5px; padding:3px 5px; text-shadow: none; }
+
+.view_data_list { margin:0; padding:0; list-style: none; }
+.view_data_list li { margin:0; padding:0; margin-bottom:15px;  }
+.view_data_list li label { margin:0; padding:5px 0px; border-bottom:1px solid #dddddd; font-weight:bold; }
+.view_data_list li p { margin:0; padding:5px 10px; }
+.view_data_list li table { border-top:1px solid #ffffff; }
+.view_data_list li table th { color:#2A57AA; vertical-align:top; }
+
+.ps_ae { display:block; background:#F5ECF0; border:2px solid #EA138E !important; color: #EA138E; text-shadow: none; margin-top:10px !important; text-align:center; font-weight: bold; }
+
+
+
+.ui-btn-left {
+	top:12px !important;
+	left: 10px !important;
+}
+.ui-btn-right {
+	top:12px !important;
+	right: 10px !important;
+}

@@ -1,0 +1,29 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 질환력(과거력, 가족력) 관련 문항.
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 3. B형간염 바이러스 보유자입니까?  
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1"  <?=getChecked($v, "1")?> > 예</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="2" <?=getChecked($v, "2")?>> 아니요</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="3" <?=getChecked($v, "3")?>> 모름</td>
+			</tr>
+		</table>

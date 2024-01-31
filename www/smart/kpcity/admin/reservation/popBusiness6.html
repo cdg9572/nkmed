@@ -1,0 +1,109 @@
+<?
+session_start();
+include "../../inc/dbConn.php";
+include  "../inc/func.php";
+$tbl = "smart_reserve";
+//header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+if ($item != "") { 
+	
+	#휴일인지, 지정일인지, 반일인지, 평일인지 체크해서 해당 슬롯 보여줌
+	//echo $start_date;
+
+	$holiday_query = "select * from reserve_holiday where day_start='".$start_date."' and view_state='Y' and day_type='4'";
+	//echo $holiday_query;
+	$holiday_result = mysql_query($holiday_query);
+	$holiday_cnt = mysql_num_rows($holiday_result);
+
+	if($holiday_cnt > 0){
+		$add_item = 0;
+	}
+	else{
+		#지정일인지 체크함
+		$target_query = "select * from reserve_setday where day_start='".$start_date."' and view_state='Y' and day_type='3'";
+		
+		$target_result = mysql_query($target_query);
+		$target_cnt = mysql_num_rows($target_result);
+			
+		if($target_cnt > 0){#지정일일때
+			$target_query2 = "select item9 from reserve_setday where day_start='".$start_date."' and view_state='Y' and timezone= '".$item."' and day_type='3'";
+			//echo $target_query2;
+			$target_result2 = mysql_query($target_query2);
+			$target_rows2 = mysql_fetch_array($target_result2);
+
+			$target_cnt = $target_rows2[item9];
+			
+
+			$reserve_query = "select * from reserve_list_new where reserve_day='".$start_date."' and reserve_type27 ='Y' and reserve_time0='".$item."' and view_state='Y' and state='Y'";
+			$reserve_result = mysql_query($reserve_query);
+			$reserve_cnt = mysql_num_rows($reserve_result);
+
+			$add_item = $target_cnt - $reserve_cnt;
+
+
+		}
+		//echo "지정일";
+	
+		else{#지정일이 아닐때
+
+				$sel_day = date("w",strtotime($start_date));
+				if($sel_day == "6"){#토요일 반일
+					$ban_query = "select item9 from reserve_setday where  view_state='Y' and day_type='2' AND timezone='".$item."'";
+					//echo $ban_query;
+
+					$ban_result = mysql_query($ban_query);
+					$ban_rows = mysql_fetch_array($ban_result);
+
+					$ban_cnt = $ban_rows[item9];
+
+					$reserve_query = "select * from reserve_list_new where reserve_day='".$start_date."' and reserve_type27 ='Y' and reserve_time0='".$item."' and view_state='Y' and state='Y'";
+
+					$reserve_result = mysql_query($reserve_query);
+					$reserve_cnt = mysql_num_rows($reserve_result);
+
+//echo $ban_cnt;
+					$add_item = $ban_cnt - $reserve_cnt;
+					
+					//echo  "반일";
+				}
+				else if($sel_day == "0"){#일요일 휴무
+					$add_item = 0;
+				}
+				else{#전일
+
+					$situation_query = "select item9 from reserve_setday where  view_state='Y' and day_type='1' AND timezone='".$item."'";
+					$situation_result = mysql_query($situation_query);
+					$situation_rows = mysql_fetch_array($situation_result);
+					$situation_cnt = $situation_rows[item9];
+
+
+					$reserve_query = "select * from reserve_list_new where reserve_day='".$start_date."' and reserve_type27 ='Y' and reserve_time0='".$item."' and view_state='Y' and state='Y'";
+
+					$reserve_result = mysql_query($reserve_query);
+					$reserve_cnt = mysql_num_rows($reserve_result);
+
+					$add_item = $situation_cnt - $reserve_cnt;
+					
+					//echo "전일";
+				}
+
+			}
+		}
+}
+
+	
+?> 
+가능: <input type="text" name="time_cnt" value="<?=$add_item?>" size="3" readonly>

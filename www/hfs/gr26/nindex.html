@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html >
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>구래26통 의료지원사업 </title>
+  <link href="default.css" rel="stylesheet" >
+ </head>
+ <script src="../js/jquery.js" type="text/javascript"></script>
+<script src="../js/Calendar.js" type="text/javascript"></script>
+
+<link type="text/css" href="../js/ui/themes/base/ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/ui/ui.core.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker.js"></script>
+<script type="text/javascript" src="../js/ui/ui.datepicker-ko.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#RDT').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		minDate: new Date('2021-09-07'),
+		maxDate: new Date('2021-10-30'),
+		yearRange: '2021:2021'
+	});	
+});
+
+</script>
+ <body>
+
+  <div id="mtitle2">
+  <img src="../images/gr26.jpg" width='380'/>
+   <!--   뉴고려병원과 함께하는<br>
+	  구래26통 의료지원사업-->
+  </div>
+  <br>
+  <? if( strtotime("2021-10-01") > strtotime(date("Y-m-d"))  ) {	 ?>
+	<div id="reg_btn" onclick="refg_div();">미신청세대 간편예약</div>
+  <br>
+  <? } ?>
+  
+  <div id="mdiv2" style='text-align:center;'>
+  	<form id="frm3" name="frm3" target="ifrm" method="post" action="s_post.html"  onsubmit=" return CSubmit2(); ">
+	  <div id="mdiv3">
+<?
+	echo "<span style='font-size:20px;'>상품선택</span>";
+	echo "<br><table width='100%' border='1' style='font-size:14px;'>";
+	echo "<tr bgcolor='#cdcdcd'><th width='100'>추가종류</th>
+					<th width='300'>내용</th></tr>";
+
+	echo "<tr><td><input type='checkbox' name='JG' value='V' $ab1 onclick='SelectCB( this.name )'/>종합검진</td>
+					<td style='line-height:15px;font-size:12px;text-align:left;padding-top:5px;padding-bottom:5px;padding-left:5px;'><b>[혈액&소변]</b> 순환기계, 간기능, A/B/C간염, 당뇨,
+					<br>췌장기능, 철결핍성, 빈혈, 혈액질환, 전해질, 신장기능,
+					<br>골격계질환, 감염성, 갑상선기능, 부갑상선기능,
+					<br>종양표지자,생체나이, 소변 등 80여 항목<br><br>
+	<b>[장비]</b> 신장, 체중, 혈압, 시력, 청력, 체성분, 안압, 심전도, 흉부X-ray, 위일반내시경, (간/담낭/비장/췌장/신장)복부초음파,            (여)자궁경부세포진, (여)유방촬영</td></tr>";
+
+	echo "<tr><td colspan='2'><input type='checkbox' name='DP' value='V' $ab2 onclick='SelectCB( this.name )'/>대상포진</td></tr>";
+
+
+	echo "<tr><td colspan='2'><input type='checkbox' name='INP' value='V' $ab3 onclick='SelectCB( this.name )'/>독감접종[최대4인]<br>
+	1)<input type='text' name='INM1' value='' size='10'/>
+	,2)<input type='text' name='INM2' value='' size='10'/><br>
+	3)<input type='text' name='INM3' value='' size='10'/>
+	,4)<input type='text' name='INM4' value='' size='10'/></td></tr>";
+
+
+	echo "<tr><td>메모</td>
+				<td colspan='2'><textarea name='bigo2' cols='34' rows='4'>$bigo2</textarea></td></tr>";
+
+	echo "<tr><td colspan='3'>
+				<select name='DONG' required>
+					<option value=''>선택하세요</option>
+					<option value='401동'>401</option>
+					<option value='402동'>402</option>
+					<option value='403동'>403</option>
+					<option value='404동'>404</option>
+					<option value='405동'>405</option>
+					<option value='406동'>406</option>
+					<option value='407동'>407</option>
+				  </select>동
+				<input type='text' id='HO' name='HO' value='' class='required' size='10' required/>호
+				<!--<br><b>".$rcdate."일 이후</b> 일자 선택해주세요.--></td></tr>";
+
+	echo "<tr><td align='center' colspan='3'>신청자 : <input type='text' id='PNAME' name='PNAME' value='' required class='required' size='10'/></td></tr>
+			<tr><td align='center' colspan='3'>연락처 : <input type='text' id='PTEL' name='PTEL' value='' required class='required' size='10'/></td></tr>
+			<tr><td align='center' colspan='3'>희망일 : <input type='text' id='RDT' name='RDT' value='' size='10'/></td></tr>";
+	echo "</table>";
+?><div id="reg_btn2" onclick="document.frm3.onsubmit();">간편예약하기</div>
+  </div></div>
+  <br>
+  <div id="mtitle3"><b>사전 예약자 조회</b></div><br>
+  <div id="mdiv">
+	  <form name="frm" action="ch.html" method="post" target="ifrm" onsubmit=" return CSubmit(); ">
+	  <select name="dong">
+	  	<option value="">선택하세요</option>
+		<option value="401동">401</option>
+		<option value="402동">402</option>
+		<option value="403동">403</option>
+		<option value="404동">404</option>
+		<option value="405동">405</option>
+		<option value="406동">406</option>
+		<option value="407동">407</option>
+	  </select>동
+	  <input type="text" name="ho" value="" size="5" />호<br>
+	  예약자<input type="text" name="pnm" value="" size="13" class="required"/><br>
+	  연락처<input type="text" name="ptel" value="" size="13" class="required"/>
+	  </form>
+  </div>
+  <br>
+  <div id="mbtn" onclick="document.frm.onsubmit();">
+    조회하기
+  </div><br>
+  <iframe name="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+ </body>
+</html>
+
+<script>
+document.getElementById("mdiv2").style.display = "none";
+function SelectCB( nm ){
+	//alert( nm );
+	if( nm=="JG" ){
+		document.frm3.DP.checked = false;
+		document.frm3.INP.checked = false;
+	}
+	if( nm=="DP" ){
+		document.frm3.JG.checked = false;
+		document.frm3.INP.checked = false;
+	}
+	if( nm=="INP" ){
+		document.frm3.DP.checked = false;
+		document.frm3.JG.checked = false;
+	}
+}
+
+function CSubmit2(){
+	if( document.frm3.JG.checked==false && document.frm3.DP.checked==false && document.frm3.INP.checked==false  ){
+		alert( "상품 한가지는 선택하셔야 합니다. " );
+		return false;
+	}
+	if( document.frm3.DONG.value == "" ){
+		alert( "동은 필수 사항입니다." );
+		document.frm3.DONG.focus();
+		return false;
+	}
+
+	if( document.frm3.HO.value == "" ){
+		alert( "호는 필수 사항입니다." );
+		document.frm3.HO.focus();
+		return false;
+	}
+
+	if( document.frm3.PNAME.value == "" ){
+		alert( "신청자는 필수 사항입니다." );
+		document.frm3.PNAME.focus();
+		return false;
+	}
+
+	if( document.frm3.PTEL.value == "" ){
+		alert( "연락처는 필수 사항입니다." );
+		document.frm3.PTEL.focus();
+		return false;
+	}
+	return document.frm3.submit();
+}
+
+function CSubmit(){
+	if( document.frm.pnm.value == "" ){
+		alert( "예약자명은 필수 사항입니다." );
+		document.frm.pnm.focus();
+		return false;
+	}
+
+	if( document.frm.ptel.value == "" ){
+		alert( "연락처는 필수 사항입니다." );
+		document.frm.ptel.focus();
+		return false;
+	}
+	return document.frm.submit();
+}
+
+function refg_div(){
+	document.getElementById("mtitle3").style.display = "none";
+	document.getElementById("mdiv").style.display = "none";
+	document.getElementById("mbtn").style.display = "none";
+	document.getElementById("reg_btn").style.display = "none";
+	document.getElementById("mdiv2").style.display = "";
+}
+</script>

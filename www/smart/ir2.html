@@ -1,0 +1,121 @@
+<?
+include "inc/dbConn.php";
+include  "inc/func.php";
+$tbl = "smart_ir";
+header("Content-Type:text/html;charset=utf-8") ;
+if($_POST[tdate]==""){ $tdate=date("Y-m-d"); }else{ $tdate=$_POST[tdate]; }
+?>
+<html>
+<!-- jQuery UI CSS파일 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<!-- jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<!-- jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script src="js/datepicker_kr.js"></script>  
+<script>
+$(function() {
+    $( "#tdate" ).datepicker({
+    });
+});
+</script>
+<style>
+.tbl2	{	border:1px solid #d7d7d7; border-radius:1px; padding:8px;	}
+.tbl2 td{	border-bottom:1px solid #d7d7d7; }
+.tbl2 td input{	border-bottom:1px solid #d7d7d7; padding:5px;}
+textarea { border:1px solid #d7d7d7; border-radius:5px; padding:10px; }
+input { border:1px solid #d7d7d7; border-radius:5px; padding:5px; }
+table {	font-size:14px;	}
+</style>
+<title>예방접종 사전신청자 조회</title>
+<form name="fm" method="POST" action="" >
+<table>
+<tr><td width='50'>이름:</td>
+<td><input type="text" name="tname" value="<?=$_POST[tname];?>"/></td>
+<td width='50'>메모:</td>
+<td><input type="text" name="memo" value="<?=$_POST[memo];?>"/></td>
+<td width='50'><table width='100%' bgcolor="#FAF4C0" onclick="fm.submit();" ><tr align='center'><td style="cursor:hand;"><b> 조 회 </b></td></tr></table>
+<td><input type="text" size="10" id="tdate" name="tdate" value="<?=$tdate;?>"/></td>
+<td width='80'><table width='100%'  bgcolor="#D9E5FF" onclick="fm.submit();" ><tr align='center'><td style="cursor:hand;"><b> 일자조회<br/>(리스트) </b></td></tr></table>
+<td width='60'><table width='100%'  bgcolor="#E8D9FF" onclick="window.open('admin/ir_s.html','width=400,height=600');" ><tr align='center'><td style="cursor:hand;"><b> 독감월현황 </b></td></tr></table>
+</td>
+<!--<td style='font-size:11px;'><input type='radio' name='ny' value='' <? if($_GET[ny]=="" or $_POST[ny]==""){ echo "checked";	}?>>전체
+	<input type='radio' name='ny' value='N' <? if($_GET[ny]=="N" or $_POST[ny]=="N" ){ echo "checked";	}?>>뉴고려만
+	<input type='radio' name='ny' value='Y' <? if($_GET[ny]=="Y" or $_POST[ny]=="Y" ){ echo "checked";	}?>>영등포만</td>--></tr></table>
+</form>
+
+<table border='1' cellspacing="0" style="font-size:10pt;">
+<tr align='center'><td>No.</td><!--<th width='80'>접종병원</th>-->
+	<th width='80'>담당</th><th width='80'>성명</th><th width='80'>접종일</th>
+	<th width='80'>예약시간</th><th width='80'>연락처</th>
+	<th width='60'>종류</th><th width='80'>등록일</th><th>메모</th>
+	<th>삭제</th><th>수정</th></tr>
+ <?
+ $i = 1;
+ #if( $_GET[ny] <> "" or $_POST[ny] ){	$wsql = " and HOSP='$_GET[ny]$_POST[ny]' "; }else{	$wsql = "";	}
+ if($_POST[tname]<>""){	
+ 	$sql = " SELECT * FROM smart_ir  WHERE SNAME LIKE '%".$_POST[tname]."%' $wsql ";
+	$sql .= " ORDER BY rtime, sname ";
+	if( $r = mysql_query($sql) ){
+		while($row=mysql_fetch_array($r)){	?>
+<tr align='center'><td><?=$i;?></td><!--<td><?=CHECKH($row[HOSP]);?>--></td>
+	<td><?=$row[cname];?></td>
+	<td><?=$row[sname];?></td>
+	<td><?=$row[idate];?></td><td><?=$row[rtime];?></td>
+	<td><?=$row[tel];?></td><td><?=$row[t];?>가</td>
+	<td><?=$row[wdt];?></td><td align="left">&nbsp;<?=$row[memo];?></td>
+	<td><input type="button" value=" 삭 제 " onclick=" Del('<?=$row[idx];?>'); "/></td>
+	<td><input type="button" value=" 수 정 " onclick=" Mod('<?=$row[idx];?>'); "/></td></tr>
+<?			$i++;
+		}
+	}
+}elseif( $_POST[memo]<>"" ){
+ 	$sql = " SELECT * FROM smart_ir  WHERE MEMO LIKE '%".$_POST[memo]."%' $wsql ";
+	$sql .= " ORDER BY rtime ";
+	if( $r = mysql_query($sql) ){
+		while($row=mysql_fetch_array($r)){	?>
+<tr align='center'><td><?=$i;?></td><!--<td><?=CHECKH($row[HOSP]);?></td>--><td><?=$row[cname];?></td><td><?=$row[sname];?></td>
+	<td><?=$row[idate];?></td><td><?=$row[rtime];?></td>
+	<td><?=$row[tel];?></td><td><?=$row[t];?>가</td>
+	<td><?=$row[wdt];?></td><td align="left">&nbsp;<?=$row[memo];?></td>
+	<td><input type="button" value=" 삭 제 " onclick=" Del('<?=$row[idx];?>'); "/></td>
+	<td><input type="button" value=" 수 정 " onclick=" Mod('<?=$row[idx];?>'); "/></td></tr>
+<?			$i++;
+		}
+	}
+}elseif( $_POST[tdate]<>"" ){
+	$sql = " SELECT * FROM smart_ir  WHERE  sname<>'' AND  idate = '".$_POST[tdate]."' $wsql ORDER BY rtime, IDX ";
+	if( $r = mysql_query($sql) ){
+		while($row=mysql_fetch_array($r)){	?>
+<tr align='center'><td><?=$i;?></td><!--<td><?=CHECKH($row[HOSP]);?></td>--><td><?=$row[cname];?></td>
+	<td><?=$row[sname];?></td><td><?=$row[idate];?></td><td><?=$row[rtime];?></td>
+	<td><?=$row[tel];?></td><td><?=$row[t];?>가</td>
+	<td><?=$row[wdt];?></td><td align="left">&nbsp;<?=$row[memo];?></td>
+	<td><input type="button" value=" 삭 제 " onclick=" Del('<?=$row[idx];?>'); "/></td>
+	<td><input type="button" value=" 수 정 " onclick=" Mod('<?=$row[idx];?>'); "/></td></tr>
+<?			$i++;
+		}
+	}
+ } 
+ #echo $sql;
+ ?>
+</html>
+
+<script>
+function Del( v ){
+	window.open( "ir_d.html?v="+v,"","width=100,height=100" );
+}
+
+function Mod( v ){
+	window.open( "ir_m.html?v="+v,"","width=400,height=300" );
+}
+</script>
+
+<?
+function CHECKH( $v ){
+	$tmp = "미입력";
+	if( $v == "N" ){	$tmp="<font color='BLUE'><b>뉴고려</b></font>";	}
+	if( $v == "Y" ){	$tmp="<font color='#997000' ><b>영등포</b></font>";	}
+	return $tmp;
+}
+?>

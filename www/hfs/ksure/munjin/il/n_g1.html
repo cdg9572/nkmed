@@ -1,0 +1,172 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+#기본초기값
+$MNON1NJJD = 0;			$MNON1NJYC = 0;
+$MNON1SJJD = 0;			$MNON1SJYC = 0;
+$MNON1GHJD = 0;		$MNON1GHYC = 0;
+$MNON1DNJD = 0;		$MNON1DNYC = 0;
+$MNON1JJJD = 0;			$MNON1JJYC = 0;
+$MNON1PHJD = 0;		$MNON1PHYC = 0;
+$MNON1ETJD = 0;			$MNON1ETYC = 0;
+
+if( $_POST[mseq]<>""  ){ 
+	#정보가져오기
+	if( $r = mj_il_info( $_POST[mseq] )  ){
+		
+		$val = mysql_fetch_array($r);
+		
+		$MNON1NJJD = $val["MNON1NJJD"];			$MNON1NJYC = $val["MNON1NJYC"];
+		$MNON1SJJD = $val["MNON1SJJD"];			$MNON1SJYC = $val["MNON1SJYC"];
+		$MNON1GHJD = $val["MNON1GHJD"];		$MNON1GHYC = $val["MNON1GHYC"];
+		$MNON1DNJD = $val["MNON1DNJD"];		$MNON1DNYC = $val["MNON1DNYC"];
+		$MNON1JJJD = $val["MNON1JJJD"];			$MNON1JJYC = $val["MNON1JJYC"];
+		$MNON1PHJD = $val["MNON1PHJD"];		$MNON1PHYC = $val["MNON1PHYC"];
+		$MNON1ETJD = $val["MNON1ETJD"];			$MNON1ETYC = $val["MNON1ETYC"];
+
+	}
+}
+?>
+
+<form name="fm" method="post" action="n_g2.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+
+<font style="font-size:12px;color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 질환력(과거력, 가족력) 관련 문항. 
+			<? if($_POST[mlfcode]<>""){ echo "<font color='blue'>이전문진 바탕으로 값이 세팅됩니다.</font>"; }?> </font>
+<!--<font style="font-size:10pt;">공통 1/<?=$tp1;?></font>-->
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 1. 다음과 같은 질병으로 진단을 받았거나, 현재 약물 치료 중이십니까? 
+				</th>
+			</tr>
+			<tr>
+				<td  >
+				<table width='100%' border='1' cellspacing='0'>
+				<tr bgcolor='#F6F6F6'><td width='30%' >&nbsp;</td>
+					<td width='35%' style=" !important; text-align:center;">진단</td>
+					<td width='35%' style=" !important; text-align:center;">약물치료</td></tr>
+				<tr><td>뇌졸중(중풍)</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1NJJD" value="1" <? if( $MNON1NJJD=="1" || $_SESSION["MNON1NJJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1NJJD" value="0" <? if( $MNON1NJJD!="1" && $_SESSION["MNON1NJJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1NJJD"]<>""){	if( $_SESSION["MNON1NJJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1NJYC" value="1"  <? if( $MNON1NJYC=="1" || $_SESSION["MNON1NJYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1NJYC" value="0"  <? if( $MNON1NJYC!="1" && $_SESSION["MNON1NJYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1NJYC"]<>""){	if( $_SESSION["MNON1NJYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+
+				<tr bgcolor='#F6F6F6'><td>심근경색/협심증</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1SJJD" value="1"  <? if( $MNON1SJJD=="1" || $_SESSION["MNON1SJJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1SJJD" value="0"  <? if( $MNON1SJJD!="1" && $_SESSION["MNON1SJJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1SJJD"]<>""){	if( $_SESSION["MNON1SJJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1SJYC" value="1"  <? if( $MNON1SJYC=="1" || $_SESSION["MNON1SJYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1SJYC" value="0"  <? if( $MNON1SJYC!="1" && $_SESSION["MNON1SJYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1SJYC"]<>""){	if( $_SESSION["MNON1SJYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+
+				<tr><td>고혈압</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1GHJD" value="1"  <? if( $MNON1GHJD=="1" || $_SESSION["MNON1GHJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1GHJD" value="0"  <? if( $MNON1GHJD!="1" && $_SESSION["MNON1GHJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1GHJD"]<>""){	if( $_SESSION["MNON1GHJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1GHYC" value="1"  <? if( $MNON1GHYC=="1" || $_SESSION["MNON1GHYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1GHYC" value="0"  <? if( $MNON1GHYC!="1" && $_SESSION["MNON1GHYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1GHYC"]<>""){	if( $_SESSION["MNON1GHYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr bgcolor='#F6F6F6'><td>당뇨병</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1DNJD" value="1"  <? if( $MNON1DNJD=="1" || $_SESSION["MNON1DNJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1DNJD" value="0"  <? if( $MNON1DNJD!="1" && $_SESSION["MNON1DNJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1DNJD"]<>""){	if( $_SESSION["MNON1DNJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1DNYC" value="1"  <? if( $MNON1DNYC=="1" || $_SESSION["MNON1DNYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1DNYC" value="0"  <? if( $MNON1DNYC!="1" && $_SESSION["MNON1DNYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1DNYC"]<>""){	if( $_SESSION["MNON1DNYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr><td>이상지질혈증</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1JJJD" value="1"  <? if( $MNON1JJJD=="1" || $_SESSION["MNON1JJJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1JJJD" value="0"  <? if( $MNON1JJJD!="1" && $_SESSION["MNON1JJJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1JJJD"]<>""){	if( $_SESSION["MNON1JJJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1JJYC" value="1"  <? if( $MNON1JJYC=="1" || $_SESSION["MNON1JJYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1JJYC" value="0"  <? if( $MNON1JJYC!="1" && $_SESSION["MNON1JJYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1JJYC"]<>""){	if( $_SESSION["MNON1JJYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr bgcolor='#F6F6F6'><td>폐결핵</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1PHJD" value="1"  <? if( $MNON1PHJD=="1" || $_SESSION["MNON1PHJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1PHJD" value="0"  <? if( $MNON1PHJD!="1" && $_SESSION["MNON1PHJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1PHJD"]<>""){	if( $_SESSION["MNON1PHJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1PHYC" value="1"  <? if( $MNON1PHYC=="1" || $_SESSION["MNON1PHYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1PHYC" value="0"  <? if( $MNON1PHYC!="1" && $_SESSION["MNON1PHYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1PHYC"]<>""){	if( $_SESSION["MNON1PHYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr><td>기타(암포함)</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1ETJD" value="1"  <? if( $MNON1ETJD=="1" || $_SESSION["MNON1ETJD"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1ETJD" value="0"  <? if( $MNON1ETJD!="1" && $_SESSION["MNON1ETJD"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1ETJD"]<>""){	if( $_SESSION["MNON1ETJD"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON1ETYC" value="1"  <? if( $MNON1ETYC=="1" || $_SESSION["MNON1ETYC"]=="1"){ echo "checked"; }?>>예
+					<input type="radio" name="MNON1ETYC" value="0"  <? if( $MNON1ETYC!="1" && $_SESSION["MNON1ETYC"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON1ETYC"]<>""){	if( $_SESSION["MNON1ETYC"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				</table>
+				</td>
+			</tr>
+</table>
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전내용</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>	
+</table>
+</form>
+
+<script>
+
+function hisBack(){
+	parent.document.frm.action="../munjin.html?seq=<?=$_POST[rseq];?>";
+	parent.document.frm.target = "";
+	parent.document.frm.md.value = "view";
+	parent.document.frm.submit();
+	//document.fm.action="index.html";
+//	document.fm.target=opener;
+//	document.fm.md.value = "view";
+//	document.fm.submit();
+}
+
+</script>

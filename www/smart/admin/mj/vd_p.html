@@ -1,0 +1,24 @@
+<? session_start(); 
+//include "mj_function.php";
+	include "../../inc/dbConn.php";
+$sql = " UPDATE smart_mj_mnexerctbl SET
+				MNEXQ0101='".$_POST[MNEXQ0101]."', MNEXQ0102='".$_POST[MNEXQ0102]."'	, MNEXQ01T3='".$_POST[MNEXQ01T3]."'
+				, MNEXQ01M3='".$_POST[MNEXQ01M3]."', MNEXQ0104='".$_POST[MNEXQ0104]."', MNEXQ0105='".$_POST[MNEXQ0105]."'
+				, MNEXQ01T6='".$_POST[MNEXQ01T6]."', MNEXQ01M6='".$_POST[MNEXQ01M6]."', MNEXQ0201='".$_POST[MNEXQ0201]."'
+				, MNEXQ0202='".$_POST[MNEXQ0202]."' , MNEXQ02T3='".$_POST[MNEXQ02T3]."' , MNEXQ02M3='".$_POST[MNEXQ02M3]."'
+				, MNEXQ0301='".$_POST[MNEXQ0301]."', MNEXQ0302='".$_POST[MNEXQ0302]."'	, MNEXQ03T3='".$_POST[MNEXQ03T3]."'
+				, MNEXQ0304='".$_POST[MNEXQ0304]."', MNEXQ0305='".$_POST[MNEXQ0305]."', MNEXQ03T6='".$_POST[MNEXQ03T6]."'
+				, MNEXQ03M6='".$_POST[MNEXQ03M6]."', MNEXQ04T1='".$_POST[MNEXQ04T1]."', MNEXQ04M1='".$_POST[MNEXQ04M1]."'
+				, MNEXQ0500='".$_POST[MNEXQ0500]."', MNEXQ0600='".$_POST[MNEXQ0600]."'	, MNEXQ0700='".$_POST[MNEXQ0700]."'
+				, MNEXQ0800='".$_POST[MNEXQ0800]."', MNEXQ0900='".$_POST[MNEXQ0900]."', MNEXQ1000='".$_POST[MNEXQ1000]."'
+				, MNEXQ1100='".$_POST[MNEXQ1100]."', MNEXQ1200='".$_POST[MNEXQ1200]."'
+			WHERE MNEXJUBNO='".$_POST["midx"]."' ";
+if (  mysql_query($sql) ){
+?>
+<script>
+alert("수정되었습니다.");
+location.href="vd.html?i="+<?=$_POST["midx"];?>;
+</script>
+<?	}else{
+	echo "문진표 수정시 오류 발생되었습니다.<br/><br/>". mysql_error();
+}?>

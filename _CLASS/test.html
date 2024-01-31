@@ -1,0 +1,23 @@
+<?
+
+function SMail($From,$Mail_from_name,$To,$Subject,$Text) {
+$Headers .= "Content-Type: text/html; charset=UTF-8";
+$fp = popen("/home/bin/sendmail -t -f $From","w"); // 주의하실 부분
+if(!$fp) return false;
+fputs($fp,"from: =?utf-8?B?".base64_encode($Mail_from_name)."?=  <$From>
+"); // from 과 : 은 붙여주세요 => from:
+fputs($fp, "to: <$To>
+");
+fputs($fp, "subject: $Subject
+");
+fputs($fp, "$Headers
+");
+fputs($fp, "$Text");
+fputs($fp, "
+");
+pclose($fp);
+return true;
+}
+
+?>
+

@@ -1,0 +1,35 @@
+<?
+ session_start(); 
+
+include "inc/dbConn.php";
+include  "inc/func.php";
+$tbl = "smart_ir";
+header("Content-Type:text/html;charset=utf-8") ;
+#echo "<script>alert('".$_SESSION['name2']."');</script>";
+mysql_query("set names utf8;");
+echo "<iframe name=\"ifrm\" src=\"\" style=\"display:none\"></iframe>";
+#예약처리
+
+#echo $_SERVER['REMOTE_ADDR'];
+
+#echo "<br/>".$_POST[sname];
+#echo "<br/>".$_POST[tel];
+#echo "<br/>".$_POST[t];
+#echo "<br/>".$_POST[tdate];
+#echo "<br/>".$_POST[memo];
+#echo "<br/>".count($_POST[sname2]);
+
+
+$sql = " update $tbl set
+				sname='$_POST[sname]' , tel='$_POST[tel]' ,
+				idate='$_POST[idate]' ,	rtime='$_POST[rtime]' ,
+				memo='$_POST[memo]'
+			WHERE idx='$_POST[idx]'   ";
+
+#echo $sql;
+if( mysql_query($sql) ){
+	echo "<script>alert('수정되었습니다.');opener.document.fm.submit();self.close();</script>";
+}else{	
+	echo mysql_error(); 
+}
+?>

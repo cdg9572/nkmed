@@ -1,0 +1,255 @@
+<?
+include "./inc/topConf.html";
+?>
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21C smart Medical Clinic</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="cataPage07">
+<div data-role="header" data-position="fixed">
+		<h1><a href="index.html" class="head_title"><img src="images/logoFull.png" height="30" alt="21세기하나내과의원 로고"/></a></h1>
+		<a href="index.html" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		<a href="login.html?mode=D" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power">Logout</a>
+</div>
+
+<div data-role="content" class="cataBG_08">
+		<div class="banner"></div>
+		<h2 class="h2_title"><?=tr_cn("간담도검사", $tr_check)?></h2>
+
+		<!--horizontal navigation tab start-->
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a class="ui-btn-active" href="#cata08-01" data-ajax="false"><?=tr_cn("간기능검사", $tr_check)?></a></li>
+                    <li><a href="#cata08-02" data-ajax="false"><?=tr_cn("간암표지자", $tr_check)?></a></li>
+					<li><a href="#cata08-03" data-ajax="false"><?=tr_cn("간염", $tr_check)?></a></li>
+					<li><a href="#cata08-04" data-ajax="false"><?=tr_cn("초음파", $tr_check)?></a></li>
+                </ul>
+            </div>
+            <div id="cata08-01" data-inset="true" class="comentBox">
+				 <ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("간기능검사", $tr_check)?></label>
+					<table width="100%" >
+
+						<tr>
+							<th width="50%" ><?=tr_cn("검사결과", $tr_check)?></th>
+							<th ><?=tr_cn("임상참고치", $tr_check)?></th>
+						</tr>
+
+						<tr>							
+							<td> <?=tr_cn("SGOT", $tr_check)?> :  <?=$data_SGOT?> </td>
+							<td> <?=$data_esti_SGOT?> </td>
+						</tr>
+						<tr>							
+							<td> <?=tr_cn("SGPT", $tr_check)?> :  <?=$data_SGPT?> </td>
+							<td> <?=$data_esti_SGPT?> </td>
+						</tr>
+
+						<tr>							
+							<td> <?=tr_cn("r-GTP", $tr_check)?> :  <?=$data_r_GTP?> </td>
+							<td> <?=$data_esti_r_GTP?> </td>
+						</tr>
+						<tr>							
+							<td> <?=tr_cn("ALP", $tr_check)?> :  <?=$data_ALP?> </td>
+							<td> <?=$data_esti_ALP?> </td>
+						</tr>
+
+						<tr>
+							<td> <?=tr_cn("총단백정량", $tr_check)?> :  <?=$data_총단백정량 ?> </td>
+							<td> <?=$data_esti_총단백정량?> </td>
+						</tr>
+
+						<tr>							
+							<td> <?=tr_cn("알부민", $tr_check)?> :  <?=$data_알부민?> </td>
+							<td> <?=$data_esti_알부민?> </td>
+						</tr>
+						<tr>							
+							<td> <?=tr_cn("글로부린", $tr_check)?> :  <?=$data_글로부린?> </td>
+							<td> <?=$data_esti_글로부린?> </td>
+						</tr>
+						<tr>							
+							<td> <?=tr_cn("총빌리루빈", $tr_check)?> :  <?=$data_총빌리루빈?> </td>
+							<td> <?=$data_esti_총빌리루빈?> </td>
+						</tr>
+						<tr>							
+							<td> <?=tr_cn("직접빌리루빈", $tr_check)?> :  <?=$data_직접빌리루빈?> </td>
+							<td> <?=$data_esti_직접빌리루빈?> </td>
+						</tr>
+						
+						<tr>							
+							<td> <?=tr_cn("간접빌리루빈", $tr_check)?> :  <?=$data_간접빌리루빈?> </td>
+							<td> <?=$data_esti_간접빌리루빈?> </td>
+						</tr>
+
+						<!--
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						-->
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("간기능 검사", $tr_check)?>
+            </div>
+
+
+            <div id="cata08-02" data-inset="true" class="comentBox">
+				
+				 <ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("간암표지자검사", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("간암표지자", $tr_check)?> :  <?=$data_알파휘토단백_EIA_ ?> </td>
+						</tr>
+						
+						<tr>
+							<th><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td colspan="3"><?=$data_esti_알파휘토단백_EIA_ ?></td>
+						</tr>
+						
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("종양표지자", $tr_check)?>
+            </div>
+
+
+			<div id="cata08-03" data-inset="true" class="comentBox">
+				<ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("간염검사", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("B형간염 항원", $tr_check)?> :  <?=tr_cn($data_B형간염항원_EIA_, $tr_check)  ?> </td>
+						</tr>
+						<tr>
+							<th rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_B형간염항원_EIA_, $tr_check) ?> </td>
+						</tr>
+
+						<tr><td colspan=1 height=10>&nbsp;</td></tr>
+
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("B형간염 항체", $tr_check)?> :  <?=tr_cn($data_B형간염항체_EIA_, $tr_check) ?> </td>
+						</tr>
+
+						<tr>
+							<th rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_B형간염항체_EIA_, $tr_check) ?> </td>
+						</tr>
+
+						<tr><td colspan=2 height=10>&nbsp;</td></tr>
+
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("C형간염", $tr_check)?> :  <?=tr_cn($data_C형간염항체_HCV_, $tr_check) ?> </td>
+						</tr>
+						<tr>
+							<th rowspan=1><?=tr_cn("임상참고치", $tr_check)?></th>
+							<td><?=tr_cn($data_esti_C형간염항체_HCV_, $tr_check) ?> </td>
+						</tr>
+						<!--
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						-->
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("간염", $tr_check)?>
+				
+            </div>
+
+
+			<div id="cata08-04" data-inset="true" class="comentBox">
+				 <ul class="view_data_list">
+				<li>
+
+					<label><?=tr_cn("초음파", $tr_check)?></label>
+					<table width="100%" >
+						<tr>
+							<th width="80" rowspan=1><?=tr_cn("검사결과", $tr_check)?></th>
+							<td> <?=tr_cn("복부초음파", $tr_check)?> :  <?=tr_cn($data_복부초음파, $tr_check) ?> </td>
+						</tr>
+						<!--
+						<tr>
+							<th><?=tr_cn("참고내용", $tr_check)?></th>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						-->
+					</table>
+
+					</li>
+				</ul>
+
+				<?=get_category_desc("초음파(간,담낭, 비장)", $tr_check)?>
+
+				
+
+				
+            </div>
+            <!--horizontal navigation tab end-->
+	</div>
+	
+	<?
+		include "./inc/bottom.html";
+	?>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function(){
+
+function changeNavTab(left) {
+    var $tabs = $("div[data-role=navbar] li a");
+    var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+    var nextidx = 0;
+    if (left) {
+        nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+    } else {
+        nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+    }
+    $tabs.eq(nextidx).click();
+}
+
+$("#tabs").on("swipeleft", function (event) {
+    changeNavTab(true);
+});
+$("#tabs").on("swiperight", function (event) {
+    changeNavTab(false);
+});
+
+
+});//]]> 
+
+</script>
+</body>
+</html>

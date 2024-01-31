@@ -1,0 +1,81 @@
+/* CSS Document */
+@font-face {
+ font-family: 'Gotham';
+ font-style: normal;
+ font-weight: 100;
+ src: url(/css/gotham/GOTHAM-LIGHT.eot);
+ src: url(/css/gotham/GOTHAM-LIGHT.eot?#iefix) format('embedded-opentype'),
+      url(/css/gotham/GOTHAM-LIGHT.woff) format('woff'),
+      url(/css/gotham/GOTHAM-LIGHT.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'Gotham';
+ font-style: normal;
+ font-weight: 400;
+ src: url(/css/gotham/GOTHAM-MEDIUM.eot);
+ src: url(/css/gotham/GOTHAM-MEDIUM.eot?#iefix) format('embedded-opentype'),
+      url(/css/gotham/GOTHAM-MEDIUM.woff) format('woff'),
+      url(/css/gotham/GOTHAM-MEDIUM.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'Gotham';
+ font-style: normal;
+ font-weight: 700;
+ src: url(/css/gotham/GOTHAM-BOLD.eot);
+ src: url(/css/gotham/GOTHAM-BOLD.eot?#iefix) format('embedded-opentype'),
+      url(/css/gotham/GOTHAM-BOLD.woff) format('woff'),
+      url(/css/gotham/GOTHAM-BOLD.ttf) format('truetype');
+}
+@font-face {
+ font-family: 'Gotham';
+ font-style: normal;
+ font-weight: 800;
+ src: url(/css/gotham/GOTHAM-BLACK.eot);
+ src: url(/css/gotham/GOTHAM-BLACK.eot?#iefix) format('embedded-opentype'),
+      url(/css/gotham/GOTHAM-BLACK.woff) format('woff'),
+      url(/css/gotham/GOTHAM-BLACK.ttf) format('truetype');
+}
+
+
+
+
+@font-face {
+ font-family: 'Nanum Barun Gothic';
+ font-style: normal;
+ font-weight: 100;
+ src: local('Nanum Barun Gothic UltraLight'), local('Nanum Barun Gothic-UltraLight'), local('NanumBarunGothic UltraLight');
+ src: url(/css/NanumBarunGothic/NanumBarunGothicUltraLight.eot);
+ src: url(/css/NanumBarunGothic/NanumBarunGothicUltraLight.eot?#iefix) format('embedded-opentype'),
+ url(/css/NanumBarunGothic/NanumBarunGothicUltraLight.woff) format('woff'),
+ url(/css/NanumBarunGothic/NanumBarunGothicUltraLight.ttf) format('truetype');
+ }
+@font-face {
+ font-family: 'Nanum Barun Gothic';
+ font-style: normal;
+ font-weight: 300;
+ src: local('Nanum Barun Gothic Light'), local('Nanum Barun Gothic-Light'), local('NanumBarunGothic Light');
+ src: url(/css/NanumBarunGothic/NanumBarunGothicLight.eot);
+ src: url(/css/NanumBarunGothic/NanumBarunGothicLight.eot?#iefix) format('embedded-opentype'),
+ url(/css/NanumBarunGothic/NanumBarunGothicLight.woff) format('woff'),
+ url(/css/NanumBarunGothic/NanumBarunGothicLight.ttf) format('truetype');
+ }
+ @font-face {
+ font-family: 'Nanum Barun Gothic';
+ font-style: normal;
+ font-weight: 400;
+ src: local('Nanum Barun Gothic Regular'), local('Nanum Barun Gothic-Regular'), local('NanumBarunGothic Regular');
+ src: url(/css/NanumBarunGothic/NanumBarunGothic.eot);
+ src: url(/css/NanumBarunGothic/NanumBarunGothic.eot?#iefix) format('embedded-opentype'),
+ url(/css/NanumBarunGothic/NanumBarunGothic.woff) format('woff'),
+ url(/css/NanumBarunGothic/NanumBarunGothic.ttf) format('truetype');
+ }
+ @font-face {
+ font-family: 'Nanum Barun Gothic';
+ font-style: normal;
+ font-weight: 700;
+ src: local('Nanum Barun Gothic Bold'), local('Nanum Barun Gothic-Bold'), local('NanumBarunGothic Bold');
+ src: url(/css/NanumBarunGothic/NanumBarunGothicBold.eot);
+ src: url(/css/NanumBarunGothic/NanumBarunGothicBold.eot?#iefix) format('embedded-opentype'),
+ url(/css/NanumBarunGothic/NanumBarunGothicBold.woff) format('woff'),
+ url(/css/NanumBarunGothic/NanumBarunGothicBold.ttf) format('truetype');
+ }

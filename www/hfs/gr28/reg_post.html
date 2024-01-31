@@ -1,0 +1,50 @@
+<?
+
+include "../inc/dbConn.php";
+
+#echo $_POST['RIDX']."<br>";
+#echo $_POST['SNM']."<br>";
+#echo $_POST['STEL']."<br>";
+#echo $_POST['SINM1']."<br>";
+#echo $_POST['SINM2']."<br>";
+#echo $_POST['SINM3']."<br>";
+#echo $_POST['SINM4']."<br>";
+#echo $_POST['ADD_GJ'].$_POST['ADD_DJ'].$_POST['ADD_INM']."<br>";
+#echo $_POST['bigo']."<br>";
+
+if( $_POST['RIDX']<>"" ){
+	$sql = " UPDATE gr28 SET		
+					PTEL='".$_POST['PTEL']."'
+					, DONG='".$_POST['DONG']."'
+					, HO='".$_POST['HO']."'
+					, PNAME='".$_POST['PNAME']."'
+					, JG='".$_POST['JG']."'
+					, DP='".$_POST['DP']."'
+					, INP='".$_POST['INP']."'
+					, ENR='".$_POST['ENR']."'
+					, INM1='".$_POST['INM1']."'
+					, INM2='".$_POST['INM2']."'
+					, INM3='".$_POST['INM3']."'
+					, INM4='".$_POST['INM4']."'
+					, INM5='".$_POST['INM5']."'
+					, BIGO='".$_POST['bigo2']."'
+					, MDT='".time()."'
+					, RDT ='".$_POST['RDT']."'
+					, PAY ='".$_POST['PAY']."'
+				WHERE RIDX='".$_POST['RIDX']."' ";
+	$msg = $_POST['wdt'] ? "예약신청" : "예약수정" ;
+}
+
+if( mysql_query($sql) ){
+	$smsf_phone = "010-8810-7202";
+	$smsf_msg = "구래28통 $msg 되었습니다.\n".$_POST['DONG']."동 ".$_POST['HO']."호 \n 등록자:".$_POST['PNAME']."  " ;
+
+	$smsf_opt1 = "seq=".$newSeq ;
+	$frm="from3"; $ifrm="ifrm3"; $reyn = "N"; //리턴여부
+	include "../inc/nksms.html" ;
+	echo "<script>alert('$msg 되었습니다. \\n병원에서 확정진행 연락이 갈 예정입니다.');parent.location.href='index.html';</script>";
+}else{
+	echo "<script>alert('오류가 발생되었습니다.');</script>";
+}
+
+?>

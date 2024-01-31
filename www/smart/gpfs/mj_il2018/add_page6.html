@@ -1,0 +1,74 @@
+
+		
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 신체활동 (운동)
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					7-1.평소 1주일간, 숨이 많이 차게 만드는 고강도 신체활동을 며칠 하십니까? 
+				</th>
+			</tr>
+
+<?
+$ori_page_no = $page_no ;
+
+$page_no = $page_no."_1" ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+			
+			<tr>
+				<td>주당 <input type="text" name="no71" value="" style="width:50px;" >일<br/>
+				*.고강도 신체활동의 예> 달리기, 에어로빅, 빠른 속도로 자전거 타기, 건설 현장 노동, 계단으로 물건 나르기등 
+				</td>
+			</tr>
+
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					7-2.평소 하루에 숨이 많이 차게 만드는 고강도 신체활동을 몇시간 하십니까?
+				</th>
+			</tr>
+			<tr>
+				<td>하루에 <input type="text" name="no72" value="" style="width:50px;" > 시간  
+				 <input type="text" name="no73" value="" style="width:50px;" > 분  
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8-1.평소 1주일간, 숨이 약간 차게 만드는 중강도 신체활동을 며칠 하십니까? 
+				</th>
+			</tr>
+			<tr>
+				<td>주당 <input type="text" name="no81" value="" style="width:50px;" >일<br/>
+				*. 7번 응답에 관련된 신체활동은 제외하고 답해주십시오.
+				<br/>
+				*.중강도 신체활동의 예> 빠르게 걷기, 복식 테니스, 보통 속도로 자전거 타기, 가벼운 물건 나르기, 청소 등 
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8-2.평소 하루에 숨이 약간 차게 만드는 중강도 신체활동을 몇시간 하십니까?
+				</th>
+			</tr>
+			<tr>
+				<td>하루에 <input type="text" name="no82" value="" style="width:50px;" > 시간  
+				 <input type="text" name="no83" value="" style="width:50px;" > 분  
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					9. 최근 1주일 동안 팔굽혀펴기, 윗몸일으키기, 아령, 역기, 철봉 등 근력 운동을 한 날은 며칠입니까?
+				</th>
+			</tr>
+			<tr>
+				<td>주당 <input type="text" name="no9" value="" style="width:50px;" >일
+				</td>
+			</tr>
+		</table>

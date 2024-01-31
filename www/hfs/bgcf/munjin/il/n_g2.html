@@ -1,0 +1,136 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	#초기값
+	$MNON2NJCK = 0;		$MNON2SJCK = 0;
+	$MNON2GHCK = 0;		$MNON2DNCK = 0;
+	$MNON2ETCK = 0;			$MNON3BGEM = 0;
+
+	if( $_POST[mseq]<>"" && $_POST[md]=="reg"  ){ 
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET
+					MNON1NJJD='".$_POST["MNON1NJJD"]."' ,  MNON1NJYC='".$_POST["MNON1NJYC"]."'
+					, MNON1SJJD='".$_POST["MNON1SJJD"]."' ,  MNON1SJYC='".$_POST["MNON1SJYC"]."'
+					, MNON1GHJD='".$_POST["MNON1GHJD"]."' ,  MNON1GHYC='".$_POST["MNON1GHYC"]."'
+					, MNON1DNJD='".$_POST["MNON1DNJD"]."' ,  MNON1DNYC='".$_POST["MNON1DNYC"]."'
+					, MNON1JJJD='".$_POST["MNON1JJJD"]."' ,  MNON1JJYC='".$_POST["MNON1JJYC"]."'
+					, MNON1PHJD='".$_POST["MNON1PHJD"]."' ,  MNON1PHYC='".$_POST["MNON1PHYC"]."'
+					, MNON1ETJD='".$_POST["MNON1ETJD"]."' ,  MNON1ETYC='".$_POST["MNON1ETYC"]."'
+					, mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."'
+				WHERE midx='".$_POST[mseq]."'  ";
+		mysql_query($sql) or mysql_error();
+	}
+
+	if( $r = mj_il_info( $_POST[mseq] ) ){
+		$val = mysql_fetch_array($r);
+		$MNON2NJCK = $val["MNON2NJCK"];
+		$MNON2SJCK = $val["MNON2SJCK"];
+		$MNON2GHCK = $val["MNON2GHCK"];
+		$MNON2DNCK = $val["MNON2DNCK"];
+		$MNON2ETCK = $val["MNON2ETCK"];
+		$MNON3BGEM = $val["MNON3BGEM"];
+	}	?>
+
+<form name="frm" method="post" action="n_g3.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+		<font style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 질환력(과거력, 가족력) 관련 문항. <? if($_POST[mlfcode]<>""){ echo "<font color='blue'>이전문진 바탕으로 값이 세팅됩니다.</font>"; }?>
+			
+		</font>
+		<!--<font  style="font-size:12px;">공통 2/<?=$tp1;?></font>-->
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					2. 부모, 형제, 자매 중에 다음 질환을 앓았거나 해당 질환으로 사망한 경우가 있으십니까? 
+				</th>
+			</tr>
+			
+			<td>
+				<table width='100%'>
+				<tr bgcolor='#F6F6F6'><td>뇌졸중(중풍)</td>
+					<td width='70%' style=" !important; text-align:center;">
+					<input type="radio" name="MNON2NJCK" value="1" <? if( $MNON2NJCK=="1" || $_SESSION["MNON2NJCK"]=="1" ){ echo "checked"; }?>>예 
+					<input type="radio" name="MNON2NJCK" value="0" <? if( $MNON2NJCK!="1" && $_SESSION["MNON2NJCK"]!="1" ){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON2NJCK"]<>""){	if( $_SESSION["MNON2NJCK"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+
+				<tr><td>심근경색/협심증</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON2SJCK" value="1" <? if( $MNON2SJCK=="1" || $_SESSION["MNON2SJCK"]=="1" ){ echo "checked"; }?>>예 
+					<input type="radio" name="MNON2SJCK" value="0" <? if( $MNON2SJCK!="1" && $_SESSION["MNON2SJCK"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON2SJCK"]<>""){	if( $_SESSION["MNON2SJCK"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+
+				<tr bgcolor='#F6F6F6'><td>고혈압</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON2GHCK" value="1" <? if( $MNON2GHCK=="1" || $_SESSION["MNON2GHCK"]=="1" ){ echo "checked"; }?>>예 
+					<input type="radio" name="MNON2GHCK" value="0" <? if( $MNON2GHCK!="1" && $_SESSION["MNON2GHCK"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON2GHCK"]<>""){	if( $_SESSION["MNON2GHCK"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr><td>당뇨병</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON2DNCK" value="1" <? if( $MNON2DNCK=="1" || $_SESSION["MNON2DNCK"]=="1" ){ echo "checked"; }?>>예 
+					<input type="radio" name="MNON2DNCK" value="0" <? if( $MNON2DNCK!="1" && $_SESSION["MNON2DNCK"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON2DNCK"]<>""){	if( $_SESSION["MNON2DNCK"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				
+				<tr bgcolor='#F6F6F6'><td>기타(암포함)</td>
+					<td style=" !important; text-align:center;">
+					<input type="radio" name="MNON2ETCK" value="1" <? if( $MNON2ETCK=="1" || $_SESSION["MNON2ETCK"]=="1" ){ echo "checked"; }?>>예 
+					<input type="radio" name="MNON2ETCK" value="0" <? if( $MNON2ETCK!="1" && $_SESSION["MNON2ETCK"]!="1"){ echo "checked"; }?>>아니오
+					<? if( $_SESSION["MNON2ETCK"]<>""){	if( $_SESSION["MNON2ETCK"]=="1"){ echo "<br>이전: 예";  }else{ echo "<br>이전
+					: 아니오"; }  }?></td></tr>
+				</table>
+				</td></tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					3. B형간염 바이러스 보유자입니까? 
+				</th>
+			</tr>
+			<tr>
+				<td >
+				<table width='100%' style=" !important; text-align:center;">
+				<tr><td><input type="radio" name="MNON3BGEM" value="1" <? if( $MNON3BGEM=="1"  ){ echo "checked"; }?>> 예
+					<input type="radio" name="MNON3BGEM" value="2" <? if( $MNON3BGEM=="2" || $MNON3BGEM=="" ){ echo "checked"; }?>> 아니요
+					<input type="radio" name="MNON3BGEM" value="3"  <? if( $MNON3BGEM=="3" || $MNON3BGEM=="0" ){ echo "checked"; }?>> 모름
+					<? if( $_SESSION["MNON3BGEM"]<>""){	if( $_SESSION["MNON3BGEM"]=="1"){ echo "<br>이전: 예";  }elseif( $_SESSION["MNON3BGEM"]=="2"){ echo "<br>이전	: 아니오"; }else{  echo "<br>이전: 모름";  }  }?></td></tr>
+				</td>
+			</tr>
+		</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.frm.submit();" style="cursor:hand">다음설문</td></tr>
+		</table>
+</form>
+
+
+<script>
+
+function hisBack(){
+	document.frm.action="n_g1.html";
+	document.frm.md.value = "view";
+	document.frm.submit();
+}
+
+</script>
+

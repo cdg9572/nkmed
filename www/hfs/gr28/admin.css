@@ -1,0 +1,91 @@
+body{
+    margin-left: 0;
+    margin-top: 20px;
+    font-size:15px;
+    text-align:center;
+    min-width: 800px;
+}
+
+
+#mtitle{
+    display: inline-block;
+    width:400px;
+    border:0px solid rgb(30, 108, 210);
+    background-color: cornflowerblue;
+    border-radius: 25px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+ }
+
+#lang_div{
+  padding-top:1vh;
+}
+
+
+
+.lselect{
+  width:400px;
+  font-size:5vw;
+  border-radius: 5px;
+  text-align-last: center;
+  padding-top:3px;
+  padding-bottom:3px;
+}
+
+#mdiv{
+  display: inline-block;
+  width:800px;
+  padding-top: 30px;
+  border:0px solid rgb(30, 108, 210);
+	line-height:40px;
+}
+
+#mdiv form select, input{
+	font-size:15px;
+	border:1px solid rgb(30, 108, 210);
+}
+
+#mdiv2{
+	text-align:left;
+  display: inline-block;
+  width:400px;
+  border:0px solid rgb(30, 108, 210);
+	font-size:16px;
+	font-weight:bold;
+	/*padding-bottom:10px;*/
+}
+
+#mdiv3{
+  display: inline-block;
+  width:400px;
+  padding-top: 10px; padding-bottom: 10px;
+  border:0px solid rgb(30, 108, 210);
+  font-size:14px;
+	line-height:30px;
+}
+
+#mdiv3 span{
+	border:0px solid rgb(30, 108, 210);
+}
+
+#mbtn{
+	display: inline-block;
+    background-color: cornflowerblue;
+	padding:5px;
+	border-radius: 10px;
+	cursor:pointer;
+	font-size:15px;
+	font-weight:bold;
+	color:white;
+	width:90px;
+	border:0px solid rgb(30, 108, 210);
+}
+
+
+
+/* 필수입력 */
+input.required {
+	background-image:url('../images/require.png') !important;
+	background-repeat:no-repeat !important;
+	background-position:right top !important;
+}

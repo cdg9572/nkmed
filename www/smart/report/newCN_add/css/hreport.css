@@ -1,0 +1,280 @@
+/* CSS Document */
+@import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
+@import url("http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css");
+@import url("/webfonts/NanumBarunGothic/NanumBarunGothic.css");
+
+h1, h2, h3, h4, h5, dl, dt, dd, ul, li, ol, th, td, p, blockquote, form, fieldset, legend, div, body {
+	-webkit-print-color-adjust: exact;
+	-moz-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+body {
+	position:relative;
+	font-family: 'NanumBarunGothic';
+	font-weight: 400;
+	font-size: 9pt;
+	min-height: 930px;
+	background: #5F5F5F;
+}
+
+div.container {
+	position:relative;
+	width:640px;
+	height:906px;
+	margin: 0 auto;
+	overflow: hidden;
+	-webkit-box-shadow: 0px 0px 10px #000;
+	-moz-box-shadow: 0px 0px 10px #000;
+	box-shadow: 0px 0px 10px #000;
+}
+div.page {
+	width:600px;
+	height:866px;
+	padding: 20px;
+	page-break-after: always;
+}
+div.first_page {
+	background: url(../images/first_bg.jpg) no-repeat;
+}
+
+
+div.first_page2 {
+	background: url(../images/page_bg_01.jpg) no-repeat;
+}
+
+
+div.page_bg {
+	background: url(../images/page_bg_01.jpg) no-repeat;
+}
+div.page_bg_A {
+	background: url(../images/page_bg_01.jpg) no-repeat;
+}
+div.page_bg_B {
+	background: url(../images/page_bg_02.jpg) no-repeat;
+}
+
+div.page_control {
+	width: 100%;
+	background: #333;
+	position: fixed;
+	bottom: 0px;
+}
+div.page_control ul {
+	width:640px;
+	margin:0 auto;
+	list-style: none;
+}
+div.page_control ul  li {
+	color: #fff;
+	float:left;
+	padding:5px;
+}
+div.page_control ul  li a {
+	color: #fff;
+}
+div.page_control button {
+	display: inline-block;
+}
+
+
+
+div.cont_box {
+	height:786px;
+	overflow: hidden;
+	padding:15px;
+
+}
+
+div.cont_box h1 {
+	padding: 5px 15px;
+	display: block;
+	font-size:16pt;
+	background-color: #43a3a2;
+	border: 5px solid #BBD9D8;
+	color: #fff;
+	-webkit-text-shadow: 1px 1px 0px #333;
+	-moz-text-shadow: 1px 1px 0px #333;
+	text-shadow: 1px 1px 0px #333;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-bottom:15px;
+}
+div.cont_box h2 {
+	display: inline-block;
+	padding: 3px 15px;
+	border-left: 5px solid #338887;
+	border-right: 5px solid #338887;
+	font-size:14pt;
+	color: #338887;
+	line-height: 16pt;
+	margin-bottom: 10px;
+	font-weight:bold;
+}
+
+
+
+div.cont_box p {
+	padding: 0 5px;
+	display: inline-block;
+	line-height: auto;
+	margin-bottom:10px;
+	text-align: justify;
+}
+
+div.codeinput {
+	background-color:#FFF;
+	display: inline-block;
+	position:absolute;
+	border:1px solid #E0C695;
+	padding:5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	top: 420px;
+	left: 285px;
+	width:200px;
+	text-align:center
+}
+div.codeinput input {
+	width:120px;
+	height: 25px;
+	border:1px solid #43a3a2;
+}
+div.codeinput button {
+	cursor: pointer;
+	color: #fff;
+	background:#43a3a2;
+	border:1px solid #43a3a2;
+	padding:5px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+div.codeinput button:hover {
+	background: #378585;
+}
+div.codeinput table tr td {
+	padding: 0px 2px;
+}
+div.codeinput table tr th {
+	font-size: 16px;
+	color: #43a3a2;
+	text-align: left;
+}
+.pageBox {
+	position: relative;
+	width:100%;
+	height: 50px;
+}
+.pageNumLeft {
+	font-weight: bold;
+	position: absolute;
+	left: 15px;
+	bottom:18px;
+}
+.pageNumRight {
+	font-weight: bold;
+	position: absolute;
+	right: 15px;
+	bottom:18px;
+}
+.pageNum {
+	font-weight: bold;
+	position: absolute;
+	left: 35px;
+	bottom:-10px;
+}
+
+@page{  size: A4; margin : 15mm;  }
+@media print {
+	
+	body {
+		margin-top: 20px;
+		background: #fff;
+	}
+	div.page {
+		margin: 0 auto;
+		page-break-after: always;
+	}
+	div.first_page : before {
+		content: url(../images/first_bg.jpg);
+	}
+	div.page_bg : before {
+		content: url(../images/page_bg.jpg);
+	}
+	#pagea {
+		margin:0px;
+	}
+	.btn_submit, .btn_print {
+		display: none;
+	}
+	div.codeinput {
+		top: 440px;
+		left: 285px;
+	}
+	
+}
+
+
+/*  신규 common.css 추가 */ 
+
+/*공통 테이블*/
+.page_num{position:absolute;left:49px;bottom:7px;font-size:14px;font-weight:bold;}
+
+.table_list_01{width:570px;letter-spacing:-0.05em;margin:0 auto; line-height:15px}
+.table_list_01 table{width:100%;}
+.table_list_01 th{width:130;font-size:14px;border:1px solid #b49e8a;text-align:center;padding:6px 0 6px 10px;font-weight:normal;background:url(../images/th_bg.png) repeat left top;}
+.table_list_01 td{border:1px solid #b49e8a;font-size:12px;padding:8px 10px;text-align:center;background:url(../images/td_bg.png) repeat left top;}
+
+
+.table_list_01_10 { line-height:10px}
+
+.table_list_01_8 { line-height:8px}
+
+.table_list_01_7 { line-height:7px}
+
+
+.table_list_02{border-left:1px solid #90c0e6;}
+.table_list_02{border-right:1px solid #90c0e6;}
+.table_list_02 table{width:100%;}
+.table_list_02 table th{width:33%;padding:7px 0;border:1px solid #90c0e6;border-left:0;background:#c2dcf1;font-weight:normal;}
+.table_list_02 table td{padding:7px 0;border:1px solid #90c0e6;border-left:0;text-align:center;}
+
+
+.page .cont_box .bg_cont{width:560px;padding-bottom:3px;border:1px solid #b49e8a;  line-height:auto;  margin:0 auto;margin-top:13px;background:url(../images/contents_bg.png) repeat left top;}
+
+
+div.cont_box {
+	line-height:17px;
+}
+
+/* textarea 줄간격은 line-height:17px 수정 */
+.cont_box .bg_cont textarea{border:10px solid #806b58;width:95%;height:580px;border:0;overflow-y:hidden;padding:10px 10px 10px 10px;font-size:12px;color:#555;line-height:17px;letter-spacing:-0.05em;background:transparent;}
+
+.page_bg_A h3{width:570px;color:#fff;font-size:18px;text-align:center;background:#806b58;letter-spacing:-0.15em;margin-bottom:22px;margin-top:22px; padding:10px 0 10px 0;}
+
+.page_bg_A h4{width:570px;color:#fff;font-size:24px;text-align:center;background:#806b58;letter-spacing:-0.15em;margin-bottom:22px;margin-top:22px; padding:10px 0 10px 0;}
+
+
+.page_bg_A h5{
+
+	border-bottom:2px solid #b49e8a;padding:0 0 10px 2px;font-size:18px;color:#806b58;letter-spacing:-0.1em;margin-bottom:0px;
+}
+
+
+
+.cont_box p{padding:0 25px 0 7px;line-height:21px; margin-top:20px;}
+
+
+div.p15{padding:0 25px 0 7px;line-height:21px; margin-top:15px;}
+
+
+
+/* 건강정보지 */
+
+p.HStyle1
+	{style-name:"제목"; margin-top:0.0pt; margin-bottom:0.0pt; text-align:center; text-indent:0.0pt; line-height:100%; font-size:15.0pt; letter-spacing:0; font-weight:"bold"; font-style:"normal"; }
+
+p.HStyle0
+	{style-name:"제목"; margin-top:0.0pt; margin-bottom:0.0pt; text-align:center; text-indent:0.0pt; line-height:100%; font-size:10.0pt;  letter-spacing:0; font-style:"normal"; }

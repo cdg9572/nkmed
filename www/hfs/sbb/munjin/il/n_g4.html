@@ -1,0 +1,241 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+#초기값
+	$MNON60EUM = "";
+	$MNON60NUM = "";
+
+	$MNON61SJA = "";		$MNON61SBO = "";		$MNON61SCA = "";		$MNON61SCC = "";
+	$MNON61BJA = "";		$MNON61BBO = "";		$MNON61BCA = "";		$MNON61BCC = "";
+	$MNON61LJA = "";		$MNON61LBO = "";		$MNON61LCA = "";		$MNON61LCC = "";
+	$MNON61KJA = "";		$MNON61KBO = "";		$MNON61KCA = "";		$MNON61KCC = "";
+	$MNON61WJA = "";		$MNON61WBO = "";		$MNON61WCA = "";		$MNON61WCC = "";
+
+	$MNON62SJA = "";		$MNON62SBO = "";		$MNON62SCA = "";		$MNON62SCC = "";
+	$MNON62BJA = "";		$MNON62BBO = "";		$MNON62BCA = "";		$MNON62BCC = "";
+	$MNON62LJA = "";		$MNON62LBO = "";		$MNON62LCA = "";		$MNON62LCC = "";
+	$MNON62KJA = "";		$MNON62KBO = "";		$MNON62KCA = "";		$MNON62KCC = "";
+	$MNON62WJA = "";		$MNON62WBO = "";		$MNON62WCA = "";		$MNON62WCC = "";
+		
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET
+					MJ4='".$_POST["MJ4"]."' ,  MJ41Y1='".$_POST["MJ41Y1"]."'
+					, MJ41D1='".$_POST["MJ41D1"]."' ,  MJ42Y1='".$_POST["MJ42Y1"]."'
+					, MJ42D1='".$_POST["MJ42D1"]."' ,  MJ42Y2='".$_POST["MJ42Y2"]."'
+					,  MJ5='".$_POST["MJ5"]."',  MJ51Y1='".$_POST["MJ51Y1"]."'
+					, MJ51D1='".$_POST["MJ51D1"]."' ,  MJ52Y1='".$_POST["MJ52Y1"]."'
+					, MJ52D1='".$_POST["MJ52D1"]."' ,  MJ52Y2='".$_POST["MJ52Y2"]."'
+					,  MJ6='".$_POST["MJ6"]."' ,  MJ61='".$_POST["MJ61"]."' 
+					, mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."'
+				WHERE midx='".$_POST[mseq]."'  ";
+	#	echo $sql;
+		mysql_query($sql);
+	}
+
+	if( $r  = mj_il_info( $_POST[mseq] ) ){
+		$val = mysql_fetch_array($r);
+		$MNON60EUM = $val["MNON60EUM"];
+		$MNON60NUM = $val["MNON60NUM"];
+
+		$MNON61SJA = $val["MNON61SJA"];		$MNON61SBO = $val["MNON61SBO"];		$MNON61SCA = $val["MNON61SCA"];	$MNON61SCC = $val["MNON61SCC"];
+		$MNON61BJA = $val["MNON61BJA"];		$MNON61BBO = $val["MNON61BBO"];		$MNON61BCA = $val["MNON61BCA"];		$MNON61BCC = $val["MNON61BCC"];
+		$MNON61LJA = $val["MNON61LJA"];		$MNON61LBO = $val["MNON61LBO"];		$MNON61LCA = $val["MNON61LCA"];		$MNON61LCC = $val["MNON61LCC"];
+		$MNON61KJA = $val["MNON61KJA"];		$MNON61KBO = $val["MNON61KBO"];		$MNON61KCA = $val["MNON61KCA"];		$MNON61KCC = $val["MNON61KCC"];
+		$MNON61WJA = $val["MNON61WJA"];		$MNON61WBO = $val["MNON61WBO"];		$MNON61WCA = $val["MNON61WCA"];		$MNON61WCC = $val["MNON61WCC"];
+
+		$MNON62SJA = $val["MNON62SJA"];		$MNON62SBO = $val["MNON62SBO"];		$MNON62SCA = $val["MNON62SCA"];		$MNON62SCC = $val["MNON62SCC"];
+		$MNON62BJA = $val["MNON62BJA"];		$MNON62BBO = $val["MNON62BBO"];		$MNON62BCA = $val["MNON62BCA"];		$MNON62BCC = $val["MNON62BCC"];
+		$MNON62LJA = $val["MNON62LJA"];		$MNON62LBO = $val["MNON62LBO"];		$MNON62LCA = $val["MNON62LCA"];		$MNON62LCC = $val["MNON62LCC"];
+		$MNON62KJA = $val["MNON62KJA"];		$MNON62KBO = $val["MNON62KBO"];		$MNON62KCA = $val["MNON62KCA"];		$MNON62KCC = $val["MNON62KCC"];
+		$MNON62WJA = $val["MNON62WJA"];		$MNON62WBO = $val["MNON62WBO"];		$MNON62WCA = $val["MNON62WCA"];		$MNON62WCC = $val["MNON62WCC"];
+	}
+
+	?>
+
+<form name="fm" method="post" action="n_g5.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+		<font style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 음주 지난 1 년간 관련 문항. <? if($_POST[mlfcode]<>""){ echo "<font color='blue'>이전문진 바탕으로 값이 세팅됩니다.</font>"; }?> 
+		</font>
+		<!--<font style="font-size:12px; ">공통 4/<?=$tp1;?></font>-->
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					7. 술을 마시는 횟수는 어느 정도입니까?
+				</th>
+			</tr>
+			<tr>
+				<td>
+				<input type="radio" name="MNON60EUM" value="1" onclick="ck2( 1 )" <? if( $MNON60EUM=="1"){ echo "checked"; }?>> 일주일에  
+				<select id="no6v1" name="no6v1" <? if( $MNON60EUM<>"1"){ ?> style="display:none;" <? } ?> >
+				    <option value="" <? if(  $MNON60EUM=="1" && $MNON60NUM==""){ echo "selected"; }?>></option>
+					<option value="1" <? if( $MNON60EUM=="1" && $MNON60NUM==1){ echo "selected"; }?>>1</option>
+					<option value="2" <? if( $MNON60EUM=="1" && $MNON60NUM==2){ echo "selected"; }?>>2</option>
+					<option value="3" <? if( $MNON60EUM=="1" && $MNON60NUM==3){ echo "selected"; }?> >3</option>
+					<option value="4" <? if( $MNON60EUM=="1" && $MNON60NUM==4){ echo "selected"; }?>>4</option>
+					<option value="5" <? if( $MNON60EUM=="1" && $MNON60NUM==5){ echo "selected"; }?>>5</option>
+					<option value="6" <? if( $MNON60EUM=="1" && $MNON60NUM==6){ echo "selected"; }?>>6</option>
+					<option value="7" <? if( $MNON60EUM=="1" && $MNON60NUM==7){ echo "selected"; }?>>7</option>
+				</select>번
+				<!--<input type="text" id="no6v1" name="no6v1" value="<? if( $MNON60EUM=="1"){ echo $MNON60NUM; }?>"  size='3' style="display:none;" >번 -->
+				<input type="radio" name="MNON60EUM" value="2" onclick="ck2( 2 )"  <? if( $MNON60EUM=="2"){ echo "checked"; }?>> 한 달에  <input type="text" id="no6v2" name="no6v2" value="<? if( $MNON60EUM=="2"){ echo $MNON60NUM; }?>"  size='3'  style="display:none;">번 
+				</td>
+			</tr>
+			<tr><td>
+				<input type="radio" name="MNON60EUM" value="3" onclick="ck2( 3 )"  <? if( $MNON60EUM=="3"){ echo "checked"; }?>> 1년에  <input type="text" id="no6v3" name="no6v3" value="<? if( $MNON60EUM=="3"){ echo $MNON60NUM; }?>"  onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  size='3'  style="display:none;">번 
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="MNON60EUM" value="4" onclick="ck2( 4 )"  <? if( $MNON60EUM=="4"){ echo "checked"; }?>> 술을 마시지 않는다.
+			</tr>
+			</table>
+		
+		<table width="100%" class="tbst02"  id="tbl_6_1">
+		<tr>
+				<th style="!important; text-align:left;">7-1. 술을 마시는 날은 보통 어느 정도 마십니까? </th>
+			</tr>
+			<tr>
+				<td>
+				<table width='100%'>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61SJA' value="<?=$MNON61SJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61SBO' value="<?=$MNON61SBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61SCA' value="<?=$MNON61SCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61SCC' value="<?=$MNON61SCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61BJA' value="<?=$MNON61BJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61BBO' value="<?=$MNON61BBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61BCA' value="<?=$MNON61BCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61BCC' value="<?=$MNON61BCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61LJA' value="<?=$MNON61LJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61LBO' value="<?=$MNON61LBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61LCA' value="<?=$MNON61LCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61LCC' value="<?=$MNON61LCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61KJA' value="<?=$MNON61KJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61KBO' value="<?=$MNON61KBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61KCA' value="<?=$MNON61KCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61KCC' value="<?=$MNON61KCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr><td style="important; text-align:center;">와인</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61WJA' value="<?=$MNON61WJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61WBO' value="<?=$MNON61WBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61WCA' value="<?=$MNON61WCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON61WCC' value="<?=$MNON61WCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<th style="!important; text-align:left;">7-2. 가장 많이 마셨던 하루 음주량은 어느 정도입니까? </th>
+			</tr>
+			<tr>
+				<td>
+				<table width='100%'>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">술종류</td>
+					<td style="important; text-align:center;">잔</td>
+					<td style="important; text-align:center;">병</td>
+					<td style="important; text-align:center;">캔</td>
+					<td style="important; text-align:center;">CC</td></tr>
+				<tr><td style="important; text-align:center;">소주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62SJA' value="<?=$MNON62SJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62SBO' value="<?=$MNON62SBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62SCA' value="<?=$MNON62SCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62SCC' value="<?=$MNON62SCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">맥주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62BJA' value="<?=$MNON62BJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62BBO' value="<?=$MNON62BBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62BCA' value="<?=$MNON62BCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62BCC' value="<?=$MNON62BCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr><td style="important; text-align:center;">양주</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62LJA' value="<?=$MNON62LJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62LBO' value="<?=$MNON62LBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62LCA' value="<?=$MNON62LCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62LCC' value="<?=$MNON62LCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr bgcolor='#F6F6F6'><td style="important; text-align:center;">막걸리</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62KJA' value="<?=$MNON62KJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62KBO' value="<?=$MNON62KBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62KCA' value="<?=$MNON62KCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62KCC' value="<?=$MNON62KCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				<tr><td style="important; text-align:center;">와인</td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62WJA' value="<?=$MNON62WJA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62WBO' value="<?=$MNON62WBO;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62WCA' value="<?=$MNON62WCA;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='2'  /></td>
+					<td style="important; text-align:center;"><input type="text" size='2' name='MNON62WCC' value="<?=$MNON62WCC;?>" onkeyPress=" if( (event.keyCode<48) || (event.keyCode>57) ){ event.returnValue=false;alert('숫자만 가능합니다.');   }" maxlength='5'  /></td></tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		
+<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+<script>
+
+function hisBack(){
+	document.fm.action="n_g3.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+
+function ck2( val ){
+	document.getElementById("tbl_6_1").style.display = "";
+	if (val == 1){
+		document.getElementById("no6v1").style.display = "";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v2.value="";document.fm.no6v3.value="";
+	}else if(val==2){
+		document.getElementById("no6v2").style.display = "";
+		document.getElementById("no6v1").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v1.value="";document.fm.no6v3.value="";
+	}else if(val==3){
+		document.getElementById("no6v3").style.display = "";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v1").style.display = "none";
+		document.fm.no6v1.value="";document.fm.no6v2.value="";
+	}else{
+		document.getElementById("tbl_6_1").style.display = "none";
+		document.getElementById("no6v1").style.display = "none";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v1.value=""; document.fm.no6v2.value=""; document.fm.no6v3.value="";
+		
+		document.fm.MNON61SJA.value=""; document.fm.MNON61SBO.value=""; document.fm.MNON61SCA.value=""; document.fm.MNON61SCC.value="";
+		document.fm.MNON61BJA.value=""; document.fm.MNON61BBO.value=""; document.fm.MNON61BCA.value=""; document.fm.MNON61BCC.value="";
+		document.fm.MNON61LJA.value=""; document.fm.MNON61LBO.value=""; document.fm.MNON61LCA.value=""; document.fm.MNON61LCC.value="";
+		document.fm.MNON61KJA.value=""; document.fm.MNON61KBO.value=""; document.fm.MNON61KCA.value=""; document.fm.MNON61KCC.value="";
+		document.fm.MNON61WJA.value=""; document.fm.MNON61WBO.value=""; document.fm.MNON61WCA.value=""; document.fm.MNON61WCC.value="";
+		document.fm.MNON62SJA.value=""; document.fm.MNON62SBO.value=""; document.fm.MNON62SCA.value=""; document.fm.MNON62SCC.value="";
+		document.fm.MNON62BJA.value=""; document.fm.MNON62BBO.value=""; document.fm.MNON62BCA.value=""; document.fm.MNON62BCC.value="";
+		document.fm.MNON62LJA.value=""; document.fm.MNON62LBO.value=""; document.fm.MNON62LCA.value=""; document.fm.MNON62LCC.value="";
+		document.fm.MNON62KJA.value=""; document.fm.MNON62KBO.value=""; document.fm.MNON62KCA.value=""; document.fm.MNON62KCC.value="";
+		document.fm.MNON62WJA.value=""; document.fm.MNON62WBO.value=""; document.fm.MNON62WCA.value=""; document.fm.MNON62WCC.value="";
+
+	}
+}
+</script>

@@ -1,0 +1,113 @@
+<?php
+
+$title = "진료과/의료진";
+$page_title = "의료진소개";
+$page_sub_title = "전문센터";
+
+include_once "../inc/head.php";
+
+?>
+
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr04.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu">
+					<ul>
+						<li class="active"><a href="/doctor/page01.html">전문센터</a></li>
+						<li><a href="/doctor/page02.html">진료과</a></li>
+						<li><a href="/doctor/page03.html">특수클리닉</a></li>
+					</ul>
+				</div>
+				<div class="page-dropdown">
+					<button class="dropdown-toggle" type="button">선택해주세요</button>
+					<ul class="dp-section dropdown-menu" style="height: 0px;">
+						<!-- 리스트 -->
+						<li class="dropdown-item"><a href="#none">응급의학과</a></li>
+						<li class="dropdown-item"><a href="#none">정형외과</a></li>
+						<li class="dropdown-item"><a href="#none">신경외과</a></li>
+						<li class="dropdown-item"><a href="#none">내과</a></li>
+						<li class="dropdown-item"><a href="#none">소아청소년과</a></li>
+						<li class="dropdown-item"><a href="#none">영상의학과</a></li>
+						<li class="dropdown-item"><a href="#none">마취통증의학과</a></li>
+						<li class="dropdown-item"><a href="#none">직업환경의학과</a></li>
+					</ul>
+				</div>
+
+				<div class="docList">
+					<h3 class="cont-tit bar">관절센터</h3>
+					<ul class="list">
+						<li data-idx="" data-name="">
+							<a href="#none">
+								<span class="pic">
+									<img src="http://placehold.it/408x451" class="block" alt="">
+									<i></i>
+								</span>
+								<span class="name">
+									<b>김윤식</b> 병원장
+								</span>
+							</a>
+						</li>
+						<li data-idx="" data-name="">
+							<a href="#none">
+								<span class="pic">
+									<img src="http://placehold.it/408x451" class="block" alt="">
+									<i></i>
+								</span>
+								<span class="name">
+									<b>김윤식</b> 병원장
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="docList">
+					<h3 class="cont-tit bar">척추센터</h3>
+					<ul class="list">
+						<li data-idx="" data-name="">
+							<a href="#none">
+								<span class="pic">
+									<img src="http://placehold.it/408x451" class="block" alt="">
+									<i></i>
+								</span>
+								<span class="name">
+									<b>김윤식</b> 병원장
+								</span>
+							</a>
+						</li>
+						<li data-idx="" data-name="">
+							<a href="#none">
+								<span class="pic">
+									<img src="http://placehold.it/408x451" class="block" alt="">
+									<i></i>
+								</span>
+								<span class="name">
+									<b>김윤식</b> 병원장
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- //end .docList -->
+			</div>
+			<!-- //end #innerCont -->
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+
+$d1_arr = explode("&", $v) ;
+
+//print_r($d1_arr) ;
+
+?>
+
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					4. 귀하는 다음의 검사를 받은 적이 있습니까?
+				</th>
+			</tr>
+			
+			<tr>
+				<th>위암 - 위장조영검사(위장 X선 촬영)</th>
+			</tr>
+
+			<?
+				$category = "ui1" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[0], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[0], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[0], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[0], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			<tr>
+				<th>위암 - 위내시경</th>
+			</tr>
+			<?
+				$category = "ui2" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[1], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[1], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[1], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[1], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>유방암 - 유방촬영</th>
+			</tr>
+			<?
+				$category = "yu" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[2], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[2], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[2], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[2], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>대장암 - 분변잠혈검사(대변 검사)</th>
+			</tr>
+			<?
+				$category = "dae1" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[3], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[3], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[3], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[3], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>대장암 - 대장이중조영검사(대장 X선 촬영)</th>
+			</tr>
+			<?
+				$category = "dae2" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[4], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[4], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[4], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[4], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>대장암 - 대장내시경</th>
+			</tr>
+			<?
+				$category = "dae3" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[5], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[5], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[5], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[5], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>자궁경부암 - 자궁경부세포검사</th>
+			</tr>
+			<?
+				$category = "ja" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="10~" <?=getChecked($d1_arr[6], "10~")?> > 10년 이상 또는 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~1" <?=getChecked($d1_arr[6], "~1")?> > 1년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~2" <?=getChecked($d1_arr[6], "1~2")?> > 1년 이상 ~ 2년 미만</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="2~10" <?=getChecked($d1_arr[6], "2~10")?> > 2년이상 ~ 10년 미만</td>
+			</tr>
+			
+			
+			<tr>
+				<th>간암 - 간초음파</th>
+			</tr>
+			<?
+				$category = "gan" ;
+			?>
+
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="x" <?=getChecked($d1_arr[7], "x")?> > 한적 없음</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="~6" <?=getChecked($d1_arr[7], "~6")?> > 6개월 이내</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="6~1" <?=getChecked($d1_arr[7], "6~1")?> > 6개월에서 1년 사이</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="<?=$category?>" value="1~" <?=getChecked($d1_arr[7], "1~")?> > 1년보다 오래전에</td>
+			</tr>
+			
+			
+		</table>
+	

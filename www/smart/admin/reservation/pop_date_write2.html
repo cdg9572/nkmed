@@ -1,0 +1,1011 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include "../inc/chkLogin.php";
+include $DOCUMENT_ROOT."/admin/inc/func.php";
+if($re_seq != ""){
+	$query = "select * from reserve_list_new where seq='".$re_seq."'";
+	$result = mysql_query($query);
+	$rows = mysql_fetch_array($result);
+
+	$jumin_no = explode("-",$rows[jumin_no]);
+	$mobile_no = explode("-",$rows[mobile_no]);
+	$email = explode("@",$rows[email]);
+}
+$uploadDir	= $DOCUMENT_ROOT."/admin/log/upFiles/";
+$sel_day  = ($input_date)? date("Y-m-d", strtotime($input_date)) : date( "Y-m-d" );
+$ye_date = date("Y-m-d", strtotime("-1 day", strtotime($sel_day))); //어제
+$to_date = date("Y-m-d", strtotime("+1 day", strtotime($sel_day))); //내일
+
+$to_date2 = date("Y-m-d", strtotime("+1 day", strtotime(date( "Y-m-d" )))); //내일
+
+
+$doms            = array( "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" );
+$week = date('w', strtotime($sel_day)); //요일
+?>
+<!doctype html>
+<html>
+	<head>
+	<meta charset="euc-kr">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>예약</title>
+	<link href="../_css/style.css" rel="stylesheet" type="text/css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="../_js/tabmenu.js"></script>
+	<script type="text/javascript" src="../_js/contant_box_01.js"></script>
+	<script src="/admin/test/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/admin/_js/chkBoxtoImg.js"></script>
+	<script src="/admin/test/jquery.filestyle.js" type="text/javascript"></script>
+	<script src="/admin/_js/Calendar.js" type="text/javascript"></script>
+	
+	<link type="text/css" href="/admin/ui/themes/base/ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="/admin/ui/ui.core.js"></script>
+	<script type="text/javascript" src="/admin/ui/ui.datepicker.js"></script>
+	<script type="text/javascript" src="/admin/ui/ui.datepicker-ko.js"></script>
+	<link type="text/css" href="/admin/ui/demos.css" rel="stylesheet" />
+
+
+	
+	<link rel="stylesheet" href="http://kops.co.kr/assets/_css/jquery-ui.css" />
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+   <script>
+
+  $(function() {
+
+    var names = [ 
+<?
+mysql_select_db("mediroad_liss", $dbconn);
+
+$sql = "SELECT DISTINCT COMPANY_NAME FROM `COMPANY` where COMPANY_CODE <> 0 ORDER BY COMPANY_CODE desc";
+$rsd = mysql_query($sql);
+
+while($rs = mysql_fetch_array($rsd)) {
+	$cname = $rs['COMPANY_NAME'];
+	echo "'".$cname."',";
+}
+?>
+	"John Resig"
+		
+	];
+
+ 
+
+    var accentMap = {
+
+      "a": "a",
+
+      "o": "o"
+
+    };
+
+    var normalize = function( term ) {
+
+      var ret = "";
+
+      for ( var i = 0; i < term.length; i++ ) {
+
+        ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+
+      }
+
+      return ret;
+
+    };
+
+ 
+
+   for(var j=1; j <= 30; j++){
+
+		 $( "#developer"+j ).autocomplete({
+
+		  source: function( request, response ) {
+
+			var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+
+			response( $.grep( names, function( value ) {
+
+			  value = value.label || value.value || value;
+
+			  return matcher.test( value ) || matcher.test( normalize( value ) );
+
+			}) );
+
+		  }
+
+		});
+   }
+
+  });
+
+  </script>
+
+<style>
+
+  .ui-autocomplete {
+	  
+	 width: 210px;
+
+    max-height: 100px;
+
+    overflow-y: auto;
+
+    /* prevent horizontal scrollbar */
+
+    overflow-x: hidden;
+
+  }
+
+  /* IE 6 doesn't support max-height
+
+   * we use height instead, but this forces the menu to always be this tall
+
+   */
+
+  * html .ui-autocomplete {
+
+    height: 100px;
+
+  }
+  
+table tr th { background-color:#EDEDED; text-align:left; padding:3px; font-weight:bold; font-size:12px; color:#000;}
+  </style>
+
+
+
+	<script>
+		function file_browse(num)
+		{
+		
+			var file_list = "file"+num;
+			var text_list = "text"+num;
+			document.form.elements[file_list].click();
+			document.form.elements[text_list].value=document.form.elements[file_list].value; 
+		}
+		function moveFocus(obj,no,nextObj){
+			
+		   if(obj.value.length == no){
+			document.form.jumin_no2.focus();
+		   }
+		  }
+		  function moveFocus1(obj,no,nextObj){
+			
+		   if(obj.value.length == no){
+			document.form.mobile_no1.focus();
+		   }
+		  }
+		  function moveFocus2(obj,no,nextObj){
+			
+		   if(obj.value.length == no){
+			document.form.mobile_no2.focus();
+		   }
+		  }
+		  function moveFocus3(obj,no,nextObj){
+			
+		   if(obj.value.length == no){
+			document.form.mobile_no3.focus();
+		   }
+		  }
+		  function moveFocus4(obj,no,nextObj){
+			
+		   if(obj.value.length == no){
+			document.form.email1.focus();
+		   }
+		  }
+		  function selDomain(val) {
+			if (val == "직접입력") {
+				form.email2.readOnly = false;
+				form.email2.value='';
+				form.email2.focus();
+			}
+			else {
+				form.email2.value = val;
+				form.email2.readOnly = true;
+			}
+		}
+	</script>
+	<script type="text/javascript">
+			function closeiFrame() {
+			window.parent.location.reload();
+			window.parent.CloseManageFrame();
+			}
+			function send(){
+				
+				if(document.form.delivery.checked == true && (document.form.address.value =="" || document.form.detailaddress.value =="")){
+					alert("대장약 발송 체크시 주소입력은 필수입니다.");
+					document.form.address.focus();
+					return false;
+				}
+				else if(document.form.textfield1.value == ""){
+					alert("사업장을 선택하세요.");
+					document.form.textfield1.focus();
+					return false;
+				}
+				else if(document.form.reserve_time.value == ""){
+					alert("예약 시간을 선택하세요.");
+					document.form.reserve_time.focus();
+					return false;
+				}
+				else if(document.form.reserve_name.value == ""){
+					alert("성명을 입력하세요.");
+					document.form.reserve_name.focus();
+					return false;
+				}
+				else if(document.form.PRO_NAME.value == ""){
+					alert("기본 예약 검진 항목이 없는 사업장은 예약이 불가능합니다..");
+					document.form.textfield1.focus();
+					return false;
+				}
+				else{
+					document.form.submit();
+				}
+			}
+			function add_item(item,start_date){
+				window.open("/admin/slotset/add_item.html?item="+item+"&start_date="+start_date,"additem","width=540,height=600,scrollbars=yes");
+			}
+			function clear_item(sel_item){
+				
+
+				eval('document.form.'+sel_item).value = "";
+				
+				
+			}
+
+			function openWin(page, bar) {
+				if(!bar) bar = "no";
+
+				var win = window.open(page, 'POP', 'left=100, top=100, toolbar=no, location=no, directories=no, status=yes, menuBar=no, scrollBars='+bar+', resizable=no');
+				win.focus();
+			}
+
+			function item_cnt(time){
+
+				//alert(time);
+			}
+			function history_view(reserve_name,jumin_no1,jumin_no2){
+				window.open("./history_view.html?reserve_name="+reserve_name+"&jumin_no1="+jumin_no1+"&jumin_no2="+jumin_no2,"HistoryView","width=900,height=400,scrollbars=yes");
+			}
+
+	</script>
+
+
+
+	<script> 
+	var xmlHttp; 
+
+	function createXMLHttpRequest() { 
+	if (window.ActiveXObject) 
+	{ 
+	xmlHttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+	} 
+	else if (window.XMLHttpRequest) 
+	{ 
+	xmlHttp = new XMLHttpRequest(); 
+	} 
+	} 
+
+	function startRequest() { 
+		createXMLHttpRequest(); 
+		xmlHttp.onreadystatechange = handleStateChange; 
+		xmlHttp.open("GET","/admin/reservation/popBusiness.html?business_name="+document.form.textfield1.value, true); 
+		xmlHttp.send(null); 
+	} 
+
+	function handleStateChange() { 
+		if(xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) 
+			{ 
+				document.getElementById("idView").innerHTML = xmlHttp.responseText; 
+			} 
+		} 
+	} 
+
+
+	function startRequest2(PRO_NAME) { 
+		createXMLHttpRequest(); 
+		xmlHttp.onreadystatechange = handleStateChange2; 
+		xmlHttp.open("GET","/admin/reservation/popBusiness2.html?PRO_NAME="+PRO_NAME, true); 
+		xmlHttp.send(null); 
+
+		//startRequest5(PRO_NAME);
+		
+	}
+
+	function handleStateChange2() { 
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView2").innerHTML = xmlHttp.responseText; 
+	} 
+	} 
+
+		
+	} 
+	
+
+
+
+	
+
+	function startRequest3(item,start_date) { 
+	createXMLHttpRequest(); 
+	xmlHttp.onreadystatechange = handleStateChange3; 
+	xmlHttp.open("GET","/admin/reservation/popBusiness6.html?item="+item+"&start_date="+start_date, true); 
+	xmlHttp.send(null); 
+	} 
+
+	function handleStateChange3() {
+	if(xmlHttp.readyState == 4) {
+	if (xmlHttp.status == 200) 
+	{ 
+
+	document.getElementById("idView3").innerHTML = xmlHttp.responseText; 
+	} 
+	} 
+	} 
+	</script> 
+
+	
+	</head>
+ <?
+ mysql_select_db("new_mediroad", $dbconn);
+ ?>   
+<div id="contant_box_01"><span class="hiddenText">-팝업표시레이어-</span></div>
+<body style="background-color:#FFF;">
+<div style="min-width:1024px; margin:10px 15px;">
+<form name="form" autocomplete="off"  method="post" enctype="multipart/form-data" action="./proc2.php">
+<input type="hidden" name="sel_day" value="<?=$sel_day?>">
+<table width="100%" border="2" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" height="500">
+<tr>
+<td colspan="3">
+<?
+if($re_seq != ""){
+	?>
+	<input type="hidden" name="mode" value="update">
+	<input type="hidden" name="seq" value="<?=$re_seq?>">
+	<input type="hidden" name="re_seq" value="<?=$re_seq?>">
+	<input type="hidden" name="textfield1" value="<?=$rows[reserve_place]?>">
+	<input type="hidden" name="PRO_NAME" value="<?=$PRO_NAME?>">
+	<input type="hidden" name="textfield1" value="<?=$textfield1?>">
+	<input type="hidden" name="sel_day" value="<?=$sel_day?>">
+
+	<div style="background-color:#153549;">
+		<table border="0" cellspacing="0" cellpadding="0" align="center" width="100%">
+			<tr>
+				<!--<td width="30" align="center" height="40"><a href="<?=$_SERVER['PHP_SELF']?>?input_date=<?=$ye_date?>&seq=<?=$seq?>&re_seq=<?=$re_seq?>" class="small_arrow_style">◀</a></td>-->
+                 <td width="180" height="40" align="center"><input type="text" name="date" value='<?=$sel_day?>' id="date" onclick="window.open('/admin/reservation/incCalendar_pop.html?chk_date=<?=$input_date?>&re_seq=<?=$re_seq?>','','width=1200,height=800,scrollbars=yes');" class="small_date_style"></td>
+                 <td width="80" align="center"><span class="small_day_style"><?=$doms[$week]?></span></td>
+                 <!--<td width="30" align="center"><a href="<?=$_SERVER['PHP_SELF']?>?input_date=<?=$to_date?>&seq=<?=$seq?>&re_seq=<?=$re_seq?>" class="small_arrow_style">▶</a></td>-->
+
+				<td align="left"><a href="javascript:void(0)" onclick="window.open('/admin/reservation/incCalendar_pop.html?chk_date=<?=$input_date?>&re_seq=<?=$re_seq?>','','width=1200,height=800,scrollbars=yes');"><img src="/admin/_img/button/reserBtnSel.png" alt="예약일선택" style="border:none;"/></a></td>
+				<td width="350" align="right"><font style="font-size:20px;color:#FFFFFF;font-weight:bold;">[일반 예약 화면입니다]</font></td>
+
+
+				<td align="right"><a href="javascript:void(0)" onclick="window.open('/admin/reservation/popCalendar.html?chk_date=<?=$input_date?>','','width=500,height=500,scrollbars=yes');"><img src="/admin/_img/button/reserBtn01.png"width="46" height="21" alt="시간별" style="border:none;"/></a>
+                &nbsp;<a href="#" onClick="javascript:send();" style="color:#fff; padding:5px; font-size:16px;"><img src="/admin/_img/button/reserBtnModi.png" alt="예약수정" style="border:none;"/></a></td>
+             </tr>
+		</table>
+    	</div>
+
+	<?
+ }
+ else{
+?>
+<input type="hidden" name="textfield1" value="<?=$textfield1?>">
+<input type="hidden" name="PRO_NAME" value="<?=$PRO_NAME?>">
+<input type="hidden" name="mode" value="insert">
+	<div style="background-color:#153549;">
+		<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tr>
+				<td width="30" align="center" height="40"><a href="<?=$_SERVER['PHP_SELF']?>?input_date=<?=$ye_date?>" class="small_arrow_style">◀</a></td>
+				<td width="180" align="center"><input type="text" name="date" value='<?=$sel_day?>' id="date" onClick="javascript:calendar(event, 'date','')"  class="small_date_style"></td>
+				<td width="80" align="center"><span class="small_day_style"><?=$doms[$week]?></span></td>
+				<td width="30" align="center"><a href="<?=$_SERVER['PHP_SELF']?>?input_date=<?=$to_date?>" class="small_arrow_style">▶</a></td>
+				
+				<td align="left"><span style="font-size:20px;color:#FFFFFF;font-weight:bold;">[일반 예약 화면입니다]</span></td>
+				<td align="right"><a href="javascript:void(0)" onclick="window.open('/admin/reservation/popCalendar.html?chk_date=<?=$input_date?>','','width=500,height=500,scrollbars=yes');"><img src="/admin/_img/button/reserBtn01.png"width="46" height="21" alt="시간별" style="border:none;"/></a>
+                <a href="#" onClick="javascript:send();" style="color:#fff; padding:5px; font-size:16px;"><img src="/admin/_img/button/reserBtn02.png" width="46" height="21" alt="예약" style="border:none;"/></a></td>
+			</tr>
+		</table>
+    	</div>
+<?
+ }
+?>
+<div>
+</td>
+</tr>
+<tr>
+<td width="27%" valign="top"><!-- 첫번째 줄 테이블 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="500">
+  <caption>예약자 정보</caption>
+  <tr>
+  	<td  style="border-bottom:1px dotted #363636">
+<?
+	if($re_seq != ""){
+?>
+	<table width="100%" border="0" cellspacing="0" cellpadding="2">
+      <tr>
+        <th scope="row" width="90">사업장</th>
+        <td><?=$rows[reserve_place]?></td>
+      </tr>
+  </table>
+  </td>
+</tr>
+<?
+	}
+	else{
+?>
+	<table width="100%" border="0" cellspacing="0" cellpadding="2">
+      <tr>
+        <th scope="row" width="60">사업장선택</th>
+        <td> <?=$textfield1?></td>
+      </tr>
+  </table>
+  </td>
+</tr>
+<?
+	}
+?>
+<tr>
+	<td  style="border-bottom:1px dotted #363636">
+	<table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">예약시간</th>
+    <td><select name="reserve_time" onchange="javascript:startRequest3(this.value,'<?=$sel_day?>');">
+                <option value="">시간선택</option>
+                <option value="0" <?if($rows[reserve_time] == "0"){echo "selected";}?>>07:00~07:30</option>
+                <option value="1" <?if($rows[reserve_time] == "1"){echo "selected";}?>>07:30~08:00</option>
+                <option value="2" <?if($rows[reserve_time] == "2"){echo "selected";}?>>08:00~08:30</option>
+                <option value="3" <?if($rows[reserve_time] == "3"){echo "selected";}?>>08:30~09:00</option>
+                <option value="4" <?if($rows[reserve_time] == "4"){echo "selected";}?>>09:00~09:30</option>
+                <option value="5" <?if($rows[reserve_time] == "5"){echo "selected";}?>>09:30~10:00</option>
+                <option value="6" <?if($rows[reserve_time] == "6"){echo "selected";}?>>10:00~10:30</option>
+                <option value="7" <?if($rows[reserve_time] == "7"){echo "selected";}?>>10:30~11:00</option>
+                <option value="8" <?if($rows[reserve_time] == "8"){echo "selected";}?>>11:00~11:30</option>
+                <option value="9" <?if($rows[reserve_time] == "9"){echo "selected";}?>>11:30~12:00</option>
+                <option value="10" <?if($rows[reserve_time] == "10"){echo "selected";}?>>13:00~13:30</option>
+                <option value="11" <?if($rows[reserve_time] == "11"){echo "selected";}?>>12:30~13:00</option>
+                <option value="12" <?if($rows[reserve_time] == "12"){echo "selected";}?>>13:00~13:30</option>
+                <option value="13" <?if($rows[reserve_time] == "13"){echo "selected";}?>>13:30~14:00</option>
+                <option value="14" <?if($rows[reserve_time] == "14"){echo "selected";}?>>14:00~14:30</option>
+                <option value="15" <?if($rows[reserve_time] == "15"){echo "selected";}?>>14:30~15:00</option>
+                <option value="16" <?if($rows[reserve_time] == "16"){echo "selected";}?>>15:00~15:30</option>
+                <option value="17" <?if($rows[reserve_time] == "17"){echo "selected";}?>>15:30~16:00</option>
+                <option value="18" <?if($rows[reserve_time] == "18"){echo "selected";}?>>16:00~16:30</option>
+                <option value="19" <?if($rows[reserve_time] == "19"){echo "selected";}?>>16:30~17:00</option>
+                <option value="20" <?if($rows[reserve_time] == "20"){echo "selected";}?>>17:00~17:30</option>
+			</select> 위치:<select name="place"><option value="3층" <?if($rows[place] == '3층'){echo 'selected';}?>>3층</option><option value="1층" <?if($rows[place] == '1층'){echo 'selected';}?>>1층</option></select><br/>예약 : <input type="text" size="2" value="1" name="time_limit"> <span id="idView3"></span></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">성명</th>
+    <td width="80"><input name="reserve_name" type="text" size="8" value="<?=$rows[reserve_name]?>"></td>
+    <th width="50" style="text-align:center !important;">등록인</th>
+    <td><input name="reg_id" type="hidden" size="6" value="<?=$sess_AID?>" ><input name="reg_name" type="text" size="6" value="<?=$sess_ANM?>" readonly></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">사원번호</th>
+    <td  width="80"><input name="member_no" type="text" size="6" value="<?=$rows[member_no]?>"></td>
+    <th width="50" style="text-align:center !important;">부서명</th>
+    <td><input name="postion" type="text" size="6" value="<?=$rows[postion]?>"></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60">본인여부</th>
+    <td>
+    		<select name="person">
+            <option value="10 본인" <?if($rows[person] == '10 본인'){echo 'selected';}?>>10 본인</option>
+            <option value="11 자녀" <?if($rows[person] == '11 자녀'){echo 'selected';}?>>11 자녀</option>
+            <option value="20 배우자" <?if($rows[person] == '20 배우자'){echo 'selected';}?>>20 배우자</option>
+            <option value="30 아버지(부)" <?if($rows[person] == '30 아버지(부)'){echo 'selected';}?>>30 아버지(부)</option>
+            <option value="31 어머니(모)" <?if($rows[person] == '31 어머니(모)'){echo 'selected';}?>>31 어머니(모)</option>
+            <option value="32 조부" <?if($rows[person] == '32 조부'){echo 'selected';}?>>32 조부</option>
+            <option value="33 조모" <?if($rows[person] == '33 조모'){echo 'selected';}?>>33 조모</option>
+            <option value="34 형제자매" <?if($rows[person] == '34 형제자매'){echo 'selected';}?>>34 형제자매</option>
+            <option value="35 처부모" <?if($rows[person] == '35 처부모'){echo 'selected';}?>>35 처부모</option>
+            <option value="36 처조부모" <?if($rows[person] == '36 처조부모'){echo 'selected';}?>>36 처조부모</option>
+            <option value="37 손자" <?if($rows[person] == '37 손자'){echo 'selected';}?>>37 손자</option>
+            <option value="38 손녀" <?if($rows[person] == '38 손녀'){echo 'selected';}?>>38 손녀</option>
+            <option value="39 기타" <?if($rows[person] == '39 기타'){echo 'selected';}?>>39 기타</option>
+        </select>
+    </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">영업소명</th>
+    <td width="100"><select name="office"><option value="1영업소" <?if($rows[office] == '1영업소'){echo 'selected';}?>>1영업소</option><option value="2영업소" <?if($rows[office] == '2영업소'){echo 'selected';}?>>1영업소</option></select></td>
+    <th width="80" style="text-align:center !important;">대장약발송</th>
+    <td><input type="checkbox" name="delivery" value="Y" <?if($rows[delivery] == "Y"){echo "checked";}?>></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">주민등록번호</th>
+    <td><input name="jumin_no1" type="text" style="width:70px;" maxlength="6" value="<?=$jumin_no[0]?>" onkeyup="moveFocus(this,6,'jumin_no2')" > - <input name="jumin_no2" type="password" style="width:70px;" value="<?=$jumin_no[1]?>" onkeyup="moveFocus1(this,7,'mobile_no1')"></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">휴대폰</th>
+    <td><input name="mobile_no1" type="text" class="text_fw_30" value="<?=$mobile_no[0]?>" onkeyup="moveFocus2(this,3,'mobile_no2')"> - <input name="mobile_no2" type="text" class="text_fw_40" value="<?=$mobile_no[1]?>" onkeyup="moveFocus3(this,4,'mobile_no3')"> - <input name="mobile_no3" type="text" class="text_fw_40" value="<?=$mobile_no[2]?>" onkeyup="moveFocus4(this,4,'email1')"></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td  style="border-bottom:1px dotted #363636">
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">이메일</th>
+   
+	<td><input name='email1' type="text" class="input" size="8" value="<?=$email[0]?>">@<input name='email2' readOnly id="email_etc" type="text" class="input" size="6"  value="<?=$email[1]?>">&nbsp;<select name="sel_url" class="textfield" onChange="selDomain(form.sel_url.value)"><option value="">메일선택</option><option value="gmail.com">gmail</option><option value="hotmail.com">hotmail</option><option value="korea.com">korea</option><option value="nate.com">nate</option><option value="naver.com">naver</option><option value="yahoo.com">yahoo</option><option value="직접입력">직접입력</option></select></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+  <td>
+  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <th width="60" scope="row">주소</th>
+    <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+            <tr>
+               <td><input name="firstzip" type="text" size="3"  value="<?=$rows[post1]?>"> - <input name="secondzip" size="3"  type="text"  value="<?=$rows[post2]?>"> <input class="btn" type="button" name="" id="" onClick="openWin('/admin/log/popZipCode.html', 'no')" onFocus="this.blur();" value="우편번호찾기"></td>
+            </tr>
+            <tr>
+                <td><input name="address" type="text" style="width:98%" value="<?=$rows[addr1]?>"></td>
+            </tr>
+            <tr>
+                <td><input name="detailaddress" type="text" style="width:98%" value="<?=$rows[addr2]?>"></td>
+            </tr>
+        </table>
+    </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+</table>
+<!-- 첫번째 줄 테이블 END--></td>
+<td width="20%" valign="top" ><!-- 두번째 줄 테이블 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="2" >
+  <caption>예약검진항목선택</caption>
+  <tr>
+  	<td>
+    	<?
+		if($PRO_NAME != ""){
+			echo $PRO_NAME;
+		}
+		?>
+   
+	<div class="res_menu_result01">
+     	<ul>
+         	<span id="idView"></span>
+         </ul>
+    </div>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="2" >
+  <caption>기본선택목록..</caption>
+  <tr>
+  	<td>
+    		<div class="res_menu_result02">
+			<ul id="idView2">
+            <?
+			if($PRO_NAME != ""){
+				mysql_select_db("mediroad_liss", $dbconn);
+
+
+				$sql_b = "select a.PRO_NAME , a.PRO_CODE from COMPANYPROFILE as a left join COMPANY as b on (a.COMPANY_CODE=b.COMPANY_CODE)  where a.PRO_NAME = '".$PRO_NAME."'";
+					//echo $sql_b;
+					$result_b = mysql_query($sql_b); 
+					$rows_b = mysql_fetch_array($result_b);
+
+				$codes = explode(",",$rows_b[PRO_CODE]);
+
+				for($i=0;$i<sizeof($codes);$i++){
+					echo $codes[$i]."<br>";
+				}
+				mysql_select_db("new_mediroad", $dbconn);
+
+			}
+			?>
+			</ul>
+		</div>
+    </td>
+  </tr>
+</table>
+<!--
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <caption>수주코멘트</caption>
+  <tr>
+  	<td>
+    		<div class="res_menu_result06">
+            <ul>
+             	<span id="idView_det"></span>
+             </ul>
+		</div> 
+    </td>
+  <tr>
+</table>
+-->
+<!-- 두번째 줄 테이블 END--></td>
+<td width="53%" valign="top"><!-- 세번째 줄 테이블 -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <caption>추가검진항목</caption>
+  	<tr>
+     	<td valign="top">
+        
+         	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+             	<tr>
+                
+                
+                
+                
+                  	<td width="38%" valign="top">
+                      	<table width="100%" border="0" cellspacing="0" cellpadding="0" height="500"  style="border-right:1px dotted #363636">
+                                        <!-- <tr>
+                                            <td colspan="3" class="thd">기본검사</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                            	<a onclick="javascript:add_item('item0','<?=$sel_day?>');" class="btn05">기본</a>
+                                            </td>
+                                            <td align="center"><input type="text" name="item0" readonly style="border:0; width:60px; padding:0; font-size:9px;"></td>
+                                            <td align="center"><a onclick="javascript:clear_item('item0')" class="btn05">X</a></td>
+                                        </tr>-->
+
+									  <tr>
+                                            <th style="border-bottom:1px dotted #363636"  height="25">위검사</th>
+                                        </tr>
+                                        <tr>
+											<td><input name="item1" type="checkbox" value="Y" <?if($rows[reserve_type1] == "Y"){echo "checked";}?>>위장조영촬영</td>
+										</tr>
+										<!--<tr>
+											<td colspan="3"><input name="item2" type="checkbox" value="Y" <?if($rows[reserve_type2] == "Y"){echo "checked";}?>>위내시경합계</td>
+										</tr>-->
+										<tr>
+											<td><input name="item3" type="checkbox" value="Y" <?if($rows[reserve_type3] == "Y"){echo "checked";}?>>일반위</td>
+										</tr>
+										<tr>
+											<td style="border-bottom:1px dotted #363636"><input name="item4" type="checkbox" value="Y" <?if($rows[reserve_type4] == "Y"){echo "checked";}?>>수면위</td>
+										</tr>
+                                        	<th style="border-bottom:1px dotted #363636">대장검사</th>
+                                        <tr>
+                                        		<td>
+                                        		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                            <td align="center"  width="120"><input type="button" onclick="javascript:add_item('item5','<?=$sel_day?>');" value="수면대장" class="selbtn01"></td>
+                                            <td align="center"><input type="text" name="item5" readonly style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time5] != ""){ echo sel_time($rows[reserve_time5]);}?>"></td>
+                                          <td align="center" width="20"><a onclick="javascript:clear_item('item5')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                          </tr>
+                                          </table></td>
+                                          
+                                        </tr>
+										 <tr>
+                                         <td  style="border-bottom:1px dotted #363636">
+                                        		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                            <td align="center" width="120"><input type="button" onclick="javascript:add_item('item6','<?=$sel_day?>');" value="일반대장" class="selbtn01"></td>
+                                            <td align="left"><input type="text" name="item6" readonly style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time6] != ""){ echo sel_time($rows[reserve_time6]);}?>"></td>
+                                          <td align="center" width="20"><a onclick="javascript:clear_item('item6')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                          </tr>
+                                          </table></td>
+                                        </tr>
+                                        <!--<tr>
+											<td colspan="3" style="border-bottom:1px dotted #363636"><input name="item6" type="checkbox" value="Y" <?if($rows[reserve_type6] == "Y"){echo "checked";}?>>일반대장</td>
+										</tr>-->
+                                        </tr>
+                                        	<th style="border-bottom:1px dotted #363636">CT검사</th>
+                                        <tr>
+                                       <tr>
+											<td><input name="item7" type="checkbox" value="Y" <?if($rows[reserve_type7] == "Y"){echo "checked";}?>>심장CT</td>
+										</tr>
+
+										
+                                        <tr>
+											<td><input name="item8" type="checkbox" value="Y" <?if($rows[reserve_type8] == "Y"){echo "checked";}?>>뇌 합계</td>
+										</tr>
+                                        <tr>
+											<td><input name="item9" type="checkbox" value="Y" <?if($rows[reserve_type9] == "Y"){echo "checked";}?>>경추 CT</td>
+										</tr>
+                                        <tr>
+											<td><input name="item10" type="checkbox" value="Y" <?if($rows[reserve_type10] == "Y"){echo "checked";}?>>흉부 CT</td>
+										</tr>
+										<tr>
+											<td><input name="item11" type="checkbox" value="Y" <?if($rows[reserve_type11] == "Y"){echo "checked";}?>>요추 CT</td>
+										</tr>
+                                       <tr>
+											<td><input name="item12" type="checkbox" value="Y" <?if($rows[reserve_type12] == "Y"){echo "checked";}?>>복부비만 CT</td>
+										</tr>
+										<tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center"  width="120"><input type="button" onclick="javascript:add_item('item13','<?=$sel_day?>');" value="VIP" class="selbtn01"></td>
+                                            <td align="left"><input type="text" name="item13" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time13] != ""){ echo sel_time($rows[reserve_time13]);}?>"></td>
+                                          <td align="center" width="20"><a onclick="javascript:clear_item('item13')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                          </tr>
+                                          </table>
+                                          </td>
+                                        </tr>
+							</table></td>
+                            
+                            
+                            
+                            
+                            
+                              <td width="38%" valign="top">
+                                	<table width="100%" border="0" cellspacing="0" cellpadding="0" height="500"  style="border-right:1px dotted #363636">
+                                       
+									   <!-- <tr>
+											<td colspan="3"><input name="item13" type="checkbox" value="Y" <?if($rows[reserve_type13] == "Y"){echo "checked";}?>>부비동 CT</td>
+										</tr>
+                                        <tr>
+											<td colspan="3" style="border-bottom:1px dotted #363636"><input name="item14" type="checkbox" value="Y" <?if($rows[reserve_type14] == "Y"){echo "checked";}?>>관상동맥 CT</td>
+										</tr>-->
+										
+                                    	<tr>
+                                        	<th colspan="3" style="border-bottom:1px dotted #363636"  height="25">MR 검사</th>
+                                        </tr>
+                                       <!-- <tr>
+                                            <td align="center">
+                                            	<a onclick="javascript:add_item('item15','<?=$sel_day?>');" class="btn05">MR합계</a>
+                                            </td>
+                                            <td align="center"><input type="text" name="item15" readonly style="border:0; width:60px; padding:0; font-size:9px;" value="<?if($rows[reserve_time15] != ""){ echo sel_time($rows[reserve_time15]);}?>"></td>
+                                            <td align="center"><a onclick="javascript:clear_item('item15')" class="btn05">X</a></td>
+                                        </tr>-->
+                                       <!-- <tr>
+                                            <td align="center"><input type="button" onclick="javascript:add_item('item16','<?=$sel_day?>');" value="뇌MRI-T2" class="selbtn01"></td>
+                                            <td align="left"><input type="text" name="item16" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time16] != ""){ echo sel_time($rows[reserve_time16]);}?>"></td>
+                                            <td align="center" width="20"><input type="button" onclick="javascript:clear_item('item16')" value="X" class="delbtn01"></td>
+                                        </tr>-->
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center"  width="120"><input type="button" onclick="javascript:add_item('item17','<?=$sel_day?>');" value="뇌MRA" class="selbtn01"></td>
+                                          <td align="center"><input type="text" name="item17" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time17] != ""){ echo sel_time($rows[reserve_time17]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item17')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center"  width="120">
+                                            	<input type="button" onclick="javascript:add_item('item18','<?=$sel_day?>');" value="MRI MBA" class="selbtn01">
+                                            </td>
+                                          <td align="center"><input type="text" name="item18" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time18] != ""){ echo sel_time($rows[reserve_time18]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item18')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center"  width="120">
+                                            	<input type="button" onclick="javascript:add_item('item19','<?=$sel_day?>');" value="뇌MRI" class="selbtn01">
+                                            </td>
+                                          <td align="center"><input type="text" name="item19" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time19] != ""){ echo sel_time($rows[reserve_time19]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item19')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center"  width="120">
+                                            	<input type="button" onclick="javascript:add_item('item20','<?=$sel_day?>');" value="요추MRI" class="selbtn01">
+                                            </td>
+                                          <td align="center"><input type="text" name="item20" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time20] != ""){ echo sel_time($rows[reserve_time20]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item20')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td style="border-bottom:1px dotted #363636">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="center" width="120">
+                                            	<input type="button" onclick="javascript:add_item('item21','<?=$sel_day?>');" value="경추MRI" class="selbtn01">
+                                            </td>
+                                          <td align="center"><input type="text" name="item21" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time21] != ""){ echo sel_time($rows[reserve_time21]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item21')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                        	<th style="border-bottom:1px dotted #363636">PET-CT 검사</th>
+                                        </tr>
+                                        <!--<tr>
+                                        	<td align="center">
+                                            	<a onclick="javascript:add_item('item22','<?=$sel_day?>');" class="btn05">합계</a>
+                                            </td>
+                                            <td align="center"><input type="text" name="item22" readonly style="border:0; width:60px; padding:0; font-size:9px;" value="<?if($rows[reserve_time22] != ""){ echo sel_time($rows[reserve_time22]);}?>"></td>
+                                            <td align="center"><a onclick="javascript:clear_item('item22')" class="btn05">X</a></td>
+										</tr>-->
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                        	<td align="center"   width="120">
+                                            	<input type="button" onclick="javascript:add_item('item23','<?=$sel_day?>');" value="PET-CT(몸통)" class="selbtn01">
+                                            </td>
+                                            <td  align="center"><input type="text" name="item23" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time23] != ""){ echo sel_time($rows[reserve_time23]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item23')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+										</tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td style="border-bottom:1px dotted #363636">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+										 <tr>
+                                        	<td align="center" width="120">
+                                            	<input type="button" onclick="javascript:add_item('item24','<?=$sel_day?>');" value="PET-CT(뇌)" class="selbtn01">
+                                            </td>
+                                            <td align="center"><input type="text" name="item24" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time24] != ""){ echo sel_time($rows[reserve_time24]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item24')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+										</tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        
+										<tr>
+                                        	<th style="border-bottom:1px dotted #363636">특수초음파검사</th>
+                                        </tr>
+                                        
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                        	<td align="center"   width="120">
+                                            	<input type="button" onclick="javascript:add_item('item25','<?=$sel_day?>');" value="심초" class="selbtn01">
+                                            </td>
+                                            <td align="center"><input type="text" name="item25" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time25] != ""){ echo sel_time($rows[reserve_time25]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item25')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+										</tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td style="border-bottom:1px dotted #363636">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                        	<td align="center"  width="120">
+                                            	<input type="button" onclick="javascript:add_item('item26','<?=$sel_day?>');" value="유초" class="selbtn01">
+                                            </td>
+                                            <td align="center"><input type="text" name="item26" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time26] != ""){ echo sel_time($rows[reserve_time26]);}?>"></td>
+                                            <td align="center" width="20"><a onclick="javascript:clear_item('item26')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+										</tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+
+										<tr>
+                                        	<th style="border-bottom:1px dotted #363636">기타</th>
+                                        </tr>
+                                        
+                                        <tr>
+                                        <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+                                            <td align="center"  width="120"><input type="button" onclick="javascript:add_item('item15','<?=$sel_day?>');" value="스케일링" class="selbtn01"></td>
+                                            <td align="center"><input type="text" name="item15" style="width:96%; border:none; padding:0; font-size:12px; text-align:center; background:transparent;" value="<?if($rows[reserve_time15] != ""){ echo sel_time($rows[reserve_time15]);}?>"></td>
+                                          <td align="center" width="20"><a onclick="javascript:clear_item('item15')" class="delbtn01"><i class="fa  fa-times-circle-o fa-lg"></i></a></td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <!--<tr>
+											<td colspan="3"><input name="item27" type="checkbox" value="Y" <?if($rows[reserve_type27] == "Y"){echo "checked";}?>>ABVS</td>
+										</tr>-->
+							    </table></td>
+                                         
+                                         
+                                         
+                                         
+                                         
+                                         
+                                <td width="24%" valign="top">
+                                	<table width="100%" border="0" cellspacing="0" cellpadding="0" height="500">
+                                    	<!--<tr>
+                                        	<td colspan="3" class="thd">정신건강</td>
+                                        </tr>
+                                        <tr>
+											<td colspan="3"><input name="item28" type="checkbox" value="Y" <?if($rows[reserve_type28] == "Y"){echo "checked";}?>>정신건강의학</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item29" type="checkbox" value="Y" <?if($rows[reserve_type29] == "Y"){echo "checked";}?>>치매선별</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item30" type="checkbox" value="Y" <?if($rows[reserve_type30] == "Y"){echo "checked";}?>>알코올의존도</td>
+										</tr>-->
+
+
+                                        <tr>
+                                        	<th style="border-bottom:1px dotted #363636" height="25" >비고</th>
+                                        </tr>
+                                        <tr>
+											<td align="center" style="border-bottom:1px dotted #363636">당일결과</td>
+										</tr>
+										
+										 <tr>
+                                        	<th style="border-bottom:1px dotted #363636">코멘트</th>
+                                        </tr>
+                                        <tr>
+											<td align="center" style="border-bottom:1px dotted #363636"><textarea class="textarea01" name="comment"><?=$rows[comment]?></textarea></td>
+										</tr>
+										 <tr>
+                                        	<th style="border-bottom:1px dotted #363636"><a href='#' onclick="javasript:history_view(document.form.reserve_name.value,document.form.jumin_no1.value,document.form.jumin_no2.value);">히스토리보기</a> </th>
+                                        </tr>
+										 <tr>
+                                        	<th>블랙리스트<input type="checkbox" name="blacklist" value="Y" <?if($rows[black_list] == "Y"){echo "checked";}?>></th>
+                                        </tr>
+										 <tr>
+                                        	<th>sms발송<input type="checkbox" name="sms" value="Y"></th>
+                                        </tr>
+                                    </table></td>
+                                    
+                                    
+                                    
+                            </tr>
+                        </table></td>
+                </tr>
+			</table>
+            
+<!-- 세번째 줄 테이블 END--></td>
+
+
+<div>
+</tr>
+</table>
+</form> 
+</div>
+</body>
+</html>

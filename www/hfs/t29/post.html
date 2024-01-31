@@ -1,0 +1,59 @@
+<?
+
+include "../inc/dbConn.php";
+
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+$sql = " SELECT * 
+			FROM t29
+			 WHERE dong='".$_POST['dong']."'
+				and ho='".$_POST['ho']."' ";
+#echo $sql;
+if( $r = mysql_query($sql) ){
+	$row = mysql_fetch_array($r);
+	echo  $row[tidx];
+	if( $row[tidx] == "" ){
+		$sql = " INSERT INTO t29 
+			VALUES (
+				0, '".$_POST['cho']."'
+				, '".$_POST['pcnt']."', '".$_POST['dong']."'
+				, '".$_POST['ho']."', '".$_POST['sname']."'
+				, '".$_POST['tel']."', '".date("Y-m-d H:i:s")."'
+			) ";
+		mysql_query($sql);
+		echo " <script>
+					alert( '등록되었습니다.' );
+					parent.document.frm.reset();
+				</script> ";
+	}else{
+		echo "<form name='frm' method='post' action='mod.html' style='display:none;'>";
+		echo "	<input type='hidden' name='tidx' value='".$row['tidx']."'/>";
+		echo "	<input type='hidden' name='cho' value='".$_POST['cho']."'/>";
+		echo "	<input type='hidden' name='pcnt' value='".$_POST['pcnt']."'/>";
+		echo "	<input type='hidden' name='dong' value='".$_POST['dong']."'/>";
+		echo "	<input type='hidden' name='ho' value='".$_POST['ho']."'/>";
+		echo "	<input type='hidden' name='sname' value='".$_POST['sname']."'/>";
+		echo "	<input type='hidden' name='tel' value='".$_POST['tel']."'/>";
+		echo "</form>";
+		echo "<script>
+			var con_test = confirm( '해당 동/호 수에 등록이 되어 있습니다.\\n이전내용\\n선택:$row[cho]\\n성명:$row[sname]\\n연락처:$row[tel]\\n변경하시겠습니까?' );
+
+			if( con_test == true ){
+				document.frm.submit();
+			}else{
+				alert( '취소되었습니다.' );
+				parent.document.frm.reset();
+			}
+			</script>";
+	}
+}else{
+	echo "여기";
+}
+
+
+#echo $sql;
+
+?>

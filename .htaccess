@@ -1,0 +1,17 @@
+PHP_VALUE mysql.default_charset UTF8
+php_flag session.use_trans_sid off
+
+#ErrorDocument 404 http://nkhospital.net/error.php
+
+Options -MultiViews 
+#RewriteEngine On
+#RewriteBase /www/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{QUERY_STRING} ^(.*)
+RewriteRule ^(.*)/(path)/(.*)/(.*) /rev_template_nk/$3/$4%1
+#RewriteCond %{QUERY_STRING} ^(.*)
+RewriteRule ^(.*)/(con)/(.*)/(.*) /rev_template_nk/$3.php?cd=$2&pg=$3&$4&%1
+#RewriteCond %{QUERY_STRING} ^(.*)
+RewriteRule ^(.*)/(online)/(.*)/(.*) /rev_template_nk/$2/$3.php?cd=$2&pg=$3&$4&%1 [L]

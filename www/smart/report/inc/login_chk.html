@@ -1,0 +1,13 @@
+<?
+
+
+if(!$_SESSION['sess_USEQ']) {
+	echo "
+		<script>
+			//alert('세션이 만료되었거나 정상적인 접근이 아닙니다.');
+			location.href='./login.html?mode=D';
+		</script>
+		";
+	exit;
+}
+?>

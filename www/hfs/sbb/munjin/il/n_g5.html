@@ -1,0 +1,266 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+	#초기값
+	$MNON71DAY="";
+	$MNON72HOU="";
+	$MNON72MIN="";
+	$MNON81DAY="";
+	$MNON82HOU="";
+	$MNON82MIN="";
+	$MNON90DAY="";
+
+	if( $_POST[mseq]<>"" & $_POST[md]=="reg"  ){ 
+		if( $_POST["MNON60EUM"] == 1 ){
+			$MNON60NUM = $_POST["no6v1"]; 
+		}elseif( $_POST["MNON60EUM"] == 2 ){
+			$MNON60NUM = $_POST["no6v2"]; 
+		}elseif( $_POST["MNON60EUM"] == 3 ){
+			$MNON60NUM = $_POST["no6v3"]; 
+		}elseif( $_POST["MNON60EUM"] == 4 ){
+			$MNON60NUM = ""; 
+		}
+		#정보등록하기
+		$sql = " UPDATE smart_mj_il SET
+						MNON60EUM = '".$_POST["MNON60EUM"]."', MNON60NUM = '".$MNON60NUM." '
+						, MNON61SJA = '".$_POST["MNON61SJA"]."',	MNON61SBO = '".$_POST["MNON61SBO"]." '
+						, MNON61SCA = '".$_POST["MNON61SCA"]."', MNON61SCC = '".$_POST["MNON61SCC"]." '
+						, MNON61BJA = '".$_POST["MNON61BJA"]."',	MNON61BBO = '".$_POST["MNON61BBO"]." '
+						, MNON61BCA = '".$_POST["MNON61BCA"]."', MNON61BCC = '".$_POST["MNON61BCC"]." '
+						, MNON61LJA = '".$_POST["MNON61LJA"]."',	MNON61LBO = '".$_POST["MNON61LBO"]." '
+						, MNON61LCA = '".$_POST["MNON61LCA"]."', MNON61LCC = '".$_POST["MNON61LCC"]." '
+						, MNON61KJA = '".$_POST["MNON61KJA"]."',	MNON61KBO = '".$_POST["MNON61KBO"]." '	
+						, MNON61KCA = '".$_POST["MNON61KCA"]."', MNON61KCC = '".$_POST["MNON61KCC"]." '
+						, MNON61WJA = '".$_POST["MNON61WJA"]."', MNON61WBO = '".$_POST["MNON61WBO"]." '		
+						, MNON61WCA = '".$_POST["MNON61WCA"]."', MNON61WCC = '".$_POST["MNON61WCC"]." '
+						, MNON62SJA = '".$_POST["MNON62SJA"]."', MNON62SBO = '".$_POST["MNON62SBO"]." '
+						, MNON62SCA = '".$_POST["MNON62SCA"]."', MNON62SCC = '".$_POST["MNON62SCC"]." '
+						, MNON62BJA = '".$_POST["MNON62BJA"]."', MNON62BBO = '".$_POST["MNON62BBO"]." '	
+						, MNON62BCA = '".$_POST["MNON62BCA"]."', MNON62BCC = '".$_POST["MNON62BCC"]." '
+						, MNON62LJA = '".$_POST["MNON62LJA"]."', MNON62LBO = '".$_POST["MNON62LBO"]." '
+						, MNON62LCA = '".$_POST["MNON62LCA"]."', MNON62LCC = '".$_POST["MNON62LCC"]." '
+						, MNON62KJA = '".$_POST["MNON62KJA"]."', MNON62KBO = '".$_POST["MNON62KBO"]." '	
+						, MNON62KCA = '".$_POST["MNON62KCA"]."', MNON62KCC = '".$_POST["MNON62KCC"]." '
+						, MNON62WJA = '".$_POST["MNON62WJA"]."', MNON62WBO = '".$_POST["MNON62WBO"]." '		
+						, MNON62WCA = '".$_POST["MNON62WCA"]."', MNON62WCC = '".$_POST["MNON62WCC"]." '
+						, mdt='".date("Y-m-d")."'  , mti='".date("H:i:s")."'
+				WHERE midx='".$_POST[mseq]."'  ";
+			mysql_query($sql);
+	}
+
+	if( $r  = mj_il_info( $_POST[mseq] ) ){
+		$val = mysql_fetch_array($r);
+		$MNON71DAY= $val["MNON71DAY"];
+		$MNON72HOU= $val["MNON72HOU"];
+		$MNON72MIN= $val["MNON72MIN"];
+		$MNON81DAY= $val["MNON81DAY"];
+		$MNON82HOU= $val["MNON82HOU"];
+		$MNON82MIN= $val["MNON82MIN"];
+		$MNON90DAY= $val["MNON90DAY"];
+	}
+?>
+<form name="fm" method="post" action="n_g6.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+		<font style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※  신체활동[운동] <? if($_POST[mlfcode]<>""){ echo "<font color='blue'>이전문진 바탕으로 값이 세팅됩니다.</font>"; }?>
+		</font><!--<font style="font-size:12px; ">공통 5/<?=$tp1;?></font>-->
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8-1.평소 1주일간, 숨이 많이 차게 만드는 고강도 신체활동을 며칠 하십니까? 
+				</th>
+			</tr>
+			<tr>
+				<td>주당 
+				<select name="MNON71DAY"  style="width:50px;" onchange="CheckS( 7  );" >
+				    <option value="0" <? if(  $MNON71DAY==""){ echo "selected"; }?>>0</option>
+					<option value="1" <? if( $MNON71DAY=="1"){ echo "selected"; }?>>1</option>
+					<option value="2" <? if( $MNON71DAY=="2"){ echo "selected"; }?>>2</option>
+					<option value="3" <? if( $MNON71DAY=="3"){ echo "selected"; }?>>3</option>
+					<option value="4" <? if( $MNON71DAY=="4"){ echo "selected"; }?>>4</option>
+					<option value="5" <? if( $MNON71DAY=="5"){ echo "selected"; }?>>5</option>
+					<option value="6" <? if( $MNON71DAY=="6"){ echo "selected"; }?>>6</option>
+					<option value="7" <? if( $MNON71DAY=="7"){ echo "selected"; }?>>7</option>
+				</select>
+				<!--<input type="text" name="MNON71DAY" value="<?=$MNON71DAY;?>" style="width:50px;" >-->일<br/>
+				*.고강도 신체활동의 예> 달리기, 에어로빅, 빠른 속도로 자전거 타기, 건설 현장 노동, 계단으로 물건 나르기등 
+				</td>
+			</tr>
+
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					8-2.평소 하루에 숨이 많이 차게 만드는 고강도 신체활동을 몇시간 하십니까?
+				</th>
+			</tr>
+			<tr>
+				<td>하루에 <input type="text" id="MNON72HOU" name="MNON72HOU" value="<?=$MNON72HOU;?>" style="width:50px;" onchange="CheckH('MNON72HOU',this.value, '7')"> 시간  
+				 <input type="text" id="MNON72MIN" name="MNON72MIN" value="<?=$MNON72MIN;?>" style="width:50px;" onchange="CheckM('MNON72MIN',this.value, '7')"> 분  
+				</td>
+			</tr>
+
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					9-1.평소 1주일간, 숨이 약간 차게 만드는 중강도 신체활동을 며칠 하십니까? 
+				</th>
+			</tr>
+			<tr>
+				<td>주당 
+				<select name="MNON81DAY"  style="width:50px;" onchange="CheckS( 8 );">
+				    <option value="0" <? if(  $MNON81DAY==""){ echo "selected"; }?>>0</option>
+					<option value="1" <? if( $MNON81DAY=="1"){ echo "selected"; }?>>1</option>
+					<option value="2" <? if( $MNON81DAY=="2"){ echo "selected"; }?>>2</option>
+					<option value="3" <? if( $MNON71DAY=="3"){ echo "selected"; }?>>3</option>
+					<option value="4" <? if( $MNON71DAY=="4"){ echo "selected"; }?>>4</option>
+					<option value="5" <? if( $MNON71DAY=="5"){ echo "selected"; }?>>5</option>
+					<option value="6" <? if( $MNON71DAY=="6"){ echo "selected"; }?>>6</option>
+					<option value="7" <? if( $MNON71DAY=="7"){ echo "selected"; }?>>7</option>
+				</select>
+				<!--<input type="text" name="MNON81DAY" value="<?=$MNON81DAY;?>" style="width:50px;" >-->일<br/>
+				*. 8번 응답에 관련된 신체활동은 제외하고 답해주십시오.
+				<br/>
+				*.중강도 신체활동의 예> 빠르게 걷기, 복식 테니스, 보통 속도로 자전거 타기, 가벼운 물건 나르기, 청소 등 
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					9-2.평소 하루에 숨이 약간 차게 만드는 중강도 신체활동을 몇시간 하십니까?
+				</th>
+			</tr>
+			<tr>
+				<td>하루에 <input type="text" id="MNON82HOU" name="MNON82HOU" value="<?=$MNON82HOU;?>" style="width:50px;" onchange="CheckH('MNON82HOU',this.value, '8')"> 시간  
+				 <input type="text" id="MNON82MIN" name="MNON82MIN" value="<?=$MNON82MIN;?>" style="width:50px;" onchange="CheckM('MNON82MIN',this.value, '8')"> 분  
+				</td>
+			</tr>
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					10. 최근 1주일 동안 팔굽혀펴기, 윗몸일으키기, 아령, 역기, 철봉 등 근력 운동을 한 날은 며칠입니까?
+				</th>
+			</tr>
+			<tr>
+				<td>주당 
+				<select name="MNON90DAY"  style="width:50px;" >
+				    <option value="00" <? if(  $MNON90DAY=="00"){ echo "selected"; }?>>0</option>
+					<option value="1" <? if( $MNON90DAY=="1"){ echo "selected"; }?>>1</option>
+					<option value="2" <? if( $MNON90DAY=="2"){ echo "selected"; }?>>2</option>
+					<option value="3" <? if( $MNON90DAY=="3"){ echo "selected"; }?>>3</option>
+					<option value="4" <? if( $MNON90DAY=="4"){ echo "selected"; }?>>4</option>
+					<option value="5" <? if( $MNON90DAY=="5"){ echo "selected"; }?>>5</option>
+					<option value="6" <? if( $MNON90DAY=="6"){ echo "selected"; }?>>6</option>
+					<option value="7" <? if( $MNON90DAY=="7"){ echo "selected"; }?>>7</option>
+				</select>
+				<!--<input type="text" name="MNON90DAY" value="<?=$MNON90DAY;?>" style="width:50px;" >-->일
+				</td>
+			</tr>
+		</table>
+<!--<input type="button" value="이전설문" onclick="hisBack();"/>&nbsp;<input type="submit" value="다음설문"/>-->
+<table width='100%' cellspacing='10'>
+<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+		<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+</table>
+</form>
+<script>
+function CheckH( nm, val ){
+	if( val > 0 && val < 24 ){
+	}else{
+		alert("입력 범위는 0~23까지 입니다.");
+		if ( nm == "MNON72HOU" ){
+			document.fm.MNON72HOU.value = "";
+			document.fm.MNON72HOU.focus();
+			return false;
+		}else{
+			document.fm.MNON82HOU.value = "";
+			document.fm.MNON82HOU.focus();
+			return false;
+		}
+	}
+}
+
+function CheckM( nm, val ){
+	if( val > 0 && val < 59 ){
+	}else{
+		alert("입력 범위는 0~59까지 입니다.");
+		if ( nm == "MNON72MIN" ){
+			document.fm.MNON72MIN.value = "";
+			document.fm.MNON72MIN.focus();
+			return false;
+		}else{
+			document.fm.MNON82MIN.value = "";
+			document.fm.MNON82MIN.focus();
+			return false;
+		}
+	}
+}
+
+function CheckS( v ){
+
+	if( v == "7" ){ 
+		if(	document.fm.MNON71DAY.value == "" ){
+			document.fm.MNON72HOU.value = "";
+			document.fm.MNON72MIN.value = "";
+			document.getElementById("MNON72HOU").style.display = "none";
+			document.getElementById("MNON72MIN").style.display = "none";
+		}else{
+			document.getElementById("MNON72HOU").style.display = "";
+			document.getElementById("MNON72MIN").style.display = "";
+		}
+	}
+
+	if( v == "8" ){ 
+		if(	document.fm.MNON81DAY.value == "" ){
+			document.fm.MNON82HOU.value = "";
+			document.fm.MNON82MIN.value = "";
+			document.getElementById("MNON82HOU").style.display = "none";
+			document.getElementById("MNON82MIN").style.display = "none";
+		}else{
+			document.getElementById("MNON82HOU").style.display = "";
+			document.getElementById("MNON82MIN").style.display = "";
+		}
+	}
+}
+
+function hisBack(){
+	document.fm.action="n_g4.html";
+	document.fm.md.value = "view";
+	document.fm.submit();
+}
+function ck2( val ){
+	if (val == 1){
+		document.getElementById("no6v1").style.display = "";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v2.value="";document.fm.no6v3.value="";
+	}else if(val==2){
+		document.getElementById("no6v2").style.display = "";
+		document.getElementById("no6v1").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v1.value="";document.fm.no6v3.value="";
+	}else if(val==3){
+		document.getElementById("no6v3").style.display = "";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v1").style.display = "none";
+		document.fm.no6v1.value="";document.fm.no6v2.value="";
+	}else{
+		document.getElementById("no6v1").style.display = "none";
+		document.getElementById("no6v2").style.display = "none";
+		document.getElementById("no6v3").style.display = "none";
+		document.fm.no6v1.value=""; document.fm.no6v2.value=""; document.fm.no6v3.value="";
+	}
+}
+</script>

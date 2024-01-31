@@ -1,0 +1,204 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "./inc/func.php";
+include "./inc/dbConn.php";
+
+
+$sql = "select * from smart_resscomp where RIDX = '$reserve_seq' " ;
+#echo $sql;
+$row = mysql_fetch_array(mysql_query($sql)) ;
+
+//testing_dsp($row) ;
+
+testing_dsp("session") ;
+?>
+
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital_<?=$cpname;?></title>
+
+<link rel="stylesheet" type="text/css" href="../../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="index.html"><img src="images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>문진표 작성</h2>
+
+
+	
+
+	
+	<section style="padding:0px 10px; min-height:450px;">
+	
+		<table width="100%" class="tbst02">
+			<tr>
+				<th colspan="2" style="background:#187DC0 !important; color: #FFF !important; text-align:left;">예약정보</th>
+			</tr>
+			<tr>
+				<th>성명</th>
+				<td><input type="text" class="intextst01" name="name" value="<?=$row[RNAME]?>"></td>
+			</tr>
+			<tr>
+				<th>연락처</th>
+				<td><input type="text" class="intextst01" name="mobile_no" value="<?=$row[RTEL]?>" placeholder="&quot;-&quot; 없이 입력해주세요."></td>
+			</tr>
+		</table>
+	
+		
+		<?
+		#if($exam_category_am == "5대암"){
+			$sql = "select * from smart_munjin_cmp where reserve_seq = $reserve_seq and munjin_category='5대암'" ;
+			$res = mysql_query($sql);
+			$am_num = @mysql_num_rows($res);
+			$am_row = @mysql_fetch_array($res) ;
+
+			testing_dsp($sql) ;
+		?>
+
+		<form name='form1' method='post' action='./mj_A/munjin_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_reserve'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='munjin_category' value='5대암'>
+		<input type='hidden' name='reserve_seq' value='<?=$seq?>'>
+
+		<div style="padding:10px 0px; margin-bottom:5px;">
+
+			<?
+				if($am_num)
+				{
+					$am_date = substr($am_row[reg_date],0, 10) ;
+
+					if($am_row[done_check]=="Y") $am_check = "<b>5대암 문진표 [ 작성완료 $am_date ]</b>" ;
+					else  $am_check = "<b>5대암 문진표 작성중 [$am_date]</b>" ;
+
+					$url = "/mj_A/mj_A.html?reserve_seq=$reserve_seq&seq=$am_row[seq]&munjin_category=5대암&page_no=1" ;
+
+					//echo $url ;
+				?>
+					<a href="<?=$url?>" class="btnst01" ><?=$am_check?></a>
+				<?
+				}
+				else
+				{				
+				?>
+
+					<a href="#" class="btnst01" onClick="chkForm1(document.form1)">5대암 문진표 작성하기</a>
+			<?
+				}
+			?>
+
+			
+			<!--<a href="mj_A.html?step=1&reserve_seq=$seq" class="btnst01">문진표 작성하기</a>-->
+		</div>
+
+		</form>
+		<?
+		#}
+		?>
+
+		<?
+		#if($exam_category_il == "일반검진")		{
+			$sql = "select * from smart_munjin_cmp where reserve_seq = $reserve_seq and munjin_category='일반검진'" ;
+			$res = mysql_query($sql);
+			$il_num = @mysql_num_rows($res);
+			$il_row = @mysql_fetch_array($res) ;
+
+			testing_dsp($sql) ;
+
+		?>
+
+		
+		<form name='form2' method='post' action='./mj_il/munjin_proc.html' target="company_proc" >
+		<input type='hidden' name='tbl' value='smart_reserve'>
+		<input type='hidden' name='mode' value='new'>
+		<input type='hidden' name='munjin_category' value='일반검진'>
+		<input type='hidden' name='reserve_seq' value='<?=$seq?>'>
+
+		<div style="padding:5px 0px; margin-bottom:15px;">
+			
+			<?
+				if($il_num)
+				{
+					$il_date = substr($il_row[reg_date],0, 10) ;
+
+					if($il_row[done_check]=="Y") $il_check = "<b>일반검진 문진표 [ 작성완료 $il_date ]</b>" ;
+					else  $il_check = "<b>일반검진 문진표 작성중 [$il_date]</b>" ;
+
+					$url = "/mj_il/mj_il.html?reserve_seq=$reserve_seq&seq=$il_row[seq]&munjin_category=일반검진&page_no=1" ;
+
+					//echo $url ;
+				?>
+					<a href="<?=$url?>" class="btnst02" ><?=$il_check?></a>
+				<?
+				}
+				else
+				{				
+				?>
+
+					<a href="#" class="btnst02" onClick="chkForm2(document.form2)">일반검진 문진표 작성하기</a>
+			<?
+				}
+			?>
+			<!--<a href="mj_A.html?step=1&reserve_seq=$seq" class="btnst01">문진표 작성하기</a>-->
+		</div>
+
+		</form>
+		<?
+		# }
+		?>
+	</section>
+
+	</form>
+	
+<script language="JavaScript">
+<!--	
+function chkForm1(frm) {
+
+	//alert('5대암') ;
+	frm.submit();
+}
+
+function chkForm2(frm) {
+
+	frm.submit();
+}
+//-->
+</script>
+
+
+	<iframe name="company_proc" width=0 height=0 ></iframe>
+
+
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "건강검진";
+$page_sub_title = "건강검진 예약/결과";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+include_once $GP -> INC_WWW . '/count_inc.php';
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-2";
+?>
+<style>
+	.tableType-01 > table > tbody > tr > th,
+	.tableType-01 > table > tbody > tr > td {padding:15px 20px;}
+	.form .form-control {border:1px solid #ccc;background-color: #fff;}
+</style>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr16.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu-3">
+					<ul>
+						<li><a href="page16-1.html">건강검진 예약</a></li>
+						<li class="active"><a href="page16-2.html">예약 확인</a></li>
+						<li><a href="https://eo-m.com/2023/HSP/HSP_Controller.asp?part=nfc&mehId=GV2984&mtype=1" target="_blank">문진표 작성</a></li>
+						<li><a href="page16-4.html">검진순서</a></li>
+						<li><a href="page16-5.html">검진 주의사항</a></li>
+					</ul>
+				</div>
+				<div class="sub-middle-tit">
+					<h2>예약 확인</h2>
+					<span class="bar"></span>
+				</div>
+				<h3 class="cont-tit"><small>예약 확인</small></h3>
+                <form name="base_form" id="base_form" method="GET" action="/service/page16-2-2.html">
+				<div class="tableType-01 text-center">
+					<table>
+						<colgroup>
+							<col style="width: 25%;">
+							<col>
+							<col style="width: 25%;">
+							<col>
+						</colgroup>
+						<tbody>
+                            <tr>
+                                <th>이름</th>
+                                <td>
+                                    <div class="form no-margin">
+                                        <input type="text" class="form-control" name="tm_content5" id="tm_content5" value="<?=$_GET['tm_content5']?>">
+                                    </div>
+                                </td>
+                                <th>휴대전화</th>
+                                <td>
+                                    <div class="form no-margin">
+                                        <input type="text" class="form-control" name="tm_content6" id="tm_content6" value="<?=$_GET['tm_content6']?>">
+                                    </div>
+                                </td>
+                            </tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div id="btn-box" class="center">
+					<button href="" class="btn bg-blue" style="width: 270px;">예약 확인</button>
+				</div>
+                </form>
+
+				<div class="l-pad-box gray text-left" style="margin-top: 80px;">
+					<ul class="c-middot-list">
+						<li>뉴고려병원 건강검진 프로그램은 예약제입니다.</li>
+						<li>홈페이지나 상담전화를 이용하여 미리 예약하십시오. (평생건강증진센터 1933-9988)</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

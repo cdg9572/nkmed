@@ -1,0 +1,158 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+
+$MNSMQST01 = "";	$MNSMQST02 = "";	$MNSMQST03 = "";
+$MNSMQST04 = "";	$MNSMQST05 = "";	$MNSMQST06 = "";
+$MNSMQST07 = "";	$MNSMQST08 = "";	$MNSMQST09 = "";
+$mseq = $_POST[mseq];
+
+$sql = " SELECT * FROM smart_mj_mnsmoketbl WHERE MNSMJUBNO='".$mseq."' ";
+#echo "test".$_POST[seq]. " " . $_POST[md];
+if( $mseq<>""   ){ 
+	#정보 확인하고 
+	if($r = mysql_query($sql)){
+		$val = mysql_fetch_array($r);
+		if($val["MNSMJUBNO"] == ""){
+			mysql_query( " INSERT INTO smart_mj_mnsmoketbl ( MNSMJUBNO, WDT ) VALUES ( '".$mseq."', '".DATE("YmdHis")."' ) " );
+		}
+	}
+}
+
+#정보가져오기
+#$sql = " SELECT * FROM smart_mj_mnsmoketbl WHERE MNSMJUBNO='".$mseq."' ";
+if( $r = mysql_query($sql) ){
+		$val = mysql_fetch_array($r);
+		$MNSMQST01 = $val["MNSMQST01"];	$MNSMQST02 = $val["MNSMQST02"];	
+		$MNSMQST03 = $val["MNSMQST03"];	$MNSMQST04 = $val["MNSMQST04"];	
+		$MNSMQST05 = $val["MNSMQST05"];	$MNSMQST06 = $val["MNSMQST06"];	
+		$MNSMQST07 = $val["MNSMQST07"];	$MNSMQST08 = $val["MNSMQST08"];	
+		$MNSMQST09 = $val["MNSMQST09"];	
+}
+
+?>
+  <body topmargin=0>
+<form name="fm" method="post" action="cmm_2.html">
+<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+<input type="hidden" name="md" value="reg"/>
+<font style="font-size:12px; color:red;">※흡연 생활습관 평가도구</font> &nbsp;
+<!--<font  style="font-size:12px;">추가문진 1/7</font>-->
+<!--<table width="100%" class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 1. 다음 중 어디에 해당하십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST01" value="1" <? if( $MNSMQST01==1){ echo "checked"; }?> onclick="setC(1);" />1. 평생 비흡연자 
+				<input type="radio" name="MNSMQST01" value="2" <? if( $MNSMQST01==2){ echo "checked"; }?> onclick="setC(2);" />2. 과거 흡연자
+				<input type="radio" name="MNSMQST01" value="3" <? if( $MNSMQST01==3){ echo "checked"; }?> onclick="setC(3);" />3. 현재 흡연자
+				<input type="radio" name="MNSMQST01" value="4" <? if( $MNSMQST01==4){ echo "checked"; }?> onclick="setC(4);" />4. 전자담배 단독 사용자</td></tr>
+</table>-->
+<table width="100%" class="tbst02">
+<tr><td><b>평생 비흡연자, 과거 흡연자, 전자담배 단독 사용자는 작성하지 않습니다.</b></td></tr>
+</table>
+<table width='100%' cellspacing='10'>
+	<tr align='center'>
+	<td width='100%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand"><b>다음설문</b></td></tr>
+</table>
+<div id="dvd" style="">
+<table width="100%" class="tbst02">
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					 1. 앞으로 1개월 이내에 담배를 끊을 계획이 있으십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST02" value="1" <? if( $MNSMQST02==1){ echo "checked"; }?> />1. 1개월 안에 금연할 계획이 있다.<br/>
+				<input type="radio" name="MNSMQST02" value="2" <? if( $MNSMQST02==2){ echo "checked"; }?> />2. 6개월 안에 금연할 계획이 있다.<br/>
+				<input type="radio" name="MNSMQST02" value="3" <? if( $MNSMQST02==3){ echo "checked"; }?> />3. 6개월 이내는 아니지만 언젠가는 금연할 생각이 있다.<br/>
+				<input type="radio" name="MNSMQST02" value="4" <? if( $MNSMQST02==4){ echo "checked"; }?> />4. 현재로서는 전혀 금연할 생각이 없다.</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	2. 만약 오늘 당장 금연을 하신다면 금연성공을 얼마나 확신하십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST03" value="1" <? if( $MNSMQST03==1){ echo "checked"; }?> />0(전혀아님)
+&nbsp;<input type="radio" name="MNSMQST03" value="2" <? if( $MNSMQST03==2){ echo "checked"; }?> />1
+&nbsp;<input type="radio" name="MNSMQST03" value="3" <? if( $MNSMQST03==3){ echo "checked"; }?> />2
+&nbsp;<input type="radio" name="MNSMQST03" value="4" <? if( $MNSMQST03==4){ echo "checked"; }?> />3
+&nbsp;<input type="radio" name="MNSMQST03" value="5" <? if( $MNSMQST03==5){ echo "checked"; }?> />4
+&nbsp;<input type="radio" name="MNSMQST03" value="6" <? if( $MNSMQST03==6){ echo "checked"; }?> />5
+&nbsp;<input type="radio" name="MNSMQST03" value="7" <? if( $MNSMQST03==7){ echo "checked"; }?> />6
+&nbsp;<input type="radio" name="MNSMQST03" value="8" <? if( $MNSMQST03==8){ echo "checked"; }?> />7(매우확신)
+	</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	3. 아침에 일어나서 얼마 만에 첫 번째 담배를 피우십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST04" value="1" <? if( $MNSMQST04==1){ echo "checked"; }?> />1. 5분 이내
+				<input type="radio" name="MNSMQST04" value="2" <? if( $MNSMQST04==2){ echo "checked"; }?> />2. 6-30분 사이
+				<input type="radio" name="MNSMQST04" value="3" <? if( $MNSMQST04==3){ echo "checked"; }?> />3. 31-60분 사이
+				<input type="radio" name="MNSMQST04" value="4" <? if( $MNSMQST04==4){ echo "checked"; }?> />4. 60분 이후 </td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	4. 당신은 금연구역, 예를 들면 교회, 극장, 도서관 등에서 흡연을 참기가 어렵습니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST05" value="1" <? if( $MNSMQST05==1){ echo "checked"; }?> />1. 예 &nbsp;&nbsp;
+				<input type="radio" name="MNSMQST05" value="2" <? if( $MNSMQST05==2){ echo "checked"; }?> />2. 아니다</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	5. 어떤 경우의 담배가 가장 포기하기 싫으시겠습니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST06" value="1" <? if( $MNSMQST06==1){ echo "checked"; }?> />1. 아침 첫 담배 &nbsp;&nbsp;
+				<input type="radio" name="MNSMQST06" value="2" <? if( $MNSMQST06==2){ echo "checked"; }?> />2. 다른 나머지</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	6. 하루에 담배를 몇 개비나 피우십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST07" value="1" <? if( $MNSMQST07==1){ echo "checked"; }?> />1. 10개비 이하
+				<input type="radio" name="MNSMQST07" value="2" <? if( $MNSMQST07==2){ echo "checked"; }?> />2. 11-20개비
+				<input type="radio" name="MNSMQST07" value="3" <? if( $MNSMQST07==3){ echo "checked"; }?> />3. 21-30개비
+				<input type="radio" name="MNSMQST07" value="4" <? if( $MNSMQST07==4){ echo "checked"; }?> />4. 31개비 이상 </td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	7. 아침에 일어나서 첫 몇 시간 동안에, 하루 중 다른 시간보다 더 자주 담배를 피우십니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST08" value="1" <? if( $MNSMQST08==1){ echo "checked"; }?> />1. 예 &nbsp;&nbsp;
+				<input type="radio" name="MNSMQST08" value="2" <? if( $MNSMQST08==2){ echo "checked"; }?> />2. 아니오</td></tr>
+<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+	8. 하루 중 대부분을 누워 지낼 만큼 몹시 아프다면 담배를 피우시겠습니까?</th></tr>
+<tr><td><input type="radio" name="MNSMQST09" value="1" <? if( $MNSMQST09==1){ echo "checked"; }?> />1. 예 &nbsp;&nbsp;
+				<input type="radio" name="MNSMQST09" value="2" <? if( $MNSMQST09==2){ echo "checked"; }?> />2. 아니오</td></tr>
+</table>
+</div>
+<!--<input type="submit" value="다음 문진표"/>-->
+<table width='100%' cellspacing='10'>
+	<tr align='center'>
+	<td width='100%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand"><b>다음설문</b></td></tr>
+</table>
+</form>
+
+<script>
+function setC( val ){
+	//alert( val );
+	//alert( document.getElementById("dvd").style.display ) ;
+	if( val == 3){
+		document.getElementById("dvd").style.display = "";
+	}else{
+		document.getElementById("dvd").style.display = "none";
+			document.fm.MNSMQST02(0).checked = false;	document.fm.MNSMQST02(1).checked = false;
+			document.fm.MNSMQST02(2).checked = false; document.fm.MNSMQST02(3).checked = false;
+
+			document.fm.MNSMQST03(0).checked = false;	document.fm.MNSMQST03(1).checked = false;
+			document.fm.MNSMQST03(2).checked = false; document.fm.MNSMQST03(3).checked = false;
+			document.fm.MNSMQST03(4).checked = false;	document.fm.MNSMQST03(5).checked = false;
+			document.fm.MNSMQST03(6).checked = false; document.fm.MNSMQST03(7).checked = false;
+
+			document.fm.MNSMQST04(0).checked = false;	document.fm.MNSMQST04(1).checked = false;
+			document.fm.MNSMQST04(2).checked = false; document.fm.MNSMQST04(3).checked = false;
+
+			document.fm.MNSMQST05(0).checked = false;	document.fm.MNSMQST05(1).checked = false;
+
+			document.fm.MNSMQST06(0).checked = false;	document.fm.MNSMQST06(1).checked = false;
+
+			document.fm.MNSMQST07(0).checked = false;	document.fm.MNSMQST07(1).checked = false;
+			document.fm.MNSMQST07(2).checked = false; document.fm.MNSMQST07(3).checked = false;
+
+			document.fm.MNSMQST08(0).checked = false;	document.fm.MNSMQST08(1).checked = false;
+
+			document.fm.MNSMQST09(0).checked = false;	document.fm.MNSMQST09(1).checked = false;
+	}
+	
+}
+</script>

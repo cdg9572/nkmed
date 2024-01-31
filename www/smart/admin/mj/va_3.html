@@ -1,0 +1,160 @@
+<?
+	$MNCAGT5EM = $row[MNCAGT5EM];
+	$MNCAGT51C = $row[MNCAGT51C];
+	$MNCAGT52C = $row[MNCAGT52C];
+	$MNCAGT53C = $row[MNCAGT53C];
+	$MNCAGT54C = $row[MNCAGT54C];
+	$MNCAGT55C = $row[MNCAGT55C];
+
+	$MNCAGT6EM = $row[MNCAGT6EM];
+	$MNCAGT61C = $row[MNCAGT61C];
+	$MNCAGT62C = $row[MNCAGT62C];
+	$MNCAGT63C = $row[MNCAGT63C];
+	$MNCAGT64C = $row[MNCAGT64C];
+	$MNCAGT65C = $row[MNCAGT65C];
+
+	$MNCAGT7EM = $row[MNCAGT7EM];
+	$MNCAGT71C = $row[MNCAGT71C];
+	$MNCAGT72C = $row[MNCAGT72C];
+	$MNCAGT73C = $row[MNCAGT73C];
+	$MNCAGT74C = $row[MNCAGT74C];
+	$MNCAGT75C = $row[MNCAGT75C];
+
+	$MNCAGT8EM = $row[MNCAGT8EM];
+	$MNCAGT8RS = $row[MNCAGT8RS];
+	$MNCAGT9EM = $row[MNCAGT9EM];
+	$MNCAGT9RS = $row[MNCAGT9RS];
+	$MNCAGT10E = $row[MNCAGT10E];
+
+	$MNCAGT11E = $row[MNCAGT11E];	
+	$MNCAGT12E = $row[MNCAGT12E];	
+	$MNCAGT13E = $row[MNCAGT13E];	
+	$MNCAGT14E = $row[MNCAGT14E];	
+?>
+<p style="font-size:12px; color:red;">※ 해당되는 곳에 체크 해주십시오.</p>
+<table width="100%" style='font-size:8pt;'>
+<tr><td>5 현재 또는 과거에 진단받은 <b>위장질환</b>이 있으십니까?</td></tr>
+<tr><td><table width='100%' border='1' cellspacing='0'  style="font-size:8pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td>위궤양</td><td width='14%'>위축성위염</td>
+						<td width='14%'>장상피화생</td><td width='14%'>위용종</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT51C" value="1" <? if( $MNCAGT51C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT52C"  value="1" <? if( $MNCAGT52C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT53C"  value="1" <? if( $MNCAGT53C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT54C"  value="1" <? if( $MNCAGT54C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT55C"  value="1" <? if( $MNCAGT55C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT5EM"  value="1" <? if( $MNCAGT5EM=="1" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td></tr>
+	
+<tr><td>6 현재 또는 과거에 진단받은 <b>대장 항문질환</b>이 있으십니까?</td></tr>
+<tr><td><table width='100%' border='1' cellspacing='0'  style="font-size:8pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td>대장용종(폴립)</td><td width='14%'  style="font-size:9pt;">궤양성 대장염</td><td width='14%'>크론병</td>
+						<td width='14%' style="font-size:8pt;">치질(치핵,치열)</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT61C" value="1" <? if( $MNCAGT61C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT62C"  value="1" <? if( $MNCAGT62C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT63C"  value="1" <? if( $MNCAGT63C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT64C"  value="1" <? if( $MNCAGT64C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT65C"  value="1" <? if( $MNCAGT65C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT6EM"  value="1" <? if( $MNCAGT6EM=="1" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td></tr>
+	
+<tr><td>7 <b>간(肝) 질환</b>이 있으십니까?</td></tr>
+<tr><td><table width='100%' border='1' cellspacing='0' style="font-size:9pt;">
+					<tr style=" !important; text-align:center;">
+						<td width='14%'>질환명</td><td style="font-size:8pt;">B형간염바이러스<br>보유자</td><td style="font-size:9pt;" width='14%'>만성B형간염</td><td width='14%' style="font-size:9pt;">만성C형간염</td><td width='14%'>간경변</td><td width='14%'>기&nbsp;타</td><td width='14%'>없&nbsp;음</td></tr>
+					<tr style=" !important; text-align:center;"><td>질환유무</td>
+						<td><input type="checkbox" name="MNCAGT71C" value="1" <? if( $MNCAGT71C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT72C"  value="1" <? if( $MNCAGT72C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT73C"  value="1" <? if( $MNCAGT73C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT74C"  value="1" <? if( $MNCAGT74C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT75C"  value="1" <? if( $MNCAGT75C=="1" ){ echo "checked"; } ?> /></td>
+						<td><input type="checkbox" name="MNCAGT7EM"  value="1" <? if( $MNCAGT7EM=="1" ){ echo "checked"; } ?> /></td>
+						</tr>
+					</table>
+					</td></tr>
+	<tr><td height='10'></td></tr>
+<tr><td><b><font color='red'>여성분들만 응답해주세요.</font></b></td></tr>
+	
+<tr><td>8. 월경을 언제 시작하셨습니까? </td></tr>
+<tr><td  ><table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT8EM" value="1" <? if( $MNCAGT8EM == "1" ){ echo "checked"; } ?>  />만 
+						 <input type="text"  name="MNCAGT8RS"  value="<?=$MNCAGT8RS;?>" /> 세&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT8EM" value="2" <? if( $MNCAGT8EM == "2" ){ echo "checked"; } ?> />초경이 없었음</td></tr>
+					</table>
+					</td></tr>
+	
+<tr><td>9. 현재 월경의 상태는 어떠십니까? </td></tr>
+<tr><td><table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT9EM" value="1" <? if( $MNCAGT9EM == "1" ){ echo "checked"; } ?>> 아직 월경이 있음 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT9EM" value="2" <? if( $MNCAGT9EM == "2" ){ echo "checked"; } ?>> 자궁적출술을 하였음<br/>
+						<input type="radio" name="MNCAGT9EM" value="3" <? if( $MNCAGT9EM == "3" ){ echo "checked"; } ?> > 폐경되었음 
+						( 폐경연령 : 만 <input type="text"  name="MNCAGT9RS" value="<?=$MNCAGT9RS;?>" size='5' />세 )</td></tr>
+					</table>
+					</td></tr>
+	
+<tr><td>10. 폐경 후 증상을 완화하기 위해서 호르몬 제제를 복용하고 계시거나 과거에 복용하신 적이 있습니까? </td></tr>
+<tr><td><table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT10E" value="1" <? if( $MNCAGT10E == "1" ){ echo "checked"; } ?>> 호르몬 제제를 복용한 적 없음&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT10E" value="2" <? if( $MNCAGT10E == "2" ){ echo "checked"; } ?>> 2년 미만 복용<br/>
+						<input type="radio" name="MNCAGT10E" value="3" <? if( $MNCAGT10E == "3" ){ echo "checked"; } ?>> 아직 월경이 있음 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT10E" value="4" <? if( $MNCAGT10E == "4" ){ echo "checked"; } ?>> 5년 이상 복용<br/>
+						<input type="radio" name="MNCAGT10E" value="5" <? if( $MNCAGT10E == "5" ){ echo "checked"; } ?> > 모르겠음</td></tr>
+					</table>
+					</td></tr>
+	
+	<tr><td>11. 자녀를 몇 명 출산하셨습니까? </td></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT11E" value="1" <? if( $MNCAGT11E == "1" ){ echo "checked"; } ?>  />1명  &nbsp;&nbsp; &nbsp; &nbsp;
+						<input type="radio" name="MNCAGT11E" value="2" <? if( $MNCAGT11E == "2" ){ echo "checked"; } ?> /> 2명이상 &nbsp;&nbsp;
+						<input type="radio" name="MNCAGT11E" value="3" <? if( $MNCAGT11E == "3" ){ echo "checked"; } ?> /> 출산한 적 없음
+						</td></tr>
+					</table>
+					</td></tr>
+	
+	<tr><td>12. 모유 수유 여부 및 총 수유기간은? </td></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT12E" value="1" <? if( $MNCAGT12E == "1" ){ echo "checked"; } ?>> 6개월 미만&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT12E" value="2" <? if( $MNCAGT12E == "2" ){ echo "checked"; } ?>> 6개월~1년 미만<br/>
+						<input type="radio" name="MNCAGT12E" value="3" <? if( $MNCAGT12E == "3" ){ echo "checked"; } ?> > 1년 이상
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT12E" value="4" <? if( $MNCAGT12E == "4" ){ echo "checked"; } ?> > 수유한 적 없음</td></tr>
+					</table>
+					</td></tr>
+	
+	<tr><td>13. 과거에 유방에 양성 종양으로 진단받은 적이 있습니까?<br/>
+		( 양성 종양이란 악성종양인 암이 아닌 기타 물혹, 덩어리 등을 말합니다. )</td></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT13E" value="1" <? if( $MNCAGT13E == "1" ){ echo "checked"; } ?>  />예  &nbsp;&nbsp; &nbsp; &nbsp;
+						<input type="radio" name="MNCAGT13E" value="2" <? if( $MNCAGT13E == "2" ){ echo "checked"; } ?> /> 아니오 &nbsp;&nbsp;
+						<input type="radio" name="MNCAGT13E" value="3" <? if( $MNCAGT13E == "3" ){ echo "checked"; } ?> /> 모르겠음
+						</td></tr>
+					</table>
+					</td></tr>
+	
+	<tr><td>14. 피임약을 복용하고 계시거나 과거에 복용하신 적이 있습니까? </td></tr>
+	<tr><td  >
+					<table width='100%' border='0' cellspacing='0' style="font-size:9pt;" >
+					<tr><td style=" !important; text-align:left;">
+						<input type="radio" name="MNCAGT14E" value="1" <? if( $MNCAGT14E == "1" ){ echo "checked"; } ?>> 피임약을 복용한 적 없음&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT14E" value="2" <? if( $MNCAGT14E == "2" ){ echo "checked"; } ?>> 1년 미만 복용<br/>
+						<input type="radio" name="MNCAGT14E" value="3" <? if( $MNCAGT14E == "3" ){ echo "checked"; } ?>> 1년 이상 복용 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="MNCAGT14E" value="4" <? if( $MNCAGT14E == "4" ){ echo "checked"; } ?>> 모르겠음</td></tr>
+					</table>
+					</td></tr>
+	</table>

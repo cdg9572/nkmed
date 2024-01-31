@@ -1,0 +1,15 @@
+
+* {font-family:¸¼Àº°íµñ;}
+
+a { text-decoration: none; }
+
+.menu_list { list-style: none; padding:0px; margin:0px; }
+.menu_list li { width: 100%; }
+.menu_list li img{ width: 100%; margin-bottom:5px;}
+
+section { text-align: center; width: 100%; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+
+.intextst01 { width: 95%; border: none; padding:5px; }
+h2{ border-bottom: 3px solid #5B8DE7; font-size: 1em;	padding-bottom:5px; margin-bottom:10px; }

@@ -1,0 +1,393 @@
+<?
+include "./inc/topConf.html";
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.theme-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.structure-1.4.5.css">
+<link rel="stylesheet" type="text/css" href="jquery-mobile/jquery.mobile.inline-svg-1.4.5.min.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="jquery-mobile/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div data-role="page" id="cataPage09">
+<div data-role="header" data-position="fixed">
+		<h1><a href="index.html" class="head_title"><img src="images/logoFull.png" height="30" alt="21세기하나내과의원 로고"/></a></h1>
+		<a href="index.html" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		<a href="login.html?mode=D"  rel="external" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-power">Logout</a>
+	</div>
+<div data-role="content" class="cataBG_09">
+		<div class="banner"></div>
+		<h2 class="h2_title">위장및대장검사</h2>
+
+		<!--horizontal navigation tab start-->
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a class="ui-btn-active" href="#cata01-01" data-ajax="false"> 위장 검사</a></li>
+                    <li><a href="#cata01-02" data-ajax="false"> 헬리코박터균검사</a></li>
+					<li><a href="#cata01-03" data-ajax="false"> 대장내시경검사</a></li>
+					<li><a href="#cata01-04" data-ajax="false"> 분변검사</a></li>
+
+					
+                </ul>
+            </div>
+            <div id="cata01-01" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<?
+
+					$dsp_title = "위내시경" ;
+					
+					#$src_item = "상부소화관내시경검사" ;
+					$src_item = "위내시경소견" ;
+					$src_item1 = "수면위내시경" ;
+					$src_item2 = "UpperGastrointestinalEndoscopy" ;
+					$src_item3 = "위조직검사" ;
+					$src_item31 = "위조직" ;
+					$src_item4 = "CLO" ;
+
+					#$dsp_item = "상부소화관 내시경검사" ;
+					$dsp_item = "위내시경소견" ;
+					$dsp_title1 = "수면위내시경" ;
+					$dsp_item2 = "Upper Gastrointestinal Endoscopy" ;
+					$dsp_item3 = "위조직검사" ;
+					$dsp_item4 = "CLO" ;
+					
+
+					$data = ${"data_".$src_item} ;
+					$data1 = ${"data_".$src_item1} ;
+					$data2 = ${"data_".$src_item2} ;
+					$data3 = ${"data_".$src_item3} ;
+					$data31 = ${"data_".$src_item31} ;
+					$data4 = ${"data_".$src_item4} ;
+					
+
+					if($data || $data1  || $data2 || $data3 ||$data31 ||$data4 || $display_check)	{
+						echo "<li>
+								<!--<label>$dsp_title</label>-->
+								<table width='100%'>
+									<tr>
+										<!--<th width='80'>검사결과 </th>-->
+										<td>" ;
+
+								if($data) echo "$dsp_item : $data <br>" ;
+								#if($data1) echo "$dsp_item1 : $data1 <br>" ;
+								if($data1) echo str_replace("다.", "다.<br/>", str_replace("경 ==","경 == <br>",$data1))." <br>" ;
+								if($data2) echo "$dsp_item2 : $data2 <br>" ;
+								if($data3) echo "$dsp_item3 : $data3 <br>" ;
+								if($data31) echo str_replace("다.", "다.<br/>", str_replace("사 ==","사 == <br>",$data31))." <br>" ; 
+								if($data4) echo "$dsp_item4 : $data4 <br>" ;
+										
+										
+								echo"	</td>
+									</tr> " ;
+
+						echo"	</table></li> " ;
+					}
+					//=====================================================
+
+						$src_item = "UGI" ;
+					$dsp_item = "UGI(위장조영촬영)" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+					
+				?>
+
+
+				
+				</ul>
+
+				<?=get_category_desc("위장 검사", 1)?>
+
+
+            </div>
+
+			<div id="cata01-02" data-inset="true" class="comentBox">
+				
+                <ul class="view_data_list">
+
+				<? 
+					#$src_item = "헬리코박트_정성_" ;
+					$src_item = "CLO_H_Pylori_" ;
+					$dsp_item = "헬리코박터균검사(H.pylori) - 정성" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<!--<label>$dsp_item</label>-->
+								<table width='100%'>
+									<tr>
+										<!--<th width='80'>검사결과 </th>-->
+										<td>". str_replace("다.","다.<br>&nbsp;",str_replace(") ==",") ==<br>",$data)) ." </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   	$src_item = "HpyloriIgG" ;
+					$dsp_item = "헬리코박터균검사(H.pylori) - 정량" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+					
+				?>
+				
+				</ul>
+
+				<?=get_category_desc("헬리코박터균")?>
+
+            </div>
+
+
+			<div id="cata01-03" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+
+					$dsp_title = "대장내시경" ;
+					
+					#$src_item = "S상결장내시경" ;
+					$src_item = "대장내시경소견" ;
+					$src_item1 = "수면대장내시경" ;
+					
+					#$src_item2 = "수면대장내시경" ;
+					#$src_item3 = "대장내시경" ;
+					$src_item4 = "대장조직" ;
+
+					#$dsp_item = "S상결장내시경" ;
+					$dsp_item = "대장내시경소견" ;
+					#$dsp_item2 = "수면대장내시경" ;
+					#$dsp_item3 = "대장내시경" ;
+					$dsp_item4 = "대장조직" ;
+					
+
+					$data = ${"data_".$src_item} ;
+					$data1 = ${"data_".$src_item1} ;
+					#$data2 = ${"data_".$src_item2} ;
+					#$data3 = ${"data_".$src_item3} ;
+					$data4 = ${"data_".$src_item4} ;
+
+					//echo "333 : $data3";
+					
+
+					if($data || $data1 || $data2 ||$data3 ||$data4 || $display_check)	{
+						echo "<li>
+								<!--<label>$dsp_title</label>-->
+								<table width='100%'>
+									<tr>
+										<!--<th width='80'>검사결과 </th>-->
+										<td>" ;
+
+								if($data) echo "$dsp_item : $data <br>" ;
+								#if($data1) echo "$dsp_item1 : $data1 <br>" ;
+								if($data1) echo str_replace("다.", "다.<br/>", str_replace("경 ==","경 == <br>",$data1))." <br>" ;
+								if($data2) echo "$dsp_item2 : $data2 <br>" ;
+								if($data3) echo "$dsp_item3 : $data3 <br>" ;
+								#if($data4) echo "$dsp_item4 : $data4 <br>" ;
+								if($data4) echo str_replace("다.", "다.<br/>", str_replace("사 ==","사 == <br>",$data4))." <br>" ;
+										
+								echo"
+										</td>
+									</tr> " ;
+
+						echo"	</table></li> " ;
+					}
+					//=====================================================
+					
+				?>
+				</ul>
+
+				<?=get_category_desc("대장내시경 검사")?>
+            </div>
+
+
+
+			<div id="cata01-04" data-inset="true" class="comentBox">
+                <ul class="view_data_list">
+				<?
+				$src_item = "분변충란검사" ;
+					$dsp_item = "분변충란검사" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			   $src_item = "분변잠혈_정량_" ;
+					$dsp_item = "분변잠혈검사(정량)" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+				$src_item = "분변정량" ;
+					$dsp_item = "분변잠혈검사(정량)" ;
+					
+					$data = ${"data_".$src_item} ;
+					$esti = ${"esti_".$src_item} ;
+
+					if($data || $display_check)	{
+						echo "<li>
+								<label>$dsp_item</label>
+								<table width='100%'>
+									<tr>
+										<th width='80'>검사결과 </th>
+										<td>$data </td>
+									</tr> " ;
+
+						if($esti){
+							echo "	<tr>
+										<th>참고내용</th>
+										<td> $esti </td>
+									</tr> " ;
+						}
+
+						echo"	</table></li> " ;
+					}
+
+	   		   //=====================================================
+
+			
+					
+				?>
+				</ul>
+
+				<?=get_category_desc("분변검사")?>
+            </div>
+
+			
+
+            
+            <!--horizontal navigation tab end-->
+	</div>
+	<?
+		include "./inc/bottom.html";
+	?>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(document).ready(function(){
+
+function changeNavTab(left) {
+    var $tabs = $("div[data-role=navbar] li a");
+    var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+    var nextidx = 0;
+    if (left) {
+        nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+    } else {
+        nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+    }
+    $tabs.eq(nextidx).click();
+}
+
+$("#tabs").on("swipeleft", function (event) {
+    changeNavTab(true);
+});
+$("#tabs").on("swiperight", function (event) {
+    changeNavTab(false);
+});
+
+
+});//]]> 
+
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?
+session_start();
+header("Content-Type:text/html;charset=utf-8") ;
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+$DOCUMENT_ROOT = $DOCUMENT_ROOT."";
+
+include "../inc/func.php";
+include "../inc/dbConn.php";
+
+
+$sql = "select * from smart_munjin where seq = $seq" ;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+
+$reserve_seq = $row[reserve_seq] ;
+$name = $row[name] ;
+$mobile_no = $row[mobile_no] ;
+//testing_dsp($row) ;
+
+
+
+$r_sql = "select * from smart_reserve where seq = $reserve_seq" ;
+$r_res = mysql_query($r_sql);
+$r_row = mysql_fetch_array($r_res) ;
+
+
+testing_dsp("post") ;
+
+page_no
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Korea Hospital</title>
+
+<link rel="stylesheet" type="text/css" href="../css/boilerplate.css">
+<link rel="stylesheet" type="text/css" href="../css/defult.css">
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<script src="../js/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	
+	<header>
+		<a href="../index.html"><img src="../images/logo_sub.jpg" class="sub_logo" alt=""/></a>
+	</header>
+	
+	<h2>문진표 작성</h2>
+	
+	<section style="padding:0px 10px;">
+	
+		<table width="100%" class="tbst01">
+			<thead>
+				<tr>
+					<th colspan="4" style="background:#187DC0 !important; color: #FFF !important; text-align:left !important;">문진표 작성 완료</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="border:1px solid #187DC0; text-align:left;"><strong><?=$name?></strong>님<br/>
+					문진표 작성을 해주셔서 감사합니다.<br/>
+					<?=$name?> 님은 <strong><?=$r_row[reserve_date]?> <?=$r_row[reserve_hour]?>:<?=$r_row[reserve_min]?></strong>로 예약되셨습니다.<br/>
+					<strong>24시간 내</strong>에 담당 간호사가 연락드리도록 하겠습니다.<br/>
+					문의 사항이 있으시면 1661-7779 번으로 문의주세요.</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		<div style="padding:20px 0px;">
+			<a href="../index.html" class="btnst01">처음으로 가기</a>
+		</div>
+	</section>
+	
+	<footer>
+		<p>Copyright(c) 2016 NEW Korea Hospital</p>
+	</footer>
+</body>
+</html>

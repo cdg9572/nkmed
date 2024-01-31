@@ -1,0 +1,157 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+
+$d1_arr = explode("&", $v) ;
+
+//print_r($d1_arr) ;
+
+
+?>
+	
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					3. 본인, 부모, 형제, 자매, 자녀 중에 현재 암에 걸리신 분이나 과거에 걸리셨던 분이 계십니까?
+				</th>
+			</tr>
+			<tr>
+				<th>위암</th>
+			</tr>
+			<?
+				$category = "ui" ;
+				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[0], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[0], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[0], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[0], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[0], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[0], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[0], "자녀")?> > 자녀
+				</td>
+			</tr>
+			
+			<tr>
+				<th>유방암</th>
+			</tr>
+			<?
+				$category = "yu" ;
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[1], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[1], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[1], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[1], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[1], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[1], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[1], "자녀")?> > 자녀
+				</td>
+			</tr>
+			
+			<tr>
+				<th>대장암</th>
+			</tr>
+			<?
+				$category = "dae" ;
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[2], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[2], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[2], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[2], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[2], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[2], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[2], "자녀")?> > 자녀
+				</td>
+			</tr>
+			
+			<tr>
+				<th>간암</th>
+			</tr>
+			<?
+				$category = "gan" ;
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[3], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[3], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[3], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[3], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[3], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[3], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[3], "자녀")?> > 자녀
+				</td>
+			</tr>
+			
+			<tr>
+				<th>자궁경부암</th>
+			</tr>
+			<?
+				$category = "ja" ;
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[4], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[4], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[4], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[4], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[4], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[4], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[4], "자녀")?> > 자녀
+				</td>
+			</tr>
+			
+			<tr>
+				<th>기타 (<input type="text" name="no<?=$page_no?>_add"   value="<?=$v_add?>"  >암)</th>
+			</tr>
+			<?
+				$category = "etc" ;
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="없다" <?=getChecked($d1_arr[5], "없다")?> > 없다</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="모르겠다" <?=getChecked($d1_arr[5], "모르겠다")?> > 모르겠다</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="<?=$category?>[]" value="본인" <?=getChecked($d1_arr[5], "본인")?> > 본인 |
+					<input type="checkbox" name="<?=$category?>[]" value="부모" <?=getChecked($d1_arr[5], "부모")?> > 부모 |
+					<input type="checkbox" name="<?=$category?>[]" value="형제" <?=getChecked($d1_arr[5], "형제")?> > 형제 |
+					<input type="checkbox" name="<?=$category?>[]" value="자매" <?=getChecked($d1_arr[5], "자매")?> > 자매 |
+					<input type="checkbox" name="<?=$category?>[]" value="자녀" <?=getChecked($d1_arr[5], "자녀")?> > 자녀
+				</td>
+			</tr>
+		</table>
+	
+	

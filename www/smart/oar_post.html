@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+ <body>
+ <?
+ include "inc/dbConn.php";
+ 	$time = time();
+#	echo $time."<br>";
+#	echo $_POST["agency"]."<br>";	echo $_POST["agname"]."<br>";
+#	echo $_POST["agtel"]."<br>";	echo $_POST["rtype"]."<br>";
+	$gubn = ( $_POST["rtype"]=="G" ) ? "검진" : "진료" ;
+	$dpt = ( $_POST["rtype"]=="G" ) ? $_POST["dept2"] : $_POST["dept"] ;
+#	echo $dpt."<br>";	
+#	echo $_POST["pname"]."<br>";	echo $_POST["rdt"]."<br>";	echo $_POST["rmemo"]."<br>";
+
+	$sql = " SELECT * FROM nkh_overseas
+			WHERE AGENCY='".$_POST["agency"]."'
+				AND AGNAME='".$_POST["agname"]."'
+				AND AGTEL='".$_POST["agtel"]."'	
+				AND RDT='".$_POST["rdt"]."'	
+				AND RTYPE='".$_POST["rtype"]."'
+				AND PNAME='".$_POST["pname"]."' ";
+	if($data=mysql_query($sql)){
+		$row = mysql_fetch_array($data);
+		if($row[OIDX]==""){
+			$sql = " INSERT INTO nkh_overseas 
+				VALUES ( 0, '".$_POST["pname"]."', ''
+				, '".$_POST["rdt"]."', '".$_POST["rtype"]."', '".$dpt."'
+				, '".$_POST["rmemo"]."', '".$_POST["agency"]."', '".$_POST["agname"]."'
+				, '".$_POST["agtel"]."', '".$time."', '".$_SERVER['REMOTE_ADDR']."'
+				, '등록' , '' , '' , '' , '' )";
+			if(mysql_query($sql)){
+				#echo " 등록되었습니다. ";
+				$memo = "외국인유치정보등록\n";
+				$memo .= $_POST["agency"]."\n";
+				$memo .= "담당:".$_POST["agname"]."\n";
+				$memo .= "연락처:".$_POST["agtel"]."\n";
+				$memo .= $gubn.": ".$dpt."\n";
+				$memo .= "예약희망일 : ".$_POST["rdt"]."\n";
+				
+				echo "<form id='frm' name='frm' action='http://119.197.19.46:8000/oar_sms.html' method='post' target='ifrm' style='display:none;'>";
+				echo "<textarea name='msg' required/>$memo</textarea>";
+				echo "</form>";
+				//문자 발송 정보처리...
+			}else{
+				echo "
+				<script>
+					alert(\"오류가 발생되었습니다.\\n병원에 문의 바랍니다.\\n연락처:1833-9988\\n평일:9:00~12:30, 13:30~17:00\");
+					location.href=\"oar.html\";
+				</script> ";
+				//echo "오류가 발생되었습니다.";
+				return false;
+			}
+		}else{
+			echo "
+				<script>
+					alert(\"등록된 정보가 있습니다.\\n내용변경 문의는 병원에 문의 바랍니다.\");
+					location.href=\"oar.html\";
+				</script> ";
+			return false;
+		}
+	}
+
+?>
+<iframe id="ifrm" name="ifrm" src="" style="display:none;"></iframe>
+</body>
+</html>
+<script>
+document.getElementById("frm").submit();
+setTimeout(function() {
+  alert("간평예약등록 되었습니다.\n\n병원 담당자를 통해 최종확정됩니다.\n\n병원 담당자가 업무시간에 빠른 연락드리겠습니다.");
+  location.href="oar.html";
+}, 1000);
+</script>

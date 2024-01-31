@@ -1,0 +1,11 @@
+<?
+#session_start();
+session_destroy();
+?>
+<script>
+function goto(){
+	location.href="http://smart.nkhospital.net/report2/index.html?l=<?=$_GET[l];?>";
+}
+</script>
+<body onload="goto()";>
+</body>

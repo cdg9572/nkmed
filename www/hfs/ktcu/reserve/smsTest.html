@@ -1,0 +1,103 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include  "../inc/func.php";
+$tbl = "smart_reserve";
+header("Content-Type:text/html;charset=utf-8") ;
+
+mysql_query("set names utf8;");
+
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+
+
+
+		//================== 현재시간 체크
+		$nowDate = date("YmdHi") ;
+		$nowDay = date("w") ;
+		$nowHour = date("YmdHi") ;
+
+
+		$DBinCh = "N" ;
+
+		//시간, 분, 초, 월, 일, 년
+
+		$mktime =  mktime(17, 34, 45, 10, 22, 2016);
+		echo date("YmdHi",   $mktime);
+
+		$chDate = date("YmdHi");
+		$chDay = date("w");
+		$chHour = date("H");
+
+		echo "<p>chDay :$chDay" ;	
+
+		if($chDay == '0' || $chDay == '6') //== 일요일이면
+		{
+			echo "<p>주말 $chDay" ;	
+			$DBinCh = "Y" ;
+		}
+
+		if($chHour >= "18")
+		{
+			echo "<p>밤 $chHour" ;	
+			$DBinCh = "Y" ;
+		}
+
+		
+		echo "<p>" ;
+
+		$nowDate2 = $nowDate +2  ;
+		echo "$nowDate | $nowDate2 >> $nowDay <br>" ;
+
+
+		echo date('YmdHi',strtotime("+1 day")); 	
+		
+		
+		//exit;
+		//====================================
+	
+		//========== sms 발송 
+		$smsf_phone = "01092576895" ;
+		$smsf_rephone = "0319809190" ;
+		$smsf_msg = "[ $nowDate2 예약]$name 님이 $reserve_date $reserve_hour".":"."$reserve_min 에 $item_category 를 예약 하셨습니다" ;
+		$smsf_mode = "imt" ;
+
+		$smsf_opt1 = "$nowDate2 예약 ||seq=".$newSeq ;
+
+
+		
+
+?>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<form action="http://www.smsfly.co.kr/outside/asp_sms_send.php" method="post" name="sendSMS">
+		<input type="hidden" name="smsf_id" value="nk9190" /><br/>
+		<input type="hidden" name="smsf_pwd" value="nk9195" /><br/>
+		<input type="hidden" name="smsf_keycode" value="e90055399877b23dcc123728d6f41cbc" /><br/>
+		<input type="text" name="smsf_returl" value="http://smart.nkhospital.net/inc/smsTest_return.php" /><br/>
+		<input type="text" name="smsf_phone" value="<?=$smsf_phone?>" /> 전송번호<br/>
+		<input type="text" name="smsf_rephone" value="0319809190" /> 회신번호<br/>
+		<input type="text" name="smsf_msg" value="<?=$smsf_msg?>" />단문메시지<br/>
+		<input type="text" name="smsf_mode" value="tim" /> imt : 즉시 / tim : 예약<br/>
+		<input type="text" name="smsf_tdate" value="201610201710" /> 예약시간 2016 0905 0808 (년월일시분)<br/>
+		<input type="text" name="smsf_opt1" value="<?=$smsf_opt1?>" /> 추가 파라미터 <br/>
+		<input type="submit" value="전송테스트" />
+	</form>
+
+	<?
+	//exit;
+	?>
+
+	<script>
+			document.sendSMS.submit() ;
+	</script>
+
+
+

@@ -1,0 +1,778 @@
+<?
+
+session_start();
+include "../../inc/dbConn.php";
+include  "../../inc/func.php";
+
+mysql_query("set names utf8;");
+
+header("Content-Type:text/html;charset=utf-8"); //"
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL ^ E_NOTICE);
+
+//==== register_global 처리
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+@extract($_FILES);
+@extract($_ENV);
+@extract($_COOKIE);
+@extract($_SESSION);
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Print</title>
+<script src="https://use.fontawesome.com/72561c7928.js"></script>
+<style>
+body { position:relative; width: 100%; height: 100%; margin: 0; padding: 0; background-color: #ddd; }
+img {width:16px !important; height:16px; vertical-align:middle; }
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: middle; }
+* { box-sizing: border-box; -moz-box-sizing: border-box; }
+.paper { width: 210mm; min-height: 297mm; padding: 15mm; /* set contents area */ margin: 10mm auto; border-radius: 5px; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); }
+.content { padding: 0; height: 257mm; }
+@page { size: A4; margin: 0; }
+.content img { width:100%; }
+.printBtn, .printBtn:visited { display:block; width:100px; padding:35px 0px; background:#999; font-size:16px; color:#FFF; text-decoration: none; text-align:center; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; position:fixed; top: 2mm; right:4mm;}
+.printBtn:hover { background-color:#333; }
+
+h1 { text-align:center; font-size:16pt; }
+h2 { font-size:12pt; text-align: center; margin-bottom:5mm; }
+h3 {border:1px solid #333; background:#ccc; font-size:10pt; margin:0; padding:1mm 2mm; }
+h4 {font-size:10pt; padding:0; margin:0; margin-bottom:1mm; font-weight: normal; font-family: serif;}
+.box {border:1px solid #333; border-top: none; padding:1mm 3mm; margin-bottom:1mm; }
+p { font-size:9pt; font-family:serif; margin:0; padding:0; margin-bottom:1mm; }
+.tts1 { margin-bottom:2mm; }
+.tts1 th, .tts1 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts1 th { font-size:10pt; font-weight:bold;}
+.tts1 td { font-size:9pt; }
+.tts2 { margin-bottom:2mm; }
+.tts2 th, .tts2 td { border:1px solid #333; font-family:serif; padding:1mm;}
+.tts2 th { font-size:10pt; font-weight:bold; text-align:left;}
+.tts2 td { font-size:9pt; text-align:center; }
+@media print {
+	html, body {width: 210mm; height: 297mm; background: #fff; }
+	.paper {margin: 0; padding:15mm; border: initial; border-radius: initial; width: initial; min-height: initial; box-shadow: initial; background: initial; page-break-after: always; }
+	.printBtn { display:none; }
+}
+</style>
+</head>
+
+
+<?
+
+$sql = "select * from smart_munjin_cmp where seq = $seq" ;
+#echo $sql;
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res) ;
+
+testing_dsp("$sql") ;
+
+$reserve_seq = $row[reserve_seq] ;
+$name = $row[name] ;
+$mobile_no = $row[mobile_no] ;
+//testing_dsp($row) ;
+
+testing_dsp("post") ;
+testing_dsp("get") ;
+testing_dsp("session") ;
+
+
+?>
+
+<body>
+	<a href="javascript:window.print()" class="printBtn">출력하기</a>
+	<div class="paper">
+        <div class="content">
+			<h1>건강검진 공통 문진표</h1>
+			<h2><img src="check.jpg" style="width:20px !important; height:20px !important;" /> 일반건강검진<span style="margin-left:15mm;">
+				<img src="square.jpg" style="width:20px !important; height:20px !important;" /> 생애전환기 건강진단</span></h2>
+			<p>※ 검진대상자는 문진문항을 빠짐없이 표시하여야만 정확한 건강위험평가 결과를 통보 받으실 수 있습니다.</p>
+			<table width="100%" class="tts1">
+				<tr>
+					<th rowspan="2" width="13%">수검자성명</th>
+					<td rowspan="2" width="17%"><?=$row[name]?></td>
+					<th rowspan="2" width="13%">주민등록번호</th>
+					<td rowspan="2" width="17%">&nbsp;</td>
+					<th rowspan="2" width="11%">전화번호</th>
+					<th width="12%">자택</th>
+					<td width="17%">&nbsp;</td>
+				</tr>
+				<tr>
+					<th>핸드폰</th>
+					<td><?=$row[mobile_no]?>;</td>
+				</tr>
+				<tr>
+					<td colspan="4" align="center">
+						<img src="square.jpg" />건강보험가입자
+						<span style="margin-left:5mm;"><img src="square.jpg" /> 의료급여수급권자</span>
+					</td>
+					<th>e-Mail</th>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<th rowspan="2">주소</th>
+					<td rowspan="2" colspan="5">&nbsp;</td>
+					<th>우편번호</th>
+				</tr>
+				<tr>
+					<td align="center">&nbsp;</td>
+				</tr>
+			</table>
+			
+			<p>※ 귀하께서는 국민건강보험공단, 질병관리본부, 국립암센터 또는 보건소에서 제공하는 건강 관련 정보 및 사업 안내를 메일 또는 우편 등으로 받아 보는 것에 동의하십니까? <strong style="font-family:sans-serif;"><span style="margin-left:5mm;"><img src="square.jpg" /> 예</span> <span style="margin-left:5mm;"><img src="square.jpg" /> 아니요</span></strong></p>
+			
+			<h3>질환력(과거력, 가족력) 관련 문항</h3>
+			<div class="box">
+				<p>※ 아래 문항을 읽고 현재 상태에 해당하는 내용에 ‘○'표시해 주십시오.</p>
+
+			<?
+				$page_no = 1 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+
+
+				<h4>1. 다음과 같은 <strong>질병으로 진단을 받았거나, 현재 약물 치료 중</strong>이십니까?</h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th>질병명</th>
+						<th>뇌졸중<br/>(중풍)</th>
+						<th>심장병<br/><span style="font-size:7pt">(심근경색/협심증)</span></th>
+						<th>고혈압</th>
+						<th>당뇨병</th>
+						<th>이상지질<br/>혈증</th>
+						<th>폐결핵</th>
+						<th>기타<br/>(암포함)</th>
+					</tr>
+					<tr>
+						<th>진단여부</th>
+						<td align="center">
+							<? if($d1_arr[0] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[5] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[6] == "진단여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						
+					
+					</tr>
+					<tr>
+						<th>약물치료여부</th>
+						<td align="center">
+							<? if($d1_arr[0] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[5] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[6] == "약물치료여부") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+				</table>
+				
+
+
+			<?
+				$page_no = 2 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				$d1_arr = explode("&", $v) ;
+
+			?>
+
+				<h4>2. <strong>부모, 형제, 자매 중에 다음 질환을 앓았거나 해당 질환으로 사망한 경우</strong>가 있으십니까?</h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th>질병명</th>
+						<th>뇌졸중<br/>(중풍)</th>
+						<th>심장병<br/><span style="font-size:7pt">(심근경색/협심증)</span></th>
+						<th>고혈압</th>
+						<th>당뇨병</th>
+						<th>기타<br/>(암포함)</th>
+					</tr>
+					<tr>
+						<th>있음</th>
+						<td align="center">
+							<? if($d1_arr[0] == "뇌졸중(중풍)") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[1] == "심장병(심근경색/협심증)") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[2] == "고혈압") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[3] == "당뇨병") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+						<td align="center">
+							<? if($d1_arr[4] == "기타(암포함)") echo "<img src='circle.jpg' width='16' >" ; ?>
+						</td>
+					</tr>
+				</table>
+
+
+			<?
+				$page_no = 3 ;
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+			?>
+				
+				<h4>3. <strong>B형간염 바이러스 보유자</strong>입니까? 
+					<strong>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 예
+						</span>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니요
+						</span>
+						<span style="margin-left:5mm;">
+							 <? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 모름
+						</span>
+					</strong>
+				</h4>
+			</div>
+			
+			<h3>흡연관련 문항</h3>
+			<div class="box">
+				<h4>4. 아래 문항을 읽고 자신의 <strong>현재 상태에 해당되는</strong> 내용을 작성하여 주십시오.</h4>
+
+
+			<?
+			$page_no = 4 ;
+			$ori_page_no = $page_no ;
+
+			$page_no = $page_no."_1" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+				
+				<h4>4-1. 지금까지 평생 총 5갑(100개비)이상의 담배를 피운 적이 있습니까?</h4>
+				<p>
+					 <? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니오(☞ 5번 문항으로 가세요)
+					<span style="margin-left:5mm;">
+					<? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 예, 지금은 끊었음 (☞ 4-2번 문항으로 가세요)</span>
+				</p>
+				<p><? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 예, 현재도 흡연 중 (☞ 4-3번 문항으로 가세요)</span></p>
+				
+			
+
+			<?
+			unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+			$page_no = $ori_page_no ;
+
+			$page_no = $page_no."_2" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+
+				<h4>4-2. <strong>과거에 흡연</strong>을 하였으나 현재는 끊으셨다면</h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th width="70%">금연 전까지 담배를 몇 년이나 피우셨습니까?</th>
+						<td>총 <?=$v?> 년</td>
+					</tr>
+					<tr>
+						<th>금연하시기 전 평균 하루 흡연량은 몇 개비였습니까?</th>
+						<td><?=$v_add?> 개비</td>
+					</tr>
+				</table>
+				
+
+			<?
+			unset($page_no, $v_name,   $v_add_name,  $v,    $v_add   ) ;
+
+
+			$page_no = $ori_page_no ;
+
+
+			$page_no = $page_no."_3" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+				<h4>4-3. <strong>현재도 흡연</strong>을 하신다면</h4>
+				<table width="100%" class="tts1">
+					<tr>
+						<th width="70%">몇 년째 담배를 피우시고 계십니까?</th>
+						<td>총 <?=$v?> 년</td>
+					</tr>
+					<tr>
+						<th>평균 하루 흡연량은 몇 개비였습니까?</th>
+						<td><?=$v_add?> 개비</td>
+					</tr>
+				</table>
+			</div>
+			
+			<h3>음주 관련 문항</h3>
+			<div class="box">
+				<h4>5. 아래 문항을 읽고 자신의 <strong>현재 상태에 해당</strong>하는 내용을 작성하여 주십시오.</h4>
+			<?
+			$page_no = 5 ;
+			$ori_page_no = $page_no ;
+
+			$page_no = $page_no."_1" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+				<h4>5-1. 1주에 <strong>평균 며칠</strong>이나 술을 마십니까?<strong style="margin-left:5mm;"> <?=$v?> 일</strong></h4>
+
+			<?
+
+			$page_no = $ori_page_no ;
+
+			$page_no = $page_no."_2" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+				<h4>5-2. 술을 마실 때 보통 <strong>하루에 얼마나</strong> 마십니까?<strong style="margin-left:5mm;"><?=$v?> 잔</strong></h4>
+				<p>(※ 술 종류에 관계없이 각각의 술잔으로 계산합니다.단, 캔맥주 1개(355cc)는 맥주 1.6잔과 같습니다.)</p>
+			</div>
+			
+		</div>    
+    </div>
+	<div class="paper">
+        <div class="content">
+			<h3>신체활동(운동) 관련 문항</h3>
+			<div class="box">
+				<h4>6. 아래 문항을 읽고 <strong>최근 1주일간 활동 상태</strong>에 해당하는 답에 <img src="check.jpg" width="16" /> 표시해 주십시오.</h4>
+
+
+			<?
+			$page_no = 6 ;
+			$page_no = $page_no."_1" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+			?>
+
+				<h4>6-1. 최근 1주일간, 평소보다 숨이 훨씬 더 차게 만드는 격렬한 활동을, 하루 20분 이상 시행한 날은 며칠이었습니까? <span style="font-size:8pt;">(예: 달리기, 에어로빅, 빠른 속도로 자전거 타기, 등산 등)</span></h4>
+				<p style="text-align:center; font-size:11pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "0") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 0
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 1
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 2
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 3
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "4") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 4
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "5") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 5
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "6") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 6
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "7") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 7
+					</span>
+				</p>
+
+
+				<?
+			$page_no = 6 ;
+			$page_no = $page_no."_2" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+
+			?>
+				
+				<h4>6-2. 최근 1주일간,  평소보다 숨이 조금 더 차게 만드는 중간정도 활동을, 하루 30분 이상 시행한 날은 며칠이었습니까? <span style="font-size:8pt;">(예 : 빠르게 걷기, 복식 테니스 치기,  보통 속도로 자전거 타기, 엎드려 걸레질하기 등)</span></h4>
+				<p><span style="font-family:sans-serif;">※6-1 응답에 관련된 신체활동은 제외</span></p>
+				<p style="text-align:center; font-size:11pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "0") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 0
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 1
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 2
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 3
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "4") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 4
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "5") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 5
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "6") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 6
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "7") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 7
+					</span>
+				</p>
+
+
+				<?
+			$page_no = 6 ;
+			$page_no = $page_no."_3" ;
+
+			$v_name = "no".$page_no ;
+			$v_add_name = "no".$page_no."_add" ;
+
+			$v = $row[$v_name] ;
+			$v_add = $row[$v_add_name] ;
+
+
+			?>
+				
+				<h4>6-3. 최근 1주일간, 한 번에 적어도 10분 이상씩 걸은 경우를 합하여, 하루 총 30분 이상 걸은 날은  며칠이었습니까? <span style="font-size:8pt;">(예: 가벼운 운동, 출퇴근이나 여가 시간에 걷기 포함)</span></h4>
+				<p><span style="font-family:sans-serif;">※ 6-1, 6-2 응답에 관련된 신체활동은 제외 <?=$v?></span></p>
+				<p style="text-align:center; font-size:11pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "0") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 0
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "1") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 1
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "2") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 2
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "3") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 3
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "4") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 4
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "5") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 5
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "6") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 6
+					</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "7") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 7
+					</span>
+				</p>
+			</div>
+			
+			<h3>인지기능관련 문항<span style="font-size:9pt;">(만 66세, 70세와 74세 건강검진 대상자만 답하시오)</span><br/><span style="font-size:9pt; font-weight:normal;">(동행한 가족이 있으면 가족이 작성, 없으면 본인이 작성)</span></h3>
+			<div class="box">
+				<h4>7. <strong>1년 전과 비교</strong>하여, <strong>현재 상태에 해당</strong>하는 곳에 <img src="check.jpg" width="16" /> 표시해 주십시오.</h4>
+
+				<?
+				$page_no = 7 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_1" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+
+
+				<h4>7-1. 자신의 기억력이 친구나 동료들에 비해 못하다고 생각하십니까?</h4>
+				<p style="text-align:center; font-size:10pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "아니다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "가끔(조금)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 가끔(조금) 그렇다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "자주(많이)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자주(많이) 그렇다</span>
+				</p>
+				
+				<?
+				$page_no = 7 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_2" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+
+				<h4>7-2. 자신의 기억력이 1년 전에 비해 더 나빠졌다고 생각하십니까?</h4>
+				<p style="text-align:center; font-size:10pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "아니다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "가끔(조금)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 가끔(조금) 그렇다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "자주(많이)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자주(많이) 그렇다</span>
+				</p>
+				
+				<?
+				$page_no = 7 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_3" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+
+				<h4>7-3. 중요한 일을 하는데 있어서도 기억력이 문제가 되는 경우가 있습니까?</h4>
+				<p style="text-align:center; font-size:10pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "아니다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "가끔(조금)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 가끔(조금) 그렇다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "자주(많이)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자주(많이) 그렇다</span>
+				</p>
+
+				<?
+				$page_no = 7 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_4" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+				
+				<h4>7-4. 자신의 기억력이 떨어진 것을 남들도 알고 있습니까?</h4>
+				<p style="text-align:center; font-size:10pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "아니다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "가끔(조금)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 가끔(조금) 그렇다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "자주(많이)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자주(많이) 그렇다</span>
+				</p>
+				
+
+				<?
+				$page_no = 7 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_5" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+				<h4>7-5. 잘해오던 일상적인 일을 하는데 예전보다 서툴러졌다고 생각하십니까?</h4>
+				<p style="text-align:center; font-size:10pt;">
+					<span style="margin-right:5mm;">
+						<? if($v  == "아니다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 아니다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "가끔(조금)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 가끔(조금) 그렇다</span>
+					<span style="margin-right:5mm;">
+						<? if($v  == "자주(많이)그렇다") echo "<img src='check.jpg' />";  else echo "<img src='square.jpg' />"  ; ?> 자주(많이) 그렇다</span>
+				</p>
+				
+			</div>
+			
+			<h3>기분상태 관련 문항 <span style="font-size:9pt;">(만40세 생애전환기 건강진단 대상자만 답하시오)</span></h3>
+			<div class="box">
+
+
+			
+
+
+				<h4>8. <strong>최근 일주일 동안</strong> 아래와 같은 일들이 얼마나 자주 일어났었는지 답변해 주십시오.</h4>
+				<table width="100%" class="tts2">
+					<tr>
+						<th width="32%" style="text-align:center;">최근 일주일간 나는</th>
+						<th width="17%" style="text-align:center;">극히 드물었다.<br/><span style="font-size:7pt;">(일주일간 1일 이하)</span></th>
+						<th width="17%" style="text-align:center;">가끔 있었다.<br/><span style="font-size:7pt;">(일주일간 2일)</span></th>
+						<th width="17%" style="text-align:center;">종종 있었다.<br/><span style="font-size:7pt;">(일주일간 3~4일)</span></th>
+						<th width="17%" style="text-align:center;">대부분 그랬다<br/><span style="font-size:7pt;">(일주일간 5일 이상)</span></th>
+					</tr>
+
+					<?
+				$page_no = 8 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_1" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+
+					<tr>
+						<th style="font-weight:normal;">8-1. 평소에는 아무렇지도 않던 일들이 괴롭고 귀찮게 느껴졌다.</th>
+						<td><? if($v  == "극히") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "가끔") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "종종") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "대부분") echo "<img src='circle.jpg' />";  ?> </td>
+					</tr>
+
+
+						<?
+				$page_no = 8 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_2" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+					<tr>
+						<th style="font-weight:normal;">8-2. 먹고 싶지 않고, 식욕이 없었다.</th>
+						<td><? if($v  == "극히") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "가끔") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "종종") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "대부분") echo "<img src='circle.jpg' />";  ?> </td>
+					</tr>
+
+
+						<?
+				$page_no = 8 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_3" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+					<tr>
+						<th style="font-weight:normal;">8-3. 어느 누가 도와준다 하더라도, 나의 울적한 기분을 떨쳐 버릴 수 없을 것 같았다.</th>
+						<td><? if($v  == "극히") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "가끔") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "종종") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "대부분") echo "<img src='circle.jpg' />";  ?> </td>
+					</tr>
+
+
+
+						<?
+				$page_no = 8 ;
+				$ori_page_no = $page_no ;
+
+				$page_no = $page_no."_4" ;
+
+				$v_name = "no".$page_no ;
+				$v_add_name = "no".$page_no."_add" ;
+
+				$v = $row[$v_name] ;
+				$v_add = $row[$v_add_name] ;
+
+				?>
+					<tr>
+						<th style="font-weight:normal;">8-4. 상당히 우울했다.</th>
+						<td><? if($v  == "극히") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "가끔") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "종종") echo "<img src='circle.jpg' />";  ?> </td>
+						<td><? if($v  == "대부분") echo "<img src='circle.jpg' />";  ?> </td>
+					</tr>
+				</table>
+			</div>
+			
+			<div style="border:1px solid #666;">
+				<p style="padding:1mm 2mm; margin:0; color:#666;">※ 만 66세 수검자의 경우 별지 제2호 서식(만 66세용 생애전단기 건강진단 문진표)도 함께 작성 하세요.</p>
+			</div>
+			
+		</div>    
+    </div>
+</body>
+</html>

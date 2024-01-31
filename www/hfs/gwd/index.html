@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>김포시 장애인복지시설연합회 전용 간편예약사이트</title>
+	<link rel="stylesheet" type="text/css" href="/css/boilerplate.css">
+	<link rel="stylesheet" type="text/css" href="/css/defult.css">
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<style>
+	body	{	text-align: center;	}
+	.mtd	{	margin-top: 200px;	}
+	label	{	min-width:100px!important;border:1px solid green;	}
+	.fdiv	{	display:inline-block;margin-top: 10px; font-weight:bold;color:#717170;	}
+	.fdiv input{	border-radius: 5px;	border:1px solid lightblue; padding:5px;}
+	.btnFont{	margin-top: 20px; font-weight:bold; padding:10px 20px ; border-radius: 5px;	border:1px solid lightblue; background-color:#c2f0ff; color:#717170;}
+	</style>
+</head>
+<body>
+	<div class='mtd'>
+		<img src="/images/gwd_logo.png" />
+		<h2>뉴고려병원 전용 간편예약</h2>
+		<form autocomplete="off" method="post" action="gwd_check.html">
+		<div class='fdiv' style='margin-left: 83px;'>성명</div>
+		<div class='fdiv'><input type="text" name="gname" value="" size="14" maxlength="10" required/></div>
+		<br>
+		<div class='fdiv'>생년월일(6자리)</div>
+		<div class='fdiv'><input type="text" name="gbdt" value="" size="14" maxlength="6" required/></div>
+		<br>
+		<div class='fdiv' style='margin-left: 66px;'>연락처</div>
+		<div class='fdiv'><input type="text" name="gtel" value="" size="14" maxlength="14" required/></div>
+		<br>
+		<button class='btnFont'>조회하기</button>
+		</form>
+		<!--iframe src="" name="ifrm"></iframe-->
+	</div>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<?
+session_start();
+include "../inc/dbConn.php";
+include "../inc/chkLogin.php";
+include "../inc/func.php";
+
+$query = "select * from reserve_list_new where seq='".$seq."'";
+$result = mysql_query($query);
+$rows = mysql_fetch_array($result);
+
+
+$uploadDir	= $DOCUMENT_ROOT."/admin/log/upFiles/";
+$sel_day  = substr($rows['reserve_day'],0,10);
+$ye_date = date("Y-m-d", strtotime("-1 day", strtotime($sel_day))); //어제
+$to_date = date("Y-m-d", strtotime("+1 day", strtotime($sel_day))); //내일
+
+$to_date2 = date("Y-m-d", strtotime("+1 day", strtotime(date( "Y-m-d" )))); //내일
+
+
+$doms            = array( "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" );
+$week = date('w', strtotime($sel_day)); //요일
+
+?>
+
+<!doctype html>
+<html>
+	<head>
+	<meta charset="euc-kr">
+	<title>Untitled Document</title>
+	<link href="../_css/style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="../_js/tabmenu.js"></script>
+	<script type="text/javascript" src="../_js/contant_box_01.js"></script>
+	<script src="/admin/test/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/admin/_js/chkBoxtoImg.js"></script>
+	<script src="/admin/test/jquery.filestyle.js" type="text/javascript"></script>
+	<script src="/admin/_js/Calendar.js" type="text/javascript"></script>
+	
+	<link type="text/css" href="/admin/ui/themes/base/ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="/admin/ui/ui.core.js"></script>
+	<script type="text/javascript" src="/admin/ui/ui.datepicker.js"></script>
+	<script type="text/javascript" src="/admin/ui/ui.datepicker-ko.js"></script>
+	<link type="text/css" href="/admin/ui/demos.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+			function closeiFrame() {
+			window.parent.location.reload();
+			window.parent.CloseManageFrame();
+			}
+			function send(){
+				//if(document.form.deliver.value =="Y" && $){
+				//}
+				document.form.submit();
+			}
+			function add_item(item,start_date){
+				window.open("/admin/slotset/add_item.html?item="+item+"&start_date="+start_date,"additem","width=540,height=600");
+			}
+			function clear_item(sel_item){
+				
+
+				eval('document.form.'+sel_item).value = "";
+				
+				
+			}
+
+			function openWin(page, bar) {
+				if(!bar) bar = "no";
+
+				var win = window.open(page, 'POP', 'left=100, top=100, toolbar=no, location=no, directories=no, status=yes, menuBar=no, scrollBars='+bar+', resizable=no');
+				win.focus();
+			}
+
+	</script>
+
+
+	
+	</head>
+<div id="contant_box_01"><span class="hiddenText">-팝업표시레이어-</span></div>
+<body style="background-color:transparent;">
+<div class="wrap_res_manage_layer_1070">
+<form name="form" autocomplete="off"  method="post" name="FRM" enctype="multipart/form-data" action="./proc.php">
+<input type="hidden" name="sel_day" value="<?=$sel_day?>">
+<div class="top_manage_layer_1070">
+        <div style="position:absolute; right:20px; top:20px;"><a onclick="closeiFrame();" style="cursor:pointer;"><img src="../_img/button/IMG905218.gif"></a></div>
+        <div style="margin-top:40px;">
+                <table border="0" cellspacing="0" cellpadding="0" align="center" class="day_calender_small_list">
+                <tr>
+                        <td width="30" align="center" bgcolor="#62aa00"></td>
+                        <td width="180" align="center"><input type="text" name="date" value='<?=$sel_day?>' id="date"  class="small_date_style"></td>
+                        <td width="80" align="center"><span class="small_day_style">
+                            <?=$doms[$week]?>
+                            </span></td>
+                        <td width="30" align="center" bgcolor="#62aa00"></td>
+                    </tr>
+            </table>
+    	</div>   
+</div>
+
+<div class="contants_res_manage_layer_1070">
+<table width="1070" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="400" valign="top">
+        	<table width="100%" height="415" border="0" cellspacing="0" cellpadding="5" class="write_table_02">
+            	<tr>
+                    <th colspan="2">예약자 정보.</th>
+                </tr>
+                <tr>
+                	<th style="font-size:12px;">사업장&nbsp;&nbsp;</th>
+                    <td>
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="non_table">
+                            <tr>
+                                <td>
+                                    <?=$rows[reserve_place]?>
+                                    
+                                </td>
+                               
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                	<th style="font-size:12px;">예&nbsp;약&nbsp;&nbsp;시&nbsp;간</th>
+                	<td>
+                        <?=sel_time($rows[reserve_time])?>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="35%" style="font-size:12px;">성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명</th>
+                    <td><?=$rows[reserve_name]?></td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px;">생년월일</th>
+                    <td><?=$rows[jumin_no]?></td>
+                </tr>
+               
+                <tr>
+                    <th style="font-size:12px;">휴&nbsp;&nbsp;&nbsp;&nbsp;대&nbsp;&nbsp;&nbsp;&nbsp;폰</th>
+                    <td><?=$rows[mobile_no]?></td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px;">이&nbsp;&nbsp;&nbsp;&nbsp;메&nbsp;&nbsp;&nbsp;&nbsp;일</th>
+                    <td><?=$rows[email]?></td>
+                </tr>
+                <tr>
+                    <th valign="top"  style="padding-top:10px; font-size:12px;">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</th>
+                    <td valign="top" style="margin:0; padding:0;">
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="non_table">
+                            <tr>
+                                <td><?if($rows[post1] != ""){?>[<?=$rows[post1]?>-<?=$rows[post2]?>]<?}?> <?=$rows[addr1]?> <?=$rows[addr2]?>
+								</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr> 
+            </table>
+
+        </td>
+        <td width="10"></td>
+              
+        <td valign="top">
+        	<table width="100%" height="415" border="0" cellspacing="0" cellpadding="0" class="write_table_02">
+                <tr >
+                    <th>추가검진항목</th>
+                </tr>
+                <tr>
+                	<td valign="top">
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="non_table">
+                            <tr>
+                                <td width="33%" valign="top">
+                                	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="res_table_menu_02">
+                                        <tr>
+                                            <td colspan="3" class="thd">위검사</td>
+                                        </tr>
+                                        <tr>
+											<td colspan="3"><input name="item1" readonly type="checkbox" value="Y" <?if($rows[reserve_type1]=="Y"){echo "checked";}?>>위장조명촬영</td>
+										</tr>
+										<tr>
+											<td colspan="3"><input name="item2" readonly type="checkbox" value="Y" <?if($rows[reserve_type2]=="Y"){echo "checked";}?>>위내시경합계</td>
+										</tr>
+										<tr>
+											<td colspan="3"><input name="item3" readonly type="checkbox" value="Y" <?if($rows[reserve_type3]=="Y"){echo "checked";}?>>일반위</td>
+										</tr>
+										<tr>
+											<td colspan="3"><input name="item4" readonly type="checkbox" value="Y" <?if($rows[reserve_type4]=="Y"){echo "checked";}?>>수면위</td>
+										</tr>
+
+
+										<tr>
+                                        	<td colspan="3" class="thd">대장검사</td>
+                                        <tr>
+
+										<tr>
+											<td colspan="3"><input name="item5" readonly type="checkbox" value="Y" <?if($rows[reserve_type5]=="Y"){echo "checked";}?>>수면대장 (<?=sel_time($rows[reserve_time5])?>)</td>
+										</tr>
+
+                                        <tr>
+											<td colspan="3" align=""><input name="item6" readonly type="checkbox" value="Y" <?if($rows[reserve_type6]=="Y"){echo "checked";}?>>일반대장</td>
+										</tr>
+                                        </tr>
+                                        	<td colspan="3" class="thd">CT검사</td>
+                                        <tr>
+                                        <tr>
+											<td colspan="3"><input name="item7" readonly type="checkbox" value="Y" <?if($rows[reserve_type7]=="Y"){echo "checked";}?>>CT 합계</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item8" readonly type="checkbox" value="Y" <?if($rows[reserve_type8]=="Y"){echo "checked";}?>>뇌 합계</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item9" readonly type="checkbox" value="Y" <?if($rows[reserve_type9]=="Y"){echo "checked";}?>>경추 CT</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item10" readonly type="checkbox" value="Y" <?if($rows[reserve_type10]=="Y"){echo "checked";}?>>흉부 CT</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item11" type="checkbox" value="Y" <?if($rows[reserve_type11]=="Y"){echo "checked";}?>>요추 CT</td>
+										</tr>
+                                    </table>
+
+                                </td>
+                                <td width="33%" valign="top">
+                                	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="res_table_menu_02">
+                                    	 <tr>
+											<td colspan="3"><input name="item12" readonly type="checkbox" value="Y" <?if($rows[reserve_type12]=="Y"){echo "checked";}?>>복부비만 CT</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item13" readonly type="checkbox" value="Y" <?if($rows[reserve_type13]=="Y"){echo "checked";}?>>부비동 CT</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item14" readonly type="checkbox" value="Y" <?if($rows[reserve_type14]=="Y"){echo "checked";}?>>관상동맥 CT</td>
+										</tr>
+                                    	<tr>
+                                        	<td colspan="3" class="thd">MR 검사</td>
+                                        </tr>
+
+										<tr>
+											<td colspan="3"><input name="item15" readonly type="checkbox" value="Y" <?if($rows[reserve_type15]=="Y"){echo "checked";}?>>MR합계 <?if($rows[reserve_time15]!=""){echo "(".sel_time($rows[reserve_time15]).")";}?></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item16" readonly type="checkbox" value="Y" <?if($rows[reserve_type16]=="Y"){echo "checked";}?>>뇌MRI-T2 <?if($rows[reserve_time16]!=""){echo "(".sel_time($rows[reserve_time16]).")";}?></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item17" readonly type="checkbox" value="Y" <?if($rows[reserve_type17]=="Y"){echo "checked";}?>>뇌MRA<?if($rows[reserve_time17]!=""){echo "(".sel_time($rows[reserve_time17]).")";}?></td></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item18" readonly type="checkbox" value="Y" <?if($rows[reserve_type18]=="Y"){echo "checked";}?>>MRI MBA<?if($rows[reserve_time18]!=""){echo "(".sel_time($rows[reserve_time18]).")";}?></td></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item19" readonly type="checkbox" value="Y" <?if($rows[reserve_type19]=="Y"){echo "checked";}?>>뇌MRI<?if($rows[reserve_time19]!=""){echo "(".sel_time($rows[reserve_time19]).")";}?></td></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item20" readonly type="checkbox" value="Y" <?if($rows[reserve_type20]=="Y"){echo "checked";}?>>척추MRI <?if($rows[reserve_time20]!=""){echo "(".sel_time($rows[reserve_time20]).")";}?></td></td>
+										</tr>
+
+										<tr>
+											<td colspan="3"><input name="item21" readonly type="checkbox" value="Y" <?if($rows[reserve_type21]=="Y"){echo "checked";}?>>기타MRI<?if($rows[reserve_time21]!=""){echo "(".sel_time($rows[reserve_time21]).")";}?></td></td>
+										</tr>
+
+
+
+
+                                       
+                                        
+                                        <tr>
+                                        	<td colspan="3" class="thd">PET-CT 검사</td>
+                                        </tr>
+
+										<tr>
+											<td colspan="3"><input name="item22" readonly type="checkbox" value="Y" <?if($rows[reserve_type22]=="Y"){echo "checked";}?>>합계 <?if($rows[reserve_time22]!=""){echo "(".sel_time($rows[reserve_time22]).")";}?></td></td>
+										</tr>
+										<tr>
+											<td colspan="3"><input name="item23" readonly type="checkbox" value="Y" <?if($rows[reserve_type23]=="Y"){echo "checked";}?>>Torso <?if($rows[reserve_time23]!=""){echo "(".sel_time($rows[reserve_time23]).")";}?></td></td>
+										</tr>
+										
+
+
+
+
+                                    </table>
+                                </td>
+                                <td width="34%" valign="top">
+                                	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="res_table_menu_02">
+                                    	<tr>
+											<td colspan="3"><input name="item24" readonly type="checkbox" value="Y" <?if($rows[reserve_type24]=="Y"){echo "checked";}?>>B+T <?if($rows[reserve_time24]!=""){echo "(".sel_time($rows[reserve_time24]).")";}?></td></td>
+										</tr>
+										<tr>
+                                        	<td colspan="3" class="thd">특수초음파검사</td>
+                                        </tr>
+
+										<tr>
+											<td colspan="3"><input name="item25" readonly type="checkbox" value="Y" <?if($rows[reserve_type25]=="Y"){echo "checked";}?>>심초 <?if($rows[reserve_time25]!=""){echo "(".sel_time($rows[reserve_time25]).")";}?></td></td>
+										</tr>
+
+
+										<tr>
+											<td colspan="3"><input name="item26" readonly type="checkbox" value="Y" <?if($rows[reserve_type26]=="Y"){echo "checked";}?>>유초 <?if($rows[reserve_time26]!=""){echo "(".sel_time($rows[reserve_time26]).")";}?></td></td>
+										</tr>
+
+
+
+
+                                        
+                                        <tr>
+											<td colspan="3"><input name="item27" readonly type="checkbox" value="Y" <?if($rows[reserve_type27]=="Y"){echo "checked";}?>>ABVS</td>
+										</tr>
+                                    	<tr>
+                                        	<td colspan="3" class="thd">정신건강</td>
+                                        </tr>
+                                        <tr>
+											<td colspan="3"><input name="item28" readonly type="checkbox" value="Y" <?if($rows[reserve_type28]=="Y"){echo "checked";}?>>정신건강의학</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item29" readonly type="checkbox" value="Y" <?if($rows[reserve_type29]=="Y"){echo "checked";}?>>치매선별</td>
+										</tr>
+                                        <tr>
+											<td colspan="3"><input name="item30" readonly type="checkbox" value="Y" <?if($rows[reserve_type30]=="Y"){echo "checked";}?>>알코올의존도</td>
+										</tr>
+                                        <tr>
+                                        	<td colspan="3" class="thd">비고</td>
+                                        </tr>
+                                        <tr>
+											<td colspan="3">당일결과</td>
+										</tr>
+										 <tr>
+                                        	<td colspan="3" class="thd">코멘트</td>
+                                        </tr>
+                                        <tr>
+											<td colspan="3"><textarea rows="4" cols="25"><?=$rows[comment]?></textarea></td>
+										</tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+			</table>
+			<table width="500" height="315" border="0" cellspacing="0" cellpadding="0" >
+                <tr>
+                	<td valign="top">
+						<table cellpadding="0" border="0" cellspacing="0" width="150">
+							<tr>
+								<td width="150" valign="top">&nbsp;	</td>
+								<td width="200" valign="top">&nbsp;</td>
+								<td width="200" valign="top">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</form> 
+</div>
+</body>
+</html>

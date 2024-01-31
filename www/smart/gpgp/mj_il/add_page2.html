@@ -1,0 +1,66 @@
+<?
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+
+$d1_arr = explode("&", $v) ;
+
+//print_r($d1_arr) ;
+
+
+?>
+		<p style="font-size:12px; color:red;"><i class="fa fa-certificate" aria-hidden="true"></i>
+			※ 질환력(과거력, 가족력) 관련 문항.
+		</p>
+		
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					2. 부모, 형제, 자매 중에 다음 질환을 앓았거나 해당 질환으로 사망한 경우가 있으십니까? 
+				</th>
+			</tr>
+			
+			<?
+				$category = "c01" ; //== 뇌졸중(중풍)				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="뇌졸중(중풍)" <?=getChecked($d1_arr[0], "뇌졸중(중풍)")?> > 뇌졸중(중풍)</td>
+			</tr>
+
+
+			<?
+				$category = "c02" ; //== 심장병(심근경색/협심증)
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="심장병(심근경색/협심증)" <?=getChecked($d1_arr[1], "심장병(심근경색/협심증)")?> > 심장병(심근경색/협심증)</td>
+			</tr>
+
+			<?
+				$category = "c03" ; //== 고혈압				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="고혈압" <?=getChecked($d1_arr[2], "고혈압")?> > 고혈압</td>
+			</tr>
+
+			<?
+				$category = "c04" ; //== 당뇨병				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="당뇨병" <?=getChecked($d1_arr[3], "당뇨병")?> > 당뇨병</td>
+			</tr>
+
+			
+
+			<?
+				$category = "c05" ; //== 기타(암포함)				
+			?>
+			<tr>
+				<td><input type="checkbox" name="<?=$category?>[]" value="기타(암포함)" <?=getChecked($d1_arr[6], "기타(암포함)")?> >기타(암포함) </td>
+			</tr>
+
+		</table>
+	
+	

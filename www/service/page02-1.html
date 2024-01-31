@@ -1,0 +1,515 @@
+<?php 
+$title = "서비스 이용안내";
+$page_title = "예약/발급";
+$page_sub_title = "진료 예약(재진)";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once $GP -> INC_WWW . '/head.php';
+include_once $GP -> INC_WWW . '/count_inc.php';
+include_once($GP -> CLS."/class.member.php");
+include_once($GP -> CLS."/class.doctor.php");
+$C_Member 	= new Member;
+$C_Doctor 	= new Doctor;
+
+$dep1 = "0";$dep2 = "0-0";$dep3 = "0-0-1";
+
+$args = "";
+$args['mb_code'] = $_SESSION['susercode'];
+$data_member = $C_Member->Mem_Info($args);
+
+if($data_member) {extract($data_member);}
+
+?>
+<style>
+	.tabMenu ul li.active {
+		border-color: #1795d0;
+		background-color: #1795d0;
+	}
+</style>
+<body>
+	<div id="wrap">
+		<?php 
+		include_once  $GP -> INC_WWW . "/header.php";
+		if (!$C_Func -> is_login()) {    
+                echo "<script>$('.modal-box').fadeIn();$('.close').hide();</script>";
+         }else{
+            //고객번호 조회하기
+            $url = "http://1.214.232.188:8070/api/v1/";
+            $path01 = "exp_patient";   
+
+            $data01 = array(
+                "cust_name" =>  $mb_name,
+                "cust_phone" => str_replace("-", "",$mb_mobile)
+            );
+
+            $json_data = json_encode($data01);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path01,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_POSTFIELDS => $json_data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'),
+            ));
+            $response = curl_exec($curl);                  
+            $data = json_decode($response, true);	   
+
+            $_SESSION['suserbirth'] 	= $data['data'][0]['cust_birth'];
+            $_SESSION['suserpatientno'] 	= $data['data'][0]['cust_no'];
+            $_SESSION['susercount'] 	= $data['data_cnt'];
+
+            if($mb_name == "최도규" || $mb_name == "서준범" || $mb_name == "김마리아" || $mb_name == "채승병" || $mb_name == "여나래"){
+                 $_SESSION['suserpatientno'] 	= "782844";                 
+            }   
+            
+            if($mb_name == "" || $mb_mobile == ""){
+                $C_Func->put_msg_and_go("성함,휴대전화 정보가 정확하지 않습니다.", "/mypage/mypage01.html");
+            }
+            else if( $data['data_cnt'] < 1){    
+                    $C_Func->put_msg_and_go("신환 환자이시거나 예약 이력이 조회되지 않습니다.", "/");			                                 
+            }  
+         }       
+
+        $url = "http://1.214.232.188:8070/api/v1/";
+        $path01 = "check_reserve"; 
+
+        $data01 = array(
+                    "cust_no" =>  $_SESSION['suserpatientno']                
+                    );
+
+        $json_data = json_encode($data01);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url.$path01,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => $json_data,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'),
+        ));
+        $response = curl_exec($curl);                  
+        $data02 = json_decode($response, true);
+		?>
+		<form id="r_form" name="r_form" class="body" action="?" method="post">
+		<input type="hidden" value="ONLINE_RESERVE_REG" id="r_mode" name="r_mode">                          
+        <input type="hidden" value="<?=$_SESSION['suserphone']?>" id="tor_rs_phone" name="tor_rs_phone">
+		<input type="hidden" value="<?=$ptype?>" id="ptype" name="ptype">    		
+		<input type="hidden" value="<?=$tor_name?>" id="tor_name" name="tor_name">    
+		<input type="hidden" name="mb_code" id="mb_code" value="<?=$_SESSION['susercode']?>" />
+		<input type="hidden" name="tor_rs_name" id="tor_rs_name" value="<?=$_SESSION['susername']?>" />
+		<input type="hidden" name="dr_mcode_next" id="dr_mcode_next" />
+		<input type="hidden" name="dr_mtreat_no_next" id="dr_mtreat_no_next" />
+		<input type="hidden" name="is_date" id="is_date"/>
+		<input type="hidden" name="is_time" id="is_time"/>
+		<input type="hidden" name="is_comt" id="is_comt"/>
+		<input type="hidden" name="dr_idx_next" id="dr_idx_next"/>
+		<input type="hidden" id="dr_ps_next" name="dr_ps_next">        
+		<input type="hidden" id="c_type_next" name="c_type_next">
+		<input type="hidden" id="dr_name_next" name="dr_name_next">  
+		<div id="container">
+			<?php include_once "../inc/location.php" ?>
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr15.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small>
+						<?=$page_sub_title?>
+					</small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont">
+				<div class="tabMenu">
+					<ul>
+						<li class="active"><a href="page02-1.html">진료과 예약</a></li>
+						<li><a href="page02-2.html">의료진 예약</a></li>
+					</ul>
+				</div>
+				<h3 class="cont-tit" style="display: flex;justify-content: space-between;padding-bottom: 20px;">
+					환자 정보 <a href="#none" class="btn" style="margin-top: -10px;" onclick="$('.rsv-submit.recent').fadeIn(100)">최근 예약내역 불러오기</a>
+				</h3>
+				<div class="tableType-01 text-center">
+					<table>
+						<tbody>
+							<tr>
+								<th>성함</th>
+								<td><?=$mb_name?></td>
+								<th>전화</th>
+								<td><?=$mb_mobile?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>             
+				<div class="rsv-step-wrap">
+					<!-- 진료과 선택 -->
+					<div class="rsv-step-box">
+						<div class="rsv-step-tit">
+							<span class="step">STEP 1</span>
+							<span class="bar"></span>
+							<span class="tit">진료과를 선택해주세요.</span><!-- 이부분 진료과 선택하면 진료과 명으로 바뀌면 됩니다~ -->
+						</div>
+						<div class="rsv-step-cont">
+							<div class="initial">
+								<button type="button" data-target="all">ALL</button>
+								<button type="button" data-target="ㄱ">ㄱ</button>
+								<button type="button" data-target="ㄴ">ㄴ</button>
+								<button type="button" data-target="ㄷ">ㄷ</button>
+								<button type="button" data-target="ㄹ">ㄹ</button>
+								<button type="button" data-target="ㅁ">ㅁ</button>
+								<button type="button" data-target="ㅂ">ㅂ</button>
+								<button type="button" data-target="ㅅ">ㅅ</button>
+								<button type="button" data-target="ㅇ">ㅇ</button>
+								<button type="button" data-target="ㅈ">ㅈ</button>
+								<button type="button" data-target="ㅊ">ㅊ</button>
+								<button type="button" data-target="ㅋ">ㅋ</button>
+								<button type="button" data-target="ㅌ">ㅌ</button>
+								<button type="button" data-target="ㅍ">ㅍ</button>
+								<button type="button" data-target="ㅎ">ㅎ</button>
+							</div>
+							<div class="initial-list">
+                            <? foreach($GP->NEW_MOBILE_CLINIC_REAL as $val=>$key){                                
+                                //echo '<button type="button">· '.$key.'</button> ';
+                               }
+                            ?>
+								<button type="button" data-group="ㅈ" value="AB">· 정형외과</button>
+								<button type="button" data-group="ㅅ" value="AC">· 신경외과</button>
+                                <button type="button" data-group="ㅇ" value="K">· 일반외과</button>															
+								<button type="button" data-group="ㅅ" value="AK">· 심장혈관흉부외과</button>
+								<button type="button" data-group="ㅅ" value="AD">· 소화기내과</button>
+								<button type="button" data-group="ㅅ" value="AE">· 순환기내과</button>
+								<button type="button" data-group="ㅅ" value="AF">· 신장내과</button>
+								<button type="button" data-group="ㅎ" value="T">· 호흡기내과</button>
+                                <button type="button" data-group="ㅅ" value="M">· 신경과</button>								
+								<button type="button" data-group="ㅅ" value="N">· 산부인과</button>
+								<button type="button" data-group="ㅍ" value="V">· 피부비뇨의학과</button>
+                                <button type="button" data-group="ㅈ" value="W">· 재활의학과</button>
+                                <button type="button" data-group="ㅈ" value="Z">· 정신건강의학과</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- 의료진 선택 -->
+					<div class="rsv-step-box">
+						<div class="rsv-step-tit">
+							<span class="step">STEP 2</span>
+							<span class="bar"></span>
+							<span class="tit" id="doctor_tit">의료진을 선택해주세요.</span><!-- 이부분 의료진 선택하면 의료진 이름으로 바뀌면 됩니다~ -->
+						</div>
+						<div class="rsv-step-cont">
+							<!-- <div class="radio">
+								<label for="li-fast">
+									<input id="li-fast" type="radio" name="li" checked> 예약 빠른순
+								</label>
+								<label for="li-list">
+									<input id="li-list" type="radio" name="li"> 가나다순
+								</label>
+							</div> -->
+							<ul class="doc">                                                   							
+							</ul>
+						</div>
+					</div>
+
+					<!-- 날짜/시간 선택 -->
+					<div class="rsv-step-box" id="data_box">
+						<div class="rsv-step-tit">
+							<span class="step">STEP 3</span>
+							<span class="bar"></span>
+							<span class="tit">예약일시를 선택해주세요.</span><span class="tit-time"></span><!-- 이부분 예약일시 선택하면 -> 2023/07/06/15:20:00 이런식으로 나옵니다 -->
+						</div>
+						<div class="rsv-step-cont" style="display:none">
+							<p class="schedule-tit">해당 진료일정은 <span class="c-blue"></span>이 소속된 <br class="mb-show">전체(과/센터) 진료 일정입니다.</p>
+							<div class="schedule-wrap"> 
+								<div class="schedule-noti">원하는 날짜와 시간을 선택해 주세요.</div>
+								<div class="schedule-box">
+									<div class="cal">										
+									</div>
+									<div class="calInfo">
+										<div class="label-box">
+                                            <span class="today">오늘</span>
+											<span class="possible">예약가능</span>
+											<span class="choice">선택</span>
+										</div>
+										<div class="label-time">											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- //end .rsv-step-wrap -->
+				<div id="btn-box" class="center">
+					<a href="#none" class="btn bg-green" style="width: 180px;" id="res1_submit">예약하기</a>
+				</div>
+			</div>
+		</div>
+		<!-- //end #container -->
+
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+
+	<!-- 모달 -->
+	<!-- 최근 예약 내역 -->
+	<div class="rsv-submit recent">
+		<div class="rsv-submit-box small">
+			<div class="rsv-submit-head">
+				<img src="/resource-pc/images/logo.png" alt="인봉의료재단 뉴고려병원">
+				<button type="button" onclick="$('.rsv-submit.recent').fadeOut(100)">닫기</button>
+			</div>
+			<div class="rsv-submit-body">
+				<p class="rsv-box-tit">최근 예약내역<span class="c-green scale"> ●</span></p>
+				<!-- <div class="s-pad-box gray text-left">
+					오늘 날짜로부터 1년 이내의 내역만 노출됩니다.
+				</div> -->
+				<div class="tableType-01 navy text-center">
+					<table>
+						<thead>
+							<tr>
+								<th>예약일</th>
+								<th>시간</th>
+								<th>의료진</th>
+								<th>선택</th>
+							</tr>
+						</thead>
+						<tbody>
+                        <? if(count($data02['data']) > 0) { ?>                                   
+                                <? 
+                                for($i=0;$i<count($data02['data']);$i++){ 
+                                        $args["dr_mcode"] = $data[$i]["PHY_EMPL_NO"];
+                                        $dr_info = $C_Doctor->Doctor_Info_Code($args);
+                                        $dr_ps  = $GP -> DOCTOR_POSITION[$dr_info["dr_position"]];	                          
+                                        $recept_no = $data02['data'][$i]["recept_no"] ;
+                                ?>
+                                    <input type="hidden" name="recept_no" id="recept_no" value="<?=$data02['data'][$i]["recept_no"]?>" />
+                                    <tr>                                        
+                                        <td><?=substr($data02['data'][$i]['reserv_ymd'],0,4)."-".substr($data02['data'][$i]['reserv_ymd'],4,2)."-".substr($data02['data'][$i]['reserv_ymd'],6,2)?></td>
+                                        <td><?=substr($data02['data'][$i]['reserv_time'],0,2).":".substr($data02['data'][$i]['reserv_time'],2,2);?>
+                                        <td><?=$data02['data'][$i]['reserv_doct_nm']?></td> 
+                                        <td>
+                                            <button type="button" onclick="window.location.href='/service/page14-2.html';" class="btn bg-deepblue">선택</button>
+                                        </td>                                                                              
+                                                                      
+                                    </tr>
+
+                                <? } ?>                                
+                        <? }else { ?>
+                            <tr>
+                                <td colspan="4">예약한 내역이 없습니다.</td>	
+                           </tr>
+                        <? } ?>							
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- <div class="rsv-submit-foot">										
+				<button type="button" onclick="$('.rsv-submit.recent').fadeOut(100)">취소</button>
+				<button type="submit" id="res_submit">확인</button>
+			</div> -->
+		</div>
+	</div>
+	<!-- 예약버튼 누른 후 -->
+	<div class="rsv-submit rsv">
+		<div class="rsv-submit-box small">
+			<div class="rsv-submit-head">
+				<img src="/resource-pc/images/logo.png" alt="인봉의료재단 뉴고려병원">
+				<button type="button" onclick="$('.rsv-submit.rsv').fadeOut(100)">닫기</button>
+			</div>
+			<div class="rsv-submit-body">
+				<p class="rsv-box-tit">진료예약신청<span class="c-green scale"> ●</span></p>
+				<textarea name="comt" id="comt" class="rsv-textarea" cols="30" rows="5" placeholder="환자의 증상을 입력해 주시기 바랍니다.(30자 이내)"></textarea>
+			</div>
+			<div class="rsv-submit-foot">										
+				<button type="button" onclick="$('.rsv-submit.rsv').fadeOut(100)">취소</button>
+				<button type="submit" id="res_submit">예약하기</button>
+			</div>
+		</div>
+	</div>
+    </form>
+	<div id="loadingOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999;">
+	  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 20px;">
+		처리중이니 잠시 기다려 주세요...
+	  </div>
+	</div>
+	<script>
+		$(function(){
+			$(".rsv-step-wrap .rsv-step-cont .initial button").on("click",function(){
+				if($(this).eq() == 0){
+					$(this).siblings().removeClass("on")
+				}else{
+					$(this).addClass("on").siblings().removeClass("on")
+				};
+			});
+
+			$(".rsv-step-wrap .rsv-step-cont .initial-list button, .rsv-step-wrap .rsv-step-cont .doc li, .schedule-box .label-time button").on("click",function(){
+				$(this).addClass("on").siblings().removeClass("on")
+			});	 
+            
+        });   
+            
+       
+        //진료과  자음 선택
+        $('.initial button').click(function() {
+            var target = $(this).data('target');
+            
+            if (target === 'all') {
+            // "ALL" 버튼 클릭 시 모든 버튼 표시
+            $('.initial-list button').show();
+            } else {
+            // 다른 버튼 클릭 시 선택한 target과 동일한 data-group을 가진 버튼만 표시
+            $('.initial-list button[data-group="' + target + '"]').show();
+            $('.initial-list button[data-group!="' + target + '"]').hide();
+            }
+        }); 
+        
+        //진료과 선택 후 의료진 표시
+        $('.initial-list button').click(function() {            
+			$('.rsv-step-box:eq(2) .rsv-step-cont').hide();//캘린더 숨기기
+   		    $('.rsv-step-box:eq(1) .rsv-step-tit .tit').text("의료진을 선택해주세요.");
+			$('.rsv-step-box:eq(2) .rsv-step-tit .tit').text("예약일시를 선택해주세요.");
+			$(".tit-time").text("");
+
+			 var val = $(this).val();
+						 
+			 if(val == '') {
+				 return false;
+			 }
+
+			 var buttonText = $(this).text().replace('· ', '');
+      		 $('.rsv-step-box:first .rsv-step-tit .tit').text(buttonText);
+
+
+             $.ajax({
+				type: "POST",
+				url: "doctor_sel.html",
+				data: "ct_type=" + val,
+				dataType: "text",               
+                success: function(data) {
+                    $('.doc').empty();
+                    $('.doc').append(data);                  
+                },
+                error: function(xhr, status, error) {
+                    alert(error);                   
+                }
+                });
+		});
+       
+        //달력 월 이동        
+        function ch_cal(date, yydd, dr_idx) {   
+            if (date == '') {
+                alert("날짜를 선택하세요");
+                return false;
+            }
+
+			$.ajax({
+				type: "POST",
+				url: "doctor_cal.html",
+				data: "date=" + date + "&yydd=" + yydd + "&dr_idx=" + dr_idx,
+				dataType: "text",
+				success: function (data) {
+					$('.cal').empty();
+					$('.cal').append(data);
+				},
+				error: function (xhr, status, error) {
+					alert(error);
+				}
+			});
+        }	
+        
+        //시간 노출
+        function time_sel(dr_idx, date, obj) {
+            if (dr_idx == '') {
+                alert("의료진을 먼저 선택하세요");
+                return false;
+            }
+            $('.label-time').empty();   
+            $(".tit-time").empty();
+            
+            date_text = date.substring(0, 4) + "년 " + date.substring(5, 7) + "월 " + date.substring(8, 10) + "일";    
+                                 
+            $("#is_date").val(date);            
+            $('.rsv-step-box:eq(2) .rsv-step-tit .tit').text(date_text);
+            
+        
+            $.ajax({
+                type: "POST",
+                url: "doctor_time.html",
+                data: "date=" + date + "&dr_idx=" + dr_idx,
+                dataType: "text",
+                success: function (data) {
+                    $('.label-time').empty();                
+                    $('.label-time').append(data);
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });  
+			$('.calBody td').removeClass('cho');
+            $(obj.parentNode).addClass('cho');
+            return false;
+        }
+
+        function disableButton() {
+            var button = $('#res_submit');
+            button.prop('disabled', true);
+			$('.rsv-submit.rsv').hide();
+			$('#loadingOverlay').show();
+            // button.hide(); // 버튼을 숨깁니다.
+            //button.text('처리중이니 잠시 기다려 주세요'); // 버튼 텍스트 변경	 
+        }	
+
+		$('#res1_submit').click(function(){			
+			
+			if($('#dr_mcode_next').val() == '')	{
+				alert('의료진을 선택해주세요');				
+                $('.rsv-step-wrap').focus();
+				return false;
+			}	
+
+			if($('#is_date').val() == '')	{
+				alert('날짜를 선택해주세요');
+				$('.schedule-wrap').focus();
+				return false;
+			}	
+
+			if($('#is_time').val() == '')	{
+				alert('시간을 선택해주세요');
+				$('.schedule-wrap').focus();
+				return false;
+			}			
+
+			$('.rsv-submit.rsv').fadeIn(100);
+
+        });
+
+        $('#res_submit').click(function(){
+
+			if($('#comt').val() == '')	{
+				alert('증상을 입력해주세요');
+				return false;
+			}	            
+            
+            $("#is_comt").val($('#comt').val());
+            disableButton();	
+
+            $('#r_form').attr('action','proc/online_proc.php');
+            $('#r_form').submit();
+            return false;
+
+        });
+	
+	</script>
+    <style>
+        .loading-message {
+            display: block;
+            /* 추가적인 스타일 속성 설정 */
+            }
+        
+    </style>
+    
+</body>
+
+</html>

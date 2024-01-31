@@ -1,0 +1,13 @@
+<?
+
+include "../inc/dbConn.php";
+
+$sql = " DELETE FROM gr28 
+			WHERE RIDX='".$_GET["v"]."' ";
+
+if( mysql_query($sql) ){
+	echo "<script>alert('삭제되었습니다.');location.href='index.html';</script>";
+}else{
+	echo "<script>alert('오류가 발생되었습니다.');</script>";
+}
+?>

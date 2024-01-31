@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>뉴고려병원&구래27통 간편예약</title>
+    <link rel="stylesheet" href="http://smart.nkhospital.net/css/bulma.min.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.nkhospital.net/favicon/favicon-32x32.png">
+	<!-- jQuery UI CSS파일 -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+	<!-- jQuery 기본 js파일 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+	<!-- jQuery UI 라이브러리 js파일 -->
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+	<script src="http://smart.nkhospital.net/js/datepicker_kr.js"></script> 
+	<script>
+	$(function() {
+	  // 오늘 날짜 가져오기
+      var today = new Date();
+      
+      // 7일 뒤의 날짜 계산
+      var futureDate = '2023-08-21';//'<?=date("Y-m-d", strtotime("+7 days",strtotime(date("Y-m-d"))));?>';
+	  
+	  // 비활성화할 날짜 배열
+	  var disabledDates = ['2023-08-15','2023-09-28','2023-09-29'];
+      
+		$( "#rdt" ).datepicker({  
+			minDate: futureDate,
+			maxDate: "2023-11-18";
+			beforeShowDay: function(date) {
+			  var dateString = $.datepicker.formatDate('yy-mm-dd', date);
+			  if (disabledDates.indexOf(dateString) !== -1) {
+				return [false, 'disabled-date']; // 비활성화된 날짜에 'disabled-date' 클래스 추가
+			  }
+			  var day = date.getDay();
+			  return [(day !== 0 && day !== 6), ''];
+			}
+		});
+	});
+	</script>
+	<style>
+	.tbox {	
+		height: 200px;    
+		width: 100%;    
+		border: 1px solid #d6d6d6;    
+		background: #fff;    
+		padding: 30px 25px;    
+		line-height: 18px;    
+		overflow-y: scroll;	
+	}
+	input { margin-bottom:10px; }
+	</style>
+<script>
+	document.addEventListener("DOMContentLoaded", function(event) {
+      // 로드 완료 후 실행할 작업을 이곳에 작성합니다.
+      document.getElementById("DEPT").style.display="none";
+      document.getElementById("DEPT2").style.display="none";
+
+	  let frm = document.getElementById("frm");
+	  frm.addEventListener("submit",function(e){
+		  e.preventDefault();
+		  if(document.getElementsByName("rtype")[0].checked){
+			if(document.getElementById("dept2").value==""){
+				alert( "상품을 선택해주세요." );
+				document.getElementById("dept2").focus();
+				return false;  
+			}
+		  }else{
+			if(document.getElementById("dept").value==""){
+				alert( "진료과를 작성해주세요." );
+				document.getElementById("dept").focus();
+				return false;  
+			}
+		  }
+		  frm.submit();
+	  });
+      
+      // 예시: 버튼 클릭 시 얼럿 창 표시
+      //var button = document.getElementById("myButton");
+      //button.addEventListener("click", function() {        alert("버튼이 클릭되었습니다.");      });
+    });
+
+	function dV( v ){
+		document.getElementById("DEPT").style.display="none";
+		document.getElementById("DEPT2").style.display="none";
+		if(v=="G"){
+			document.getElementById("DEPT2").style.display="";
+		}else{
+			document.getElementById("DEPT").style.display="";
+		}
+		
+	}
+</script>
+  </head>
+<?
+#echo "<script>alert('검진 예약 시청기간이 종료되었습니다.\\n관심과 이용에 고맙습니다.');</script>";
+#return false;
+?>
+<body>
+	<section class="hero is-primary">
+		<div class="hero-body">
+			<!--p class="span" style='color:blue;font-weight:bold;'>[현재 데모사이트입니다.]</p-->
+			<p class="title" style='font-size:1.8em;'>뉴고려병원 구래 27통 주민을 위한 검진 간편예약</p>
+			<p class="subtitle" style='font-size:1.1em;'> 구래27통 주민만 이용가능합니다.</p>
+		</div>
+	</section>
+
+	<section class="section">
+  		<!--font color='red'>현재 진행확정이 아닌점으로 사전예약 진행중입니다. 순차적으로 전화 드릴예정이니 양해부탁드립니다.</font-->
+		<div class="container">
+			<form id="frm" name="frm" method="post" action="rm_post.html" autocomplete="off">
+				<div class="media-content mb-3">
+				
+					<div class="content tbox mb-2 is-small" >
+						<p class="list_big_title">개인정보 수집 및 이용에 관한 동의</p>
+						<p class="s_txt mgt_20">의료법인 인봉의료재단 뉴고려병원 구래27통 주민을 위한 검진 간편예약 서비스를 이용하실때 개인정보를 수집합니다.</p>
+						<p class="s_txt"><strong>수집되는 개인정보 항목은 아래와 같습니다.</strong></p>
+						<p class="s_txt">- 고객명, 연락처, 동, 호수 </p>
+						<p class="s_txt">- 수집된 개인정보는 수검 완료시까지 보관됩니다.</p>
+						<p class="s_txt">- 개인정보의 삭제를 원하실 경우 지체 없이 해당 정보를 삭제합니다.</p>
+						<p class="s_txt">- 귀하는 개인정보 수집 및 이용에 대하여 동의를 거부할 권리가 있으며, 동의를 거부할 경우 본 서비스를 이용할 수 없음을 알려 드립니다. </p>
+					</div>
+
+					<div class="agree">
+						<input type="checkbox" name="agree_policy" id="agree_policy" required class='' value="1">
+						<span style='font-size:0.6em;' >상기 개인정보 취급 및 이용에 관한 내용을 읽었으며, 동의합니다.</span>
+					</div>
+				</div>
+
+				<div class="" style='display:flex;'>
+					<div class="span mr-2 pt-1">동</div>
+					<div class="select is-small mr-2">
+						<select id="dong" name='dong' required>
+							<option value=''>동을 선택하세요</option>
+							<option value='408'>408동</option>
+							<option value='409'>409동</option>
+							<option value='410'>410동</option>
+							<option value='411'>411동</option>
+							<option value='412'>412동</option>
+						</select></div>
+					<div class="span  mr-2 pt-1">호수</div>
+					<div class=" is-5"><input class="input is-small is-hovered is-half" type="number" name="ho" value="" placeholder="호수" required style='width:100px;'></div>
+  				</div>
+
+				<div class="" style='display:flex;'>
+				  <div class="span mr-5 pt-1">예약자명 : </div>
+				  <div class=""><input type="text"  class="input is-small is-hovered is-half" name="rname" required /></div>
+				</div>
+
+				<div class="" style='display:flex;'>
+				  <div class="span mr-5 pt-1">연 락 처 : &nbsp;</div>
+				  <div class=""><input type="number"  class="input is-small is-hovered is-half" name="rtel" required /></div>
+				  <div class="span is-small">숫자만</div>
+				</div>
+
+				<div class="" style='display:flex;'>
+				  <div class="span mr-2 pt-1">예약희망일 : </div>
+				  <div class=""><input type="text" id="rdt" name="rdt" class="input is-small is-hovered is-half" required /></div>
+				</div>
+
+				<div class="" style='display:flex;'>
+					<div class="span mr-5 pt-1" >상품선택 : </div>
+					<div class="select is-small">
+						<select id="sp" name='sp' required>
+								<option value=''>상품을 선택하세요</option>
+								<option value='종합검진'>종합검진형</option>
+								<option value='대상포진'>대상포진</option>
+								<option value='폐렴구균'>폐렴구균</option>
+								<option value='암면역'>암+면역</option>
+								<option value='유전자3435'>선천적유전자(남34종,여35종)</option>
+								<option value='유전자20접종'>선천적유전자20종+독감접종</option>
+							</select></div>
+					<div class="ml-2" ><button type='button' class='button is-primary is-small' onclick="viewL();">상품보기</button></div>
+				</div>
+
+				<div class="field is-horizontal mt-2">
+					<div class="field-span is-normal">
+						<span class="span">메모사항 : </span></div>
+
+					<div class="field-body mt-1 ml-5 is-normal">
+						<textarea name="rmemo" class="textarea is-hovered" placeholder="문의사항은 여기에 작성해주세요."></textarea></div>
+				</div>
+
+				<div class="field " style='text-align:center;'>
+					<button class="button is-primary">예약하기</button>
+					<button type="reset" class="ml-4 button" >초기화</button>
+					<button class="ml-4 button is-danger" onclick="self.close();">종료하기</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
+<script>
+function viewL(){
+	window.open("plist.html","","");
+}
+</script>

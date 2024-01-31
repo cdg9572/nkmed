@@ -1,0 +1,144 @@
+<? session_start(); ?>
+<!DOCTYPE html >
+<html>
+ <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="initial-scale=1.0">
+ </head>
+<?
+	include "../mj_function.php";	
+	include "../../inc/dbConn.php";
+
+	$mseq = $_POST[mseq];
+	if( $mseq<>"" & $_POST[md]=="reg"  ){ 
+		$sql = " UPDATE smart_mj_mnexerctbl SET 
+						MNEXQ0101='".$_POST[MNEXQ0101]."', MNEXQ0102='".$_POST[MNEXQ0102]."'	, MNEXQ01T3='".$_POST[MNEXQ01T3]."'
+						, MNEXQ01M3='".$_POST[MNEXQ01M3]."', MNEXQ0104='".$_POST[MNEXQ0104]."', MNEXQ0105='".$_POST[MNEXQ0105]."'
+						, MNEXQ01T6='".$_POST[MNEXQ01T6]."', MNEXQ01M6='".$_POST[MNEXQ01M6]."', MNEXQ0201='".$_POST[MNEXQ0201]."'
+						, MNEXQ0202='".$_POST[MNEXQ0202]."' , MNEXQ02T3='".$_POST[MNEXQ02T3]."' , MNEXQ02M3='".$_POST[MNEXQ02M3]."'
+						, LDT= '".DATE("YmdHis")."'
+					WHERE 	MNEXJUBNO='".$mseq."' 	";
+		if( mysql_query( $sql ) ){
+		}else{
+			echo mysql_error()."<br/>".$sql;
+		}
+	}
+
+	#운동정보
+	$sql  = " SELECT * FROM smart_mj_mnexerctbl WHERE MNEXJUBNO='".$mseq."'  ";
+	#초기화
+	$MNEXQ0301 = "";		$MNEXQ0302 = "";	$MNEXQ03T3 = "";	$MNEXQ03M3 = "";	
+	$MNEXQ0304 = "";		$MNEXQ0305 = "";	$MNEXQ03T6 = "";	$MNEXQ03M6 = "";	
+	$MNEXQ04T1 = "";		$MNEXQ04M1 = "";		$MNEXQ0500 = "";	$MNEXQ0600 = "";	
+	$MNEXQ0700 = "";		$MNEXQ0800 = "";		$MNEXQ0900 = "";		$MNEXQ1000 = "";	
+	$MNEXQ1100 = "";		$MNEXQ1200 = "";	
+
+	#$none="none"; $none1="none"; $none2="none";
+	if( $r = mysql_query($sql) ){
+		$val = mysql_fetch_array($r);
+		$MNEXQ0301 = $val["MNEXQ0301"];	
+		$MNEXQ0302 = $val["MNEXQ0302"];	
+		$MNEXQ03T3 = $val["MNEXQ03T3"];	$MNEXQ03M3 = $val["MNEXQ03M3"];	
+		$MNEXQ0304 = $val["MNEXQ0304"];	
+		$MNEXQ0305 = $val["MNEXQ0305"];
+		$MNEXQ03T6 = $val["MNEXQ03T6"];	$MNEXQ03M6 = $val["MNEXQ03M6"];
+		$MNEXQ04T1 = $val["MNEXQ04T1"];	$MNEXQ04M1 = $val["MNEXQ04M1"];
+		$MNEXQ0500 = $val["MNEXQ0500"];
+		$MNEXQ0600 = $val["MNEXQ0600"];
+		$MNEXQ0700 = $val["MNEXQ0700"];
+		$MNEXQ0800 = $val["MNEXQ0800"];
+		$MNEXQ0900 = $val["MNEXQ0900"];
+		$MNEXQ1000 = $val["MNEXQ1000"];
+		$MNEXQ1100 = $val["MNEXQ1100"];
+		$MNEXQ1200 = $val["MNEXQ1200"];
+	#	if( $MNEXQ0301 == "1" ){ $none1 = ""; }
+	#	if( $MNEXQ0304 == "1" ){ $none2 = ""; $none = "";}
+	#	if( $MNEXQ0304 == "2" ){ $none = ""; }
+	}
+	?>
+	<form name="fm" method="post" action="cmm_5.html">
+	<input type="hidden" name="rseq" value="<?=$_POST[rseq];?>"/>
+	<input type="hidden" name="mseq" value="<?=$_POST[mseq];?>"/>
+	<input type="hidden" name="mlfcode" value="<?=$_POST[mlfcode];?>"/>
+	<input type='hidden' name='ty' value="<?=$_POST[ty];?>" />
+	<input type='hidden' name='ty1' value="<?=$_POST[ty1];?>" />
+	<input type='hidden' name='ty2' value="<?=$_POST[ty2];?>" />
+	<input type='hidden' name='s' value="<?=$_POST[s];?>" />
+	<input type="hidden" name="md" value="reg"/>
+	<font style="font-size:12px; color:red;">※ 운동 생활습관 평가도구 2/3</font> &nbsp;<!--<font  style="font-size:12px;">추가문진 4/7--></font>
+	<table width="100%" class="tbst02">
+	<tr><td>3. 앞서 말한 일과 장소 이동시 신체 활동에 대해서는 제외합니다. 스포츠, 운동 및 여가 활동에 대하여 묻겠습니다.
+	</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+						 3-1. 평소 최소 10분 이상 계속 숨이 많이 차거나 심장이 매우 빠르게 뛰는 고강도의 스포츠, 운동 및 여가 활동을 하십니까?</th></tr>
+	<tr><td style="font-size:11px;">※ 예: 달리기, 줄넘기, 등산, 농구 시합, 수영, 배드민턴 등</td></tr>
+	<tr><td><input type="radio" name="MNEXQ0301" value="1" <? if( $MNEXQ0301=="1"){ echo "checked"; }?> onclick="setC(1);" />1. 예
+			<input type="radio" name="MNEXQ0301" value="2" <? if( $MNEXQ0301=="2"){ echo "checked"; }?> onclick="setC(2);" />2. 아니오(3-4번으로)</td></tr>
+	</table>
+	<div id="dvd" style="display:<?=$none1;?>;" >
+	<table width='100%'>
+	<tr><td>3-2. 평소 일주일 동안, 고강도의 스포츠, 운동 및 여가 활동을 며칠 하십니까?</td></tr>
+	<tr><td align='right'>일주일에( <input type="text" size="4" name="MNEXQ0302" value="<?=$MNEXQ0302;?>"/> )일</td></tr>
+	<tr><td>3-3. 평소 하루에 고강도의 스포츠, 운동 및 여가 활동을 몇 시간 하십니까?</td></tr>
+	<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ03T3" value="<?=$MNEXQ03T3;?>"/> )시간&nbsp;
+	( <input type="text" size="4" name="MNEXQ03M3" value="<?=$MNEXQ03M3;?>"/> )분</td></tr>
+	</table>
+	</div>
+	<table width="100%" class="tbst02">
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">3-4. 평소 최소 10분 이상 계속 숨이 약간 차거나 심장이 약간 빠르게 뛰는 중강도의 스포츠, 운동 및 여가 활동을 하십니까?</th></tr>
+	<tr><td style="font-size:11px;">※ 예: 빠르게 걷기, 가볍게 뛰기(조깅), 웨이트 트레이닝(근력 운동), 골프, 댄스스포츠, 필라테스 등</td></tr>
+	<tr><td><input type="radio" name="MNEXQ0304" value="1" <? if( $MNEXQ0304==1){ echo "checked"; }?> onclick="setC2(1);" />1. 예
+			<input type="radio" name="MNEXQ0304" value="2" <? if( $MNEXQ0304==2){ echo "checked"; }?> onclick="setC2(2);" />2. 아니오(4번으로)</td></tr>
+	</table>
+	<div id="dvd3" style="display:<?=$none2;?>;" >
+	<table width='100%'>
+	<tr><td>3-5. 평소 일주일 동안, 중강도의 스포츠, 운동 및 여가 활동을 며칠 하십니까?</td></tr>
+	<tr><td align='right'>일주일에( <input type="text" size="4" name="MNEXQ0305" value="<?=$MNEXQ0305;?>"/> )일</td></tr>
+	<tr><td>3-6. 평소 하루에 중강도의 스포츠, 운동 및 여가 활동을 몇 시간 하십니까?</td></tr>
+	<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ03T6" value="<?=$MNEXQ03T6;?>"/> )시간&nbsp;
+	( <input type="text" size="4" name="MNEXQ03M6" value="<?=$MNEXQ03M6;?>"/> )분</td></tr>
+	</table>
+	</div>
+	<div id="dvd4" style="display:<?=$none;?>;" >
+	<table width='100%'>
+	<tr><td>4. 다음은 자는 시간을 제외하고, 일할 때나 집에 있을 때, 장소를 이동할 때, 친구와 함께 할 때에 앉아 있거나 누워 있는 것에 대한 질문입니다. </td></tr>
+	<tr><td style="font-size:11px;">※ 예: 책상에 앉아 있기, 친구와 앉아 있기, 자동차/버스/기차를 이용해 이동하기, 책 읽기, 글쓰기, 카드놀이 하기, 텔레비전 보기, 게임 하기(닌텐도, 컴퓨터, 플레이스테이션), 인터넷 사용, 음악감상 등</td></tr>
+	<tr><th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">4-1. 평소 하루에 앉아 있거나, 누워 있는 시간이 몇 시간 입니까?</th></tr>
+	<tr><td align='right'>하루에( <input type="text" size="4" name="MNEXQ04T1" value="<?=$MNEXQ04T1;?>"/> )시간&nbsp;
+	( <input type="text" size="4" name="MNEXQ04M1" value="<?=$MNEXQ04M1;?>"/> )분</td></tr>
+	</table>
+	</div>
+	<!--<input type="button" value="이전설문" onclick="hisBack();"/> &nbsp; &nbsp;
+	<input type="submit" value="다음 문진표"/>-->
+	<table width='100%' cellspacing='10'>
+	<tr align="center"><td width='50%' bgcolor="#6799FF" onclick="hisBack();" style="cursor:hand">이전설문</td>
+			<td width='50%' height="40" bgcolor="#86E57F" onclick="document.fm.submit();" style="cursor:hand">다음설문</td></tr>
+	</table>
+	</form>
+	<script>
+	function setC( val ){
+		if( val == 1){
+			document.getElementById("dvd").style.display = "";
+		}else{
+			document.getElementById("dvd").style.display = "none"; 
+			document.fm.MNEXQ0302.value = "";		document.fm.MNEXQ03T3.value = "";	document.fm.MNEXQ03M3.value = "";
+		}
+	}
+
+	function setC2( val ){
+		if( val == 1){
+			document.getElementById("dvd3").style.display = "";
+		}else{
+			document.getElementById("dvd3").style.display = "none"; 
+			document.fm.MNEXQ0305.value = "";		document.fm.MNEXQ03T6.value = "";	document.fm.MNEXQ03M6.value = "";
+		}
+		document.getElementById("dvd4").style.display = "";
+	}
+
+	function hisBack(){
+		document.fm.action="cmm_3.html";
+		document.fm.md.value = "view";
+		document.fm.submit();
+	}
+	</script>

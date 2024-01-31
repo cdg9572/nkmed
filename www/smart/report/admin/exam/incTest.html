@@ -1,0 +1,135 @@
+<?
+header("Content-Type:text/html;charset=utf-8") ;
+mysql_query("set names utf8;");
+
+$jumin = explode("-", $row_data['jumin_no']);
+$zipCode = explode("-", $row_data['zip_code']);
+//echo $uploadDir.$row_data['file'];
+if(is_file($uploadDir.$row_data['file'])) $upImg = "/new_mcm/admin/member/upFiles/member/".$row_data['file'];
+else $upImg = "imgs/noImg.gif";
+
+$phone_no = explode("-",$row_data['phone_no']);
+$phone_no2 = explode("-",$row_data['phone_no2']);
+
+$mobile_no = explode("-",$row_data['mobile_no']);
+$email = explode("@",$row_data['email']);
+
+
+//echo $seq;
+?>
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+
+	if(!frm.dsp_item.value) {
+		alert('item명을 입력해 주세요.');
+		frm.dsp_item.focus();
+		return false;
+	}
+	else if(!frm.xls_item.value) {
+		alert('엑셀항목명을 입력해 주세요.');
+		frm.xls_item.focus();
+		return false;
+	}
+
+	
+	else{
+
+		frm.target = "main";
+		frm.submit();
+	}
+}
+
+
+function chkForm_modi(frm) {
+	
+		frm.mode.value="modify";
+		frm.target = "main";
+		frm.submit();
+}
+
+function chkForm_del(frm) {
+
+		frm.mode.value="del";
+		frm.target = "main";
+		frm.submit();
+}
+
+
+
+//-->
+</script>
+
+
+
+<div class="historyText">홈 &gt; 검진 관리 &gt; Desc. 관리  </div>
+				
+	
+
+
+	<div class="propBox2">
+		<h3>임상참고치 관리</h3>
+
+		<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+			
+			<tr>
+				<th width=50>no</th>
+				<th colspan=2>항목</th>
+				<th  colspan=2>엑셀</th>
+				<th  colspan=2>소스</th>
+
+				<th  colspan=2>임상참고치 남</th>
+				<th  colspan=2>임상참고치 여</th>
+			
+			</tr>
+			
+
+		<?
+			//$sql = "select * from seran_esti where use_yn = 'Y' order by reg_date desc " ;
+
+			$sql = "select * from seran_esti where use_yn = 'Y' 
+						group by dsp_item
+						order by seq , reg_date " ;
+
+			$sql = "select * from (select * from seran_esti where use_yn = 'Y' 
+						order by seq desc, reg_date desc ) as gtable group by dsp_item " ;
+
+			$res = mysql_query($sql) ;
+			
+			$i = 0 ;
+			while($row = mysql_fetch_array($res))
+			{
+				$i ++ ;
+		?>
+
+		
+
+				<tr style="border-color:blue;">
+						<td>  <?=$i?> <td>
+						<td>  <?=$row[dsp_item]?> <td>
+						<td>  <?=$row[xls_item]?> <td>
+						<td>  <?=$row[src_item]?> <td>
+
+						<td>  <?=$row[esti_M]?> <td>
+						<td>  <?=$row[esti_F]?> <td>
+				</tr>
+
+		<?
+		}
+		?>
+
+		</table>
+		
+	</div>
+
+
+
+
+
+	
+
+
+	<iframe name="main" width=700 height=600></iframe>
+
+
+</div>

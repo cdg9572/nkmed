@@ -1,0 +1,15 @@
+<!--http://119.197.19.46:8000-->
+<form action="http://119.197.19.46:8000/gumjin/SMS/asp_sms_send.php" method="post" name="<?=$frm;?>" target='<?=$ifrm;?>'>
+	<input type="text" name="smsf_returl" value="http://smart.nkhospital.net/gpap/inc/sms_return.php" /><br/>
+	<input type="text" name="smsf_phone" value="<?=$smsf_phone?>" /> 전송번호<br/>
+	<input type="text" name="smsf_msg" value="<?=$smsf_msg?>" />내용<br/>
+	<input type="text" name="smsf_opt1" value="<?=$smsf_opt1?>" /> 추가 파라미터 <br/>
+	<input type="text" name="reyn" value="<?=$reyn;?>" />리턴유무<br/>
+	<input type="submit" value="전송테스트" />
+</form>
+<iframe id='<?=$ifrm;?>'  name='<?=$ifrm;?>' style='display:;' width='200' height='200' ></iframe>
+
+<? echo "<script>document.$frm.submit() ;</script>"; ?>
+<script>
+//		document.sendSMS2.submit() ; 
+</script>

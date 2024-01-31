@@ -1,0 +1,105 @@
+
+<?php
+
+$title = "MEMBER";
+$page_title = "회원가입";
+$page_sub_title = "회원가입";
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_init.php';
+include_once "../inc/head.php";
+
+$dep1 = "3";$dep2 = "3-0";
+
+?>
+<style>
+	.label_wrap {display: none;}
+</style>
+<script>
+	$(function(){
+		$(".agreeSection").eq(1).find("h2.title").text('개인정보처리방침').css("text-align","left");
+	});
+</script>
+<body>
+	<div id="wrap">
+		<?php include_once "../inc/header.php" ?>
+		<div id="container">
+			<div id="sub-bnnr">
+				<img src="/resource-pc/images/subBnnr07.png" alt="">
+				<h2>
+					<span><img src="/resource-pc/images/sub-bnnr-text.png" alt="믿으니까 뉴고려"></span>
+					<small><?=$page_sub_title?></small>
+				</h2>
+			</div>
+			<!-- //end #sub-bnnr -->
+			<div id="innerCont" style="max-width:800px">
+				<h2 class="pageTitle join">회원가입<span>1/2</span></h2>
+				<div class="section">
+					<form id="jForm" method="post" action="?">
+						<?php
+							include_once "agree1.php";
+							include_once "agree2.php";
+							include_once "agree3.php";
+						?>
+					</form>
+					<p class="agreeChk">
+						<label><input type="checkbox" class="inputChk" name="agree4" id="agree4" value="" /> 모든 약관 및 취급 방침에 동의</label>
+					</p>
+					<div id="btn-box">
+						<a href="join02.html" class="btn bg-deepblue block" id="img_next">다음 단계</a>
+					</div>
+				</div>
+				<!-- //Content -->
+			</div>
+			<!-- //end #innerCont -->
+		</div>
+		<!-- //end #container -->
+		<form id="hd_frm" name="hd_frm" action="?" method="post">
+		<input type="hidden" name="agree" id="agree" />
+		</form>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$('#img_next').click(function(){
+
+				if($('#agree1:checked').val() == undefined){
+					alert('약관동의 하셔야 합니다');
+					return false;
+				}
+
+				if($('#agree2:checked').val() == undefined){
+					alert('개인정보 취금방침에 동의 하셔야 합니다');
+					return false;
+				}
+
+				if($('#agree3:checked').val() == undefined){
+					alert('고유식별정보 처리 동의 하셔야 합니다');
+					return false;
+				}
+
+				$('#agree').val('Y');
+				$('#hd_frm').attr('action','./join02.html');
+				$('#hd_frm').submit();
+				return false;
+			});
+
+			$("#agree4").click(function(){
+					//만약 전체 선택 체크박스가 체크된상태일경우
+				if($("#agree4").prop("checked")) {
+					//해당화면에 전체 checkbox들을 체크해준다
+					$("input[type=checkbox]").prop("checked",true);
+					// 전체선택 체크박스가 해제된 경우
+				} else {
+					//해당화면에 모든 checkbox들의 체크를해제시킨다.
+					$("input[type=checkbox]").prop("checked",false);
+				}
+			})
+
+
+		});
+	</script>
+		<?php include_once "../inc/fnb.php" ?>
+		<?php include_once "../inc/footer.php" ?>
+	</div>
+	<!-- //end #wrap -->
+</body>
+
+</html>

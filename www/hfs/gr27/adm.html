@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>구래27통 예약 관라자페이지</title>
+    <link rel="stylesheet" href="http://smart.nkhospital.net/css/bulma.min.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.nkhospital.net/favicon/favicon-32x32.png"><!-- jQuery 기본 js파일 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<style>
+	.w150{	max-width:150px;	}
+	th{	text-align:center!important;	}
+	.txc{	text-align:center!important;	}
+	.curp{ cursor:pointer; }
+	</style>
+</head>
+<?
+include "../inc/dbConn.php";
+$tf = ($_GET[m]<>"") ? true : false ;
+if( $_POST['id']<>"" and $_POST['pw']<>""){
+	if($_POST[id]=="nkadmin" and  $_POST['pw']=="nk980911$"){
+		$tf = true;
+	}else{
+		echo "<script>alert('정보가 일치하지 않습니다.');</script>";
+	}
+}
+?>
+
+<body>
+<? if( $tf === false ){ ?>
+<section class="hero is-large ">
+  <div class=" hero-body">
+  	
+	<div class="title">
+		<img class=' mr-1' sizes="32x32" src="http://www.nkhospital.net/favicon/favicon-32x32.png">뉴고려병원<br>구래27통 관리자페이지</div>
+	<div class="subtitle ">
+		<form method="post" action="" autocomplete="off">
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="subtitle label">ID</label></div>
+
+				<div class="field-body w150" >
+					<input class="input is-hovered" type="text" name="id" value=""  required></div>
+			</div>
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="subtitle label">PW</label></div>
+
+				<div class="field-body w150 ">
+					<input class="input is-hovered" type="password" name="pw" value=""  required></div>
+			</div>
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="subtitle label"></label></div>
+				<div class="button field-body is-primary is-normal w150 " >
+					<button class="button field-body is-primary is-normal w150 ">로그인</button></div>
+				<!--div class="field-label is-primary is-normal">로그인</div-->
+			</div>
+		</form>
+	</div>
+	
+    
+  </div>
+</section>
+<? }else{ ?>
+<div class='p-2 is-small' style='display:flex;'>
+
+	<div><img class='mt-2 mr-1' src="http://www.nkhospital.net/favicon/favicon-32x32.png" style="height:24px"></div>
+	<div class="mt-2 ml-2 is-small" >
+		<form id="frm" name="frm" method="post" class='has-text-small' style='font-size:0.9em;'>
+			이름 또는 연락처 : <input type="text" id="txt" name="txt" value="" style='font-size:0.9em;'/>
+			동 : <select id="dong" name="don" style='font-size:0.9em;'>
+					<option value=''>동을 선택하세요</option>
+					<option value='408'>408동</option>
+					<option value='409'>409동</option>
+					<option value='410'>410동</option>
+					<option value='411'>411동</option>
+					<option value='412'>412동</option>
+					<option value='ALL'>전체</option>
+				</select>
+			<button>조회</button>
+			조회조건 : <select id="state" name="state" style='font-size:0.9em;'>
+					<option value='대기'>분류 선택하세요[기본:예약대기]</option>
+					<option value='처리'>예약처리만</option>
+					<option value='취소'>예약취소만</option>
+					<option value='ALL'>전체</option>
+				</select>
+		</form>
+	</div>
+</div>	
+<div id="cont">
+</div>
+<? } ?>
+<iframe id="ifrm" name="ifrm" style='border:0px solid red;'></iframe>
+</body>
+</html>
+<script>
+// 모든 a 태그 요소를 선택합니다.
+const frm = document.getElementById('frm');
+
+frm.addEventListener('submit', function(e) {
+	e.preventDefault();
+	let txt = document.getElementById("txt");
+	let dong = document.getElementById("dong");
+	let state = document.getElementById("state");
+	if( txt.value=="" && dong.value==""){
+		alert("최소 하나의 정보를 입력후 조회하세요.");
+	}else{
+		$.ajax({
+			url:"adm_l.html",
+			type:'POST', // GET, PUT
+			data:{
+				txt:txt.value,
+				dong:dong.value,
+				state:state.vlaue
+			},
+			dataType:"html",
+			success:function(data2){
+				$("#cont").empty();
+				$("#cont").append(data2);
+			},
+			error: function(jqXHR, textStatus, errorThrown) { 
+				console.log(jqXHR.responseText); 
+			}
+		});
+	}
+});
+</script>

@@ -1,0 +1,28 @@
+<?
+$page_no = 9 ;
+
+$v_name = "no".$page_no ;
+$v_add_name = "no".$page_no."_add" ;
+
+$v = $row[$v_name] ;
+$v_add = $row[$v_add_name] ;
+
+?>
+		<table width="100%" class="tbst02">
+			<tr>
+				<th style="background:#187DC0 !important; color: #FFF !important; text-align:left;">
+					9. 현재 월경의 상태는 어떠십니까?
+				</th>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="1"  <?=getChecked($v, "1")?> > 아직 월경이 있음.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="2"  <?=getChecked($v, "2")?> >자궁적출술을 하였음.</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="no<?=$page_no?>" value="3"  <?=getChecked($v, "3")?> >폐경 되었음 (폐경연령:<input type="text" name="no<?=$page_no?>_add" value="<?=$v_add?>"/>세)</td>
+			</tr>
+		</table>
+	
+	

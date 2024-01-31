@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>해외환자유치 관라자페이지</title>
+    <link rel="stylesheet" href="/css/bulma.min.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://www.nkhospital.net/favicon/favicon-32x32.png">
+	<style>
+	.w150{	max-width:150px;	}
+	th{	text-align:center!important;	}
+	.txc{	text-align:center!important;	}
+	.curp{ cursor:pointer; }
+	</style>
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+
+		  let frm = document.getElementById("frm");
+		  frm.addEventListener("submit",function(e){
+			  e.preventDefault();
+			  if(document.getElementsByName("rtype")[0].checked){
+				if(document.getElementById("dept2").value==""){
+					alert( "상품을 선택해주세요." );
+					document.getElementById("dept2").focus();
+					return false;  
+				}
+			  }else{
+				if(document.getElementById("dept").value==""){
+					alert( "진료과를 작성해주세요." );
+					document.getElementById("dept").focus();
+					return false;  
+				}
+			  }
+			  frm.submit();
+		  });
+		  
+		  // 예시: 버튼 클릭 시 얼럿 창 표시
+		  //var button = document.getElementById("myButton");
+		  //button.addEventListener("click", function() {        alert("버튼이 클릭되었습니다.");      });
+		});
+
+		function dV( v ){
+			document.getElementById("DEPT").style.display="none";
+			document.getElementById("DEPT2").style.display="none";
+			if(v=="G"){
+				document.getElementById("DEPT2").style.display="";
+			}else{
+				document.getElementById("DEPT").style.display="";
+			}
+			
+		}
+
+	</script>
+</head>
+<?
+include "inc/dbConn.php";
+$sql = " SELECT * FROM nkh_overseas WHERE OIDX='".$_GET[v]."' ";
+if($data=mysql_query($sql)){
+	$row = mysql_fetch_array($data);
+}else{
+	echo "오류 발생";
+	return flase;
+}
+?>
+<body style='line-height: 1.2;'>
+
+<div class="container  p-3">
+	<form id="frm" name="frm" class='' method="post" action="oar_adm_p.html" >
+	<input type="hidden" name="OIDX" value="<?=$_GET[v]?>" />
+		<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label ">유치기관명</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered is-small" type="text" name="agency" value="<?=$row[AGENCY]?>" placeholder="유치기관명" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">에이젼담당자</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered is-small" type="text" name="agname" value="<?=$row[AGNAME]?>" placeholder="에이젼담당자" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">담당자연락처</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered is-small" type="number" name="agtel" value="<?=$row[AGTEL]?>" placeholder="담당자연락처" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">예약유형</label></div>
+
+					<div class="field-body" style='display:flex;'>
+						<label class="pt-1"><input class=" ml-3 mr-3 " type="radio" name="rtype" value="G" placeholder="Primary input" required onclick="dV(this.value);" <? if($row[RTYPE]=="G") echo "checked"; ?>>건강검진</label>
+						<div id="DEPT2" class="select is-small is-link ml-3 mr-3">
+							<select class="" id="dept2" name='dept2'>
+								<option value=''>검진상품을 선택하세요</option>
+								<option value='상담후선택' <? if($row[RDEPT]=="상담후선택") echo "selected"; ?> >상담후선택</option>
+								<option value='검진상품1' <? if($row[RDEPT]=="검진상품1") echo "selected"; ?> >검진상품1</option>
+								<option value='검진상품2' <? if($row[RDEPT]=="검진상품2") echo "selected"; ?> >검진상품2</option>
+								<option value='검진상품3' <? if($row[RDEPT]=="검진상품3") echo "selected"; ?> >검진상품3</option>
+								<option value='검진상품4' <? if($row[RDEPT]=="검진상품4") echo "selected"; ?> >검진상품4</option>
+							  </select>
+							</div>
+
+						<label class="pt-1"><input class=" ml-3 mr-3" type="radio" name="rtype" value="O" placeholder="Primary input" required onclick="dV(this.value);"<? if($row[RTYPE]=="O") echo "checked"; ?>>외래진료</label>
+					
+						<div id="DEPT" class="ml-3" >
+							<input type="text" class="input is-small is-hovered" id="dept" name="dept" value="<?=$row[RDEPT]?>" placeholder="희망진료과 :" /></div>
+
+						
+					</div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">고객명</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered is-small" type="text"  name="pname" value="<?=$row[PNAME]?>" placeholder="고객명" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">예약희망일</label></div>
+
+					<div class="field-body">
+						<input class="input is-hovered is-small" type="text"  id="rdt" name="rdt" value="<?=$row[RDT]?>" placeholder="예약희망일" required></div>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">메모사항</label></div>
+
+					<div class="field-body">
+						<textarea name="rmemo" class="textarea is-hovered is-small" placeholder="문의사항은 여기에 작성해주세요."><?=$row[RMEMO]?></textarea></div>
+				</div>
+
+				<div class="field " style='text-align:center;'>
+					<button class="button is-primary">수정하기</button>
+					<button type="reset" class="ml-4 button" >초기화</button>
+					<button class="ml-4 button is-black" onclick="self.close();">창닫기</button>
+					<button type="button" class="ml-4 button is-danger" onclick="delV('<?=$_GET['v']?>');">삭제하기</button>
+				</div>
+
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label">병원처리현황-작업중</label></div>
+
+					<div class="field-body" >
+						<span>처리구분:</span>
+						<select class="" id="state" name='state'>
+								<option value='등록' <? if($row[STATE]=="등록") echo "selected"; ?> >등록</option>
+								<option value='예약처리' <? if($row[STATE]=="예약처리") echo "selected"; ?> >예약처리</option>
+								<option value='수검완료' <? if($row[STATE]=="수검완료") echo "selected"; ?> >수검완료</option>
+								<option value='부도' <? if($row[STATE]=="부도") echo "selected"; ?> >부도</option>
+						</select>
+						<span>환자번호:</span>
+						<input class="input is-hovered is-small mb-1 " type="number"  id="ptno" name="ptno" value="<?=$row[PTNO]?>" placeholder="병록번호입력해주세요" required style="width:150px;">
+						<br>
+						<span>병원메모:</span>
+						<textarea name="hrmemo" class="textarea is-hovered is-small" placeholder="문의사항은 여기에 작성해주세요." style="min-width: 300px;    max-width: 300px;    display: initial;"><?=$row[HRMEMO]?></textarea>
+						</div>
+				</div>
+	</form>
+</div>
+</body>
+</html>
+
+<? 
+if($row[RTYPE]=="G"){
+	echo "<script>document.getElementById('DEPT').style.display='none';</script>";
+}else{
+	echo "<script>document.getElementById('DEPT2').style.display='none';</script>";
+}
+?>
+<script>
+function delV( v ){
+	location.href="oar_adm_p.html?v="+v;
+}
+</script>

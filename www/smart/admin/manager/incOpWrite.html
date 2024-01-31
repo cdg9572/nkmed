@@ -1,0 +1,219 @@
+<?
+//header("Content-Type:text/html;charset=utf-8") ;
+mysql_query("set names utf8;");
+
+$jumin = explode("-", $row_data['jumin_no']);
+$zipCode = explode("-", $row_data['zip_code']);
+//echo $uploadDir.$row_data['file'];
+if(is_file($uploadDir.$row_data['file'])) $upImg = "/new_mcm/admin/member/upFiles/member/".$row_data['file'];
+else $upImg = "imgs/noImg.gif";
+
+$phone_no = explode("-",$row_data['phone_no']);
+$phone_no2 = explode("-",$row_data['phone_no2']);
+
+$mobile_no = explode("-",$row_data['mobile_no']);
+$email = explode("@",$row_data['email']);
+
+
+//echo $seq;
+?>
+<script language="JavaScript">
+<!--
+function chkForm(frm) {
+
+	if(!frm.name.value) {
+		alert('이름을 입력해 주세요.');
+		frm.name.focus();
+		return false;
+	}
+	else if(!frm.asp_url.value) {
+		alert('URL명을 입력해 주세요.');
+		frm.asp_url.focus();
+		return false;
+	}
+	
+	else{
+
+		frm.target = "main";
+		frm.submit();
+	}
+}
+function chkDel(){
+	document.form.mode.value="del";
+	document.form.submit();
+	
+}
+function previewImage(filename) {
+	document.form.preview.src = filename;
+}
+
+function openWinSearchId(id) {
+	if(!id) {
+		alert('아이디를 입력해 주세요.');
+		document.form.manager_id.focus();
+		return false;
+	}
+
+	var win = window.open('<?=$dir?>/popId.html?sec=<?=strtolower($menu)?>&id='+id, 'POP', 'left=100, top=100, toolbar=no, location=no, directories=no, status=no, menuBar=no, scrollBars=no, resizable=no');
+	win.focus();
+}
+
+function TeamMake(frm) {
+	if(frm.checked==true) {
+		for(i=0;i<document.form.team_prof.length;i++) {
+			document.form.team_prof[i].disabled = false;
+		}
+	} else {
+		for(i=0;i<document.form.team_prof.length;i++) {
+			document.form.team_prof[i].disabled = true;
+		}
+	}
+}
+function phonefirst()
+{
+	f= document.form
+	f.secondphone.focus()
+}
+function phonesecond()
+{
+	f= document.form
+	if(f.secondphone.value.length==4)
+	f.thirdphone.focus()
+}
+
+function cellfirst()
+{
+	f= document.form
+	f.secondcell.focus()
+}
+
+function cellsecond()
+{
+	f= document.form
+	if(f.secondcell.value.length==4)
+	f.thirdcell.focus()
+}
+
+function selDomain(val) {
+	if (val == "직접입력") {
+		form.email_url.readOnly = false;
+		form.email_url.value='';
+		form.email_url.focus();
+	}
+	else {
+		form.email_url.value = val;
+		form.email_url.readOnly = true;
+	}
+}
+function selDomain2(val) {
+	if (val == "직접입력") {
+		form.email_url2.readOnly = false;
+		form.email_url2.value='';
+		form.email_url2.focus();
+	}
+	else {
+		form.email_url2.value = val;
+		form.email_url2.readOnly = true;
+	}
+}
+
+//-->
+</script>
+
+
+
+<div class="historyText">홈 &gt; 사이트 관리 &gt; 영업자 ASP 관리 &gt; 영업자 ASP 등록 </div>
+				
+	<div class="propBox2">
+
+		<h2 class="pageTitle"><i class="fa fa-th-large"></i> 영업자 ASP 등록</h2>
+
+		<table width="100%" class="tableSt02" style="margin-bottom:15px;">
+			<form  target='main' name='form' method='post' action='<?=$actionPage?>' enctype='multipart/form-data'>
+			<input type='hidden' name='uploadDir' value='<?=$uploadDir?>'>
+			<input type='hidden' name='tbl' value='<?=$tbl?>'>
+			<input type='hidden' name='dir' value='<?=$dir?>'>
+			<input type='hidden' name='menu' value='<?=$menu?>'>
+			<input type='hidden' name='mode' value='<?=$mode?>'>
+			<input type='hidden' name='seq' value='<?=$seq?>'>
+			<input type='hidden' name='team_prof_list' value=''>
+			<tr>
+				<th>이름</th>
+				<td><input class="inputDef" type="text" name="name" value='<?=$row_data['name']?>' style="width:400px;"/></td>
+			</tr>
+
+			<tr>
+				<th>url<br>(접속주소)</th>
+				<td>http://smart.nkhospital.net/_asp/ <input class="inputDef" type="text" name="asp_url" value='<?=$row_data['asp_url']?>' style="width:217px;"/></td>
+			</tr>
+			
+			<!--
+			<?
+			if($seq != ""){
+			?>
+			<tr>
+				<th width='15%'>아이디</th>
+				<td colspan="2">
+					<?=$row_data['manager_id']?>
+				</td>
+			</tr>
+			<?
+			}
+			else{
+			?>
+			<tr>
+				<th>아이디</th>
+				<td><input class="inputDef" type="text" name="manager_id" style="width:400px;" placeholder="4자리 이상, 영문자와 숫자 조합만 가능" /></td>
+			</tr>
+			<?
+			}
+			?>
+			
+			<tr>
+				<th>비빌번호</th>
+				<td><input class="inputDef" type="password" name="manager_passwd" style="width:400px;" value='<?=$row_data['manager_passwd']?>' placeholder="6자리 이상"/></td>
+			</tr>
+			-->
+
+			<tr>
+				<th>Mobile No.</th>
+				<td><input class="inputDef" type="text" name="mobile" style="width:400px;"></td>
+			</tr>
+
+			<tr>
+				<th>Email</th>
+				<td><input class="inputDef" type="text" name="email" style="width:400px;"></td>
+			</tr>
+
+			<!--
+			<tr>
+				<th style="padding:10px;">권한</th>
+				<td style="padding:10px 5px;">
+					
+
+					<select name="manager_group" style="width:416px;">
+						<option value="">선택</option>
+						<option value="부운영자" <?if($row_data[manager_group]=="부운영자"){echo "selected";}?>>부운영자</option>
+						<option value="운영자" <?if($row_data[manager_group]=="운영자"){echo "selected";}?>>운영자</option>
+						<option value="총괄운영자" <?if($row_data[manager_group]=="총괄운영자"){echo "selected";}?>>총괄운영자</option>
+					</select>
+
+
+				</td>
+			</tr>
+			-->
+			</form>
+		</table>
+		
+		<div style="position:relative;text-align:right">
+			<a href="#" onClick="chkForm(document.form)" class="resBtn02 pocenter520">등록</a>
+			<a href="#" onClick="history.go(-1);" class="cancelBtn02 poright">취소</a>
+		</div>
+	</div>
+	
+
+
+	<iframe name="main" width=0 height=0></iframe>
+
+
+</div>
